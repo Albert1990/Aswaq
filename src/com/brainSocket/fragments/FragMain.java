@@ -1,0 +1,81 @@
+package com.brainSocket.fragments;
+
+import java.util.List;
+
+import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.R;
+import com.brainSocket.data.DataRequestCallback;
+import com.brainSocket.data.DataStore;
+import com.brainSocket.data.ServerAccess;
+import com.brainSocket.data.ServerResult;
+import com.brainSocket.models.CategoryModel;
+
+import enums.FragmentType;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+public class FragMain extends Fragment implements OnClickListener{
+	private HomeCallbacks homeCallbacks;
+	private Button btnAddAdvertise;
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		return inflater.inflate(R.layout.frag_main, container, false);
+	}
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onViewCreated(view, savedInstanceState);
+		init();
+	}
+	
+	private void init()
+	{
+		homeCallbacks=(HomeCallbacks)getActivity();
+		DataStore.getInstance().attemptGetCategories(ServerAccess.MAIN_CATEGORY_ID, getMainCategoriesCallback);
+		btnAddAdvertise=(Button)getActivity().findViewById(R.id.btnAddAdvertise);
+		btnAddAdvertise.setOnClickListener(this);
+	}
+	
+private DataRequestCallback getMainCategoriesCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			if(success)
+			{
+				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
+				{
+					List<CategoryModel> categories=(List<CategoryModel>)data.getValue("categories");
+					homeCallbacks.showToast(Integer.toString(categories.size()));
+					
+				}
+				else
+				{
+					homeCallbacks.showToast("error in getting categories");
+				}
+			}
+		}
+	};
+
+@Override
+public void onClick(View v) {
+	// TODO Auto-generated method stub
+	int viewId=v.getId();
+	switch(viewId)
+	{
+	case R.id.btnAddAdvertise:
+		homeCallbacks.loadFragment(FragmentType.AddAdvertise);
+		break;
+	}
+}
+
+}
