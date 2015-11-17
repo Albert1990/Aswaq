@@ -14,9 +14,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONStringer;
+
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.models.AppUser;
+
 import android.provider.Settings.Secure;
 
 
@@ -185,7 +189,7 @@ public class ServerAccess {
 			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			
 			// url
-			String url = BASE_SERVICE_URL + "categories_api/get_categories";
+			String url = BASE_SERVICE_URL + "categories_api/get_page_components";
 			// send request
 			String response = sendPostRequest(url, jsonPairs);
 			// parse response
@@ -195,7 +199,9 @@ public class ServerAccess {
 				if(jsonResponse.has("object")){
 					if(!jsonResponse.isNull("object"))
 					{
-						result.addPair("jsonCategories", jsonResponse.getJSONArray("object"));
+						JSONObject ob=jsonResponse.getJSONObject("object");
+						result.addPair("jsonCategories", ob.getJSONArray("categories"));
+						result.addPair("jsonSlides", ob.getJSONArray("slides"));
 					}
 				}
 			} else {
@@ -232,6 +238,83 @@ public class ServerAccess {
 		return result;
 	}
 	
+	public ServerResult searchFor(String keyword)
+	{
+		ServerResult result=new ServerResult();
+		try
+		{
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>();
+
+			jsonPairs.add(new BasicNameValuePair("keyword", keyword));
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			// url
+						String url = BASE_SERVICE_URL + "users_api/search_for";
+						// send request
+						String response = sendPostRequest(url, jsonPairs);
+						// parse response
+						if (response != null && !response.equals("")) { // check if response is empty
+							JSONObject jsonResponse = new JSONObject(response);
+							result.setFlag(jsonResponse.getInt(FLAG));
+							if(jsonResponse.has("object")){
+								if(!jsonResponse.isNull("object"))
+								{
+									JSONObject ob=jsonResponse.getJSONObject("object");
+									result.addPair("searchResults", ob);
+								}
+							}
+						} else {
+							result.setFlag(CONNECTION_ERROR_CODE);
+						}
+		}
+		catch(Exception ex)
+		{
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
+	public ServerResult addNewAdvertise(String description,
+			int categoryId,boolean isUsed,int price,
+			JSONArray telephones)
+	{
+		ServerResult result=new ServerResult();
+		try
+		{
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>();
+
+			jsonPairs.add(new BasicNameValuePair("description", description));
+			jsonPairs.add(new BasicNameValuePair("category_id", Integer.toString(categoryId)));
+			jsonPairs.add(new BasicNameValuePair("price", Integer.toString(price)));
+			jsonPairs.add(new BasicNameValuePair("is_used", Boolean.toString(isUsed)));
+			jsonPairs.add(new BasicNameValuePair("telephones", telephones.toString()));
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			jsonPairs.add(new BasicNameValuePair("pay_type","1"));
+			// url
+						String url = BASE_SERVICE_URL + "users_api/search_for";
+						// send request
+						String response = sendPostRequest(url, jsonPairs);
+						// parse response
+						if (response != null && !response.equals("")) { // check if response is empty
+							JSONObject jsonResponse = new JSONObject(response);
+							result.setFlag(jsonResponse.getInt(FLAG));
+							if(jsonResponse.has("object")){
+								if(!jsonResponse.isNull("object"))
+								{
+									JSONObject ob=jsonResponse.getJSONObject("object");
+									result.addPair("searchResults", ob);
+								}
+							}
+						} else {
+							result.setFlag(CONNECTION_ERROR_CODE);
+						}
+		}
+		catch(Exception ex)
+		{
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
 	private String sendPostRequest(String url, List<NameValuePair> jsonPairs) {
         client = new DefaultHttpClient();
         String result = null;
@@ -259,7 +342,6 @@ public class ServerAccess {
         }
         return result;
     }
-	
 	
 	
 }

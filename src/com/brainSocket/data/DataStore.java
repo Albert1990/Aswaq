@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import com.brainSocket.models.AppUser;
 import com.brainSocket.models.CategoryModel;
+import com.brainSocket.models.SlideModel;
 
 import android.os.Handler;
 
@@ -100,7 +101,7 @@ public class DataStore {
 		}).start();
 	}
 
-	public void attemptGetCategories(final int categoryId,final DataRequestCallback callback) {
+	public void attemptGetPageComponents(final int categoryId,final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
@@ -124,9 +125,16 @@ public class DataStore {
 								categories.add(new CategoryModel((JSONObject)jsonCategories.get(i)));
 							}
 							result.addPair("categories", categories);
+							
+							JSONArray jsonSlides=(JSONArray)result.getValue("jsonSlides");
+							List<SlideModel> slides=new ArrayList<SlideModel>();
+							for(int i=0;i<jsonSlides.length();i++)
+							{
+								slides.add(new SlideModel((JSONObject)jsonSlides.get(i)));
+							}
+							result.addPair("slides", slides);
 						}
 						catch(Exception ex){}
-						
 					}
 				}
 				if(callback!=null)
@@ -146,6 +154,54 @@ public class DataStore {
 				ServerResult result=serverHandler.verifyUser(verificationCode);
 				if(result.connectionFailed())
 					success=false;
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptSearchFor(final String keyword,final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success=true;
+				ServerResult result=serverHandler.searchFor(keyword);
+				if(result.connectionFailed())
+					success=false;
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptAddNewAdvertise(final String description,
+			final int categoryId,final boolean isUsed,final int price,
+			final JSONArray telephones,final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result=serverHandler.addNewAdvertise(description,
+						categoryId,isUsed,price,telephones);
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					{
+						try
+						{
+							
+						}
+						catch(Exception ex){}
+					}
+				}
 				if(callback!=null)
 					invokeCallback(callback, success, result);
 			}

@@ -2,6 +2,7 @@ package com.brainSocket.aswaq;
 
 import com.brainSocket.fragments.FragAddAdvertise;
 import com.brainSocket.fragments.FragMain;
+import com.brainSocket.fragments.FragSubCategories;
 import com.brainSocket.fragments.FragVerification;
 
 import enums.FragmentType;
@@ -95,6 +96,12 @@ public class AppBaseActivity extends ActionBarActivity implements HomeCallbacks{
 			FragVerification fragVerification=new FragVerification();
 			fragmentManager.beginTransaction()
 			.replace(R.id.content_frame, fragVerification)
+			.commit();
+			break;
+		case SubCategories:
+			FragSubCategories fragSubCategories=new FragSubCategories();
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragSubCategories)
 			.commit();
 			break;
 		}

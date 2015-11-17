@@ -1,7 +1,7 @@
 package com.brainSocket.fragments;
 
 import java.util.List;
-
+import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.data.DataRequestCallback;
@@ -9,7 +9,7 @@ import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.models.CategoryModel;
-
+import com.brainSocket.models.SlideModel;
 import enums.FragmentType;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,12 +40,39 @@ public class FragMain extends Fragment implements OnClickListener{
 	private void init()
 	{
 		homeCallbacks=(HomeCallbacks)getActivity();
-		DataStore.getInstance().attemptGetCategories(ServerAccess.MAIN_CATEGORY_ID, getMainCategoriesCallback);
+		DataStore.getInstance().attemptGetPageComponents(ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
 		btnAddAdvertise=(Button)getActivity().findViewById(R.id.btnAddAdvertise);
 		btnAddAdvertise.setOnClickListener(this);
 	}
 	
-private DataRequestCallback getMainCategoriesCallback=new DataRequestCallback() {
+	private void search()
+	{
+		String keyword="computer";
+		if(AswaqApp.isEmptyOrNull(keyword))
+		{
+			// set text error on the text box and request for focus
+		}
+		else
+		{
+			DataStore.getInstance().attemptSearchFor(keyword,getSearchResultsCallback);
+		}
+	}
+	
+	private DataRequestCallback getSearchResultsCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	private void displaySubCategories(int parentCategoryId)
+	{
+		homeCallbacks.loadFragment(FragmentType.SubCategories);
+	}
+	
+private DataRequestCallback getPageComponentsCallback=new DataRequestCallback() {
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
@@ -57,6 +84,8 @@ private DataRequestCallback getMainCategoriesCallback=new DataRequestCallback() 
 					List<CategoryModel> categories=(List<CategoryModel>)data.getValue("categories");
 					homeCallbacks.showToast(Integer.toString(categories.size()));
 					
+					List<SlideModel> slides=(List<SlideModel>)data.getValue("slides");
+					homeCallbacks.showToast(Integer.toString(slides.size()));
 				}
 				else
 				{

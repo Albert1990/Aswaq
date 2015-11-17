@@ -3,5 +3,6 @@ package enums;
 public enum FragmentType {
 	Main,
 	AddAdvertise,
-	Verification
+	Verification,
+	SubCategories
 }
