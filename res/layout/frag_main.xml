@@ -23,13 +23,12 @@
     </GridView>
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/btnAddAdvertise""
+        android:id="@+id/btnAddAdvertise"
         style="@style/MenuButtonsStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_add"
-        fab:fab_label="@string/main_action_create_one_time_trip"/>
+        android:src="@drawable/ic_add"/>
 
 </RelativeLayout>
