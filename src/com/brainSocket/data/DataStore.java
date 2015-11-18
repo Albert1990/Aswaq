@@ -35,6 +35,22 @@ public class DataStore {
 		}
 	}
 
+	
+	/**
+	 * user to invoke the DataRequestCallback on the main thread
+	 */
+	private void invokeCallback(final DataRequestCallback callback,
+			final boolean success, final ServerResult data) {
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				if (callback == null)
+					return;
+				callback.onDataReady(data, success);
+			}
+		});
+	}
+	
 	/**
 	 * @param phoneNumfinal
 	 * @param username
@@ -370,18 +386,5 @@ public class DataStore {
 		}).start();
 	}
 
-	/**
-	 * user to invoke the DataRequestCallback on the main thread
-	 */
-	private void invokeCallback(final DataRequestCallback callback,
-			final boolean success, final ServerResult data) {
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				if (callback == null)
-					return;
-				callback.onDataReady(data, success);
-			}
-		});
-	}
+
 }

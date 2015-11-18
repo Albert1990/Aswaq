@@ -30,4 +30,7 @@
     <string name="error_verification_message_wrong">رمز التفعيل خطأ</string>
     <string name="hint_txt_product_description">وصف بسيط عما تنشره</string>
 
+    <!-- Generic -->
+    <string name="place_holder">-------</string>
+    
 </resources>
