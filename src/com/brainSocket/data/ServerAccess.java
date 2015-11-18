@@ -315,6 +315,155 @@ public class ServerAccess {
 		return result;
 	}
 	
+	public ServerResult getCategoryAds(int categoryId) {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
+			jsonPairs.add(new BasicNameValuePair("category_id", Integer.toString(categoryId)));
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			
+			// url
+			String url = BASE_SERVICE_URL + "ads_api/get_category_ads";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				if(jsonResponse.has("object")){
+					if(!jsonResponse.isNull("object"))
+					{
+						JSONObject ob=jsonResponse.getJSONObject("object");
+						result.addPair("jsonAds", ob.getJSONArray("ads"));
+						result.addPair("jsonSlides", ob.getJSONArray("slides"));
+					}
+				}
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
+	public ServerResult getAdvertiseDetails(int adId) {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
+			jsonPairs.add(new BasicNameValuePair("ad_id", Integer.toString(adId)));
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			
+			// url
+			String url = BASE_SERVICE_URL + "ads_api/get_details";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				if(jsonResponse.has("object")){
+					if(!jsonResponse.isNull("object"))
+					{
+						JSONObject ob=jsonResponse.getJSONObject("object");
+						result.addPair("jsonAdDetails", ob);
+					}
+				}
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
+	public ServerResult getUserPage(int userId) {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
+			jsonPairs.add(new BasicNameValuePair("user_id", Integer.toString(userId)));
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			
+			// url
+			String url = BASE_SERVICE_URL + "users_api/get_page";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				if(jsonResponse.has("object")){
+					if(!jsonResponse.isNull("object"))
+					{
+						JSONObject ob=jsonResponse.getJSONObject("object");
+						result.addPair("jsonUser", ob.getJSONObject("user"));
+						result.addPair("jsonUserAds", ob.getJSONArray("userAds"));
+					}
+				}
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
+	public ServerResult followUser(int userId) {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
+			jsonPairs.add(new BasicNameValuePair("user_id", Integer.toString(userId)));
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			
+			// url
+			String url = BASE_SERVICE_URL + "followers_api/follow";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
+	public ServerResult getClients() {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			
+			// url
+			String url = BASE_SERVICE_URL + "followers_api/follow";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
 	private String sendPostRequest(String url, List<NameValuePair> jsonPairs) {
         client = new DefaultHttpClient();
         String result = null;

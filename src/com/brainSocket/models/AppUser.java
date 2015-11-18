@@ -1,11 +1,17 @@
 package com.brainSocket.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONObject;
+
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 
-public class AppUser /*implements Parcelable */{		
+public class AppUser /*implements Parcelable */{	
+	
+	private List<AdvertiseModel> ads=new ArrayList<AdvertiseModel>();
 	
 	public enum GENDER {MALE, FEMALE} ;
 	
@@ -115,10 +121,7 @@ public class AppUser /*implements Parcelable */{
 			if(json.has("address"))
 				address = json.getString("address");
 		}catch (Exception e) {}
-//		try {
-//			if(json.has("created_at"))
-//				date = json.getLong("created_at");
-//		}catch (Exception e) {}
+		
 	}
 	
 	/**

@@ -5,18 +5,19 @@ import java.util.List;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
+import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.models.AdvertiseModel;
-import com.brainSocket.models.SlideModel;
+import com.brainSocket.models.AppUser;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-public class FragAds extends Fragment{
+public class FragUserPage extends Fragment implements OnClickListener{
 	private HomeCallbacks homeCallbacks;
 	
 	@Override
@@ -35,23 +36,55 @@ public class FragAds extends Fragment{
 	
 	private void init()
 	{
-		homeCallbacks=(HomeCallbacks)getActivity();
-		int categoryId=2;
-		DataStore.getInstance().attemptGetCategoryAds(categoryId, getCategoryAdsCallback);
+		int userId=1;
+		DataStore.getInstance().attemptGetUserPage(userId,getUserPageCallback);
 	}
 	
-	private DataRequestCallback getCategoryAdsCallback=new DataRequestCallback() {
+	private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
 			if(success)
 			{
-				List<AdvertiseModel> ads=(List<AdvertiseModel>)data.getValue("ads");
-				List<SlideModel> slides=(List<SlideModel>)data.getValue("slides");
+				AppUser user=(AppUser)data.getValue("user");
+				List<AdvertiseModel> userAds=(List<AdvertiseModel>)data.getValue("userAds");
 				
-				homeCallbacks.showToast("there is "+ads.size()+" ads");
 			}
 		}
 	};
+	
+	private void follow(int userId)
+	{
+		
+		DataStore.getInstance().attemptFollowUser(userId,followUserCallback);
+	}
+	
+	private DataRequestCallback followUserCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			if(success)
+			{
+				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
+				{
+					
+				}
+			}
+		}
+	};
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		int viewId=v.getId();
+		switch(viewId)
+		{
+		case 1:
+			
+			break;
+		}
+	}
+
 }

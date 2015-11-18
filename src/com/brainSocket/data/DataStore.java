@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.models.CategoryModel;
 import com.brainSocket.models.SlideModel;
@@ -200,6 +201,167 @@ public class DataStore {
 							
 						}
 						catch(Exception ex){}
+					}
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptGetCategoryAds(final int categoryId,final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result=serverHandler.getCategoryAds(categoryId);
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					{
+						try
+						{
+							JSONArray jsonAds=(JSONArray)result.getValue("jsonAds");
+							List<AdvertiseModel> ads=new ArrayList<AdvertiseModel>();
+							for(int i=0;i<jsonAds.length();i++)
+							{
+								ads.add(new AdvertiseModel((JSONObject)jsonAds.get(i)));
+							}
+							result.addPair("ads", ads);
+							
+							JSONArray jsonSlides=(JSONArray)result.getValue("jsonSlides");
+							List<SlideModel> slides=new ArrayList<SlideModel>();
+							for(int i=0;i<jsonSlides.length();i++)
+							{
+								slides.add(new SlideModel((JSONObject)jsonSlides.get(i)));
+							}
+							result.addPair("slides", slides);
+						}
+						catch(Exception ex){}
+					}
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptGetAdvertiseDetails(final int adId,final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result=serverHandler.getAdvertiseDetails(adId);
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					{
+						try
+						{
+							JSONObject jsonAdDetails=(JSONObject)result.getValue("jsonAdDetails");
+							result.addPair("adDetails", new AdvertiseModel(jsonAdDetails));
+						}
+						catch(Exception ex){}
+					}
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptGetUserPage(final int userId,final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result=serverHandler.getUserPage(userId);
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					{
+						try
+						{
+							JSONObject jsonUser=(JSONObject)result.getValue("jsonUser");
+							result.addPair("user", new AppUser(jsonUser));
+
+							List<AdvertiseModel> ads=new ArrayList<AdvertiseModel>();
+							JSONArray jsonUserAds=(JSONArray)result.getValue("jsonUserAds");
+							for(int i=0;i<jsonUserAds.length();i++)
+							{
+								ads.add(new AdvertiseModel(jsonUserAds.getJSONObject(i)));
+							}
+							result.addPair("userAds", ads);
+						}
+						catch(Exception ex){}
+					}
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptFollowUser(final int userId,final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result=serverHandler.followUser(userId);
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					{
+
+					}
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptGetClients(final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result=serverHandler.getClients();
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					{
+						List<AppUser> clients=new ArrayList<AppUser>();
+						JSONArray jsonClients=(JSONArray)result.getValue("jsonClients");
+						for(int i=0;i<jsonClients.length();i++)
+						{
+							clients.add(new AppUser((JSONObject)jsonClients.get(i)));
+						}
 					}
 				}
 				if(callback!=null)
