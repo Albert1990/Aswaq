@@ -11,6 +11,7 @@ import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.models.CategoryModel;
 import com.brainSocket.models.SlideModel;
+import com.github.clans.fab.FloatingActionButton;
 
 import enums.FragmentType;
 import adapters.CategoryListAdapter;
@@ -26,7 +27,7 @@ import android.widget.GridView;
 
 public class FragMain extends Fragment implements OnClickListener {
 	private HomeCallbacks homeCallbacks;
-	private Button btnAddAdvertise;
+	private FloatingActionButton btnAddAdvertise;
 	private GridView gridViewCategories;
 
 	@Override
@@ -48,7 +49,7 @@ public class FragMain extends Fragment implements OnClickListener {
 		gridViewCategories=(GridView)getActivity().findViewById(R.id.gridViewCategories);
 		DataStore.getInstance().attemptGetPageComponents(
 				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
-		btnAddAdvertise = (Button) getActivity().findViewById(
+		btnAddAdvertise = (FloatingActionButton) getActivity().findViewById(
 				R.id.btnAddAdvertise);
 		btnAddAdvertise.setOnClickListener(this);
 	}
@@ -90,7 +91,6 @@ public class FragMain extends Fragment implements OnClickListener {
 
 					List<SlideModel> slides = (List<SlideModel>) data
 							.getValue("slides");
-					//homeCallbacks.showToast(Integer.toString(slides.size()));
 					CategoryListAdapter categoryListAdapter=new CategoryListAdapter(getActivity(), categories);
 					gridViewCategories.setAdapter(categoryListAdapter);
 					

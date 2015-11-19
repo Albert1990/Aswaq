@@ -60,7 +60,7 @@ public class ServerAccess {
 
 	// api
 	static final int MAIN_PORT_NUM = 80 ;
-	static final String BASE_SERVICE_URL = "http://192.168.10.182:"+MAIN_PORT_NUM+"/aswaq/index.php/";
+	static final String BASE_SERVICE_URL = "http://192.168.1.112:"+MAIN_PORT_NUM+"/aswaq/index.php/";
 
 	// api keys
 		private static final String FLAG = "flag";

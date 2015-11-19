@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.brainSocket.aswaq.R;
 import com.brainSocket.models.CategoryModel;
+import com.brainSocket.views.TextViewCustomFont;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -46,7 +47,7 @@ public class CategoryListAdapter extends BaseAdapter{
 		LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if(convertView==null)
 			convertView=inflater.inflate(R.layout.item_main_grid_category, parent, false);
-		EditText lblCategoryName=(EditText) convertView.findViewById(R.id.lblCategoryName);
+		TextViewCustomFont lblCategoryName=(TextViewCustomFont) convertView.findViewById(R.id.lblCategoryName);
 		lblCategoryName.setText(categories.get(position).getName());
 		return convertView;
 	}

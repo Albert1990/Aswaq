@@ -33,14 +33,14 @@ public class MainActivity extends AppBaseActivity {
 	private void init()
 	{
 		AppUser me=DataCacheProvider.getInstance().getMe();
-		if(!me.isVerified())
-		{
-			loadFragment(FragmentType.Verification);
-		}
-		else
-		{
+//		if(!me.isVerified())
+//		{
+//			loadFragment(FragmentType.Verification);
+//		}
+//		else
+//		{
 			loadFragment(FragmentType.Main);
-		}
+		//}
 	}
 	
 	@Override
