@@ -242,7 +242,9 @@ public class DataStore {
 							}
 							result.addPair("slides", slides);
 						}
-						catch(Exception ex){}
+						catch(Exception ex){
+							success=false;
+						}
 					}
 				}
 				if(callback!=null)
@@ -271,7 +273,9 @@ public class DataStore {
 							JSONObject jsonAdDetails=(JSONObject)result.getValue("jsonAdDetails");
 							result.addPair("adDetails", new AdvertiseModel(jsonAdDetails));
 						}
-						catch(Exception ex){}
+						catch(Exception ex){
+							success=false;
+						}
 					}
 				}
 				if(callback!=null)
@@ -308,7 +312,9 @@ public class DataStore {
 							}
 							result.addPair("userAds", ads);
 						}
-						catch(Exception ex){}
+						catch(Exception ex){
+							success=false;
+						}
 					}
 				}
 				if(callback!=null)
@@ -354,14 +360,21 @@ public class DataStore {
 					success=false;
 				else
 				{
-					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					try
 					{
-						List<AppUser> clients=new ArrayList<AppUser>();
-						JSONArray jsonClients=(JSONArray)result.getValue("jsonClients");
-						for(int i=0;i<jsonClients.length();i++)
+						if(result.getFlag()==ServerAccess.ERROR_CODE_done)
 						{
-							clients.add(new AppUser((JSONObject)jsonClients.get(i)));
+							List<AppUser> clients=new ArrayList<AppUser>();
+							JSONArray jsonClients=(JSONArray)result.getValue("jsonClients");
+							for(int i=0;i<jsonClients.length();i++)
+							{
+								clients.add(new AppUser((JSONObject)jsonClients.get(i)));
+							}
 						}
+					}
+					catch(Exception ex)
+					{
+						success=false;
 					}
 				}
 				if(callback!=null)
