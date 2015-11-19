@@ -22,6 +22,7 @@
         tools:listitem="@layout/item_main_grid_category" >
     </GridView>
 
+    
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/btnAddAdvertise"
         style="@style/MenuButtonsStyle"
