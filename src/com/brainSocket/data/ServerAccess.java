@@ -464,6 +464,33 @@ public class ServerAccess {
 		return result;
 	}
 	
+	public ServerResult sendVerificationCode()
+	{
+		ServerResult result=new ServerResult();
+		try
+		{
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>();
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			// url
+						String url = BASE_SERVICE_URL + "verification_messages_api/send_verification_code";
+						// send request
+						String response = sendPostRequest(url, jsonPairs);
+						// parse response
+						if (response != null && !response.equals("")) { // check if response is empty
+							JSONObject jsonResponse = new JSONObject(response);
+							result.setFlag(jsonResponse.getInt(FLAG));
+							
+						} else {
+							result.setFlag(CONNECTION_ERROR_CODE);
+						}
+		}
+		catch(Exception ex)
+		{
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
 	private String sendPostRequest(String url, List<NameValuePair> jsonPairs) {
         client = new DefaultHttpClient();
         String result = null;

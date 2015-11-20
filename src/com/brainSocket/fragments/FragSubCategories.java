@@ -8,13 +8,16 @@ import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.models.CategoryModel;
 
+import adapters.SubCategoriesListAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class FragSubCategories extends Fragment {
+	private ListView lstSubCategories;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +36,7 @@ public class FragSubCategories extends Fragment {
 	
 	private void init()
 	{
+		lstSubCategories=(ListView)getActivity().findViewById(R.id.lstSubCategories);
 		int selectedCategoryId=1;
 		DataStore.getInstance().attemptGetPageComponents(selectedCategoryId, getPageComponentsCallback);
 	}
@@ -46,6 +50,8 @@ public class FragSubCategories extends Fragment {
 			{
 				List<CategoryModel> subCategories=(List<CategoryModel>)data.getValue("categories");
 				//display categories in the list view
+				SubCategoriesListAdapter subCategoriesListAdapter=new SubCategoriesListAdapter(getActivity(), subCategories);
+				lstSubCategories.setAdapter(subCategoriesListAdapter);
 			}
 		}
 	};

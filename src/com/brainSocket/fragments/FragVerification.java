@@ -45,6 +45,20 @@ public class FragVerification extends Fragment implements OnClickListener{
 		homeCallback=(HomeCallbacks)getActivity();
 	}
 	
+	private void resendVerificationCode()
+	{
+		DataStore.getInstance().attemptSendVerificationCode(resendVerificationCodeCallback);
+	}
+	
+	private DataRequestCallback resendVerificationCodeCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
 	private DataRequestCallback verifyUserCallback=new DataRequestCallback() {
 		
 		@Override

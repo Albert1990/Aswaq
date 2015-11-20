@@ -398,6 +398,31 @@ public class DataStore {
 			}
 		}).start();
 	}
+	
+	public void attemptSendVerificationCode(final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success=true;
+				ServerResult result=serverHandler.sendVerificationCode();
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					try
+					{
+						
+					}
+					catch(Exception ex){}
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
 
 
 }
