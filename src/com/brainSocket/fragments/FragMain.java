@@ -21,14 +21,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 
-public class FragMain extends Fragment implements OnClickListener {
+public class FragMain extends Fragment implements OnClickListener,OnItemClickListener {
 	private HomeCallbacks homeCallbacks;
 	private FloatingActionButton btnAddAdvertise;
 	private GridView gridViewCategories;
+	private List<CategoryModel> categories =null;
+	private List<SlideModel> slides=null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +51,7 @@ public class FragMain extends Fragment implements OnClickListener {
 	private void init() {
 		homeCallbacks = (HomeCallbacks) getActivity();
 		gridViewCategories=(GridView)getActivity().findViewById(R.id.gridViewCategories);
+		gridViewCategories.setOnItemClickListener(this);
 		DataStore.getInstance().attemptGetPageComponents(
 				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
 		btnAddAdvertise = (FloatingActionButton) getActivity().findViewById(
@@ -84,12 +89,12 @@ public class FragMain extends Fragment implements OnClickListener {
 			// TODO Auto-generated method stub
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
-					List<CategoryModel> categories = (List<CategoryModel>) data
+					categories = (List<CategoryModel>) data
 							.getValue("categories");
 					homeCallbacks
 							.showToast(Integer.toString(categories.size()));
 
-					List<SlideModel> slides = (List<SlideModel>) data
+					slides = (List<SlideModel>) data
 							.getValue("slides");
 					CategoryListAdapter categoryListAdapter=new CategoryListAdapter(getActivity(), categories);
 					gridViewCategories.setAdapter(categoryListAdapter);
@@ -110,6 +115,14 @@ public class FragMain extends Fragment implements OnClickListener {
 			homeCallbacks.loadFragment(FragmentType.AddAdvertise);
 			break;
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		int categoryId=categories.get(position).getId();
+		homeCallbacks.loadFragment(FragmentType.SubCategories);
 	}
 
 }

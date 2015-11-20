@@ -4,5 +4,7 @@ public enum FragmentType {
 	Main,
 	AddAdvertise,
 	Verification,
-	SubCategories
+	SubCategories,
+	ShowAds,
+	AdvertiseDetails,
 }

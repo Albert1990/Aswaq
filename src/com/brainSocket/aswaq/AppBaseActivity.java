@@ -1,6 +1,8 @@
 package com.brainSocket.aswaq;
 
 import com.brainSocket.fragments.FragAddAdvertise;
+import com.brainSocket.fragments.FragAds;
+import com.brainSocket.fragments.FragAdvertiseDetails;
 import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
 import com.brainSocket.fragments.FragVerification;
@@ -102,6 +104,18 @@ public class AppBaseActivity extends ActionBarActivity implements HomeCallbacks{
 			FragSubCategories fragSubCategories=new FragSubCategories();
 			fragmentManager.beginTransaction()
 			.replace(R.id.content_frame, fragSubCategories)
+			.commit();
+			break;
+		case ShowAds:
+			FragAds fragAds=new FragAds();
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragAds)
+			.commit();
+			break;
+		case AdvertiseDetails:
+			FragAdvertiseDetails fragAdvertiseDetails=new FragAdvertiseDetails();
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragAdvertiseDetails)
 			.commit();
 			break;
 		}
