@@ -70,7 +70,7 @@ public class FragVerification extends Fragment implements OnClickListener{
 			}
 			else if(data.getFlag()==ServerAccess.ERROR_CODE_verification_message_not_exists)
 			{
-				txtVerificationCode.setError(getString(R.string.error_verification_message_wrong));
+				txtVerificationCode.setError(getString(R.string.verif_error_verification_message_wrong));
 				txtVerificationCode.requestFocus();
 			}
 			else

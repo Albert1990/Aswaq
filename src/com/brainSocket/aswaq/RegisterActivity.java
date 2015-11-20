@@ -66,18 +66,18 @@ public class RegisterActivity extends AppBaseActivity implements
 		String description = txtDescription.getText().toString();
 
 		if (AswaqApp.isEmptyOrNull(email)) {
-			txtEmail.setError(getString(R.string.error_email_empty));
+			txtEmail.setError(getString(R.string.login_error_email_empty));
 			focusView = txtEmail;
 			cancel = true;
 		} else {
 			if (!AswaqApp.isEmailValid(email)) {
-				txtEmail.setError(getString(R.string.error_email_invalid));
+				txtEmail.setError(getString(R.string.login_error_email_invalid));
 				focusView = txtEmail;
 				cancel = true;
 			}
 		}
 		if (AswaqApp.isEmptyOrNull(userName)) {
-			txtUserName.setError(getString(R.string.error_user_name_empty));
+			txtUserName.setError(getString(R.string.login_error_user_name_empty));
 			focusView = txtUserName;
 			cancel = true;
 		}
@@ -91,12 +91,12 @@ public class RegisterActivity extends AppBaseActivity implements
 
 		}
 		if (AswaqApp.isEmptyOrNull(password)) {
-			txtPassword.setError(getString(R.string.error_password_empty));
+			txtPassword.setError(getString(R.string.login_error_password_empty));
 			focusView = txtPassword;
 			cancel = true;
 		} else {
 			if (password.length() < 4) {
-				txtPassword.setError(getString(R.string.error_password_length));
+				txtPassword.setError(getString(R.string.login_error_password_length));
 				focusView = txtPassword;
 				cancel = true;
 			}
@@ -123,7 +123,7 @@ public class RegisterActivity extends AppBaseActivity implements
 					startActivity(i);
 					break;
 				case ServerAccess.ERROR_CODE_user_exists_before:
-					showToast(getString(R.string.error_user_exists_before));
+					showToast(getString(R.string.login_error_user_exists_before));
 					break;
 				}
 			}

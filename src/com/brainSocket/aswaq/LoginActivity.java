@@ -40,7 +40,6 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		try {
 			int viewId = v.getId();
 			switch (viewId) {
@@ -69,23 +68,23 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener {
 
 		// check email if valid
 		if (AswaqApp.isEmptyOrNull(email)) {
-			txtEmail.setError(getString(R.string.error_email_empty));
+			txtEmail.setError(getString(R.string.login_error_email_empty));
 			cancel = true;
 			focusView = txtEmail;
 		} else {
 			if (!AswaqApp.isEmailValid(email)) {
-				txtEmail.setError(getString(R.string.error_email_invalid));
+				txtEmail.setError(getString(R.string.login_error_email_invalid));
 				cancel = true;
 				focusView = txtEmail;
 			}
 		}
 		if (AswaqApp.isEmptyOrNull(password)) {
-			txtPassword.setError(getString(R.string.error_password_empty));
+			txtPassword.setError(getString(R.string.login_error_password_empty));
 			cancel = true;
 			focusView = txtPassword;
 		} else {
 			if (password.length() < 4) {
-				txtPassword.setError(getString(R.string.error_password_length));
+				txtPassword.setError(getString(R.string.login_error_password_length));
 				cancel = true;
 				focusView = txtPassword;
 			}
@@ -103,18 +102,17 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener {
 
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					Intent i = new Intent(LoginActivity.this,
 							MainActivity.class);
 					startActivity(i);
 				} else if (data.getFlag() == ServerAccess.ERROR_CODE_user_not_exists) {
-					txtEmail.setError(getString(R.string.error_email_or_password_wrong));
+					txtEmail.setError(getString(R.string.login_error_email_or_password_wrong));
 					txtEmail.requestFocus();
 				}
 			} else {
-				showToast(getString(R.string.error_connection_failed));
+				showToast(getString(R.string.login_error_connection_failed));
 			}
 		}
 	};

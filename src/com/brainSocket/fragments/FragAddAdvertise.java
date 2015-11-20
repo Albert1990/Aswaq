@@ -1,16 +1,6 @@
 package com.brainSocket.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
-
-import com.brainSocket.aswaq.HomeCallbacks;
-import com.brainSocket.aswaq.R;
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.data.ServerResult;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,19 +9,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.R;
+import com.brainSocket.data.DataRequestCallback;
+import com.brainSocket.data.DataStore;
+import com.brainSocket.data.ServerAccess;
+import com.brainSocket.data.ServerResult;
+
 public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private HomeCallbacks homeCallback;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		return inflater.inflate(R.layout.frag_add_advertise, container, false);
 	}
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
 	}
@@ -48,12 +43,9 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		telephones.put("0932525649");
 		telephones.put("4460467");
 		
-		if(cancel)
-		{
+		if(cancel){
 			
-		}
-		else
-		{
+		}else{
 			DataStore.getInstance().attemptAddNewAdvertise(description,
 					selectedCategoryId,
 					isUsed,price,telephones,addNewAdvertiseCallback);
@@ -64,11 +56,8 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
-			if(success)
-			{
-				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
-				{
+			if(success){
+				if(data.getFlag()==ServerAccess.ERROR_CODE_done){
 					homeCallback.showToast("the new advertise have been added successfully");
 				}
 			}
@@ -77,10 +66,8 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		int viewId=v.getId();
-		switch(viewId)
-		{
+		switch(viewId){
 		case 1:
 			addNewAdvertise();
 			break;

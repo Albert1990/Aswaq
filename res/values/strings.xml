@@ -6,31 +6,39 @@
     <string name="action_settings">Settings</string>
     <string name="lblEmail">البريد الإلكتروني</string>
     <string name="lblPassword">كلمة المرور</string>
-    <string name="btnLogin">دخول</string>
-    <string name="btnRegister">تسجيل</string>
-    <string name="lblOr">أو</string>
+    
     <string name="btnDoesntHaveAccount">لا تملك حساباً ؟</string>
-    <string name="error_email_invalid">البريد الإلكتروني غير صحيح</string>
-    <string name="error_password_length">كلمة المرور يجب أن تكون أكثر من 4 محارف</string>
-    <string name="error_email_empty">يرجى ادخال البريد الإلكتروني</string>
-    <string name="error_password_empty">يرجى إدخال كلمة المرور</string>
     <string name="lbl_mobile_number">رقم الموبايل</string>
     <string name="lbl_address">العنوان</string>
     <string name="lbl_description">شرح عن خدمتك</string>
     <string name="error_mobile_number_empty">أدخل رقم الموبايل</string>
     <string name="lbl_user_name">الاسم</string>
-    <string name="error_user_name_empty">يرجى إدخال الاسم</string>
-    <string name="error_email_or_password_wrong">خطأ في البريد الالكتروني او كلمة المرور</string>
-    <string name="error_connection_failed">حدث خطأ في عملية الاتصال</string>
-    <string name="error_user_exists_before">إن البريد الالكتروني هذا مسجل من قبل</string>
     <string name="btn_add_advertise">أضف إعلان</string>
-    <string name="lbl_verification_text">تفقد البريد الوارد في برديك الالكتروني وأدخل رمز التأكيد</string>
-    <string name="hint_verification_code">رمز التأكيد</string>
-    <string name="btn_verifiy_code">تأكيد</string>
-    <string name="error_verification_message_wrong">رمز التفعيل خطأ</string>
     <string name="hint_txt_product_description">وصف بسيط عما تنشره</string>
 
     <!-- Generic -->
     <string name="place_holder">-------</string>
+    
+    <!-- login -->
+    <string name="login_hint_email">البريد الإلكتروني</string>
+    <string name="login_hint_psw">كلمة السر</string>
+    <string name="login_error_email_invalid">البريد الإلكتروني غير صحيح</string>
+    <string name="login_error_password_length">كلمة المرور يجب أن تكون أكثر من 4 محارف</string>
+    <string name="login_error_email_empty">يرجى ادخال البريد الإلكتروني</string>
+    <string name="login_error_password_empty">يرجى إدخال كلمة المرور</string>
+    <string name="login_error_user_name_empty">يرجى إدخال الاسم</string>
+    <string name="login_error_email_or_password_wrong">خطأ في البريد الالكتروني او كلمة المرور</string>
+    <string name="login_error_connection_failed">حدث خطأ في عملية الاتصال</string>
+    <string name="login_error_user_exists_before">إن البريد الالكتروني هذا مسجل من قبل</string>
+    <string name="login_btn_login">دخول</string>
+    <string name="login_btn_login_fb">دخول عن طريق الفيسبوك</string>
+    <string name="login_btnRegister">تسجيل</string>
+    <string name="login_lbl_or">أو</string>
+    
+    <!-- verif -->
+    <string name="verif_lbl_verification_text">تفقد البريد الوارد في برديك الالكتروني وأدخل رمز التأكيد</string>
+    <string name="verif_hint_verification_code">رمز التأكيد</string>
+    <string name="verif_btn_verifiy_code">تأكيد</string>
+    <string name="verif_error_verification_message_wrong">رمز التفعيل خطأ</string>
     
 </resources>

@@ -1,6 +1,5 @@
 package com.brainSocket.aswaq;
 
-import android.support.v4.app.Fragment;
 import enums.FragmentType;
 
 public interface HomeCallbacks {

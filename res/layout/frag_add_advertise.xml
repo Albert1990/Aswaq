@@ -4,39 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        
-        <ImageButton 
-        android:id="@+id/btnImg1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-        <ImageButton 
-        android:id="@+id/btnImg2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />    
-        <ImageButton 
-        android:id="@+id/btnImg3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />    
-        <ImageButton 
-        android:id="@+id/btnImg4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />            
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/btnImg1"
+            style="@style/add_advertisement_prod_photo"/>
+
+        <ImageButton
+            android:id="@+id/btnImg2"
+            style="@style/add_advertisement_prod_photo"/>
+
+        <ImageButton
+            android:id="@+id/btnImg3"
+            style="@style/add_advertisement_prod_photo"/>
+
+        <ImageButton
+            android:id="@+id/btnImg4"
+            style="@style/add_advertisement_prod_photo"/>
     </LinearLayout>
-    
-    <EditText 
+
+    <EditText
         android:id="@+id/txtProductDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_txt_product_description"/>
-    
-    
+        android:hint="@string/hint_txt_product_description" />
 
 </LinearLayout>
