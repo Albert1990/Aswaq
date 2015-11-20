@@ -8,8 +8,7 @@ import android.widget.TextView;
 
 import com.brainSocket.aswaq.R;
 
-public class TextViewCustomFont extends TextView
-{
+public class TextViewCustomFont extends TextView{
 	
 	// fonts
 		private static Typeface tfDinarOneLight = null;
@@ -35,10 +34,10 @@ public class TextViewCustomFont extends TextView
 			    // check fontId if equal to any or the predefined ids for the custom fonts
 			    switch (fontId) {
 				case 1:
-					this.setTypeface(getTFDinarOneLight(getContext()));
+					this.setTypeface(getTFRegular(getContext()));
 					break;	
 				case 2:
-					this.setTypeface(getTFSCDubai(getContext()));
+					this.setTypeface(getTFBold(getContext()));
 					break;	
 				default:	
 					break;
@@ -51,7 +50,7 @@ public class TextViewCustomFont extends TextView
 		catch (Exception e) {}
 	}
 	
-	public static Typeface getTFDinarOneLight(Context context)
+	public static Typeface getTFRegular(Context context)
 	{
 		try {
 			if(tfDinarOneLight == null) {
@@ -69,7 +68,7 @@ public class TextViewCustomFont extends TextView
 	 * Returns SC Duabi typeface used in the app
 	 * @return
 	 */
-	public static Typeface getTFSCDubai(Context context)
+	public static Typeface getTFBold(Context context)
 	{
 		try {
 			if(tfSCDubai == null) {

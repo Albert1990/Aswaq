@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import ae.alphaapps.appshare.R;
+import com.brainSocket.aswaq.R;
 
 public class EditTextCustomFont extends EditText
 {
