@@ -49,5 +49,11 @@
     <string name="add_ad_new">مستعمل</string>
     <string name="add_ad_add_ur_fb_page">اضافة صفحتك على الفيسبوك</string>
     <string name="add_ad_send">ارسال</string>
+    <string name="error_description_required">مطلوب شرح عن المنتج</string>
+    <string name="error_price_required">السعر مطلوب</string>
+    <string name="error_phone_required">رقم الهاتف مطلوب</string>
+    <string name="message_fb_not_installed">مكتبة الفيس بوك غير منصبة</string>
+    <string name="error_operation_failed">خطأ في العملية</string>
+    <string name="sharing_failed">خطأ في المشاركة</string>
     
 </resources>

@@ -8,7 +8,7 @@
     android:orientation="vertical" >
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/vpSlider"
+        android:id="@+id/vpSliderMain"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_slider_height" />
 
@@ -17,7 +17,7 @@
         android:id="@+id/gridViewCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vpSlider"
+        android:layout_below="@id/vpSliderMain"
         android:numColumns="4"
         tools:listitem="@layout/item_main_grid_category" >
     </GridView>

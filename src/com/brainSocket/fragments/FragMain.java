@@ -15,8 +15,10 @@ import com.github.clans.fab.FloatingActionButton;
 
 import enums.FragmentType;
 import adapters.CategoryListAdapter;
+import adapters.SliderAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +35,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 	private GridView gridViewCategories;
 	private List<CategoryModel> categories =null;
 	private List<SlideModel> slides=null;
+	private ViewPager vpSlider;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +60,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		btnAddAdvertise = (FloatingActionButton) getActivity().findViewById(
 				R.id.btnAddAdvertise);
 		btnAddAdvertise.setOnClickListener(this);
+		vpSlider=(ViewPager)getActivity().findViewById(R.id.vpSliderMain);
 	}
 
 	private void search() {
@@ -98,6 +102,9 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 							.getValue("slides");
 					CategoryListAdapter categoryListAdapter=new CategoryListAdapter(getActivity(), categories);
 					gridViewCategories.setAdapter(categoryListAdapter);
+					
+					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);
+					vpSlider.setAdapter(sliderAdapter);
 					
 				} else {
 					homeCallbacks.showToast("error in getting categories");

@@ -12,6 +12,7 @@ public class AdvertiseModel {
 	private String facebookPage;
 	private int payType;
 	private String telephones;
+	private AppUser user;
 	
 	public AdvertiseModel(JSONObject ob)
 	{
@@ -80,6 +81,15 @@ public class AdvertiseModel {
 				this.telephones=ob.getString("telephones");
 		}
 		catch(Exception ex){}
+		
+		try
+		{
+			if(ob.has("user"))
+			{
+				this.user=new AppUser((JSONObject)ob.get("user"));
+			}
+		}
+		catch(Exception ex){}
 	}
 	
 	public int getId() {
@@ -137,6 +147,16 @@ public class AdvertiseModel {
 		this.telephones = telephones;
 	}
 	
+	
+	
+	public AppUser getUser() {
+		return user;
+	}
+
+	public void setUser(AppUser user) {
+		this.user = user;
+	}
+
 	public JSONObject getJsonObject()
 	{
 		JSONObject ob=new JSONObject();

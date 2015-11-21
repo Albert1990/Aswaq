@@ -1,7 +1,9 @@
 package com.brainSocket.aswaq;
 
 import com.brainSocket.data.DataStore;
+import com.brainSocket.data.ServerAccess;
 
+import enums.ImageType;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -57,6 +59,21 @@ public class AswaqApp extends Application{
 	public static boolean checkMobileNumber(final String mobileNumber)
 	{
 		return true;
+	}
+	
+	public static String getImagePath(ImageType imageType,String photo_path)
+	{
+		String url=null;
+		switch(imageType)
+		{
+		case Category:
+			url=ServerAccess.IMAGE_SERVICE_URL+"categories/";
+			break;
+		case Slide:
+			url=ServerAccess.IMAGE_SERVICE_URL+"slides/";
+			break;
+		}
+		return url+photo_path;
 	}
 
 }

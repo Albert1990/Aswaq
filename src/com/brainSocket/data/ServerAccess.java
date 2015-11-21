@@ -59,8 +59,9 @@ public class ServerAccess {
 	
 
 	// api
-	static final int MAIN_PORT_NUM = 80 ;
-	static final String BASE_SERVICE_URL = "http://192.168.10.182:"+MAIN_PORT_NUM+"/aswaq/index.php/";
+	public static final int MAIN_PORT_NUM = 80 ;
+	public static final String IMAGE_SERVICE_URL="http://192.168.1.112:"+MAIN_PORT_NUM+"/aswaq/imgs/";
+	public static final String BASE_SERVICE_URL = "http://192.168.1.112:"+MAIN_PORT_NUM+"/aswaq/index.php/";
 
 	// api keys
 		private static final String FLAG = "flag";
@@ -133,6 +134,8 @@ public class ServerAccess {
 			final String mobileNumber,
 			final String password,
 			final String address,
+			final String facebookId,
+			final String facebookAccessToken,
 			final String description) {
 		ServerResult result = new ServerResult();
 		AppUser me  = null ;
@@ -146,7 +149,8 @@ public class ServerAccess {
 			jsonPairs.add(new BasicNameValuePair("address", address));
 			jsonPairs.add(new BasicNameValuePair("description", description));
 			jsonPairs.add(new BasicNameValuePair("version", "1.0"));
-			jsonPairs.add(new BasicNameValuePair("facebook_id", "-1"));
+			jsonPairs.add(new BasicNameValuePair("facebook_id", facebookId));
+			jsonPairs.add(new BasicNameValuePair("facebook_access_token", facebookAccessToken));
 			jsonPairs.add(new BasicNameValuePair("gender", "1"));
 			
 			try{
@@ -290,7 +294,7 @@ public class ServerAccess {
 			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			jsonPairs.add(new BasicNameValuePair("pay_type","1"));
 			// url
-						String url = BASE_SERVICE_URL + "users_api/search_for";
+						String url = BASE_SERVICE_URL + "ads_api/add";
 						// send request
 						String response = sendPostRequest(url, jsonPairs);
 						// parse response

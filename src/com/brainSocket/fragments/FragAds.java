@@ -12,8 +12,10 @@ import com.brainSocket.models.SlideModel;
 
 import enums.FragmentType;
 import adapters.AdvertisesListAdapter;
+import adapters.SliderAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 	private ListView lstAds;
 	private List<AdvertiseModel> ads;
 	private List<SlideModel> slides;
+	private ViewPager vpSliderAds;
 	
 	
 	@Override
@@ -49,6 +52,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 		homeCallbacks=(HomeCallbacks)getActivity();
 		lstAds=(ListView)getActivity().findViewById(R.id.lstAds);
 		lstAds.setOnItemClickListener(this);
+		vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
 		int categoryId=4;
 		DataStore.getInstance().attemptGetCategoryAds(categoryId, getCategoryAdsCallback);
 	}
@@ -64,7 +68,12 @@ public class FragAds extends Fragment implements OnItemClickListener{
 				slides=(List<SlideModel>)data.getValue("slides");
 				
 				AdvertisesListAdapter advertisesListAdapter=new AdvertisesListAdapter(getActivity(), ads);
+				//lstAds.addHeaderView(vpSliderAds);
 				lstAds.setAdapter(advertisesListAdapter);
+				
+				SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);
+				vpSliderAds.setAdapter(sliderAdapter);
+				
 			}
 		}
 	};

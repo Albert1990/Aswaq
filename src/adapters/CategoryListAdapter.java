@@ -3,8 +3,10 @@ package adapters;
 import java.util.List;
 
 import com.brainSocket.aswaq.R;
+import com.brainSocket.data.ServerAccess;
 import com.brainSocket.models.CategoryModel;
 import com.brainSocket.views.TextViewCustomFont;
+import com.squareup.picasso.Picasso;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class CategoryListAdapter extends BaseAdapter{
 	private Context context;
@@ -48,6 +51,9 @@ public class CategoryListAdapter extends BaseAdapter{
 		if(convertView==null)
 			convertView=inflater.inflate(R.layout.item_main_grid_category, parent, false);
 		TextViewCustomFont lblCategoryName=(TextViewCustomFont) convertView.findViewById(R.id.lblCategoryName);
+		ImageView ivIcon=(ImageView)convertView.findViewById(R.id.ivIcon);
+		String imgPath=ServerAccess.IMAGE_SERVICE_URL+"categories/"+(categories.get(position).getPhotoPath());
+		Picasso.with(context).load(imgPath).into(ivIcon);
 		lblCategoryName.setText(categories.get(position).getName());
 		return convertView;
 	}

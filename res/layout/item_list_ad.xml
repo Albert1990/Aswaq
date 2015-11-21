@@ -14,7 +14,7 @@
         android:layout_marginTop="3dp" />
 
     <com.brainSocket.views.TextViewCustomFont
-        android:id="@+id/tvAdvertiseCategory"
+        android:id="@+id/tvUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignBottom="@id/ivProd"
-        android:layout_below="@id/tvAdvertiseCategory"
+        android:layout_below="@id/tvUserName"
         android:layout_toRightOf="@id/ivProd"
         android:paddingBottom="8dp"
         android:paddingLeft="3dp"

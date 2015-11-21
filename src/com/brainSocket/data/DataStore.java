@@ -64,6 +64,7 @@ public class DataStore {
 	public void attemptSignUp(final String email, final String userName,
 			final String mobileNumber, final String password,
 			final String address, final String description,
+			final String facebookId,final String facebookAccessToken,
 			final DataRequestCallback callback) {
 
 		new Thread(new Runnable() {
@@ -71,7 +72,8 @@ public class DataStore {
 			public void run() {
 				boolean success = true;
 				ServerResult result = serverHandler.registerUser(email,
-						userName, mobileNumber, password, address, description);
+						userName, mobileNumber, password, address, description,
+						facebookId,facebookAccessToken);
 				if (result.connectionFailed()) {
 					success = false;
 				} else {

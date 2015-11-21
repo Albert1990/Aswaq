@@ -104,8 +104,11 @@ public class RegisterActivity extends AppBaseActivity implements
 		if (cancel) {
 			focusView.requestFocus();
 		} else {
+			String facebookAccessToken="";
+			String facebookId="";
 			DataStore.getInstance().attemptSignUp(email, userName,
 					mobileNumber, password, address, description,
+					facebookId,facebookAccessToken,
 					registerCallback);
 		}
 

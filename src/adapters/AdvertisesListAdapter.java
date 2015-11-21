@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.brainSocket.aswaq.R;
 import com.brainSocket.models.AdvertiseModel;
+import com.brainSocket.views.TextViewCustomFont;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AdvertisesListAdapter extends BaseAdapter{
@@ -46,11 +48,15 @@ public class AdvertisesListAdapter extends BaseAdapter{
 		LayoutInflater inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 		if(convertView==null)
 			convertView=inflater.inflate(R.layout.item_list_ad, parent, false);
-		TextView lblAdvertiseUserName=(TextView)convertView.findViewById(R.id.lblAdvertiseUserName);
-		TextView lblAdvertiseDescription=(TextView)convertView.findViewById(R.id.lblAdvertiseDescription);
+		ImageView ivProduct=(ImageView)convertView.findViewById(R.id.ivProd);
+		TextViewCustomFont tvUserName=(TextViewCustomFont)convertView.findViewById(R.id.tvUserName);
+		TextViewCustomFont tvAdvertiseDescription=(TextViewCustomFont)convertView.findViewById(R.id.tvAdvertiseDescription);
+		TextViewCustomFont tvPrice=(TextViewCustomFont)convertView.findViewById(R.id.tvPrice);
 		
-		lblAdvertiseUserName.setText("soso");
-		lblAdvertiseDescription.setText(ads.get(position).getDescription());
+		ivProduct.setImageResource(R.drawable.ic_launcher);
+		tvUserName.setText(ads.get(position).getUser().getName());
+		tvAdvertiseDescription.setText(ads.get(position).getDescription());
+		tvPrice.setText(Integer.toString(ads.get(position).getPrice()));
 		
 		return convertView;
 	}
