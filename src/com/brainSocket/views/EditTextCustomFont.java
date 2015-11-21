@@ -7,20 +7,19 @@ import android.widget.EditText;
 
 import com.brainSocket.aswaq.R;
 
-public class EditTextCustomFont extends EditText
-{
+public class EditTextCustomFont extends EditText{
 		
 	public EditTextCustomFont(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(attrs);
 	}
+	
 	public EditTextCustomFont(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(attrs);
 	}
 	
-	private void init(AttributeSet attrs) 
-	{ 
+	private void init(AttributeSet attrs){ 
 		try {
 			if(!isInEditMode()) {
 				// get the typed array for the custom attrs
@@ -35,7 +34,6 @@ public class EditTextCustomFont extends EditText
 				case 2:
 					this.setTypeface(TextViewCustomFont.getTFBold(getContext()));
 					break;	
-				case 3:
 				}
 			    //Don't forget this
 			    a.recycle();
@@ -43,6 +41,5 @@ public class EditTextCustomFont extends EditText
 		}
 		catch (Exception e) {}
 	}
-	
 	
 }

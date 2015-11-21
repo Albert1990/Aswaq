@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -7,31 +8,131 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
+        android:orientation="horizontal"
         android:paddingBottom="8dp"
-        android:orientation="horizontal" >
+        android:paddingTop="8dp" >
 
         <ImageButton
             android:id="@+id/btnImg1"
-            style="@style/add_advertisement_prod_photo"/>
+            style="@style/add_advertisement_prod_photo" />
 
         <ImageButton
             android:id="@+id/btnImg2"
-            style="@style/add_advertisement_prod_photo"/>
+            style="@style/add_advertisement_prod_photo" />
 
         <ImageButton
             android:id="@+id/btnImg3"
-            style="@style/add_advertisement_prod_photo"/>
+            style="@style/add_advertisement_prod_photo" />
 
         <ImageButton
             android:id="@+id/btnImg4"
-            style="@style/add_advertisement_prod_photo"/>
+            style="@style/add_advertisement_prod_photo" />
     </LinearLayout>
 
-    <EditText
+    <com.brainSocket.views.EditTextCustomFont
         android:id="@+id/txtProductDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_txt_product_description" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="top"
+        android:hint="@string/hint_txt_product_description"
+        android:lines="4"
+        android:maxLines="6"
+        app:fontId="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.brainSocket.views.EditTextCustomFont
+            android:id="@+id/tvPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/add_ad_price_hint"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="10dp"
+            app:fontId="1" />
+
+        <com.brainSocket.views.TextViewCustomFont
+            android:id="@+id/tvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="@string/add_ad_cat_hint"
+            app:fontId="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal" >
+
+        <com.brainSocket.views.EditTextCustomFont
+            android:id="@+id/tvPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/add_ad_phone_hint"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="10dp"
+            app:fontId="1" />
+
+        <Switch
+            android:id="@+id/swhNew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textOff="@string/add_ad_used"
+            android:textOn="@string/add_ad_new" />
+    </LinearLayout>
+
+    <com.brainSocket.views.TextViewCustomFont
+        android:id="@+id/btnAddYourPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_rounded_fb"
+        android:gravity="center"
+        android:text="@string/add_ad_add_ur_fb_page"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/ts_text_normal"
+        app:fontId="1" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <com.brainSocket.views.TextViewCustomFont
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_rounded_fb"
+            android:gravity="center"
+            android:text="@string/add_ad_send"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_text_normal"
+            app:fontId="1" />
+    </FrameLayout>
 
 </LinearLayout>
