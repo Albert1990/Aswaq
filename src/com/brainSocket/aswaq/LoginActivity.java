@@ -34,6 +34,7 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 		initComponents();
 		AswaqApp.setAppContext(getApplicationContext());
+		
 	}
 
 	private void initComponents() {

@@ -1,24 +1,33 @@
 package com.brainSocket.data;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import com.brainSocket.aswaq.AswaqApp;
+import com.brainSocket.data.AndroidMultiPartEntity.ProgressListener;
 import com.brainSocket.models.AppUser;
 
 import android.provider.Settings.Secure;
@@ -39,7 +48,6 @@ public class ServerAccess {
 	public static final int ERROR_CODE_token_not_exists = -103;
 	public static final int ERROR_CODE_access_token_expired = -104;
 	public static final int ERROR_CODE_invalid_access_token = -106;
-	public static final int ERROR_CODE_verification_message_not_exists = -109;
 	public static final int ERROR_CODE_error_in_input_params = -116;
 	public static final int ERROR_CODE_user_not_verified = -120;
 	public static final int ERROR_CODE_app_version_invalid = -121;
@@ -60,8 +68,9 @@ public class ServerAccess {
 
 	// api
 	public static final int MAIN_PORT_NUM = 80 ;
-	public static final String IMAGE_SERVICE_URL="http://192.168.1.112:"+MAIN_PORT_NUM+"/aswaq/imgs/";
-	public static final String BASE_SERVICE_URL = "http://192.168.1.112:"+MAIN_PORT_NUM+"/aswaq/index.php/";
+	private boolean inProductionMode=true;
+	public static String IMAGE_SERVICE_URL="http://192.168.10.182:"+MAIN_PORT_NUM+"/aswaq/imgs/";
+	public static String BASE_SERVICE_URL = "http://192.168.10.182:"+MAIN_PORT_NUM+"/aswaq/index.php/";
 
 	// api keys
 		private static final String FLAG = "flag";
@@ -71,6 +80,20 @@ public class ServerAccess {
 	// Request executers //
 		private static HttpClient client  ;
 		private static ServerAccess instance;
+		
+		private ServerAccess()
+		{
+			if(inProductionMode)
+			{
+				IMAGE_SERVICE_URL="http://104.217.253.15:"+MAIN_PORT_NUM+"/aswaq/imgs/";
+				BASE_SERVICE_URL = "http://104.217.253.15:"+MAIN_PORT_NUM+"/aswaq/index.php/";
+			}
+			else
+			{
+				IMAGE_SERVICE_URL="http://192.168.1.112:"+MAIN_PORT_NUM+"/aswaq/imgs/";
+				BASE_SERVICE_URL = "http://192.168.1.112:"+MAIN_PORT_NUM+"/aswaq/index.php/";
+			}
+		}
 		
 		public static ServerAccess getInstance()
 		{
@@ -493,6 +516,69 @@ public class ServerAccess {
 			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
 		}
 		return result;
+	}
+	
+public ServerResult sendMultiPartHttpPOSTContact(String url , String msg ,String [] imgPath, String id , String accessTocken) throws JSONException {
+		
+		String responseString = null;
+		ServerResult res=new ServerResult();
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
+		
+
+		try {
+			AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
+					new ProgressListener() {
+
+						@Override
+						public void transferred(long num) {
+							//publishProgress((int) ((num / (float) totalSize) * 100));
+						}
+					});
+			
+			if(imgPath!=null){
+				File sourceFile;
+				for(int i =0 ;i<imgPath.length ; i++)
+				{
+					sourceFile = new File( imgPath[i]);
+					entity.addPart("image"+i, new FileBody(sourceFile));
+				}
+			}
+
+			// Adding file data to http body
+			if(msg !=null)
+				entity.addPart("message", new StringBody(msg)); // Extra parameters if you want to pass to server
+			entity.addPart("id", new StringBody(id));
+
+			//totalSize = entity.getContentLength();
+			httppost.setEntity(entity);
+
+			// Making server call
+			HttpResponse response = httpclient.execute(httppost);
+			HttpEntity r_entity = response.getEntity();
+
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode == 200) {
+				// Server response
+				responseString = EntityUtils.toString(r_entity);
+				if (responseString != null && !responseString.equals("")) { // check if response is empty
+					JSONObject jsonResponse = new JSONObject(responseString);
+					res.setFlag(jsonResponse.getInt(FLAG));
+					
+				} else {
+					res.setFlag(CONNECTION_ERROR_CODE);
+				}
+			} else {
+				responseString = "Error occurred! Http Status Code: "
+						+ statusCode;
+			}
+
+		} catch (ClientProtocolException e) {
+			res.setFlag(ServerAccess.ERROR_CODE_unknown_exception);
+		} catch (IOException e) {
+			res.setFlag(ServerAccess.ERROR_CODE_unknown_exception);
+		}
+		return res;
 	}
 	
 	private String sendPostRequest(String url, List<NameValuePair> jsonPairs) {

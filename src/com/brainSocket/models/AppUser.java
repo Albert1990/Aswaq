@@ -28,7 +28,7 @@ public class AppUser /*implements Parcelable */{
 	GENDER gender ;
 	Long date ;
 	String email;
-	boolean isVerified=false;
+	int isVerified=0;
 	String password;
 	String version;
 	long facebookId;
@@ -71,8 +71,10 @@ public class AppUser /*implements Parcelable */{
 		} 
 		catch (Exception e) {}
 		try {
-			if(json.has("is_verified")) 
-				isVerified = json.getBoolean("is_verified");
+			if(json.has("is_verified"))
+			{
+				isVerified=json.getInt("is_verified");
+			}
 		} 
 		catch (Exception e) {}
 		try {
@@ -242,10 +244,12 @@ public class AppUser /*implements Parcelable */{
 	}
 
 	public boolean isVerified() {
-		return isVerified;
+		if(isVerified>0)
+			return true;
+		return false;
 	}
 
-	public void setVerified(boolean isVerified) {
+	public void setVerified(int isVerified) {
 		this.isVerified = isVerified;
 	}
 
@@ -296,6 +300,8 @@ public class AppUser /*implements Parcelable */{
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	
 
 	
 //	public Drawable getPlaceHolderDrawable(){

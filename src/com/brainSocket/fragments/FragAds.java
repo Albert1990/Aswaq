@@ -2,19 +2,21 @@ package com.brainSocket.fragments;
 
 import java.util.List;
 
+import com.brainSocket.adapters.AdvertisesListAdapter;
+import com.brainSocket.adapters.SliderAdapter;
+import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.models.SlideModel;
 
-import enums.FragmentType;
-import adapters.AdvertisesListAdapter;
-import adapters.SliderAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,12 +51,22 @@ public class FragAds extends Fragment implements OnItemClickListener{
 	
 	private void init()
 	{
-		homeCallbacks=(HomeCallbacks)getActivity();
-		lstAds=(ListView)getActivity().findViewById(R.id.lstAds);
-		lstAds.setOnItemClickListener(this);
-		vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
-		int categoryId=4;
-		DataStore.getInstance().attemptGetCategoryAds(categoryId, getCategoryAdsCallback);
+		try
+		{
+			homeCallbacks=(HomeCallbacks)getActivity();
+			lstAds=(ListView)getActivity().findViewById(R.id.lstAds);
+			lstAds.setOnItemClickListener(this);
+			vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
+			if(AswaqApp.hasPair("selectedSubCategoryId"))
+			{
+				int categoryId=(Integer)AswaqApp.getPair("selectedSubCategoryId");
+				DataStore.getInstance().attemptGetCategoryAds(categoryId, getCategoryAdsCallback);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 	
 	private DataRequestCallback getCategoryAdsCallback=new DataRequestCallback() {
@@ -83,6 +95,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			long id) {
 		// TODO Auto-generated method stub
 		int adId=ads.get(position).getId();
+		AswaqApp.addPair("selectedAdId", adId);
 		homeCallbacks.loadFragment(FragmentType.AdvertiseDetails);
 	}
 }

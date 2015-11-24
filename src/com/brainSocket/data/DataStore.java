@@ -425,6 +425,23 @@ public class DataStore {
 			}
 		}).start();
 	}
+	
+	public void justWait(final int waitDelay,final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try
+				{
+					Thread.sleep(waitDelay);
+				}
+				catch(Exception ex){ex.printStackTrace();}
+				invokeCallback(callback, true, null);
+			}
+		}).start();
+	}
 
 
 }

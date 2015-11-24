@@ -1,14 +1,27 @@
 package com.brainSocket.fragments;
 
+import java.io.InputStream;
+
 import org.json.JSONArray;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
@@ -17,10 +30,9 @@ import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
 import com.brainSocket.views.EditTextCustomFont;
 import com.brainSocket.views.TextViewCustomFont;
-
-import enums.FragmentType;
 
 public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private HomeCallbacks homeCallback;
@@ -29,6 +41,11 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private EditTextCustomFont tvPhone;
 	private Switch swhNew;
 	private TextViewCustomFont btnSubmit;
+	private ImageView btnImg1;
+	private ImageView btnImg2;
+	private ImageView btnImg3;
+	private ImageView btnImg4;
+	private ImageView selectedImageView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +68,19 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		swhNew=(Switch)getActivity().findViewById(R.id.swhNew);
 		btnSubmit=(TextViewCustomFont)getActivity().findViewById(R.id.btnSubmit);
 		btnSubmit.setOnClickListener(this);
+		
+		btnImg1=(ImageButton)getActivity().findViewById(R.id.btnImg1);
+		btnImg1.setOnClickListener(this);
+		
+		btnImg2=(ImageButton)getActivity().findViewById(R.id.btnImg2);
+		btnImg2.setOnClickListener(this);
+		
+		btnImg3=(ImageButton)getActivity().findViewById(R.id.btnImg3);
+		btnImg3.setOnClickListener(this);
+		
+		btnImg4=(ImageButton)getActivity().findViewById(R.id.btnImg4);
+		btnImg4.setOnClickListener(this);
+		
 	}
 	
 	private void addNewAdvertise()
@@ -114,6 +144,39 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			}
 		}
 	};
+	
+	private void browseImage(View v)
+	{
+		selectedImageView=(ImageView)v;
+		Intent intent = new Intent();
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		startActivityForResult(Intent.createChooser(intent, "Select Picture"),200);
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		try
+		{
+			Uri selectedImage = data.getData();
+			String[] filePathColumn = {MediaStore.Images.Media.DATA};
+			Cursor cursor =AswaqApp.getAppContext().getContentResolver().query(
+                    selectedImage, filePathColumn, null, null, null);
+			cursor.moveToFirst();
+			
+			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String filePath = cursor.getString(columnIndex);
+            cursor.close();
+
+
+            Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+            AswaqApp.resizeImage(yourSelectedImage, selectedImage.toString());
+            selectedImageView.setImageBitmap(yourSelectedImage);
+		}
+		catch(Exception ex){ex.printStackTrace();}
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -121,6 +184,18 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		switch(viewId){
 		case R.id.btnSubmit:
 			addNewAdvertise();
+			break;
+		case R.id.btnImg1:
+			browseImage(v);
+			break;
+		case R.id.btnImg2:
+			browseImage(v);
+			break;
+		case R.id.btnImg3:
+			browseImage(v);
+			break;
+		case R.id.btnImg4:
+			browseImage(v);
 			break;
 		}
 	}

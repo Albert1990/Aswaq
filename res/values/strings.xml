@@ -55,5 +55,16 @@
     <string name="message_fb_not_installed">مكتبة الفيس بوك غير منصبة</string>
     <string name="error_operation_failed">خطأ في العملية</string>
     <string name="sharing_failed">خطأ في المشاركة</string>
+    <string name="trial_version">نسخة تجريبية</string>
+    <string name="btn_resend_verification_code">إعادة إرسال رمز التفعيل</string>
+    <string name="toast_verification_sent">تم إرسال رمز التفعيل بنجاح</string>
+    <string name="drawer_feedback">فييد باك</string>
+    <string name="drawer_logout">تسجيل خروج</string>
+    <string name="drawer_share">شير</string>
+    <string name="drawer_main">الرئيسية</string>
+    <string name="drawer_profile">صفحتي الشخصية</string>
+    <string name="drawer_agents">عملائي</string>
+    <string name="drawer_callus">اتصل بنا</string>
+    <string name="drawer_favourites">المفضلة</string>
     
 </resources>

@@ -16,6 +16,12 @@
         android:inputType="number"
         android:hint="@string/verif_hint_verification_code"/>
     
+    <Button 
+        android:id="@+id/btnResendVerificationCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_resend_verification_code"/>
+    
    <Button 
        android:id="@+id/btnVerifyCode"
        android:layout_width="match_parent"

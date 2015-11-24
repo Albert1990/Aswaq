@@ -1,5 +1,6 @@
 package com.brainSocket.fragments;
 
+import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
@@ -31,8 +32,18 @@ public class FragAdvertiseDetails extends Fragment {
 	
 	private void init()
 	{
-		int adId=1;
-		DataStore.getInstance().attemptGetAdvertiseDetails(adId, getAdvertiseDetailsCallback);
+		try
+		{
+			if(AswaqApp.hasPair("selectedAdId"))
+			{
+				int adId=(Integer)AswaqApp.getPair("selectedAdId");
+				DataStore.getInstance().attemptGetAdvertiseDetails(adId, getAdvertiseDetailsCallback);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 	
 	private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback() {

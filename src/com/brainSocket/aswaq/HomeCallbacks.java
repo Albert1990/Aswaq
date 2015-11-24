@@ -1,6 +1,6 @@
 package com.brainSocket.aswaq;
 
-import enums.FragmentType;
+import com.brainSocket.enums.FragmentType;
 
 public interface HomeCallbacks {
 	public void showProgress(boolean show, int msg);

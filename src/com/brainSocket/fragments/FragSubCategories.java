@@ -2,15 +2,16 @@ package com.brainSocket.fragments;
 
 import java.util.List;
 
+import com.brainSocket.adapters.SubCategoriesListAdapter;
+import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
 import com.brainSocket.models.CategoryModel;
 
-import enums.FragmentType;
-import adapters.SubCategoriesListAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -42,11 +43,21 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 	
 	private void init()
 	{
-		homeCallbacks=(HomeCallbacks)getActivity();
-		lstSubCategories=(ListView)getActivity().findViewById(R.id.lstSubCategories);
-		lstSubCategories.setOnItemClickListener(this);
-		int selectedCategoryId=2;
-		DataStore.getInstance().attemptGetPageComponents(selectedCategoryId, getPageComponentsCallback);
+		try
+		{
+			homeCallbacks=(HomeCallbacks)getActivity();
+			lstSubCategories=(ListView)getActivity().findViewById(R.id.lstSubCategories);
+			lstSubCategories.setOnItemClickListener(this);
+			if(AswaqApp.hasPair("selectedCategoryId"))
+			{
+				int selectedCategoryId=(Integer)AswaqApp.getPair("selectedCategoryId");
+				DataStore.getInstance().attemptGetPageComponents(selectedCategoryId, getPageComponentsCallback);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 	
 	private DataRequestCallback getPageComponentsCallback=new DataRequestCallback() {
@@ -69,6 +80,7 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 			long id) {
 		// TODO Auto-generated method stub
 		int subCategoryId=subCategories.get(position).getId();
+		AswaqApp.addPair("selectedSubCategoryId", subCategoryId);
 		homeCallbacks.loadFragment(FragmentType.ShowAds);
 	}
 

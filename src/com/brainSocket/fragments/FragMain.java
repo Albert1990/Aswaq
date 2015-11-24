@@ -2,6 +2,8 @@ package com.brainSocket.fragments;
 
 import java.util.List;
 
+import com.brainSocket.adapters.CategoryListAdapter;
+import com.brainSocket.adapters.SliderAdapter;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
@@ -9,13 +11,11 @@ import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
 import com.brainSocket.models.CategoryModel;
 import com.brainSocket.models.SlideModel;
 import com.github.clans.fab.FloatingActionButton;
 
-import enums.FragmentType;
-import adapters.CategoryListAdapter;
-import adapters.SliderAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -95,9 +95,6 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					categories = (List<CategoryModel>) data
 							.getValue("categories");
-					homeCallbacks
-							.showToast(Integer.toString(categories.size()));
-
 					slides = (List<SlideModel>) data
 							.getValue("slides");
 					CategoryListAdapter categoryListAdapter=new CategoryListAdapter(getActivity(), categories);
@@ -129,6 +126,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 			long id) {
 		// TODO Auto-generated method stub
 		int categoryId=categories.get(position).getId();
+		AswaqApp.addPair("selectedCategoryId", categoryId);
 		homeCallbacks.loadFragment(FragmentType.SubCategories);
 	}
 

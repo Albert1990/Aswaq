@@ -50,7 +50,9 @@ public class DataCacheProvider {
 			prefData = AswaqApp.getAppContext().getSharedPreferences(PREF_DATA, Context.MODE_PRIVATE);
 			prefDataEditor = prefData.edit();
 		} 
-		catch (Exception e) {}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static DataCacheProvider getInstance()
@@ -136,7 +138,9 @@ public class DataCacheProvider {
 					me = new AppUser(json);
 				}
 			}
-			catch (Exception e) {}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return me;
 	}
