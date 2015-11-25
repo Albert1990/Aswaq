@@ -20,6 +20,11 @@ import android.view.ViewGroup;
 public class FragUserPage extends Fragment implements OnClickListener{
 	private HomeCallbacks homeCallbacks;
 	
+	private FragUserPage()
+	{
+		
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

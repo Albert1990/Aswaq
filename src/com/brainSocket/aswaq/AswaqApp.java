@@ -27,43 +27,13 @@ public class AswaqApp extends Application{
 	private static Context AppContext ;
 	private static Activity currentAcivity ;
 	public static final String VERSIOIN_ID = "0.1";
-	private static HashMap<String, Object> crossData;
 	
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
 		AppContext = this ;
 		DataStore.getInstance() ; // to make sure DataStore is initalized
-		crossData=new HashMap<String, Object>();
 	}
-	
-	public static void addPair(String key,Object ob)
-	{
-		if(crossData.containsKey(key))
-			crossData.remove(key);
-		crossData.put(key, ob);
-	}
-	
-	public static Object getPair(String key)
-	{
-		Object ob=null;
-		try
-		{
-			ob= crossData.get(key);
-			crossData.remove(key);
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-		}
-		return ob;
-	}
-	
-	public static boolean hasPair(String key)
-	{
-		return crossData.containsKey(key);
-	}
-	
 	
 	public static Context getAppContext() {
 		return AppContext;
@@ -134,20 +104,6 @@ public class AswaqApp extends Application{
 		catch(Exception ex){
 			ex.printStackTrace();
 		}
-	}
-	
-	public static void copy(File src, File dst) throws IOException {
-	    InputStream in = new FileInputStream(src);
-	    OutputStream out = new FileOutputStream(dst);
-
-	    // Transfer bytes from in to out
-	    byte[] buf = new byte[1024];
-	    int len;
-	    while ((len = in.read(buf)) > 0) {
-	        out.write(buf, 0, len);
-	    }
-	    in.close();
-	    out.close();
 	}
 
 }

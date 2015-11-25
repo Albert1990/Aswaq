@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/vpSliderMain"
+        android:layout_marginTop="10dp"
         android:numColumns="4"
         tools:listitem="@layout/item_main_grid_category" >
     </GridView>

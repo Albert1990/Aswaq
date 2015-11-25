@@ -1,5 +1,6 @@
 package com.brainSocket.fragments;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.brainSocket.adapters.SubCategoriesListAdapter;
@@ -26,6 +27,11 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 	private HomeCallbacks homeCallbacks;
 	private List<CategoryModel> subCategories=null;
 	
+	private FragSubCategories()
+	{
+		
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -36,7 +42,6 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		init();
 	}
@@ -48,11 +53,7 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 			homeCallbacks=(HomeCallbacks)getActivity();
 			lstSubCategories=(ListView)getActivity().findViewById(R.id.lstSubCategories);
 			lstSubCategories.setOnItemClickListener(this);
-			if(AswaqApp.hasPair("selectedCategoryId"))
-			{
-				int selectedCategoryId=(Integer)AswaqApp.getPair("selectedCategoryId");
-				DataStore.getInstance().attemptGetPageComponents(selectedCategoryId, getPageComponentsCallback);
-			}
+			DataStore.getInstance().attemptGetPageComponents(getArguments().getInt("selectedCategoryId"), getPageComponentsCallback);
 		}
 		catch(Exception ex)
 		{
@@ -80,8 +81,26 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 			long id) {
 		// TODO Auto-generated method stub
 		int subCategoryId=subCategories.get(position).getId();
-		AswaqApp.addPair("selectedSubCategoryId", subCategoryId);
-		homeCallbacks.loadFragment(FragmentType.ShowAds);
+		HashMap<String, Object> params=new HashMap<String, Object>();
+		params.put("selectedSubCategoryId", subCategoryId);
+		homeCallbacks.loadFragment(FragmentType.ShowAds,params);
+	}
+	
+	public static FragSubCategories newInstance(HashMap<String, Object> params)
+	{
+		FragSubCategories fragSubCategories=new FragSubCategories();
+		try
+		{
+			Bundle extras=new Bundle();
+			if(params.containsKey("selectedCategoryId"))
+				extras.putInt("selectedCategoryId", (Integer)params.get("selectedCategoryId"));
+			fragSubCategories.setArguments(extras);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return fragSubCategories;
 	}
 
 }

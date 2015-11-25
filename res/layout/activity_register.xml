@@ -9,38 +9,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>
-    <EditText 
-        android:id="@+id/txtUserNameRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lbl_user_name"/>
+
     <EditText 
         android:id="@+id/txtEmailRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/lblEmail"/>
-    <EditText 
-        android:id="@+id/txtMobileNumberRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:hint="@string/lbl_mobile_number"/>
+        android:hint="@string/lbl_email"/>
+
     <EditText 
         android:id="@+id/txtPasswordRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="@string/lblPassword"/>
+        android:hint="@string/lbl_password"/>
+    
     <EditText 
-        android:id="@+id/txtAddressRegister"
+        android:id="@+id/txtRepeatPasswordRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/lbl_address"/>
-    <EditText 
-        android:id="@+id/txtDescriptionRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lbl_description"/>
+        android:inputType="textPassword"
+        android:hint="@string/hint_password_repeat"/>
+
     <Button 
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"

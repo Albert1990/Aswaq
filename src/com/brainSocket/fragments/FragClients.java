@@ -14,6 +14,11 @@ import android.view.ViewGroup;
 public class FragClients extends Fragment{
 	private HomeCallbacks homeCallbacks;
 	
+	private FragClients()
+	{
+		
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

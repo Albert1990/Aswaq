@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@string/lblEmail"
+            android:text="@string/lbl_email"
             app:fontId="1"/>
 
         <EditText
@@ -36,7 +36,7 @@
         <com.brainSocket.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lblPassword"
+            android:text="@string/lbl_password"
             app:fontId="1" />
 
         <EditText
@@ -92,10 +92,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/btnDoesntHaveAccount"
+            android:text="@string/btn_doesnt_have_account"
             android:textColor="@color/blue"
             android:textSize="@dimen/ts_text_normal" 
             app:fontId="1"/>
+        
     </LinearLayout>
 
 </ScrollView>

@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 public class FragAbout extends Fragment{
 	private HomeCallbacks homeCallbacks;
 	
+	private FragAbout()
+	{
+		
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

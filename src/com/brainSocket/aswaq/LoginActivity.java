@@ -1,6 +1,7 @@
 package com.brainSocket.aswaq;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
@@ -8,6 +9,13 @@ import com.brainSocket.data.FacebookProvider;
 import com.brainSocket.data.FacebookProviderListener;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
+import com.brainSocket.fragments.FragAddAdvertise;
+import com.brainSocket.fragments.FragAds;
+import com.brainSocket.fragments.FragAdvertiseDetails;
+import com.brainSocket.fragments.FragMain;
+import com.brainSocket.fragments.FragSubCategories;
+import com.brainSocket.fragments.FragVerification;
 import com.brainSocket.views.TextViewCustomFont;
 import com.facebook.Profile;
 
@@ -20,7 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends AppBaseActivity implements OnClickListener {
+public class LoginActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
 	private EditText txtEmail;
 	private EditText txtPassword;
 	private TextViewCustomFont btnLogin;
@@ -193,6 +201,30 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		} catch (Exception ex) {
 
 		}
+	}
+	
+	@Override
+	public void showProgress(boolean show, int msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showToast(String msg) {
+		// TODO Auto-generated method stub
+		Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void setTitle(String title) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void loadFragment(FragmentType fragmentType,HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

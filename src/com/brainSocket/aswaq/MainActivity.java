@@ -1,5 +1,6 @@
 package com.brainSocket.aswaq;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.brainSocket.adapters.DrawerAdapter;
@@ -9,6 +10,12 @@ import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.fragments.FragAddAdvertise;
+import com.brainSocket.fragments.FragAds;
+import com.brainSocket.fragments.FragAdvertiseDetails;
+import com.brainSocket.fragments.FragMain;
+import com.brainSocket.fragments.FragSubCategories;
+import com.brainSocket.fragments.FragVerification;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.models.CategoryModel;
 
@@ -28,11 +35,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends AppBaseActivity implements OnBackStackChangedListener,OnClickListener{
+public class MainActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
 	private ListView lvDrawer ;
 	private DrawerAdapter adapter ;
 	private DrawerLayout dlDrawer ;
 	private View llLogout;
+	private FragmentManager fragmentManager;
+	private FragmentType currentFragmentType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +52,11 @@ public class MainActivity extends AppBaseActivity implements OnBackStackChangedL
 	
 	private void init()
 	{
-		getSupportFragmentManager().addOnBackStackChangedListener(this);
+		fragmentManager=getSupportFragmentManager();
 		AppUser me=DataCacheProvider.getInstance().getMe();
 		if(!me.isVerified())
 		{
-			loadFragment(FragmentType.Verification);
+			loadFragment(FragmentType.Verification,null);
 		}
 		else
 		{
@@ -57,7 +66,7 @@ public class MainActivity extends AppBaseActivity implements OnBackStackChangedL
 			dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
 			llLogout=findViewById(R.id.llLogout);
 			llLogout.setOnClickListener(this);
-			loadFragment(FragmentType.Main);
+			loadFragment(FragmentType.Main,null);
 		}
 	}
 	
@@ -78,12 +87,6 @@ public class MainActivity extends AppBaseActivity implements OnBackStackChangedL
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onBackStackChanged() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 //	@Override
@@ -122,4 +125,73 @@ public class MainActivity extends AppBaseActivity implements OnBackStackChangedL
 		}
 	}
 	
+	@Override
+	public void showProgress(boolean show, int msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showToast(String msg) {
+		// TODO Auto-generated method stub
+		Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void setTitle(String title) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void loadFragment(FragmentType fragmentType,HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		switch(fragmentType)
+		{
+		case Main:
+			FragMain mainFrag = FragMain.newInstance();
+			fragmentManager.beginTransaction()
+				//.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right,R.anim.slide_in_from_right,R.anim.slide_out_to_left)
+				.replace(R.id.content_frame, mainFrag)
+				//.addToBackStack(FragmentType.Main.name())
+				.commit();
+			break;
+		case AddAdvertise:
+			FragAddAdvertise fragAddAdvertise = FragAddAdvertise.newInstance(params);
+			fragmentManager.beginTransaction()
+				//.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right,R.anim.slide_in_from_right,R.anim.slide_out_to_left)
+				.replace(R.id.content_frame, fragAddAdvertise)
+				.addToBackStack(FragmentType.AddAdvertise.name())
+				.commit();
+			break;
+		case Verification:
+			FragVerification fragVerification=FragVerification.newInstance();
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragVerification)
+			.commit();
+			break;
+		case SubCategories:
+			FragSubCategories fragSubCategories=FragSubCategories.newInstance(params);
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragSubCategories)
+			.addToBackStack(FragmentType.SubCategories.name())
+			.commit();
+			break;
+		case ShowAds:
+			FragAds fragAds=FragAds.newInstance(params);
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragAds)
+			.addToBackStack(FragmentType.ShowAds.name())
+			.commit();
+			break;
+		case AdvertiseDetails:
+			FragAdvertiseDetails fragAdvertiseDetails=FragAdvertiseDetails.newInstance(params);
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragAdvertiseDetails)
+			.addToBackStack(FragmentType.AdvertiseDetails.name())
+			.commit();
+			break;
+		}
+		currentFragmentType=fragmentType;
+	}
 }

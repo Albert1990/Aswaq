@@ -1,5 +1,7 @@
 package com.brainSocket.fragments;
 
+import java.util.HashMap;
+
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.data.DataRequestCallback;
@@ -16,6 +18,11 @@ import android.view.ViewGroup;
 public class FragAdvertiseDetails extends Fragment {
 	private HomeCallbacks homeCallbacks;
 	
+	private FragAdvertiseDetails()
+	{
+		
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -27,18 +34,15 @@ public class FragAdvertiseDetails extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		init();
+		int selectedAdId=savedInstanceState.getInt("selectedAdId");
+		init(selectedAdId);
 	}
 	
-	private void init()
+	private void init(int selectedAdId)
 	{
 		try
 		{
-			if(AswaqApp.hasPair("selectedAdId"))
-			{
-				int adId=(Integer)AswaqApp.getPair("selectedAdId");
-				DataStore.getInstance().attemptGetAdvertiseDetails(adId, getAdvertiseDetailsCallback);
-			}
+			DataStore.getInstance().attemptGetAdvertiseDetails(selectedAdId, getAdvertiseDetailsCallback);
 		}
 		catch(Exception ex)
 		{
@@ -57,4 +61,21 @@ public class FragAdvertiseDetails extends Fragment {
 			}
 		}
 	};
+	
+	public static FragAdvertiseDetails newInstance(HashMap<String, Object> params)
+	{
+		FragAdvertiseDetails fragAdvertiseDetails=new FragAdvertiseDetails();
+		try
+		{
+			Bundle extras=new Bundle();
+			if(params.containsKey("selectedAdId"))
+				extras.putInt("selectedAdId",(Integer) params.get("selectedAdId"));
+			fragAdvertiseDetails.setArguments(extras);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return fragAdvertiseDetails;
+	}
 }

@@ -78,9 +78,12 @@ public class DataStore {
 					success = false;
 				} else {
 					try {
-						AppUser me = (AppUser) result.getPairs().get("appUser");
-						// apiAccessToken = me.getAccessToken();
-						// setApiAccessToken(apiAccessToken);
+						if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+						{
+							AppUser me = (AppUser) result.getPairs().get("appUser");
+							cacheProvider.storeAccessToken(me.getAccessToken());
+							cacheProvider.storeMe(me);
+						}
 					} catch (Exception e) {
 						success = false;
 					}

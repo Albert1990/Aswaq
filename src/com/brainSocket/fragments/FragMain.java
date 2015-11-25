@@ -1,5 +1,6 @@
 package com.brainSocket.fragments;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.brainSocket.adapters.CategoryListAdapter;
@@ -36,6 +37,11 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 	private List<CategoryModel> categories =null;
 	private List<SlideModel> slides=null;
 	private ViewPager vpSlider;
+	
+	private FragMain()
+	{
+		
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,10 +88,6 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		}
 	};
 
-	private void displaySubCategories(int parentCategoryId) {
-		homeCallbacks.loadFragment(FragmentType.SubCategories);
-	}
-
 	private DataRequestCallback getPageComponentsCallback = new DataRequestCallback() {
 
 		@Override
@@ -116,7 +118,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		int viewId = v.getId();
 		switch (viewId) {
 		case R.id.btnAddAdvertise:
-			homeCallbacks.loadFragment(FragmentType.AddAdvertise);
+			homeCallbacks.loadFragment(FragmentType.AddAdvertise,null);
 			break;
 		}
 	}
@@ -126,8 +128,15 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 			long id) {
 		// TODO Auto-generated method stub
 		int categoryId=categories.get(position).getId();
-		AswaqApp.addPair("selectedCategoryId", categoryId);
-		homeCallbacks.loadFragment(FragmentType.SubCategories);
+		HashMap<String, Object> params=new HashMap<String, Object>();
+		params.put("selectedCategoryId", categoryId);
+		homeCallbacks.loadFragment(FragmentType.SubCategories,params);
+	}
+	
+	public static FragMain newInstance()
+	{
+		FragMain fragMain=new FragMain();
+		return fragMain;
 	}
 
 }
