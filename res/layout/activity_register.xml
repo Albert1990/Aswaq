@@ -1,50 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-    <ImageView 
-        android:src="@drawable/ic_launcher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
-    <EditText 
-        android:id="@+id/txtUserNameRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lbl_user_name"/>
-    <EditText 
-        android:id="@+id/txtEmailRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lblEmail"/>
-    <EditText 
-        android:id="@+id/txtMobileNumberRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:hint="@string/lbl_mobile_number"/>
-    <EditText 
-        android:id="@+id/txtPasswordRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="@string/lblPassword"/>
-    <EditText 
-        android:id="@+id/txtAddressRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lbl_address"/>
-    <EditText 
-        android:id="@+id/txtDescriptionRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lbl_description"/>
-    <Button 
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login_btnRegister"/>
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="170dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/logo_splash" />
+
+        <com.brainSocket.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/lbl_user_name"
+            app:fontId="1" />
+
+        <EditText
+            android:id="@+id/txtUserNameRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.brainSocket.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/lblEmail"
+            app:fontId="1" />
+
+        <EditText
+            android:id="@+id/txtEmailRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.brainSocket.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/lbl_mobile_number"
+            app:fontId="1" />
+
+        <EditText
+            android:id="@+id/txtMobileNumberRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:inputType="phone" />
+
+        <com.brainSocket.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/lblPassword"
+            app:fontId="1" />
+
+        <EditText
+            android:id="@+id/txtPasswordRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:inputType="textPassword" />
+
+        <com.brainSocket.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/lbl_address"
+            app:fontId="1" />
+
+        <EditText
+            android:id="@+id/txtAddressRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.brainSocket.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/lbl_description"
+            app:fontId="1" />
+
+        <EditText
+            android:id="@+id/txtDescriptionRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        
+        <com.brainSocket.views.TextViewCustomFont
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"
+             android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_text_normal"
+            android:background="@drawable/selector_btn_app_theme"
+            android:text="@string/login_btnRegister" 
+            app:fontId="1"/>
+        
+
+    </LinearLayout>
+
+</ScrollView>

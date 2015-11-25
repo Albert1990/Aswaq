@@ -80,7 +80,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 				slides=(List<SlideModel>)data.getValue("slides");
 				
 				AdvertisesListAdapter advertisesListAdapter=new AdvertisesListAdapter(getActivity(), ads);
-				//lstAds.addHeaderView(vpSliderAds);
+				lstAds.addHeaderView(vpSliderAds);
 				lstAds.setAdapter(advertisesListAdapter);
 				
 				SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);

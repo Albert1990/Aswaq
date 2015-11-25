@@ -1,12 +1,24 @@
 <resources>
 
-<style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light">
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light">
         <item name="toolbarStyle">@style/ToolbarStyle</item>
         <item name="colorPrimary">@color/app_theme</item>
         <item name="colorPrimaryDark">@color/app_theme_dark</item>
         <item name="colorAccent">@color/app_theme</item>
-        <!-- <item name="elevation">0dp</item>
-        <item name="android:windowContentOverlay">@null</item> -->
+        <!--
+        <item name="elevation">0dp</item>
+        <item name="android:windowContentOverlay">@null</item>
+        -->
+    </style>
+
+    <style name="AppThemeNoActionBar" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/app_theme</item>
+        <item name="colorPrimaryDark">@color/app_theme_dark</item>
+        <item name="colorAccent">@color/app_theme</item>
+        <!--
+        <item name="elevation">0dp</item>
+        <item name="android:windowContentOverlay">@null</item>
+        -->
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
@@ -16,16 +28,16 @@
     <style name="ToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
     </style>
-    
-     <style name="MenuButtonsStyle">
+
+    <style name="MenuButtonsStyle">
         <item name="fab_size">normal</item>
         <item name="fab_shadowColor">#444</item>
         <item name="fab_colorNormal">@color/app_theme</item>
         <item name="fab_colorPressed">#F2AB00</item>
         <item name="fab_colorRipple">#D99200</item>
     </style>
-    
-     <style name="add_advertisement_prod_photo">
+
+    <style name="add_advertisement_prod_photo">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">60dp</item>
         <item name="android:background">@color/white</item>

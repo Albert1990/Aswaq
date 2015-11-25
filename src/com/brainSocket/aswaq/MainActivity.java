@@ -82,13 +82,12 @@ public class MainActivity extends AppBaseActivity implements OnBackStackChangedL
 
 	@Override
 	public void onBackStackChanged() {
-		// TODO Auto-generated method stub
 		
 	}
 	
 //	@Override
 //	public void onBackPressed() {
-//		// TODO Auto-generated method stub
+
 //		//super.onBackPressed();
 //		int  entrys = getSupportFragmentManager().getBackStackEntryCount() ;
 //		

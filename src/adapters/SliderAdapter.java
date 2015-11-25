@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.R;
+import com.brainSocket.enums.ImageType;
 import com.brainSocket.models.SlideModel;
 import com.squareup.picasso.Picasso;
 
-import enums.ImageType;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
