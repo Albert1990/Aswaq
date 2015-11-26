@@ -3,7 +3,7 @@ package com.brainSocket.fragments;
 import java.util.HashMap;
 import java.util.List;
 
-import com.brainSocket.adapters.CategoryListAdapter;
+import com.brainSocket.adapters.MainCategoriesListAdapter;
 import com.brainSocket.adapters.SliderAdapter;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
@@ -17,13 +17,17 @@ import com.brainSocket.models.CategoryModel;
 import com.brainSocket.models.SlideModel;
 import com.github.clans.fab.FloatingActionButton;
 
+import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -37,6 +41,9 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 	private List<CategoryModel> categories =null;
 	private List<SlideModel> slides=null;
 	private ViewPager vpSlider;
+	private int currentSlide=0;
+	private Dialog dialogLoading;
+	private boolean stopSliderTransition=false;
 	
 	private FragMain()
 	{
@@ -67,6 +74,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 				R.id.btnAddAdvertise);
 		btnAddAdvertise.setOnClickListener(this);
 		vpSlider=(ViewPager)getActivity().findViewById(R.id.vpSliderMain);
+		homeCallbacks.showProgress(true);
 	}
 
 	private void search() {
@@ -99,15 +107,40 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 							.getValue("categories");
 					slides = (List<SlideModel>) data
 							.getValue("slides");
-					CategoryListAdapter categoryListAdapter=new CategoryListAdapter(getActivity(), categories);
+					MainCategoriesListAdapter categoryListAdapter=new MainCategoriesListAdapter(getActivity(), categories);
 					gridViewCategories.setAdapter(categoryListAdapter);
 					
 					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);
 					vpSlider.setAdapter(sliderAdapter);
-					
+					if(slides.size() > 0)
+					{
+						stopSliderTransition=false;
+						new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+					}
+					homeCallbacks.showProgress(false);
 				} else {
 					homeCallbacks.showToast("error in getting categories");
 				}
+			}
+		}
+	};
+	
+	private Runnable SliderTransition=new Runnable() {
+		
+		@Override
+		public void run() {
+			try
+			{
+				if(currentSlide >= slides.size())
+					currentSlide=0;
+				vpSlider.setCurrentItem(currentSlide, true);
+				currentSlide++;
+				if(!stopSliderTransition)
+					new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
 			}
 		}
 	};
@@ -118,6 +151,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		int viewId = v.getId();
 		switch (viewId) {
 		case R.id.btnAddAdvertise:
+			stopSliderTransition=true;
 			homeCallbacks.loadFragment(FragmentType.AddAdvertise,null);
 			break;
 		}
@@ -130,6 +164,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		int categoryId=categories.get(position).getId();
 		HashMap<String, Object> params=new HashMap<String, Object>();
 		params.put("selectedCategoryId", categoryId);
+		stopSliderTransition=true;
 		homeCallbacks.loadFragment(FragmentType.SubCategories,params);
 	}
 	

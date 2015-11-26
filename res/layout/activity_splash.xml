@@ -26,5 +26,15 @@
         android:layout_below="@id/vSpinner"
         android:src="@drawable/dr_shadow_spot"/>-->
 
+    <com.brainSocket.views.TextViewCustomFont
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:textSize="@dimen/ts_title_big"
+        android:layout_centerHorizontal="true"
+        android:text="@string/trial_version"
+        app:fontId="2"/>
     
 </RelativeLayout>

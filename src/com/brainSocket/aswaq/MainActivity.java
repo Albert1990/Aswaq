@@ -107,6 +107,59 @@ private void initCustomActionBar() {
 		ivMenu.setOnClickListener(this);
 		//btnGroup.setOnClickListener(this);
 	}
+
+private  void backToHome(){
+	try {
+        final FragmentManager fm = getSupportFragmentManager();
+        while (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStackImmediate();
+        }
+	    
+		adapter.onFragmentChange(FragmentType.Main);
+		updateActionbar(FragmentType.Main);
+		closeDrawer();
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
+/**
+ * update content of the actionBar accourding to the current fragment
+ * @param section
+ */
+private void updateActionbar(FragmentType section) {
+//	switch(section) {
+//	case Main:
+//		ivBackHome.setVisibility(View.GONE) ;
+//		tvFragTitle.setVisibility(View.GONE);
+//		ivMenu.setVisibility(View.VISIBLE);
+//		ivLogo.setVisibility(View.VISIBLE);
+//		btnGroup.setVisibility(View.INVISIBLE);
+//		break;
+//	case HISTORY:
+//		ivBackHome.setVisibility(View.VISIBLE) ;
+//		tvFragTitle.setVisibility(View.VISIBLE);
+//		ivMenu.setVisibility(View.VISIBLE);
+//		ivLogo.setVisibility(View.GONE);
+//		btnGroup.setVisibility(View.GONE);
+//		break;
+//	case ABOUT:
+//		ivBackHome.setVisibility(View.GONE) ;
+//		tvFragTitle.setVisibility(View.VISIBLE);
+//		ivMenu.setVisibility(View.VISIBLE);
+//		ivLogo.setVisibility(View.VISIBLE);
+//		btnGroup.setVisibility(View.GONE);
+//		break;
+//	case SETTINGS:
+//		ivBackHome.setVisibility(View.VISIBLE) ;
+//		tvFragTitle.setVisibility(View.VISIBLE);
+//		ivMenu.setVisibility(View.VISIBLE);
+//		ivLogo.setVisibility(View.GONE);
+//		btnGroup.setVisibility(View.GONE);
+//		break;
+//	}
+}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,7 +182,7 @@ private void initCustomActionBar() {
 	
 //	@Override
 //	public void onBackPressed() {
-
+//		// TODO Auto-generated method stub
 //		//super.onBackPressed();
 //		int  entrys = getSupportFragmentManager().getBackStackEntryCount() ;
 //		

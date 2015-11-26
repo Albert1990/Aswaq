@@ -33,7 +33,7 @@
         android:layout_toLeftOf="@id/drawable_icon"
         android:gravity="center_horizontal"
         android:text="signout"
-        android:textColor="@color/txt_dark"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/ts_text_big"
         app:fontId="1" />
 

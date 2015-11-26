@@ -10,23 +10,22 @@
         android:id="@+id/ivIcon"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:scaleType="fitCenter"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/ic_job_2" />
 
     <com.brainSocket.views.TextViewCustomFont
-        android:id="@+id/lblCategoryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivIcon"
-        android:layout_centerHorizontal="true"
         android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/ivIcon"
+        android:id="@+id/lblCategoryName"
         android:lines="1"
         android:maxLines="1"
         android:text="@string/place_holder"
         android:textColor="@color/txt_dark"
-        android:textSize="@dimen/ts_text_normal"
-        app:fontId="1" />
+        android:textSize="@dimen/ts_text_normal" />
 
 </RelativeLayout>

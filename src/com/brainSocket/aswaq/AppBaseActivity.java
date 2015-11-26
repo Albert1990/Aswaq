@@ -46,5 +46,6 @@ public class AppBaseActivity extends ActionBarActivity {
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		super.onActivityResult(arg0, arg1, arg2);
 		//FacebookProvider.getInstance().onActiviyResult(arg0, arg1, arg2);
-	}	
+	}
+	
 }

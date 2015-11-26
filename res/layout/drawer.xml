@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="right"
-    android:background="#f0f0f0"
+    android:background="#353634"
     android:clickable="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="15dp" >
 
-    <!--
-    <com.brainSocket.views.MLRoundedImageView
+    <!--<com.brainSocket.views.MLRoundedImageView
         android:id="@+id/ivUserPictue"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -40,22 +39,14 @@
         android:text="User name"
         android:textColor="@color/gray_off_white"
         android:textSize="@dimen/ts_text_small"
-        app:fontId="1" />
-    -->
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/logo_splash" />
-
-    <View
-        android:layout_width="150dp"
-        android:layout_height="1dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="@color/txt_dark" />
+        app:fontId="1" />-->
+        
+        <ImageView 
+            android:src="@drawable/logo_splash"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
 
     <ListView
         android:id="@+id/lvDrawer"
@@ -84,8 +75,8 @@
             android:paddingBottom="8dp"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"
-            android:paddingTop="8dp"
-            android:visibility="gone" >
+            android:visibility="gone"
+            android:paddingTop="8dp" >
 
             <com.brainSocket.views.TextViewCustomFont
                 android:layout_width="0dp"
@@ -108,8 +99,7 @@
                 android:src="@drawable/ic_mail" />
         </LinearLayout>
 
-        <!--
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/llFeedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,8 +128,7 @@
                 android:padding="2dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_mail" />
-        </LinearLayout>
-        -->
+        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/llLogout"

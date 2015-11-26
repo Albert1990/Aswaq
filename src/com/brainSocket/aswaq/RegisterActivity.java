@@ -1,9 +1,12 @@
 package com.brainSocket.aswaq;
 
+import java.util.HashMap;
+
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,11 +17,11 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppBaseActivity implements
-		OnClickListener {
-	private EditText txtEmail, txtUserName, txtMobileNumber, txtPassword,
-			txtAddress, txtDescription;
+		OnClickListener,HomeCallbacks {
+	private EditText txtEmail, txtPassword,txtRepeatPassword;
 	private Button btnRegister;
 	private Dialog dialogLoading;
 
@@ -33,11 +36,8 @@ public class RegisterActivity extends AppBaseActivity implements
 
 	private void initComponents() {
 		txtEmail = (EditText) findViewById(R.id.txtEmailRegister);
-		txtUserName = (EditText) findViewById(R.id.txtUserNameRegister);
-		txtMobileNumber = (EditText) findViewById(R.id.txtMobileNumberRegister);
 		txtPassword = (EditText) findViewById(R.id.txtPasswordRegister);
-		txtAddress = (EditText) findViewById(R.id.txtAddressRegister);
-		txtDescription = (EditText) findViewById(R.id.txtDescriptionRegister);
+		txtRepeatPassword=(EditText)findViewById(R.id.txtRepeatPasswordRegister);
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(this);
 	}
@@ -49,7 +49,6 @@ public class RegisterActivity extends AppBaseActivity implements
 		switch (viewId) {
 		case R.id.btnRegister:
 			register();
-
 			break;
 		default:
 
@@ -63,11 +62,8 @@ public class RegisterActivity extends AppBaseActivity implements
 		View focusView = null;
 
 		String email = txtEmail.getText().toString();
-		String userName = txtUserName.getText().toString();
-		String mobileNumber = txtMobileNumber.getText().toString();
 		String password = txtPassword.getText().toString();
-		String address = txtAddress.getText().toString();
-		String description = txtDescription.getText().toString();
+		String repeatedPassword=txtRepeatPassword.getText().toString();
 
 		if (AswaqApp.isEmptyOrNull(email)) {
 			txtEmail.setError(getString(R.string.login_error_email_empty));
@@ -80,37 +76,38 @@ public class RegisterActivity extends AppBaseActivity implements
 				cancel = true;
 			}
 		}
-		if (AswaqApp.isEmptyOrNull(userName)) {
-			txtUserName.setError(getString(R.string.login_error_user_name_empty));
-			focusView = txtUserName;
-			cancel = true;
-		}
-		if (AswaqApp.isEmptyOrNull(mobileNumber)) {
-			txtMobileNumber
-					.setError(getString(R.string.error_mobile_number_empty));
-			focusView = txtMobileNumber;
-			cancel = true;
-		} else {
-			// check if mobile number has been written in the right format
-
-		}
 		if (AswaqApp.isEmptyOrNull(password)) {
 			txtPassword.setError(getString(R.string.login_error_password_empty));
 			focusView = txtPassword;
 			cancel = true;
-		} else {
-			if (password.length() < 4) {
-				txtPassword.setError(getString(R.string.login_error_password_length));
-				focusView = txtPassword;
+		} 
+		else {
+//			if (password.length() < 4) {
+//				txtPassword.setError(getString(R.string.login_error_password_length));
+//				focusView = txtPassword;
+//				cancel = true;
+//			}
+			if (AswaqApp.isEmptyOrNull(repeatedPassword)) {
+				txtRepeatPassword.setError(getString(R.string.login_error_password_empty));
+				focusView = txtRepeatPassword;
 				cancel = true;
 			}
+			else
+			{
+				if(!password.equals(repeatedPassword))
+				{
+					txtRepeatPassword.setError(getString(R.string.error_password_not_same));
+					focusView = txtRepeatPassword;
+					cancel = true;
+				}
+			}
 		}
+		
 		if (cancel) {
 			focusView.requestFocus();
 		} else {
 			String facebookAccessToken="";
 			String facebookId="";
-
 			showProgress(true);
 			DataStore.getInstance().attemptSignUp(email, "",
 					"", password, "", "",
@@ -123,7 +120,6 @@ public class RegisterActivity extends AppBaseActivity implements
 	private DataRequestCallback registerCallback = new DataRequestCallback() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-
 			showProgress(false);
 			if (success) {
 				switch (data.getFlag()) {
@@ -133,7 +129,7 @@ public class RegisterActivity extends AppBaseActivity implements
 					startActivity(i);
 					break;
 				case ServerAccess.ERROR_CODE_user_exists_before:
-					showToast(getString(R.string.login_error_user_exists_before));
+					txtEmail.setError(getString(R.string.login_error_user_exists_before));
 					break;
 				}
 			}
@@ -169,4 +165,10 @@ public class RegisterActivity extends AppBaseActivity implements
 		
 	}
 
+	@Override
+	public void loadFragment(FragmentType fragmentType,HashMap<String, Object> params) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
