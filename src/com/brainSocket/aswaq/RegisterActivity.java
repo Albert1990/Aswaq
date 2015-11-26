@@ -110,14 +110,10 @@ public class RegisterActivity extends AppBaseActivity implements
 		} else {
 			String facebookAccessToken="";
 			String facebookId="";
-<<<<<<< HEAD
-			DataStore.getInstance().attemptSignUp(email, userName,
-					mobileNumber, password, address, description,
-=======
+
 			showProgress(true);
 			DataStore.getInstance().attemptSignUp(email, "",
 					"", password, "", "",
->>>>>>> origin/master
 					facebookId,facebookAccessToken,
 					registerCallback);
 		}
@@ -127,11 +123,8 @@ public class RegisterActivity extends AppBaseActivity implements
 	private DataRequestCallback registerCallback = new DataRequestCallback() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-<<<<<<< HEAD
-			// TODO Auto-generated method stub
-=======
+
 			showProgress(false);
->>>>>>> origin/master
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:
@@ -146,8 +139,6 @@ public class RegisterActivity extends AppBaseActivity implements
 			}
 		}
 	};
-<<<<<<< HEAD
-=======
 	
 	@Override
 	public void showProgress(boolean show) {
@@ -177,6 +168,5 @@ public class RegisterActivity extends AppBaseActivity implements
 		// TODO Auto-generated method stub
 		
 	}
->>>>>>> origin/master
 
 }
