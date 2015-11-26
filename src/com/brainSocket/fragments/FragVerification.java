@@ -27,6 +27,11 @@ public class FragVerification extends Fragment implements OnClickListener{
 	private EditText txtVerificationCode;
 	private HomeCallbacks homeCallback;
 	
+	private FragVerification()
+	{
+		
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -85,7 +90,7 @@ public class FragVerification extends Fragment implements OnClickListener{
 				me.setVerified(1);
 				cacheProvider.removeStoredMe();
 				cacheProvider.storeMe(me);
-				homeCallback.loadFragment(FragmentType.Main);
+				homeCallback.loadFragment(FragmentType.Main,null);
 			}
 			else if(data.getFlag()==ServerAccess.ERROR_CODE_wrong_verification_code)
 			{
@@ -115,6 +120,12 @@ case R.id.btnResendVerificationCode:
 			break;
 		}
 		
+	}
+	
+	public static FragVerification newInstance()
+	{
+		FragVerification fragVerification=new FragVerification();
+		return fragVerification;
 	}
 
 }

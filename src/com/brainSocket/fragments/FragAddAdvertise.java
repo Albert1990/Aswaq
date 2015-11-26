@@ -1,6 +1,7 @@
 package com.brainSocket.fragments;
 
 import java.io.InputStream;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 
@@ -46,6 +47,11 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private ImageView btnImg3;
 	private ImageView btnImg4;
 	private ImageView selectedImageView;
+	
+	private FragAddAdvertise()
+	{
+		
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -139,7 +145,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			if(success){
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done){
 					//homeCallback.showToast("the new advertise have been added successfully");
-					homeCallback.loadFragment(FragmentType.Main);
+					homeCallback.loadFragment(FragmentType.Main,null);
 				}
 			}
 		}
@@ -198,6 +204,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			browseImage(v);
 			break;
 		}
+	}
+	
+	public static FragAddAdvertise newInstance(HashMap<String, Object> params)
+	{
+		FragAddAdvertise fragAddAdvertise=new FragAddAdvertise();
+		return fragAddAdvertise;
 	}
 
 }

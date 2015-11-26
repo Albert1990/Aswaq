@@ -12,45 +12,42 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_slider_height" />
 
-
     <com.brainSocket.views.EditTextCustomFont
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/vpSliderMain"
-        android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:padding="10dp"
+        android:background="@drawable/shape_rounded_search_box"
         android:drawableRight="@drawable/ic_search"
         android:lines="1"
         android:maxLines="1"
-        android:background="@drawable/shape_rounded_search_box"
+        android:padding="10dp"
         android:textColor="@color/txt_dark"
-        android:textSize="@dimen/ts_text_normal" 
-        app:fontId="1"/>
-    
-    
+        android:textSize="@dimen/ts_text_normal"
+        app:fontId="1" />
+
     <GridView
         android:id="@+id/gridViewCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_below="@id/etSearch"
+        android:layout_marginTop="10dp"
         android:numColumns="4"
         tools:listitem="@layout/item_main_grid_category" >
     </GridView>
 
-    
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/btnAddAdvertise"
         style="@style/MenuButtonsStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_add"/>
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_add" />
 
 </RelativeLayout>

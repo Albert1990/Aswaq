@@ -1,5 +1,6 @@
 package com.brainSocket.fragments;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.brainSocket.adapters.AdvertisesListAdapter;
@@ -33,6 +34,10 @@ public class FragAds extends Fragment implements OnItemClickListener{
 	private List<SlideModel> slides;
 	private ViewPager vpSliderAds;
 	
+	private FragAds()
+	{
+		
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,11 +62,8 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			lstAds=(ListView)getActivity().findViewById(R.id.lstAds);
 			lstAds.setOnItemClickListener(this);
 			vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
-			if(AswaqApp.hasPair("selectedSubCategoryId"))
-			{
-				int categoryId=(Integer)AswaqApp.getPair("selectedSubCategoryId");
-				DataStore.getInstance().attemptGetCategoryAds(categoryId, getCategoryAdsCallback);
-			}
+			DataStore.getInstance().attemptGetCategoryAds(getArguments().getInt("selectedSubCategoryId"), getCategoryAdsCallback);
+			
 		}
 		catch(Exception ex)
 		{
@@ -95,7 +97,25 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			long id) {
 		// TODO Auto-generated method stub
 		int adId=ads.get(position).getId();
-		AswaqApp.addPair("selectedAdId", adId);
-		homeCallbacks.loadFragment(FragmentType.AdvertiseDetails);
+		HashMap<String, Object> params=new HashMap<String, Object>();
+		params.put("selectedAdId", adId);
+		homeCallbacks.loadFragment(FragmentType.AdvertiseDetails,params);
+	}
+	
+	public static FragAds newInstance(HashMap<String, Object> params)
+	{
+		FragAds fragAds=new FragAds();
+		try
+		{
+			Bundle extras=new Bundle();
+			if(params.containsKey("selectedSubCategoryId"))
+				extras.putInt("selectedSubCategoryId", (Integer)params.get("selectedSubCategoryId"));
+			fragAds.setArguments(extras);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return fragAds;
 	}
 }
