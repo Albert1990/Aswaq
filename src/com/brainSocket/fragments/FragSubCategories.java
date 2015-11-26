@@ -53,6 +53,7 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 			homeCallbacks=(HomeCallbacks)getActivity();
 			lstSubCategories=(ListView)getActivity().findViewById(R.id.lstSubCategories);
 			lstSubCategories.setOnItemClickListener(this);
+			homeCallbacks.showProgress(true);
 			DataStore.getInstance().attemptGetPageComponents(getArguments().getInt("selectedCategoryId"), getPageComponentsCallback);
 		}
 		catch(Exception ex)
@@ -72,6 +73,7 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 				//display categories in the list view
 				SubCategoriesListAdapter subCategoriesListAdapter=new SubCategoriesListAdapter(getActivity(), subCategories);
 				lstSubCategories.setAdapter(subCategoriesListAdapter);
+				homeCallbacks.showProgress(false);
 			}
 		}
 	};

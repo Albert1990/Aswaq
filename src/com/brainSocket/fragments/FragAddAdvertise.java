@@ -101,6 +101,8 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	
 	private void addNewAdvertise()
 	{
+		try
+		{
 		boolean cancel=false;
 		View focusView=null;
 		//check description textbox
@@ -138,18 +140,25 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		if(selectedCategoryId==-1)
 		{
 			tvCategory.setError(getString(R.string.error_chose_suitable_category));
-			tvCategory.requestFocus();
+			focusView=tvCategory;
 			cancel=true;
 		}
 		
 		
 		if(cancel){
-			focusView.requestFocus();
+			if(focusView!=null)
+				focusView.requestFocus();
 		}else{
 			telephones.put(phone);
+			homeCallback.showProgress(true);
 			DataStore.getInstance().attemptAddNewAdvertise(description,
 					selectedCategoryId,
 					isUsed,price,telephones,addNewAdvertiseCallback);
+		}
+	}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 	}
 	
@@ -160,6 +169,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			if(success){
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done){
 					//homeCallback.showToast("the new advertise have been added successfully");
+					homeCallback.showProgress(false);
 					homeCallback.loadFragment(FragmentType.Main,null);
 				}
 			}
@@ -234,6 +244,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			try
 			{
 				CategoryModel selectedCategory=(CategoryModel)data.getValue("selectedCategory");
+				selectedCategoryId=selectedCategory.getId();
 				tvCategory.setText(selectedCategory.getName());
 			}
 			catch(Exception ex)

@@ -8,9 +8,12 @@ import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ public class RegisterActivity extends AppBaseActivity implements
 		OnClickListener,HomeCallbacks {
 	private EditText txtEmail, txtPassword,txtRepeatPassword;
 	private Button btnRegister;
+	private Dialog dialogLoading;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -104,6 +108,7 @@ public class RegisterActivity extends AppBaseActivity implements
 		} else {
 			String facebookAccessToken="";
 			String facebookId="";
+			showProgress(true);
 			DataStore.getInstance().attemptSignUp(email, "",
 					"", password, "", "",
 					facebookId,facebookAccessToken,
@@ -115,6 +120,7 @@ public class RegisterActivity extends AppBaseActivity implements
 	private DataRequestCallback registerCallback = new DataRequestCallback() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
+			showProgress(false);
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:
@@ -131,9 +137,20 @@ public class RegisterActivity extends AppBaseActivity implements
 	};
 	
 	@Override
-	public void showProgress(boolean show, int msg) {
+	public void showProgress(boolean show) {
 		// TODO Auto-generated method stub
-		
+		if(dialogLoading==null)
+		{
+			dialogLoading = new Dialog(this);
+			dialogLoading.setCancelable(false);
+			dialogLoading.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialogLoading.setContentView(R.layout.dialog_custom_loading);
+			dialogLoading.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		}
+		if(show)
+			dialogLoading.show();
+		else
+			dialogLoading.dismiss();
 	}
 
 	@Override

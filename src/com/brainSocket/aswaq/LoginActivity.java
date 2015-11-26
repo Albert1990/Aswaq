@@ -20,9 +20,12 @@ import com.brainSocket.views.TextViewCustomFont;
 import com.facebook.Profile;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +37,7 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 	private TextViewCustomFont btnLogin;
 	private TextViewCustomFont btnDoesntHaveAccount;
 	private TextViewCustomFont btnLoginFB;
+	private Dialog dialogLoading;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -90,6 +94,7 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 			focusView.requestFocus();
 		} else {
 			// every thing is good
+			showProgress(true);
 			DataStore.getInstance()
 					.attemptLogin(email, password, loginCallback);
 		}
@@ -99,6 +104,7 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
+			showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					Intent i = new Intent(LoginActivity.this,
@@ -157,7 +163,7 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		FacebookProvider.getInstance().requestFacebookLogin(this);
 		//Session.StatusCallback callback =  new LoginStatsCallback() ;
 		//Session.openActiveSession(LoginActivity.this, true, perm1, callback ) ;
-		showProgress(true, 0);
+		showProgress(true);
 	}
 	
 	private DataRequestCallback registerCallback = new DataRequestCallback() {
@@ -204,9 +210,19 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 	}
 	
 	@Override
-	public void showProgress(boolean show, int msg) {
-		// TODO Auto-generated method stub
-		
+	public void showProgress(boolean show) {
+		if(dialogLoading==null)
+		{
+			dialogLoading = new Dialog(this);
+			dialogLoading.setCancelable(false);
+			dialogLoading.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialogLoading.setContentView(R.layout.dialog_custom_loading);
+			dialogLoading.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		}
+		if(show)
+			dialogLoading.show();
+		else
+			dialogLoading.dismiss();
 	}
 
 	@Override

@@ -71,5 +71,6 @@
     <string name="error_connection_error">حدث خطأ في الاتصال</string>
     <string name="lbl_suitable_category">اختر الصنف المناسب لإعلانك</string>
     <string name="error_chose_suitable_category">اختر الصنف المناسب لإعلانك</string>
+    <string name="error_verification_code_required">رمز التفعيل مطلوب</string>
     
 </resources>

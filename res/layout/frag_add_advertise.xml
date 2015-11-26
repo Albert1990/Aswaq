@@ -86,6 +86,7 @@
             android:lines="1"
             android:maxLines="1"
             android:padding="10dp"
+            android:inputType="phone"
             app:fontId="1" />
 
         <Switch

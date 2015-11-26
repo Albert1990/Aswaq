@@ -50,8 +50,8 @@ public class DiagCategories extends DialogFragment implements OnItemClickListene
 	
 	private void init()
 	{
-		
 		homeCallbacks=(HomeCallbacks)getActivity();
+		homeCallbacks.showProgress(true);
 		DataStore.getInstance().attemptgetSubCategoriesAsPairs(getSubCategoriesCallback);
 	}
 	
@@ -67,6 +67,7 @@ public class DiagCategories extends DialogFragment implements OnItemClickListene
 							.getValue("categories");
 					SubCategoriesListAdapter subCategoriesListAdapter=new SubCategoriesListAdapter(getActivity(), categories);
 					lvDiagCategories.setAdapter(subCategoriesListAdapter);
+					homeCallbacks.showProgress(false);
 				} else {
 					homeCallbacks.showToast("error in getting categories");
 				}
