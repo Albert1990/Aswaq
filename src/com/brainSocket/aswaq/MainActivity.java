@@ -18,19 +18,26 @@ import com.brainSocket.fragments.FragSubCategories;
 import com.brainSocket.fragments.FragVerification;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.models.CategoryModel;
+import com.brainSocket.views.TextViewCustomFont;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -42,12 +49,19 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 	private View llLogout;
 	private FragmentManager fragmentManager;
 	private FragmentType currentFragmentType;
+	private Dialog dialogLoading;
+	private ImageView ivMenu;
+	private TextViewCustomFont tvFragTitle;
+	private ImageView ivBackHome;
+	private ImageView ivLogo;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		init();		
+		init();
+		initCustomActionBar();
 	}
 	
 	private void init()
@@ -68,6 +82,30 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 			llLogout.setOnClickListener(this);
 			loadFragment(FragmentType.Main,null);
 		}
+	}
+	
+private void initCustomActionBar() {
+		
+		ActionBar mActionBar = getSupportActionBar();
+		mActionBar.setDisplayShowHomeEnabled(false);
+		mActionBar.setDisplayShowTitleEnabled(false);
+		mActionBar.setDisplayUseLogoEnabled(false);
+		mActionBar.setDisplayHomeAsUpEnabled(false) ;
+		mActionBar.setHomeAsUpIndicator(null);
+		//LayoutInflater mInflater = LayoutInflater.from(this); 
+		mActionBar.setCustomView(R.layout.custom_actionbar);
+		mActionBar.setDisplayShowCustomEnabled(true);
+		View mCustomView = mActionBar.getCustomView() ;
+		mCustomView.invalidate();
+		
+		tvFragTitle = (TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle) ;
+		ivMenu = (ImageView) mCustomView.findViewById(R.id.ivMenu);
+		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
+		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
+		//btnGroup = findViewById(R.id.btnGroup);
+		
+		ivMenu.setOnClickListener(this);
+		//btnGroup.setOnClickListener(this);
 	}
 	
 	@Override
@@ -112,6 +150,27 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 //			e.printStackTrace();
 //		}
 //	}
+	
+	private void toggleDrawer(){
+		try{
+			if(dlDrawer.isDrawerOpen(Gravity.RIGHT)){
+				dlDrawer.closeDrawer(Gravity.RIGHT);
+			}else{
+				dlDrawer.openDrawer(Gravity.RIGHT);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	private void closeDrawer(){
+		try{
+			if(dlDrawer.isDrawerOpen(Gravity.RIGHT)){
+				dlDrawer.closeDrawer(Gravity.RIGHT);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -122,13 +181,26 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 		case R.id.llLogout:
 			DataCacheProvider.getInstance().removeStoredMe();
 			break;
+		case R.id.ivMenu:
+			toggleDrawer();
+			break;
 		}
 	}
 	
 	@Override
-	public void showProgress(boolean show, int msg) {
-		// TODO Auto-generated method stub
-		
+	public void showProgress(boolean show) {
+		if(dialogLoading==null)
+		{
+			dialogLoading = new Dialog(this);
+			dialogLoading.setCancelable(false);
+			dialogLoading.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialogLoading.setContentView(R.layout.dialog_custom_loading);
+			dialogLoading.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		}
+		if(show)
+			dialogLoading.show();
+		else
+			dialogLoading.dismiss();
 	}
 
 	@Override

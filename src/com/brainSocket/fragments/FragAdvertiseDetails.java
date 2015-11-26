@@ -34,15 +34,16 @@ public class FragAdvertiseDetails extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		int selectedAdId=savedInstanceState.getInt("selectedAdId");
-		init(selectedAdId);
+		init();
 	}
 	
-	private void init(int selectedAdId)
+	private void init()
 	{
 		try
 		{
-			DataStore.getInstance().attemptGetAdvertiseDetails(selectedAdId, getAdvertiseDetailsCallback);
+			homeCallbacks=(HomeCallbacks)getActivity();
+			homeCallbacks.showProgress(true);
+			DataStore.getInstance().attemptGetAdvertiseDetails(getArguments().getInt("selectedAdId"), getAdvertiseDetailsCallback);
 		}
 		catch(Exception ex)
 		{
@@ -58,6 +59,7 @@ public class FragAdvertiseDetails extends Fragment {
 			if(success)
 			{
 				AdvertiseModel ad=(AdvertiseModel)data.getValue("adDetails");
+				homeCallbacks.showProgress(false);
 			}
 		}
 	};

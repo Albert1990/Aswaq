@@ -5,9 +5,12 @@ import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,7 @@ public class RegisterActivity extends AppBaseActivity implements
 	private EditText txtEmail, txtUserName, txtMobileNumber, txtPassword,
 			txtAddress, txtDescription;
 	private Button btnRegister;
+	private Dialog dialogLoading;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -106,8 +110,14 @@ public class RegisterActivity extends AppBaseActivity implements
 		} else {
 			String facebookAccessToken="";
 			String facebookId="";
+<<<<<<< HEAD
 			DataStore.getInstance().attemptSignUp(email, userName,
 					mobileNumber, password, address, description,
+=======
+			showProgress(true);
+			DataStore.getInstance().attemptSignUp(email, "",
+					"", password, "", "",
+>>>>>>> origin/master
 					facebookId,facebookAccessToken,
 					registerCallback);
 		}
@@ -117,7 +127,11 @@ public class RegisterActivity extends AppBaseActivity implements
 	private DataRequestCallback registerCallback = new DataRequestCallback() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
+<<<<<<< HEAD
 			// TODO Auto-generated method stub
+=======
+			showProgress(false);
+>>>>>>> origin/master
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:
@@ -132,5 +146,37 @@ public class RegisterActivity extends AppBaseActivity implements
 			}
 		}
 	};
+<<<<<<< HEAD
+=======
+	
+	@Override
+	public void showProgress(boolean show) {
+		// TODO Auto-generated method stub
+		if(dialogLoading==null)
+		{
+			dialogLoading = new Dialog(this);
+			dialogLoading.setCancelable(false);
+			dialogLoading.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialogLoading.setContentView(R.layout.dialog_custom_loading);
+			dialogLoading.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		}
+		if(show)
+			dialogLoading.show();
+		else
+			dialogLoading.dismiss();
+	}
+
+	@Override
+	public void showToast(String msg) {
+		// TODO Auto-generated method stub
+		Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void setTitle(String title) {
+		// TODO Auto-generated method stub
+		
+	}
+>>>>>>> origin/master
 
 }

@@ -49,18 +49,18 @@ public class FragVerification extends Fragment implements OnClickListener{
 	
 	private void init()
 	{
+		homeCallback=(HomeCallbacks)getActivity();
 		btnVerifyCode=(Button)getActivity().findViewById(R.id.btnVerifyCode);
 		btnVerifyCode.setOnClickListener(this);
 		btnResendVerificationCode=(Button)getActivity().findViewById(R.id.btnResendVerificationCode);
 		btnResendVerificationCode.setOnClickListener(this);
 		txtVerificationCode=(EditText)getActivity().findViewById(R.id.txtVerificationCode);
-		homeCallback=(HomeCallbacks)getActivity();
 	}
 	
 	private void resendVerificationCode()
 	{
+		homeCallback.showProgress(true);
 		DataStore.getInstance().attemptSendVerificationCode(resendVerificationCodeCallback);
-		homeCallback.showProgress(true, 0);
 	}
 	
 	private DataRequestCallback resendVerificationCodeCallback=new DataRequestCallback() {
@@ -68,6 +68,7 @@ public class FragVerification extends Fragment implements OnClickListener{
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			homeCallback.showProgress(false);
 			if(success)
 			{
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
@@ -75,6 +76,8 @@ public class FragVerification extends Fragment implements OnClickListener{
 					homeCallback.showToast(getString(R.string.toast_verification_sent));
 				}
 			}
+			else
+				homeCallback.showToast(getString(R.string.error_connection_error));
 		}
 	};
 	
@@ -83,6 +86,8 @@ public class FragVerification extends Fragment implements OnClickListener{
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			if(success)
+			{
 			if(data.getFlag()==ServerAccess.ERROR_CODE_done)
 			{
 				DataCacheProvider cacheProvider=DataCacheProvider.getInstance();
@@ -102,7 +107,29 @@ public class FragVerification extends Fragment implements OnClickListener{
 				homeCallback.showToast("unknown error:"+data.getFlag());
 			}
 		}
+			else
+			{
+				homeCallback.showToast(getString(R.string.error_connection_error));
+			}
+		}
 	};
+	
+	private void verifyVerificationCode()
+	{
+		boolean cancel=false;
+		String verificationCode=txtVerificationCode.getText().toString();
+		if(AswaqApp.isEmptyOrNull(verificationCode))
+		{
+			txtVerificationCode.setError(getString(R.string.error_verification_code_required));
+			txtVerificationCode.requestFocus();
+			cancel=true;
+		}
+		if(cancel)
+		{
+			homeCallback.showProgress(true);
+			DataStore.getInstance().attempVerifyUser(verificationCode,verifyUserCallback);
+		}
+	}
 	
 	@Override
 	public void onClick(View v) {
@@ -111,9 +138,7 @@ public class FragVerification extends Fragment implements OnClickListener{
 		switch(viewId)
 		{
 		case R.id.btnVerifyCode:
-			//check input
-			String verificationCode=txtVerificationCode.getText().toString();
-			DataStore.getInstance().attempVerifyUser(verificationCode,verifyUserCallback);
+			verifyVerificationCode();
 			break;
 case R.id.btnResendVerificationCode:
 			resendVerificationCode();

@@ -16,6 +16,7 @@ import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.models.SlideModel;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.view.ViewPager;
@@ -33,6 +34,8 @@ public class FragAds extends Fragment implements OnItemClickListener{
 	private List<AdvertiseModel> ads;
 	private List<SlideModel> slides;
 	private ViewPager vpSliderAds;
+	private int currentSlide=0;
+	private boolean stopSliderTransition;
 	
 	private FragAds()
 	{
@@ -62,8 +65,8 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			lstAds=(ListView)getActivity().findViewById(R.id.lstAds);
 			lstAds.setOnItemClickListener(this);
 			vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
+			homeCallbacks.showProgress(true);
 			DataStore.getInstance().attemptGetCategoryAds(getArguments().getInt("selectedSubCategoryId"), getCategoryAdsCallback);
-			
 		}
 		catch(Exception ex)
 		{
@@ -87,7 +90,32 @@ public class FragAds extends Fragment implements OnItemClickListener{
 				
 				SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);
 				vpSliderAds.setAdapter(sliderAdapter);
-				
+				if(slides.size() > 0)
+				{
+					stopSliderTransition=false;
+					new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+				}
+				homeCallbacks.showProgress(false);
+			}
+		}
+	};
+	
+private Runnable SliderTransition=new Runnable() {
+		
+		@Override
+		public void run() {
+			try
+			{
+				if(currentSlide >= slides.size())
+					currentSlide=0;
+				vpSliderAds.setCurrentItem(currentSlide, true);
+				currentSlide++;
+				if(!stopSliderTransition)
+					new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
 			}
 		}
 	};

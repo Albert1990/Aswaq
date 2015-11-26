@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="right"
+<<<<<<< HEAD
     android:background="#f0f0f0"
+=======
+    android:background="#353634"
+>>>>>>> origin/master
     android:clickable="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"

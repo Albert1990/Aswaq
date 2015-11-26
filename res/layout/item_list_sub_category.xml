@@ -9,6 +9,7 @@
         android:id="@+id/lblSubCategoryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:gravity="right"
         android:padding="16dp"
         android:background="@color/white"
@@ -16,5 +17,10 @@
         android:textSize="@dimen/ts_text_normal"
         android:text="@string/app_name"
         app:fontId="1"/>
+=======
+        android:textSize="18dp"
+        android:layout_margin="5dp"
+        android:text="@string/app_name"/>
+>>>>>>> origin/master
 
 </LinearLayout>

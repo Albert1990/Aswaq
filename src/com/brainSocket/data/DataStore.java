@@ -130,7 +130,7 @@ public class DataStore {
 			public void run() {
 				// TODO Auto-generated method stub
 				boolean success = true;
-				ServerResult result=serverHandler.getCategories(categoryId);
+				ServerResult result=serverHandler.getPageComponents(categoryId);
 				if(result.connectionFailed())
 					success=false;
 				else
@@ -155,6 +155,40 @@ public class DataStore {
 								slides.add(new SlideModel((JSONObject)jsonSlides.get(i)));
 							}
 							result.addPair("slides", slides);
+						}
+						catch(Exception ex){}
+					}
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptgetSubCategoriesAsPairs(final DataRequestCallback callback) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result=serverHandler.getSubCategoriesAsPairs();
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					// parsing categories
+					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					{
+						try
+						{
+							JSONArray jsonCategories=(JSONArray)result.getValue("jsonCategories");
+							List<CategoryModel> categories=new ArrayList<CategoryModel>();
+							for(int i=0;i<jsonCategories.length();i++)
+							{
+								categories.add(new CategoryModel((JSONObject)jsonCategories.get(i)));
+							}
+							result.addPair("categories", categories);
 						}
 						catch(Exception ex){}
 					}
