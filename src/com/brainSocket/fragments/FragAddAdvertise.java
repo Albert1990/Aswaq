@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.webkit.WebView.FindListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,7 +34,9 @@ import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.dialogs.DiagCategories;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.models.CategoryModel;
 import com.brainSocket.views.EditTextCustomFont;
 import com.brainSocket.views.TextViewCustomFont;
 
@@ -47,6 +52,8 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private ImageView btnImg3;
 	private ImageView btnImg4;
 	private ImageView selectedImageView;
+	private TextViewCustomFont tvCategory;
+	int selectedCategoryId=-1;
 	
 	private FragAddAdvertise()
 	{
@@ -87,6 +94,9 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		btnImg4=(ImageButton)getActivity().findViewById(R.id.btnImg4);
 		btnImg4.setOnClickListener(this);
 		
+		tvCategory=(TextViewCustomFont)getActivity().findViewById(R.id.tvCategory);
+		tvCategory.setOnClickListener(this);
+		
 	}
 	
 	private void addNewAdvertise()
@@ -95,7 +105,6 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		View focusView=null;
 		//check description textbox
 		String description=txtProductDescription.getText().toString();
-		int selectedCategoryId=2;
 		boolean isUsed=swhNew.isActivated();
 		int price=0;
 		String phone=tvPhone.getText().toString();
@@ -126,6 +135,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			cancel=true;
 		}
 		
+		if(selectedCategoryId==-1)
+		{
+			tvCategory.setError(getString(R.string.error_chose_suitable_category));
+			tvCategory.requestFocus();
+			cancel=true;
+		}
 		
 		
 		if(cancel){
@@ -203,8 +218,30 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		case R.id.btnImg4:
 			browseImage(v);
 			break;
+		case R.id.tvCategory:
+			DiagCategories categoriesDialog= new DiagCategories(onCategorySelectedCallback);
+			categoriesDialog.show(getFragmentManager(), "Select Category");
+			
+			break;
 		}
 	}
+	
+	private DataRequestCallback onCategorySelectedCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			try
+			{
+				CategoryModel selectedCategory=(CategoryModel)data.getValue("selectedCategory");
+				tvCategory.setText(selectedCategory.getName());
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+	};
 	
 	public static FragAddAdvertise newInstance(HashMap<String, Object> params)
 	{

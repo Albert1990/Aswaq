@@ -207,7 +207,7 @@ public class ServerAccess {
 		return result;
 	}
 	
-	public ServerResult getCategories(int categoryId) {
+	public ServerResult getPageComponents(int categoryId) {
 		ServerResult result = new ServerResult();
 		try {
 			// parameters
@@ -229,6 +229,36 @@ public class ServerAccess {
 						JSONObject ob=jsonResponse.getJSONObject("object");
 						result.addPair("jsonCategories", ob.getJSONArray("categories"));
 						result.addPair("jsonSlides", ob.getJSONArray("slides"));
+					}
+				}
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
+	public ServerResult getSubCategoriesAsPairs() {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			
+			// url
+			String url = BASE_SERVICE_URL + "categories_api/get_sub_categories_as_pairs";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				if(jsonResponse.has("object")){
+					if(!jsonResponse.isNull("object"))
+					{
+						result.addPair("jsonCategories", jsonResponse.getJSONArray("object"));
 					}
 				}
 			} else {

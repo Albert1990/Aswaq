@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <TextView 
-        android:id="@+id/lblSubCategoryName"
+    <ListView 
+        android:id="@+id/lvDiagCategories"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:text="@string/app_name"/>
+        android:layout_height="wrap_content">
+        
+    </ListView>
 
 </LinearLayout>

@@ -3,7 +3,7 @@ package com.brainSocket.fragments;
 import java.util.HashMap;
 import java.util.List;
 
-import com.brainSocket.adapters.CategoryListAdapter;
+import com.brainSocket.adapters.MainCategoriesListAdapter;
 import com.brainSocket.adapters.SliderAdapter;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
@@ -99,11 +99,12 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 							.getValue("categories");
 					slides = (List<SlideModel>) data
 							.getValue("slides");
-					CategoryListAdapter categoryListAdapter=new CategoryListAdapter(getActivity(), categories);
+					MainCategoriesListAdapter categoryListAdapter=new MainCategoriesListAdapter(getActivity(), categories);
 					gridViewCategories.setAdapter(categoryListAdapter);
 					
 					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);
 					vpSlider.setAdapter(sliderAdapter);
+					//vpSlider.setCurrentItem(item);
 					
 				} else {
 					homeCallbacks.showToast("error in getting categories");
