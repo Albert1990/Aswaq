@@ -34,7 +34,14 @@ public class SliderAdapter extends PagerAdapter{
 		View v=inflater.inflate(R.layout.item_slider, container, false);
 		ImageView imgSlider=(ImageView)v.findViewById(R.id.imgSlide);
 		String photo_path=AswaqApp.getImagePath(ImageType.Slide, slides.get(position).getPhoto_path());
-		Picasso.with(context).load(photo_path).into(imgSlider);
+		// TODO temporarily removed 
+		//Picasso.with(context).load(photo_path).into(imgSlider);
+		//temp code 
+		if((position %2) == 0){
+			imgSlider.setImageResource(R.drawable.banner1);
+		}else{
+			imgSlider.setImageResource(R.drawable.banner2);
+		}
 		container.addView(v);
 		return v;
 	}

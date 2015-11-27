@@ -54,7 +54,7 @@ public class TextViewCustomFont extends TextView{
 	{
 		try {
 			if(tfDinarOneLight == null) {
-				tfDinarOneLight = Typeface.createFromAsset(context.getAssets(), "fonts/GE_Dinar_One_Light.otf");
+				tfDinarOneLight = Typeface.createFromAsset(context.getAssets(), "fonts/AraHamahSahetAlAssi-Regular.ttf");
 			}
 		} 
 		catch (Exception e) {

@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="lbl_email">البريد الإلكتروني</string>
     <string name="lbl_password">كلمة المرور</string>
+    <string name="lbl_password_repeat">تاكيد كلمة المرور</string>
     
     <string name="btn_doesnt_have_account">لا تملك حساباً ؟</string>
     <string name="lbl_mobile_number">رقم الموبايل</string>
@@ -40,6 +41,9 @@
     <string name="verif_hint_verification_code">رمز التأكيد</string>
     <string name="verif_btn_verifiy_code">تأكيد</string>
     <string name="verif_error_verification_message_wrong">رمز التفعيل خطأ</string>
+    
+    <!-- main -->
+    <string name="main_search_hint">قم بالبحث عن ما تحتاجه</string>
     
     <!-- add Adv -->
     <string name="add_ad_price_hint">السعر؟</string>

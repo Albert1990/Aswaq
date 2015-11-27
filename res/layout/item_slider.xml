@@ -7,8 +7,10 @@
     <ImageView
         android:id="@+id/imgSlide" 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_launcher"/>
+        android:layout_height="@dimen/main_slider_height"
+        android:layout_gravity="top"
+        android:scaleType="centerCrop"
+        android:src="@drawable/banner1"/>
     
 
 </LinearLayout>

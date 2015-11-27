@@ -1,14 +1,26 @@
 package com.brainSocket.aswaq;
 
 import java.util.HashMap;
-import java.util.List;
+
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.brainSocket.adapters.DrawerAdapter;
 import com.brainSocket.data.DataCacheProvider;
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
 import com.brainSocket.fragments.FragAddAdvertise;
 import com.brainSocket.fragments.FragAds;
@@ -17,30 +29,7 @@ import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
 import com.brainSocket.fragments.FragVerification;
 import com.brainSocket.models.AppUser;
-import com.brainSocket.models.CategoryModel;
 import com.brainSocket.views.TextViewCustomFont;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
 	private ListView lvDrawer ;
@@ -59,6 +48,8 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+		
 		setContentView(R.layout.activity_main);
 		init();
 		initCustomActionBar();
@@ -94,6 +85,7 @@ private void initCustomActionBar() {
 		mActionBar.setHomeAsUpIndicator(null);
 		//LayoutInflater mInflater = LayoutInflater.from(this); 
 		mActionBar.setCustomView(R.layout.custom_actionbar);
+		setActionBarColor(Color.argb(30, 0, 0, 0));
 		mActionBar.setDisplayShowCustomEnabled(true);
 		View mCustomView = mActionBar.getCustomView() ;
 		mCustomView.invalidate();
@@ -107,6 +99,10 @@ private void initCustomActionBar() {
 		ivMenu.setOnClickListener(this);
 		//btnGroup.setOnClickListener(this);
 	}
+
+public void setActionBarColor(int color){
+	getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+}
 
 private  void backToHome(){
 	try {
@@ -129,42 +125,21 @@ private  void backToHome(){
  * @param section
  */
 private void updateActionbar(FragmentType section) {
-//	switch(section) {
-//	case Main:
-//		ivBackHome.setVisibility(View.GONE) ;
-//		tvFragTitle.setVisibility(View.GONE);
-//		ivMenu.setVisibility(View.VISIBLE);
-//		ivLogo.setVisibility(View.VISIBLE);
-//		btnGroup.setVisibility(View.INVISIBLE);
-//		break;
-//	case HISTORY:
-//		ivBackHome.setVisibility(View.VISIBLE) ;
-//		tvFragTitle.setVisibility(View.VISIBLE);
-//		ivMenu.setVisibility(View.VISIBLE);
-//		ivLogo.setVisibility(View.GONE);
-//		btnGroup.setVisibility(View.GONE);
-//		break;
-//	case ABOUT:
-//		ivBackHome.setVisibility(View.GONE) ;
-//		tvFragTitle.setVisibility(View.VISIBLE);
-//		ivMenu.setVisibility(View.VISIBLE);
-//		ivLogo.setVisibility(View.VISIBLE);
-//		btnGroup.setVisibility(View.GONE);
-//		break;
-//	case SETTINGS:
-//		ivBackHome.setVisibility(View.VISIBLE) ;
-//		tvFragTitle.setVisibility(View.VISIBLE);
-//		ivMenu.setVisibility(View.VISIBLE);
-//		ivLogo.setVisibility(View.GONE);
-//		btnGroup.setVisibility(View.GONE);
-//		break;
-//	}
+	switch(section) {
+	case Main:
+		setActionBarColor(Color.TRANSPARENT);
+		break;
+	default:
+		setActionBarColor(getResources().getColor(R.color.app_theme));
+		break;
+	}
+
 }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -318,5 +293,6 @@ private void updateActionbar(FragmentType section) {
 			break;
 		}
 		currentFragmentType=fragmentType;
+		updateActionbar(currentFragmentType);
 	}
 }

@@ -20,11 +20,11 @@ import android.widget.TextView;
 
 public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 	private DrawerElement [] elements  = {
-			  new DrawerElement(R.string.drawer_main, R.drawable.ic_home, R.drawable.ic_home_active,DrawerItemType.MAIN),
-			  new DrawerElement(R.string.drawer_profile, R.drawable.ic_todo, R.drawable.ic_todo_active, DrawerItemType.PROFILE) ,
-			  new DrawerElement(R.string.drawer_agents, R.drawable.ic_chart, R.drawable.ic_chart_active, DrawerItemType.AGENTS) ,
-			  new DrawerElement(R.string.drawer_favourites, R.drawable.ic_chart, R.drawable.ic_chart_active, DrawerItemType.FAVOURITES) ,
-			  new DrawerElement(R.string.drawer_callus, R.drawable.ic_info, R.drawable.ic_info_active, DrawerItemType.CALLUS) ,
+			  new DrawerElement(R.string.drawer_main, R.drawable.ic_home, R.drawable.ic_home,DrawerItemType.MAIN),
+			  new DrawerElement(R.string.drawer_profile, R.drawable.ic_profile, R.drawable.ic_profile, DrawerItemType.PROFILE) ,
+			  new DrawerElement(R.string.drawer_agents, R.drawable.ic_customers, R.drawable.ic_customers, DrawerItemType.AGENTS) ,
+			  new DrawerElement(R.string.drawer_favourites, R.drawable.ic_fav, R.drawable.ic_fav, DrawerItemType.FAVOURITES) ,
+			  new DrawerElement(R.string.drawer_callus, R.drawable.ic_about, R.drawable.ic_about, DrawerItemType.CALLUS) ,
 			  };
 		
 		  protected final Context context;
