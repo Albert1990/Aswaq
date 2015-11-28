@@ -77,4 +77,11 @@
     <string name="error_chose_suitable_category">اختر الصنف المناسب لإعلانك</string>
     <string name="error_verification_code_required">رمز التفعيل مطلوب</string>
     
+    <!-- Details -->
+    <string name="details_payed">إعلان مدفوع</string>
+    <string name="details_call">اتصال</string>
+    <string name="details_place">المكان</string>
+    <string name="details_category">القسم</string>
+    <string name="details_desc">الوصف</string>
+    
 </resources>
