@@ -123,7 +123,7 @@
                 android:text="@string/place_holder"
                 android:textColor="@color/txt_white"
                 android:textSize="@dimen/ts_text_xsmall"
-                app:fontid="1" />
+                app:fontId="1" />
 
             <RatingBar
                 android:id="@+id/rbUserRate"
