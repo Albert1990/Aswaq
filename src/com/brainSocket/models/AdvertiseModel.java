@@ -10,7 +10,7 @@ public class AdvertiseModel {
 	private int price;
 	private boolean isUsed;
 	private String facebookPage;
-	private int payType;
+	private int isPinned;
 	private String telephones;
 	private AppUser user;
 	
@@ -70,8 +70,8 @@ public class AdvertiseModel {
 		
 		try
 		{
-			if(ob.has("pay_type"))
-				this.payType=ob.getInt("pay_type");
+			if(ob.has("is_pinned"))
+				this.isPinned=ob.getInt("is_pinned");
 		}
 		catch(Exception ex){}
 		
@@ -134,11 +134,11 @@ public class AdvertiseModel {
 	public void setFacebookPage(String facebookPage) {
 		this.facebookPage = facebookPage;
 	}
-	public int getPayType() {
-		return payType;
+	public int IsPinned() {
+		return isPinned;
 	}
-	public void setPayType(int payType) {
-		this.payType = payType;
+	public void setIsPinned(int isPinned) {
+		this.isPinned = isPinned;
 	}
 	public String getTelephones() {
 		return telephones;
@@ -167,7 +167,7 @@ public class AdvertiseModel {
 		try{ob.put("price", price);}catch(Exception ex){}
 		try{ob.put("is_used", isUsed);}catch(Exception ex){}
 		try{ob.put("facebook_page", facebookPage);}catch(Exception ex){}
-		try{ob.put("pay_type", payType);}catch(Exception ex){}
+		try{ob.put("is_pinned", isPinned);}catch(Exception ex){}
 		try{ob.put("telephones", telephones);}catch(Exception ex){}
 		return ob;
 	}

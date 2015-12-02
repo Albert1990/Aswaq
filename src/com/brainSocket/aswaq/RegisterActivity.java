@@ -170,5 +170,11 @@ public class RegisterActivity extends AppBaseActivity implements
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void loadActivity() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

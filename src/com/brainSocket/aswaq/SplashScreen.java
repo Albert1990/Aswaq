@@ -38,16 +38,16 @@ public class SplashScreen extends AppBaseActivity {
 		try
 		{
 			DataCacheProvider cacheProvider=DataCacheProvider.getInstance();
-			//cacheProvider.removeStoredMe();
-			AppUser me= cacheProvider.getMe();
-			if(me==null)
-			{
-				i=new Intent(SplashScreen.this,LoginActivity.class);
-			}
-			else
-			{
+			cacheProvider.removeAllStoredData();
+//			AppUser me= cacheProvider.getMe();
+//			if(me==null)
+//			{
+//				i=new Intent(SplashScreen.this,LoginActivity.class);
+//			}
+//			else
+//			{
 				i=new Intent(SplashScreen.this,MainActivity.class);
-			}
+//			}
 		}
 		catch(Exception ex){
 			ex.printStackTrace();

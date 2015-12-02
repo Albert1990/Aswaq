@@ -243,4 +243,10 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		
 	}
 
+	@Override
+	public void loadActivity() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

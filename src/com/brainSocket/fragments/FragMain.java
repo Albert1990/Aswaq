@@ -7,17 +7,23 @@ import com.brainSocket.adapters.MainCategoriesListAdapter;
 import com.brainSocket.adapters.SliderAdapter;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.LoginActivity;
+import com.brainSocket.aswaq.MainActivity;
 import com.brainSocket.aswaq.R;
+import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.models.AppUser;
 import com.brainSocket.models.CategoryModel;
+import com.brainSocket.models.PageModel;
 import com.brainSocket.models.SlideModel;
 import com.github.clans.fab.FloatingActionButton;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -101,12 +107,13 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			try
+			{
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
-					categories = (List<CategoryModel>) data
-							.getValue("categories");
-					slides = (List<SlideModel>) data
-							.getValue("slides");
+					PageModel page=(PageModel)data.getValue("page");
+					categories = page.getCategories();
+					slides = page.getSlides();
 					MainCategoriesListAdapter categoryListAdapter=new MainCategoriesListAdapter(getActivity(), categories);
 					gridViewCategories.setAdapter(categoryListAdapter);
 					
@@ -121,6 +128,11 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 				} else {
 					homeCallbacks.showToast("error in getting categories");
 				}
+			}
+		}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
 			}
 		}
 	};
@@ -151,8 +163,18 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		int viewId = v.getId();
 		switch (viewId) {
 		case R.id.btnAddAdvertise:
-			stopSliderTransition=true;
-			homeCallbacks.loadFragment(FragmentType.AddAdvertise,null);
+			try
+			{
+				stopSliderTransition=true;
+				AppUser me=DataCacheProvider.getInstance().getMe();
+				if(me!=null)
+					homeCallbacks.loadFragment(FragmentType.AddAdvertise,null);
+				else
+				{
+					homeCallbacks.loadActivity();
+				}
+			}
+			catch(Exception ex){}
 			break;
 		}
 	}

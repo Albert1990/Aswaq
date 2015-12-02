@@ -4,19 +4,39 @@ import java.util.HashMap;
 
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.R;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.models.AdvertiseModel;
+import com.brainSocket.views.TextViewCustomFont;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 
-public class FragAdvertiseDetails extends Fragment {
+public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 	private HomeCallbacks homeCallbacks;
+	private TextViewCustomFont tvPaid;
+	private ViewPager vpSlider;
+	private ImageView btnFbPage;
+	private TextViewCustomFont btnCall;
+	private ImageView ivUser;
+	private TextViewCustomFont tvUserName;
+	private TextViewCustomFont tvUserRate;
+	private RatingBar rbUserRate;
+	private TextViewCustomFont tvPrice;
+	private TextViewCustomFont tvDate;
+	private TextViewCustomFont tvCat;
+	private TextViewCustomFont tvPlace;
+	private TextViewCustomFont tvDesc;
+	
 	
 	private FragAdvertiseDetails()
 	{
@@ -43,6 +63,24 @@ public class FragAdvertiseDetails extends Fragment {
 		{
 			homeCallbacks=(HomeCallbacks)getActivity();
 			homeCallbacks.showProgress(true);
+			tvPaid=(TextViewCustomFont)getActivity().findViewById(R.id.tvPaid);
+			vpSlider=(ViewPager)getActivity().findViewById(R.id.vpSlider);
+			btnFbPage=(ImageView)getActivity().findViewById(R.id.btnFbPage);
+			btnFbPage.setOnClickListener(this);
+			btnCall=(TextViewCustomFont)getActivity().findViewById(R.id.btnCall);
+			btnCall.setOnClickListener(this);
+			ivUser=(ImageView)getActivity().findViewById(R.id.ivUser);
+			ivUser.setOnClickListener(this);
+			tvUserName=(TextViewCustomFont)getActivity().findViewById(R.id.tvUserName);
+			tvUserName.setOnClickListener(this);
+			tvUserRate=(TextViewCustomFont)getActivity().findViewById(R.id.tvUserRate);
+			rbUserRate=(RatingBar)getActivity().findViewById(R.id.rbUserRate);
+			tvPrice=(TextViewCustomFont)getActivity().findViewById(R.id.tvPrice);
+			tvDate=(TextViewCustomFont)getActivity().findViewById(R.id.tvDate);
+			tvCat=(TextViewCustomFont)getActivity().findViewById(R.id.tvCat);
+			tvPlace=(TextViewCustomFont)getActivity().findViewById(R.id.tvPlace);
+			tvDesc=(TextViewCustomFont)getActivity().findViewById(R.id.tvDesc);
+			
 			DataStore.getInstance().attemptGetAdvertiseDetails(getArguments().getInt("selectedAdId"), getAdvertiseDetailsCallback);
 		}
 		catch(Exception ex)
@@ -59,6 +97,9 @@ public class FragAdvertiseDetails extends Fragment {
 			if(success)
 			{
 				AdvertiseModel ad=(AdvertiseModel)data.getValue("adDetails");
+				if(ad.IsPinned()==0)
+					tvPaid.setVisibility(View.INVISIBLE);
+				
 				homeCallbacks.showProgress(false);
 			}
 		}
@@ -79,5 +120,17 @@ public class FragAdvertiseDetails extends Fragment {
 			ex.printStackTrace();
 		}
 		return fragAdvertiseDetails;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		int viewId=v.getId();
+		switch(viewId)
+		{
+		case R.id.btnCall:
+			
+			break;
+		}
 	}
 }

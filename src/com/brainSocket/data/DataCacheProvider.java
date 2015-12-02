@@ -1,9 +1,15 @@
 package com.brainSocket.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.models.AppUser;
+import com.brainSocket.models.CategoryModel;
+import com.brainSocket.models.PageModel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,25 +19,14 @@ public class DataCacheProvider {
 		public static final String PREF_DATA = "AswaqData";
 		public static final String PREF_FIRST_TIME = "isFirstTime" ; 
 		public static final String PREF_APP_USER  = "userMe" ;
-		public static final String PREF_ENROLLED_FRIENDS = "enroledFriends" ;
-		public static final String PREF_SETTINGS_NOTIFICATIONS = "settings_notifications" ;
 		public static final String PREF_API_ACCESS_TOKEN = "accessToken" ;
 		public static final String PREF_PHOTO_CACHE_CLEARED = "image_cache_clear" ;
-		public static final String PREF_USER_STATS = "userStats";
-		public static final String PREF_USER_SCORE = "score";
 		public static final String PREF_APP_ACCESS_MODE = "access_mode";
 		public static final String PREF_APP_VERSION_STATUS = "version_status";
+		public static final String PREF_APP_MAIN_CATEGORIES="main_categories";
+		public static final String PREF_APP_PAGES="pages";
+		public static final String PREF_APP_CATEGORIES_PAIRS="categories_pairs";
 		
-		// tutorial flags
-		public static final String PREF_TUT_PLANT = "tut_plant";
-		public static final String PREF_TUT_SELF = "tut_self";
-		public static final String PREF_TUT_SEND = "tut_send";
-		public static final String PREF_TUT_OPEN_TASK = "tut_open_task";
-		
-		// dates
-		private static final String PREF_LAST_SESSIONS_UPDATE_SERVER_TIME = "lastSessionsUpdateServer" ; 
-		private static final String PREF_LAST_SESSIONS_UPDATE_LOCAL_TIME = "lastSessionsUpdateLocal";
-		private static final String PREF_LAST_LONG_TERM_DATA_UPDATE_TIME = "lastLongTermUpdateLocal";
 		
 		private static DataCacheProvider cacheProvider = null;
 		// shared preferences
@@ -143,6 +138,142 @@ public class DataCacheProvider {
 			}
 		}
 		return me;
+	}
+	
+	public void storePage(PageModel page)
+	{
+		try
+		{
+			String str=prefData.getString(PREF_APP_PAGES, null);
+			JSONArray jsonPages=null;
+			if(str!=null)
+				jsonPages=new JSONArray(str);
+			else
+				jsonPages=new JSONArray();
+			int objectIndex=-1;
+			for(int i=0;i<jsonPages.length();i++)
+			{
+				JSONObject ob=jsonPages.getJSONObject(i);
+				if(ob.getInt("categoryId")==page.getCategoryId())
+				{
+					objectIndex=i;
+					break;
+				}
+			}
+			JSONObject jsonPage=page.getJsonObject();
+			if(objectIndex!=-1)
+			{
+				// we have to replace the old object
+				jsonPages.put(objectIndex, jsonPage);
+			}
+			else
+				jsonPages.put(jsonPage);
+			str=jsonPages.toString();
+			prefDataEditor.putString(PREF_APP_PAGES, str);
+			prefDataEditor.commit();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+	
+	public PageModel getStoredPage(int categoryId)
+	{
+		PageModel page=null;
+		try
+		{
+			String str=prefData.getString(PREF_APP_PAGES, null);
+			if(str==null)
+				return null;
+			JSONArray jsonPages=new JSONArray(str);
+			for(int i=0;i<jsonPages.length();i++)
+			{
+				JSONObject ob=jsonPages.getJSONObject(i);
+				if(ob.getInt("categoryId")==categoryId)
+				{
+					page=new PageModel(ob);
+					break;
+				}
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return page;
+	}
+	
+	public void removePages()
+	{
+		try
+		{
+			prefDataEditor.remove(PREF_APP_PAGES);
+			prefDataEditor.commit();
+		}
+		catch(Exception ex){}
+	}
+	
+	public void storeSubCategoriesPairs(List<CategoryModel> categories)
+	{
+		try
+		{
+			JSONArray jsonCategories=new JSONArray();
+			for(int i=0;i<categories.size();i++)
+				jsonCategories.put(categories.get(i).getJsonObject());
+			String str=jsonCategories.toString();
+			prefDataEditor.putString(PREF_APP_CATEGORIES_PAIRS, str);
+			prefDataEditor.commit();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+	
+	public List<CategoryModel> getStoredCategoriesPairs()
+	{
+		List<CategoryModel> categories=null;
+		try
+		{
+			String str=prefData.getString(PREF_APP_CATEGORIES_PAIRS, null);
+			if(str!=null)
+			{
+				JSONArray jsonCategories=new JSONArray(str);
+				categories=new ArrayList<CategoryModel>();
+				for(int i=0;i<jsonCategories.length();i++)
+				{
+					JSONObject jsOb=jsonCategories.getJSONObject(i);
+					categories.add(new CategoryModel(jsOb));
+				}
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return categories;
+	}
+	
+	public void removeSubCategoriesPairs()
+	{
+		try
+		{
+			prefDataEditor.remove(PREF_APP_CATEGORIES_PAIRS);
+			prefDataEditor.commit();
+		}
+		catch(Exception ex){}
+	}
+	
+	public void removeAllStoredData()
+	{
+		try
+		{
+			removeStoredMe();
+			removePages();
+			removeSubCategoriesPairs();
+		}
+		catch(Exception ex){}
 	}
 
 }

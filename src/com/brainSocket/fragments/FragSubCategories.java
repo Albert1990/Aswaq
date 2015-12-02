@@ -12,6 +12,7 @@ import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
 import com.brainSocket.models.CategoryModel;
+import com.brainSocket.models.PageModel;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -67,13 +68,21 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
-			if(success)
+			try
 			{
-				subCategories=(List<CategoryModel>)data.getValue("categories");
-				//display categories in the list view
-				SubCategoriesListAdapter subCategoriesListAdapter=new SubCategoriesListAdapter(getActivity(), subCategories);
-				lstSubCategories.setAdapter(subCategoriesListAdapter);
-				homeCallbacks.showProgress(false);
+				if(success)
+				{
+					PageModel page=(PageModel)data.getValue("page");
+					subCategories=page.getCategories();
+					//display categories in the list view
+					SubCategoriesListAdapter subCategoriesListAdapter=new SubCategoriesListAdapter(getActivity(), subCategories);
+					lstSubCategories.setAdapter(subCategoriesListAdapter);
+					homeCallbacks.showProgress(false);
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
 			}
 		}
 	};

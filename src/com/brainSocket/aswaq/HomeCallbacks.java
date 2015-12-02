@@ -9,4 +9,5 @@ public interface HomeCallbacks {
 	public void showToast (String msg);
 	public void setTitle(String title);
 	public void loadFragment(FragmentType fragmentType,HashMap<String, Object> params);
+	public void loadActivity();
 }

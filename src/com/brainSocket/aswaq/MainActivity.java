@@ -3,6 +3,7 @@ package com.brainSocket.aswaq;
 import java.util.HashMap;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -58,13 +59,13 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 	private void init()
 	{
 		fragmentManager=getSupportFragmentManager();
-		AppUser me=DataCacheProvider.getInstance().getMe();
-		if(!me.isVerified())
-		{
-			loadFragment(FragmentType.Verification,null);
-		}
-		else
-		{
+//		AppUser me=DataCacheProvider.getInstance().getMe();
+//		if(!me.isVerified())
+//		{
+//			loadFragment(FragmentType.Verification,null);
+//		}
+//		else
+//		{
 			lvDrawer = (ListView) findViewById(R.id.lvDrawer);
 			adapter = new DrawerAdapter(this, lvDrawer);
 			lvDrawer.setAdapter(adapter);
@@ -72,7 +73,7 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 			llLogout=findViewById(R.id.llLogout);
 			llLogout.setOnClickListener(this);
 			loadFragment(FragmentType.Main,null);
-		}
+//		}
 	}
 	
 private void initCustomActionBar() {
@@ -294,5 +295,12 @@ private void updateActionbar(FragmentType section) {
 		}
 		currentFragmentType=fragmentType;
 		updateActionbar(currentFragmentType);
+	}
+
+	@Override
+	public void loadActivity() {
+		// TODO Auto-generated method stub
+		Intent i=new Intent(MainActivity.this, LoginActivity.class);
+		startActivity(i);
 	}
 }

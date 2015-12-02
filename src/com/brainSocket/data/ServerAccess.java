@@ -213,7 +213,7 @@ public class ServerAccess {
 			// parameters
 			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
 			jsonPairs.add(new BasicNameValuePair("category_id", Integer.toString(categoryId)));
-			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			//jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			
 			// url
 			String url = BASE_SERVICE_URL + "categories_api/get_page_components";
@@ -378,7 +378,7 @@ public class ServerAccess {
 			// parameters
 			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
 			jsonPairs.add(new BasicNameValuePair("category_id", Integer.toString(categoryId)));
-			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			//jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			
 			// url
 			String url = BASE_SERVICE_URL + "ads_api/get_category_ads";
@@ -411,10 +411,10 @@ public class ServerAccess {
 			// parameters
 			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
 			jsonPairs.add(new BasicNameValuePair("ad_id", Integer.toString(adId)));
-			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			//jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			
 			// url
-			String url = BASE_SERVICE_URL + "ads_api/get_details";
+			String url = BASE_SERVICE_URL + "ads_api/get_ad_details";
 			// send request
 			String response = sendPostRequest(url, jsonPairs);
 			// parse response
