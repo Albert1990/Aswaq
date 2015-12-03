@@ -18,8 +18,9 @@ public class AdvertiseModel {
 	private String telephones;
 	private AppUser user;
 	private CategoryModel category;
-	List<SlideModel> images=new ArrayList<SlideModel>();
-	
+	private List<SlideModel> images=new ArrayList<SlideModel>();
+	private String date;
+
 	public AdvertiseModel(JSONObject ob)
 	{
 		if(ob==null)
@@ -116,6 +117,13 @@ public class AdvertiseModel {
 			}
 		}
 		catch(Exception ex){}
+		
+		try
+		{
+			if(ob.has("created_at"))
+				this.date=ob.getString("created_at");
+		}
+		catch(Exception ex){}
 	}
 	
 	public int getId() {
@@ -192,7 +200,23 @@ public class AdvertiseModel {
 	public void setCategory(CategoryModel category) {
 		this.category = category;
 	}
+	
+	public String getDate() {
+		return date;
+	}
 
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	public List<SlideModel> getImages() {
+		return images;
+	}
+
+	public void setImages(List<SlideModel> images) {
+		this.images = images;
+	}
+	
 	public JSONObject getJsonObject()
 	{
 		JSONObject ob=new JSONObject();
@@ -216,17 +240,12 @@ public class AdvertiseModel {
 			}
 			ob.put("images", jsonImages);
 		}catch(Exception ex){}
+		try{ob.put("created_at", date);}catch(Exception ex){}
 		
 		return ob;
 	}
 
-	public List<SlideModel> getImages() {
-		return images;
-	}
-
-	public void setImages(List<SlideModel> images) {
-		this.images = images;
-	}
+	
 	
 	
 }

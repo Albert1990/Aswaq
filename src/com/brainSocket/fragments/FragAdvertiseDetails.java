@@ -106,15 +106,16 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 					tvPaid.setVisibility(View.INVISIBLE);
 				
 					tvUserName.setText(ad.getUser().getName());
-					tvPrice.setText(ad.getPrice());
+					tvPrice.setText(Integer.toString(ad.getPrice()));
 					tvCat.setText(ad.getCategory().getName());
-					tvDate.setText(ad.getDescription());
+					tvDate.setText(ad.getDate());
 					tvDesc.setText(ad.getDescription());
 					String imgPath=null;
 					if(ad.getUser().getPicture().length()==0)
 						imgPath= ServerAccess.IMAGE_SERVICE_URL+"users/"+AswaqApp.DEFAULT_USER_IMAGE;
 					else
 						imgPath=ServerAccess.IMAGE_SERVICE_URL+"users/"+ad.getUser().getPicture();
+					rbUserRate.setRating(ad.getUser().getRate());
 					Picasso.with(getActivity()).load(imgPath).into(ivUser);
 					SliderAdapter adapter=new SliderAdapter(getActivity(), ad.getImages());
 					vpSlider.setAdapter(adapter);
