@@ -24,30 +24,37 @@ public class PageModel {
 			return;
 		try
 		{
-			this.categoryId=ob.getInt("categoryId");
+			if(ob.has("categoryId"))
+				this.categoryId=ob.getInt("categoryId");
 		}
 		catch(Exception ex){}
 		
 		try
 		{
-			this.categories=new ArrayList<CategoryModel>();
-			JSONArray cats=ob.getJSONArray("categories");
-			for(int i=0;i<cats.length();i++)
+			if(ob.has("categories"))
 			{
-				JSONObject categoryJsonObject=(JSONObject)cats.get(i);
-				categories.add(new CategoryModel(categoryJsonObject));
+				this.categories=new ArrayList<CategoryModel>();
+				JSONArray cats=ob.getJSONArray("categories");
+				for(int i=0;i<cats.length();i++)
+				{
+					JSONObject categoryJsonObject=(JSONObject)cats.get(i);
+					categories.add(new CategoryModel(categoryJsonObject));
+				}
 			}
 		}
 		catch(Exception ex){}
 		
 		try
 		{
-			slides=new ArrayList<SlideModel>();
-			JSONArray jsonSlides=ob.getJSONArray("slides");
-			for(int i=0;i<jsonSlides.length();i++)
+			if(ob.has("slides"))
 			{
-				JSONObject slideJsonObject=jsonSlides.getJSONObject(i);
-				slides.add(new SlideModel(slideJsonObject));
+				slides=new ArrayList<SlideModel>();
+				JSONArray jsonSlides=ob.getJSONArray("slides");
+				for(int i=0;i<jsonSlides.length();i++)
+				{
+					JSONObject slideJsonObject=jsonSlides.getJSONObject(i);
+					slides.add(new SlideModel(slideJsonObject));
+				}
 			}
 		}
 		catch(Exception ex){}

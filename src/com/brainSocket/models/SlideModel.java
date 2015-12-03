@@ -16,37 +16,43 @@ public class SlideModel {
 			return ;
 		try
 		{
-		this.id=ob.getInt("id");
+			if(ob.has("id"))
+				this.id=ob.getInt("id");
 		}
 		catch(Exception ex){}
 		
 		try
 		{
-			this.name=ob.getString("name");
+			if(ob.has("name"))
+				this.name=ob.getString("name");
 		}
 		catch(Exception ex){}
 		
 		try
 		{
-			this.categoryId=ob.getInt("category_id");
+			if(ob.has("category_id"))
+				this.categoryId=ob.getInt("category_id");
 		}
 		catch(Exception ex){}
 		
 		try
 		{
-			this.photo_path=ob.getString("photo_path");
+			if(ob.has("photo_path"))
+				this.photo_path=ob.getString("photo_path");
 		}
 		catch(Exception ex){}
 		
 		try
 		{
-			this.alt=ob.getString("alt");
+			if(ob.has("alt"))
+				this.alt=ob.getString("alt");
 		}
 		catch(Exception ex){}
 		
 		try
 		{
-			this.url=ob.getString("url");
+			if(ob.has("url"))
+				this.url=ob.getString("url");
 		}
 		catch(Exception ex){}
 	}

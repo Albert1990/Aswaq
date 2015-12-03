@@ -1,5 +1,9 @@
 package com.brainSocket.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class AdvertiseModel {
@@ -13,6 +17,8 @@ public class AdvertiseModel {
 	private int isPinned;
 	private String telephones;
 	private AppUser user;
+	private CategoryModel category;
+	List<SlideModel> images=new ArrayList<SlideModel>();
 	
 	public AdvertiseModel(JSONObject ob)
 	{
@@ -90,6 +96,26 @@ public class AdvertiseModel {
 			}
 		}
 		catch(Exception ex){}
+		
+		try
+		{
+			if(ob.has("category")){
+				this.category=new CategoryModel(ob.getJSONObject("category"));
+			}
+		}
+		catch(Exception ex){}
+		
+		try
+		{
+			if(ob.has("images")){
+				JSONArray jsonImages=ob.getJSONArray("images");
+				for(int i=0;i<jsonImages.length();i++)
+				{
+					images.add(new SlideModel(jsonImages.getJSONObject(i)));
+				}
+			}
+		}
+		catch(Exception ex){}
 	}
 	
 	public int getId() {
@@ -156,6 +182,16 @@ public class AdvertiseModel {
 	public void setUser(AppUser user) {
 		this.user = user;
 	}
+	
+	
+
+	public CategoryModel getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryModel category) {
+		this.category = category;
+	}
 
 	public JSONObject getJsonObject()
 	{
@@ -169,6 +205,28 @@ public class AdvertiseModel {
 		try{ob.put("facebook_page", facebookPage);}catch(Exception ex){}
 		try{ob.put("is_pinned", isPinned);}catch(Exception ex){}
 		try{ob.put("telephones", telephones);}catch(Exception ex){}
+		try{ob.put("user", user.getJsonObject());}catch(Exception ex){}
+		try{ob.put("category", category.getJsonObject());}catch(Exception ex){}
+		try
+		{
+			JSONArray jsonImages=new JSONArray();
+			for(int i=0;i<images.size();i++)
+			{
+				jsonImages.put(images.get(i).getJsonObject());
+			}
+			ob.put("images", jsonImages);
+		}catch(Exception ex){}
+		
 		return ob;
 	}
+
+	public List<SlideModel> getImages() {
+		return images;
+	}
+
+	public void setImages(List<SlideModel> images) {
+		this.images = images;
+	}
+	
+	
 }

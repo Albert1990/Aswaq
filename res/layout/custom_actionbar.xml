@@ -25,7 +25,7 @@
         android:src="@drawable/arrow_right"
 />
     
-    <ImageView
+    <!--<ImageView
         android:id="@+id/btnGroup"
         android:layout_width="30dp"
         android:layout_height="28dp"
@@ -34,7 +34,7 @@
         android:layout_toLeftOf="@id/ivMenu"
         android:src="@drawable/ic_groups"
         android:padding="3dp"
-        android:visibility="gone" />
+        android:visibility="gone" />-->
 
     <com.brainSocket.views.TextViewCustomFont
         android:id="@+id/tvFragTitle"

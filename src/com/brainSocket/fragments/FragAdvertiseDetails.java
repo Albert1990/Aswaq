@@ -7,10 +7,15 @@ import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
+import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.views.TextViewCustomFont;
+import com.squareup.picasso.Picasso;
 
+import adapters.SliderAdapter;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -36,6 +41,7 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 	private TextViewCustomFont tvCat;
 	private TextViewCustomFont tvPlace;
 	private TextViewCustomFont tvDesc;
+	private AdvertiseModel ad;
 	
 	
 	private FragAdvertiseDetails()
@@ -46,8 +52,7 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return inflater.inflate(R.layout.frag_advertise_details, container, false);
 	}
 	
 	@Override
@@ -96,11 +101,24 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 			// TODO Auto-generated method stub
 			if(success)
 			{
-				AdvertiseModel ad=(AdvertiseModel)data.getValue("adDetails");
+				ad=(AdvertiseModel)data.getValue("adDetails");
 				if(ad.IsPinned()==0)
 					tvPaid.setVisibility(View.INVISIBLE);
 				
-				homeCallbacks.showProgress(false);
+					tvUserName.setText(ad.getUser().getName());
+					tvPrice.setText(ad.getPrice());
+					tvCat.setText(ad.getCategory().getName());
+					tvDate.setText(ad.getDescription());
+					tvDesc.setText(ad.getDescription());
+					String imgPath=null;
+					if(ad.getUser().getPicture().length()==0)
+						imgPath= ServerAccess.IMAGE_SERVICE_URL+"users/"+AswaqApp.DEFAULT_USER_IMAGE;
+					else
+						imgPath=ServerAccess.IMAGE_SERVICE_URL+"users/"+ad.getUser().getPicture();
+					Picasso.with(getActivity()).load(imgPath).into(ivUser);
+					SliderAdapter adapter=new SliderAdapter(getActivity(), ad.getImages());
+					vpSlider.setAdapter(adapter);
+					homeCallbacks.showProgress(false);
 			}
 		}
 	};
@@ -129,7 +147,8 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 		switch(viewId)
 		{
 		case R.id.btnCall:
-			
+			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +ad.getUser().getPhoneNum()));
+			startActivity(intent);
 			break;
 		}
 	}

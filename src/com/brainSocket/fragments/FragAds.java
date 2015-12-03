@@ -127,6 +127,7 @@ private Runnable SliderTransition=new Runnable() {
 		int adId=ads.get(position).getId();
 		HashMap<String, Object> params=new HashMap<String, Object>();
 		params.put("selectedAdId", adId);
+		//homeCallbacks.showToast(Integer.toString(adId));
 		homeCallbacks.loadFragment(FragmentType.AdvertiseDetails,params);
 	}
 	
