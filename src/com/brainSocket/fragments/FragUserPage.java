@@ -1,8 +1,10 @@
 package com.brainSocket.fragments;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
@@ -41,7 +43,14 @@ public class FragUserPage extends Fragment implements OnClickListener{
 	
 	private void init()
 	{
-		int userId=1;
+		int userId=getArguments().getInt("userId");
+		if(userId==0)
+		{
+			AppUser me=DataCacheProvider.getInstance().getMe();
+			if(me==null)
+				return;
+			userId=Integer.parseInt(me.getId());
+		}
 		DataStore.getInstance().attemptGetUserPage(userId,getUserPageCallback);
 	}
 	
@@ -90,6 +99,27 @@ public class FragUserPage extends Fragment implements OnClickListener{
 			
 			break;
 		}
+	}
+	
+	public static FragUserPage newInstance(HashMap<String, Object> params)
+	{
+		FragUserPage fragUserPage=new FragUserPage();
+		try
+		{
+			int userId=0;
+			if(params.containsKey("userId"))
+			{
+				userId=(Integer)params.get("userId");
+			}
+			Bundle extras=new Bundle();
+			extras.putInt("userId", userId);
+			fragUserPage.setArguments(extras);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return fragUserPage; 
 	}
 
 }

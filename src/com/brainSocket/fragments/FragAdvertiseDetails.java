@@ -120,6 +120,8 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 					SliderAdapter adapter=new SliderAdapter(getActivity(), ad.getImages());
 					vpSlider.setAdapter(adapter);
 					homeCallbacks.showProgress(false);
+					String rate=Float.toString(ad.getUser().getRate());
+					tvUserRate.setText(rate);
 			}
 		}
 	};

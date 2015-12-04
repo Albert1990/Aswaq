@@ -46,5 +46,10 @@ public class FragClients extends Fragment{
 			
 		}
 	};
+	
+	public static FragClients newInstance()
+	{
+		return new FragClients();
+	}
 
 }
