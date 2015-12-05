@@ -48,20 +48,34 @@ public class AdvertisesListAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+		ViewHolderItem viewHolder;
 		if(convertView==null)
+		{
 			convertView=inflater.inflate(R.layout.item_list_ad, parent, false);
-		ImageView ivProduct=(ImageView)convertView.findViewById(R.id.ivProd);
-		TextViewCustomFont tvUserName=(TextViewCustomFont)convertView.findViewById(R.id.tvUserName);
-		TextViewCustomFont tvAdvertiseDescription=(TextViewCustomFont)convertView.findViewById(R.id.tvAdvertiseDescription);
-		TextViewCustomFont tvPrice=(TextViewCustomFont)convertView.findViewById(R.id.tvPrice);
+			viewHolder=new ViewHolderItem();
+			viewHolder.ivProduct =(ImageView)convertView.findViewById(R.id.ivProd);
+			viewHolder.tvUserName =(TextViewCustomFont)convertView.findViewById(R.id.tvUserName);
+			viewHolder.tvAdvertiseDescription =(TextViewCustomFont)convertView.findViewById(R.id.tvAdvertiseDescription);
+			viewHolder.tvPrice =(TextViewCustomFont)convertView.findViewById(R.id.tvPrice);
+			convertView.setTag(viewHolder);
+		}
+		else
+			viewHolder=(ViewHolderItem)convertView.getTag();
 		
-		ivProduct.setImageResource(R.drawable.ic_launcher);
-		tvUserName.setText(ads.get(position).getUser().getName());
-		tvAdvertiseDescription.setText(ads.get(position).getDescription());
-		tvPrice.setText(Integer.toString(ads.get(position).getPrice()));
+		viewHolder.ivProduct.setImageResource(R.drawable.ic_launcher);
+		viewHolder.tvUserName.setText(ads.get(position).getUser().getName());
+		viewHolder.tvAdvertiseDescription.setText(ads.get(position).getDescription());
+		viewHolder.tvPrice.setText(Integer.toString(ads.get(position).getPrice()));
 		
 		return convertView;
 	}
 	
+	private static class ViewHolderItem
+	{
+		ImageView ivProduct;
+		TextViewCustomFont tvUserName;
+		TextViewCustomFont tvAdvertiseDescription;
+		TextViewCustomFont tvPrice;
+	}
 
 }

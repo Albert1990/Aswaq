@@ -49,15 +49,30 @@ public class MainCategoriesListAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
+		ViewHolderItem viewHolder=null;
 		inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if(convertView==null)
+		{
 			convertView=inflater.inflate(R.layout.item_main_grid_category, parent, false);
-		TextViewCustomFont lblCategoryName=(TextViewCustomFont) convertView.findViewById(R.id.lblCategoryName);
-		ImageView ivIcon=(ImageView)convertView.findViewById(R.id.ivIcon);
+			viewHolder=new ViewHolderItem();
+			viewHolder.lblCategoryName=(TextViewCustomFont) convertView.findViewById(R.id.lblCategoryName);
+			viewHolder.ivIcon=(ImageView)convertView.findViewById(R.id.ivIcon);
+			convertView.setTag(viewHolder);
+		}
+		else
+		{
+			viewHolder=(ViewHolderItem)convertView.getTag();
+		}
 		String imgPath=ServerAccess.IMAGE_SERVICE_URL+"categories/"+(categories.get(position).getPhotoPath());
-		Picasso.with(context).load(imgPath).into(ivIcon);
-		lblCategoryName.setText(categories.get(position).getName());
+		Picasso.with(context).load(imgPath).into(viewHolder.ivIcon);
+		viewHolder.lblCategoryName.setText(categories.get(position).getName());
 		return convertView;
+	}
+	
+	private static class ViewHolderItem
+	{
+		TextViewCustomFont lblCategoryName;
+		ImageView ivIcon;
 	}
 
 }

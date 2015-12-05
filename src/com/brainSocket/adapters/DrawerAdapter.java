@@ -70,12 +70,16 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 		  @Override
 		  public View getView(int position, View convertView, ViewGroup parent) {
 			  
-			View rowView ;
+			ViewHolderItem viewHolder=null;
 			if(convertView == null){  
 			  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
-			  rowView = inflater.inflate(R.layout.row_drawer, parent, false);
+			  convertView = inflater.inflate(R.layout.row_drawer, parent, false);
+			  viewHolder=new ViewHolderItem();
+			  viewHolder.txt=(TextView) convertView.findViewById(R.id.title);;
+			  viewHolder.icon=(ImageView) convertView.findViewById(R.id.drawable_icon);
+			  convertView.setTag(viewHolder);
 			}else{
-			  rowView = convertView ;
+			  viewHolder=(ViewHolderItem)convertView.getTag();
 			}
 			String title = context.getString(elements[position].stringId);
 			int imRes  = elements[position].iconId;
@@ -85,15 +89,12 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 				imRes  = elements[position].activeIconId;
 				//color = getResources().getColor(R.color.app_theme_orange);
 			}
-			
-		    TextView txt  = (TextView) rowView.findViewById(R.id.title);
-		    ImageView icon = (ImageView) rowView.findViewById(R.id.drawable_icon);
 		    
-		    txt.setText(title);
+		    viewHolder.txt.setText(title);
 		    //txt.setTextColor(color);
-		    icon.setImageResource(imRes);
+		    viewHolder.icon.setImageResource(imRes);
 		    
-		    return rowView;
+		    return convertView;
 		  }
 		  
 		@Override
@@ -133,4 +134,10 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 			}
 		
 		}	
+		
+		private static class ViewHolderItem
+		{
+			TextView txt;
+			ImageView icon;
+		}
 }

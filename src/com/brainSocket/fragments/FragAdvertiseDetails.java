@@ -2,6 +2,7 @@ package com.brainSocket.fragments;
 
 import java.util.HashMap;
 
+import com.brainSocket.adapters.SliderAdapter;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
@@ -13,7 +14,6 @@ import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.views.TextViewCustomFont;
 import com.squareup.picasso.Picasso;
 
-import adapters.SliderAdapter;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;

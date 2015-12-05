@@ -45,12 +45,26 @@ public class SubCategoriesListAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
+		ViewHolderItem viewHolder=null;
 		inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 		if(convertView==null)
+		{
 			convertView=inflater.inflate(R.layout.item_list_sub_category, parent, false);
-		TextView lblSubCategoryName=(TextView)convertView.findViewById(R.id.lblSubCategoryName);
-		lblSubCategoryName.setText(subCategories.get(position).getName());
+			viewHolder=new ViewHolderItem();
+			viewHolder.lblSubCategoryName=(TextView)convertView.findViewById(R.id.lblSubCategoryName);;
+			convertView.setTag(viewHolder);
+		}
+		else
+		{
+			viewHolder=(ViewHolderItem)convertView.getTag();
+		}
+		viewHolder.lblSubCategoryName.setText(subCategories.get(position).getName());
 		return convertView;
+	}
+	
+	private static class ViewHolderItem
+	{
+		TextView lblSubCategoryName;
 	}
 
 }
