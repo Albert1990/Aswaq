@@ -165,6 +165,7 @@ public class SearchActivity extends AppBaseActivity implements OnClickListener{
             super(fm);
         }
 
+        
         public void updateAdapter( ArrayList<AdvertiseModel> apps, ArrayList<AppUser> users){
             if(fragAds == null)
                 fragAds = FragAdsList.newInstance(apps);
