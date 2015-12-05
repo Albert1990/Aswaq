@@ -64,7 +64,7 @@ public class AdvertiseModel {
 		try
 		{
 			if(ob.has("is_used"))
-				this.isUsed=ob.getBoolean("isUsed");
+				this.isUsed=ob.getBoolean("is_used");
 		}
 		catch(Exception ex){}
 		

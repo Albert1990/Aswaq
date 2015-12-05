@@ -10,6 +10,7 @@ import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.LoginActivity;
 import com.brainSocket.aswaq.MainActivity;
 import com.brainSocket.aswaq.R;
+import com.brainSocket.aswaq.SearchActivity;
 import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
@@ -29,21 +30,27 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
 
 public class FragMain extends Fragment implements OnClickListener,OnItemClickListener {
 	private HomeCallbacks homeCallbacks;
 	private FloatingActionButton btnAddAdvertise;
 	private GridView gridViewCategories;
+	private EditText etSearch;
 	private List<CategoryModel> categories =null;
 	private List<SlideModel> slides=null;
 	private ViewPager vpSlider;
@@ -56,6 +63,17 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		
 	}
 
+	 OnEditorActionListener callbackSearchQueryChange =new OnEditorActionListener() {
+	        @Override
+	        public boolean onEditorAction(TextView v, int actionId, KeyEvent event)  {
+	            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_GO)) {
+	                search();
+	                return true;
+	            }
+	            return false;
+	        }
+	    };
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -73,6 +91,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 	private void init() {
 		homeCallbacks = (HomeCallbacks) getActivity();
 		gridViewCategories=(GridView)getActivity().findViewById(R.id.gridViewCategories);
+		etSearch = (EditText) getActivity().findViewById(R.id.etSearch);
 		gridViewCategories.setOnItemClickListener(this);
 		DataStore.getInstance().attemptGetPageComponents(
 				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
@@ -80,27 +99,18 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 				R.id.btnAddAdvertise);
 		btnAddAdvertise.setOnClickListener(this);
 		vpSlider=(ViewPager)getActivity().findViewById(R.id.vpSliderMain);
+		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
+		
 		homeCallbacks.showProgress(true);
 	}
 
 	private void search() {
-		String keyword = "computer";
-		if (AswaqApp.isEmptyOrNull(keyword)) {
-			// set text error on the text box and request for focus
-		} else {
-			DataStore.getInstance().attemptSearchFor(keyword,
-					getSearchResultsCallback);
-		}
+		String input = etSearch.getText().toString();
+		Intent i = new Intent(getActivity(), SearchActivity.class);
+		if(input != null && !input.isEmpty())
+			i.putExtra("keyword", input);
+		startActivity(i);
 	}
-
-	private DataRequestCallback getSearchResultsCallback = new DataRequestCallback() {
-
-		@Override
-		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
-
-		}
-	};
 
 	private DataRequestCallback getPageComponentsCallback = new DataRequestCallback() {
 

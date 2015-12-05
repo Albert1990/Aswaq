@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/global_bg_color">
+
+    <include
+        android:id="@+id/vNoDataPlaceHolder"
+        layout="@layout/layout_place_holder"/>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipToPadding="false"
+        android:drawSelectorOnTop="true"
+        android:fastScrollEnabled="false"
+        android:listSelector="@android:color/transparent"
+        android:overScrollMode="always"
+        android:scrollbars="none"
+        android:scrollbarStyle="outsideOverlay"
+        tools:listitem="@layout/row_apps_tab"/>
+
+</FrameLayout>

@@ -85,4 +85,15 @@
     <string name="details_desc">الوصف</string>
     <string name="app_id">974683922588212</string>
     
+    <!-- search -->
+    <string name="search_place_holder">بمكنك البحث عن اشخاص أو منتجات</string>
+    <string name="search_hint">ادخل كلمة مفتاحية</string>
+    <string name="search_no_results">لا يوجد نتائج لعرضها</string>
+    <string name="search_tab_title_users">مستخدمون</string>
+    <string name="search_tab_title_ads">اعلانات</string>
+    
+    <!-- user list -->
+    <string name="user_list_follow">متابعة</string>
+    <string name="user_list_unfollow">الغاء المتابعة</string>
+    
 </resources>

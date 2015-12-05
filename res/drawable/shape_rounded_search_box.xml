@@ -8,6 +8,4 @@
         android:color="@color/txt_dark" />
 
     <corners android:radius="3dp" />
-
-    
 </shape>

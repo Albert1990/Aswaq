@@ -9,13 +9,15 @@
         <item name="elevation">0dp</item>
         <item name="android:windowContentOverlay">@null</item>
         -->
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="elevation">0dp</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
-    
+
     <style name="MainActivityTheme" parent="AppBaseTheme">
-		<item name="windowActionBarOverlay">true</item>
-		<item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
-   
 
     <style name="AppThemeNoActionBar" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/app_theme</item>
@@ -33,6 +35,11 @@
 
     <style name="ToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
+    </style>
+
+    <style name="MyActionBar" parent="Base.Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/bg_actionbar</item>
+        <item name="android:height">48dp</item>
     </style>
 
     <style name="MenuButtonsStyle">

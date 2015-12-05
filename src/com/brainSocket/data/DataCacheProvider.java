@@ -58,6 +58,31 @@ public class DataCacheProvider {
 	}
 	
 	/**
+	 * Stores the timestamp of the last photo cache clear
+	 */
+	public void storePhotoClearedCacheTimestamp(long timestamp)
+	{
+		try {
+			prefDataEditor.putLong(PREF_PHOTO_CACHE_CLEARED, timestamp);
+			prefDataEditor.commit();
+		}
+		catch (Exception e) {}
+	}
+	
+	/**
+	 * Returns the stored timestamp of the last photo cache clear
+	 */
+	public long getStoredPhotoClearedCacheTimestamp()
+	{
+		long timestamp = 0;
+		try {
+			timestamp = prefData.getLong(PREF_PHOTO_CACHE_CLEARED, 0);
+		}
+		catch (Exception e) {}
+		return timestamp;
+	}
+	
+	/**
 	 * Stores the accessToken received on login from the API 
 	 * in shared preferences
 	 * @param accessToken
