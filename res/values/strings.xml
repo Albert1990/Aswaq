@@ -96,4 +96,7 @@
     <string name="user_list_follow">متابعة</string>
     <string name="user_list_unfollow">الغاء المتابعة</string>
     
+    <!-- user profile -->
+    <string name="profile_desc">الوصف</string>
+    <string name="profile_ads">الاعلانات</string>
 </resources>
