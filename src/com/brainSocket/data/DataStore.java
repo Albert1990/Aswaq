@@ -166,6 +166,7 @@ public class DataStore {
 								cacheProvider.storePage(page);
 								result.addPair("page", page);
 							} catch (Exception ex) {
+								ex.printStackTrace();
 							}
 						}
 					}

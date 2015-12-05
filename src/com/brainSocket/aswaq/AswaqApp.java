@@ -1,26 +1,18 @@
 package com.brainSocket.aswaq;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
-import java.util.HashMap;
-
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.data.ServerResult;
-import com.brainSocket.enums.ImageType;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.widget.Toast;
+
+import com.brainSocket.data.DataStore;
+import com.brainSocket.data.ServerAccess;
+import com.brainSocket.enums.ImageType;
 
 public class AswaqApp extends Application{
 	
@@ -109,4 +101,12 @@ public class AswaqApp extends Application{
 		}
 	}
 
+    public static long getTimestampNow(){
+    	long res = 0;
+    	try {
+    		res = Calendar.getInstance().getTimeInMillis();
+    	}
+    	catch (Exception e) {}
+    	return res;
+    }
 }

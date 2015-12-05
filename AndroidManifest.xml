@@ -37,6 +37,11 @@
             android:theme="@style/AppThemeNoActionBar" >
         </activity>
         <activity
+            android:name="SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
             android:name="RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" >

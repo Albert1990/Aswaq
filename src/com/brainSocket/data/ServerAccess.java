@@ -14,7 +14,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -24,13 +23,13 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
+
+import android.provider.Settings.Secure;
 
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.data.AndroidMultiPartEntity.ProgressListener;
+import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.models.AppUser;
-
-import android.provider.Settings.Secure;
 
 
 public class ServerAccess {
@@ -298,33 +297,43 @@ public class ServerAccess {
 	public ServerResult searchFor(String keyword)
 	{
 		ServerResult result=new ServerResult();
-		try
-		{
+		try{
 			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>();
 
 			jsonPairs.add(new BasicNameValuePair("keyword", keyword));
 			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			// url
-						String url = BASE_SERVICE_URL + "users_api/search_for";
-						// send request
-						String response = sendPostRequest(url, jsonPairs);
-						// parse response
-						if (response != null && !response.equals("")) { // check if response is empty
-							JSONObject jsonResponse = new JSONObject(response);
-							result.setFlag(jsonResponse.getInt(FLAG));
-							if(jsonResponse.has("object")){
-								if(!jsonResponse.isNull("object"))
-								{
-									JSONObject ob=jsonResponse.getJSONObject("object");
-									result.addPair("searchResults", ob);
-								}
-							}
-						} else {
-							result.setFlag(CONNECTION_ERROR_CODE);
+			String url = BASE_SERVICE_URL + "users_api/search_for";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getJSONObject("attach"));
+				if(jsonResponse.has("object")){
+					if(!jsonResponse.isNull("object")){
+						JSONObject ob=jsonResponse.getJSONObject("object");
+						
+						JSONArray jsonAds = ob.getJSONArray("ads");
+						List<AdvertiseModel> ads = new ArrayList<AdvertiseModel>();
+						for (int i = 0; i < jsonAds.length(); i++) {
+							ads.add(new AdvertiseModel((JSONObject) jsonAds
+									.get(i)));
 						}
-		}
-		catch(Exception ex)
-		{
+						
+						JSONArray jsonUsers = ob.getJSONArray("users");
+						List<AppUser> users = new ArrayList<AppUser>();
+						for (int i = 0; i < jsonUsers.length(); i++) {
+							users.add(new AppUser((JSONObject) jsonUsers.get(i)));
+						}
+						result.addPair("ads", ads);
+						result.addPair("users", users);
+					}
+				}
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		}catch(Exception ex){
 			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
 		}
 		return result;
@@ -357,6 +366,7 @@ public class ServerAccess {
 							if(jsonResponse.has("object")){
 								if(!jsonResponse.isNull("object"))
 								{
+									//TODO read response
 									JSONObject ob=jsonResponse.getJSONObject("object");
 									result.addPair("searchResults", ob);
 								}

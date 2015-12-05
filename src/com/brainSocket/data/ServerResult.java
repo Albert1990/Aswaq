@@ -2,6 +2,9 @@ package com.brainSocket.data;
 
 import java.util.HashMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ServerResult {
 
 	// private static String[] errors = {
@@ -55,6 +58,15 @@ public class ServerResult {
 
 	public void setFlag(int flag) {
 		this.flag = flag;
+	}
+	
+	public void setFlag(JSONObject attach) {
+		try {
+			if(attach != null)
+				this.flag = attach.getInt("flag");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addPair(String key, Object value) {

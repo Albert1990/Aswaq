@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:gravity="center_vertical" >
+
+    <ImageView
+        android:id="@+id/ivUser"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitCenter" />
+
+    <com.brainSocket.views.TextViewCustomFont
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@id/ivUser"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:maxLines="1"
+        android:text="@string/place_holder"
+        android:textColor="@color/app_theme"
+        android:textSize="@dimen/ts_text_normal"
+        app:fontId="1" />
+
+    <RatingBar
+        android:id="@+id/rbUserRate"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@id/ivUser"
+        android:gravity="center"
+        android:numStars="5"
+        android:stepSize="1" />
+
+    <com.brainSocket.views.TextViewCustomFont
+        android:id="@+id/btnFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
+        android:gravity="right|center_horizontal"
+        android:drawableLeft="@drawable/ic_follow"
+        android:drawablePadding="4dp"
+        android:lines="1"
+        android:maxLines="1"
+        android:background="@drawable/selector_btn_app_theme"
+        android:text="@string/user_list_unfollow"
+        android:textColor="@color/txt_white"
+        android:textSize="@dimen/ts_text_normal"
+        app:fontId="1" />
+
+</RelativeLayout>
