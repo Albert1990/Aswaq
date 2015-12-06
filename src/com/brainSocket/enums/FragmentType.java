@@ -7,4 +7,5 @@ public enum FragmentType {
 	SubCategories,
 	ShowAds,
 	AdvertiseDetails,
+	UserPage,
 }

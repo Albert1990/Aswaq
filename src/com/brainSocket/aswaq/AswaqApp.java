@@ -80,6 +80,11 @@ public class AswaqApp extends Application{
 		case Slide:
 			url=ServerAccess.IMAGE_SERVICE_URL+"slides/";
 			break;
+		case User:
+			if(photo_path.length()<=0)
+				photo_path="x1.png";
+			url=ServerAccess.IMAGE_SERVICE_URL+"users/";
+			break;
 		}
 		return url+photo_path;
 	}

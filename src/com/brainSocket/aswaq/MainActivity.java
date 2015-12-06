@@ -28,6 +28,7 @@ import com.brainSocket.fragments.FragAds;
 import com.brainSocket.fragments.FragAdvertiseDetails;
 import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
+import com.brainSocket.fragments.FragUserPage;
 import com.brainSocket.fragments.FragVerification;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.views.TextViewCustomFont;
@@ -290,6 +291,13 @@ private void updateActionbar(FragmentType section) {
 			fragmentManager.beginTransaction()
 			.replace(R.id.content_frame, fragAdvertiseDetails)
 			.addToBackStack(FragmentType.AdvertiseDetails.name())
+			.commit();
+			break;
+		case UserPage:
+			FragUserPage fragUserPage=FragUserPage.newInstance(params);
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragUserPage)
+			.addToBackStack(FragmentType.UserPage.name())
 			.commit();
 			break;
 		}

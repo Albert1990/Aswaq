@@ -10,6 +10,7 @@ import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.views.TextViewCustomFont;
 import com.squareup.picasso.Picasso;
@@ -142,6 +143,13 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 		}
 		return fragAdvertiseDetails;
 	}
+	
+	private void showUserPage()
+	{
+		HashMap<String, Object> params=new HashMap<String, Object>();
+		params.put("userId", ad.getUserId());
+		homeCallbacks.loadFragment(FragmentType.UserPage, params);
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -152,6 +160,12 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 		case R.id.btnCall:
 			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +ad.getUser().getPhoneNum()));
 			startActivity(intent);
+			break;
+		case R.id.ivUser:
+			showUserPage();
+			break;
+		case R.id.tvUserName:
+			showUserPage();
 			break;
 		}
 	}

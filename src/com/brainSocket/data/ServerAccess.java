@@ -453,10 +453,10 @@ public class ServerAccess {
 			// parameters
 			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
 			jsonPairs.add(new BasicNameValuePair("user_id", Integer.toString(userId)));
-			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			//jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			
 			// url
-			String url = BASE_SERVICE_URL + "users_api/get_page";
+			String url = BASE_SERVICE_URL + "users_api/get_user_page";
 			// send request
 			String response = sendPostRequest(url, jsonPairs);
 			// parse response
@@ -468,7 +468,8 @@ public class ServerAccess {
 					{
 						JSONObject ob=jsonResponse.getJSONObject("object");
 						result.addPair("jsonUser", ob.getJSONObject("user"));
-						result.addPair("jsonUserAds", ob.getJSONArray("userAds"));
+						result.addPair("followersCount", ob.getInt("followers_count"));
+						result.addPair("jsonUserAds", ob.getJSONArray("user_ads"));
 					}
 				}
 			} else {
