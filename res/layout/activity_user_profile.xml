@@ -167,10 +167,9 @@
         android:layout_marginLeft="80dp"
         android:background="@color/app_theme" />
 
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <ListView 
+        android:id="@+id/lvAds"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </FrameLayout>
+        android:layout_height="wrap_content"></ListView>
 
 </LinearLayout>
