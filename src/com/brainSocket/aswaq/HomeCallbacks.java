@@ -10,4 +10,6 @@ public interface HomeCallbacks {
 	public void setTitle(String title);
 	public void loadFragment(FragmentType fragmentType,HashMap<String, Object> params);
 	public void loadActivity();
+	public void openSlideDrawer();
+	public void closeSlideDrawer();
 }

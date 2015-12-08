@@ -26,6 +26,7 @@ import com.brainSocket.enums.FragmentType;
 import com.brainSocket.fragments.FragAddAdvertise;
 import com.brainSocket.fragments.FragAds;
 import com.brainSocket.fragments.FragAdvertiseDetails;
+import com.brainSocket.fragments.FragClients;
 import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
 import com.brainSocket.fragments.FragUserPage;
@@ -300,6 +301,13 @@ private void updateActionbar(FragmentType section) {
 			.addToBackStack(FragmentType.UserPage.name())
 			.commit();
 			break;
+		case MyClients:
+			FragClients fragClients=FragClients.newInstance();
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragClients)
+			.addToBackStack(FragmentType.MyClients.name())
+			.commit();
+			break;
 		}
 		currentFragmentType=fragmentType;
 		updateActionbar(currentFragmentType);
@@ -310,5 +318,17 @@ private void updateActionbar(FragmentType section) {
 		// TODO Auto-generated method stub
 		Intent i=new Intent(MainActivity.this, LoginActivity.class);
 		startActivity(i);
+	}
+
+	@Override
+	public void openSlideDrawer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeSlideDrawer() {
+		// TODO Auto-generated method stub
+		closeDrawer();
 	}
 }

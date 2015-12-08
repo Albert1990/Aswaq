@@ -8,4 +8,5 @@ public enum FragmentType {
 	ShowAds,
 	AdvertiseDetails,
 	UserPage,
+	MyClients
 }

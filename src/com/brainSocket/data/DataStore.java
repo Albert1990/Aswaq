@@ -441,6 +441,7 @@ public class DataStore {
 								clients.add(new AppUser(
 										(JSONObject) jsonClients.get(i)));
 							}
+							result.addPair("clients", clients);
 						}
 					} catch (Exception ex) {
 						success = false;

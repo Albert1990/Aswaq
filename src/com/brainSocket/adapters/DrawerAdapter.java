@@ -2,10 +2,14 @@ package com.brainSocket.adapters;
 
 import java.util.List;
 
+import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
+import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.enums.DrawerItemType;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.models.AppUser;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -32,18 +36,20 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 		  protected List<Integer> selected ; 
 		  protected ListView list ;
 		  int selectedItemIndex = 0 ;
+		  private HomeCallbacks homeCallbacks;
 		  
 		  public void setSelectedItemIndex(int selectedItemIndex) {
 			this.selectedItemIndex = selectedItemIndex;
 			notifyDataSetChanged() ;
 		}
 		  
-		  public DrawerAdapter(Context context, ListView view ) {
+		  public DrawerAdapter(Activity activity, ListView view) {
 		    super();
-		    this.context = context;
+		    this.context = activity;
 		    
 		    list = view ;
 		    list.setOnItemClickListener(this);
+		    homeCallbacks=(HomeCallbacks)activity;
 		  }
 
 		  public void onFragmentChange(FragmentType fragType){
@@ -125,6 +131,13 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 				break;
 			case AGENTS:
 				//switchSection(FRAG_TYPE.STATS);
+				AppUser me=DataCacheProvider.getInstance().getMe();
+				if(me!=null)
+					homeCallbacks.loadFragment(FragmentType.MyClients,null);
+				else
+				{
+					homeCallbacks.loadActivity();
+				}
 				break;
 			case FAVOURITES:
 				//switchSection(FRAG_TYPE.ABOUT);

@@ -249,4 +249,16 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		
 	}
 
+	@Override
+	public void openSlideDrawer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeSlideDrawer() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

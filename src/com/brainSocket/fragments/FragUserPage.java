@@ -61,6 +61,8 @@ public class FragUserPage extends Fragment implements OnClickListener{
 	
 	private void init()
 	{
+		homeCallbacks=(HomeCallbacks)getActivity();
+		homeCallbacks.showProgress(true);
 		int userId=getArguments().getInt("userId");
 		if(userId==0)
 		{
@@ -105,6 +107,7 @@ public class FragUserPage extends Fragment implements OnClickListener{
 				tvDesc.setText(user.getDescription());
 				//AdvertisesListAdapter advertisesListAdapter=new AdvertisesListAdapter(getActivity(), userAds);
 				//lvAds.setAdapter(advertisesListAdapter);
+				homeCallbacks.showProgress(false);
 			}
 		}
 	};

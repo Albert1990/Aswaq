@@ -1,18 +1,25 @@
 package com.brainSocket.fragments;
 
+import java.util.List;
+
+import com.brainSocket.adapters.ClientsListAdapter;
 import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.R;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.models.AppUser;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class FragClients extends Fragment{
 	private HomeCallbacks homeCallbacks;
+	private ListView lvClients;
 	
 	private FragClients()
 	{
@@ -22,8 +29,8 @@ public class FragClients extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return inflater.inflate(R.layout.frag_clients, container, false);
+		
 	}
 	
 	@Override
@@ -35,6 +42,10 @@ public class FragClients extends Fragment{
 	
 	private void init()
 	{
+		homeCallbacks=(HomeCallbacks)getActivity();
+		lvClients=(ListView)getActivity().findViewById(R.id.lstClients);
+		homeCallbacks.closeSlideDrawer();
+		homeCallbacks.showProgress(true);
 		DataStore.getInstance().attemptGetClients(getClientsCallback);
 	}
 	
@@ -43,7 +54,13 @@ public class FragClients extends Fragment{
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
-			
+			if(success)
+			{
+				List<AppUser> clients=(List<AppUser>)data.getValue("clients");
+				ClientsListAdapter clientsListAdapter=new ClientsListAdapter(getActivity(), clients);
+				lvClients.setAdapter(clientsListAdapter);
+				homeCallbacks.showProgress(false);
+			}
 		}
 	};
 	
