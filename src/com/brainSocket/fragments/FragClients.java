@@ -3,6 +3,13 @@ package com.brainSocket.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
 import com.brainSocket.adapters.ClientsListAdapter;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
@@ -10,13 +17,6 @@ import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.models.AppUser;
-
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
 public class FragClients extends Fragment{
 	private HomeCallbacks homeCallbacks;
@@ -55,9 +55,14 @@ public class FragClients extends Fragment{
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+<<<<<<< Updated upstream
 			if(success)
 			{
 				ArrayList<AppUser> clients=(ArrayList<AppUser>)data.getValue("clients");
+=======
+			if(success){
+				List<AppUser> clients=(List<AppUser>)data.getValue("clients");
+>>>>>>> Stashed changes
 				ClientsListAdapter clientsListAdapter=new ClientsListAdapter(getActivity(), clients);
 				lvClients.setAdapter(clientsListAdapter);
 				homeCallbacks.showProgress(false);
