@@ -55,14 +55,8 @@ public class FragClients extends Fragment{
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
-<<<<<<< Updated upstream
-			if(success)
-			{
-				ArrayList<AppUser> clients=(ArrayList<AppUser>)data.getValue("clients");
-=======
 			if(success){
 				List<AppUser> clients=(List<AppUser>)data.getValue("clients");
->>>>>>> Stashed changes
 				ClientsListAdapter clientsListAdapter=new ClientsListAdapter(getActivity(), clients);
 				lvClients.setAdapter(clientsListAdapter);
 				homeCallbacks.showProgress(false);
