@@ -3,10 +3,10 @@ package com.brainSocket.adapters;
 import java.util.List;
 
 import com.brainSocket.aswaq.R;
+import com.brainSocket.data.PhotoProvider;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.models.CategoryModel;
 import com.brainSocket.views.TextViewCustomFont;
-import com.squareup.picasso.Picasso;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -64,7 +64,8 @@ public class MainCategoriesListAdapter extends BaseAdapter{
 			viewHolder=(ViewHolderItem)convertView.getTag();
 		}
 		String imgPath=ServerAccess.IMAGE_SERVICE_URL+"categories/"+(categories.get(position).getPhotoPath());
-		Picasso.with(context).load(imgPath).into(viewHolder.ivIcon);
+		//Picasso.with(context).load(imgPath).into(viewHolder.ivIcon);
+		PhotoProvider.getInstance().displayPhotoNormal(imgPath, viewHolder.ivIcon);
 		viewHolder.lblCategoryName.setText(categories.get(position).getName());
 		return convertView;
 	}

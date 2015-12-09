@@ -38,7 +38,7 @@ public class SplashScreen extends AppBaseActivity {
 		try
 		{
 			DataCacheProvider cacheProvider=DataCacheProvider.getInstance();
-			cacheProvider.removeAllStoredData();
+			//cacheProvider.removeAllStoredData();
 //			AppUser me= cacheProvider.getMe();
 //			if(me==null)
 //			{

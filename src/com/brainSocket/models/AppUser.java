@@ -19,7 +19,7 @@ public class AppUser /*implements Parcelable */{
 	
 
 	String phoneNum = null;
-	String id = null;
+	int id = 0;
 	String name = null;
 	String countryId ;
 	String gcmId ;
@@ -47,7 +47,7 @@ public class AppUser /*implements Parcelable */{
 		
 		try {
 			if(json.has("id")) 
-				id = json.getString("id");
+				id = json.getInt("id");
 		} 
 		catch (Exception e) {}
 		try {
@@ -172,11 +172,11 @@ public class AppUser /*implements Parcelable */{
 		this.phoneNum = phoneNum;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

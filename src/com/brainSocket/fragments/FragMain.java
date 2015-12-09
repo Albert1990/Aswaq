@@ -102,6 +102,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
 		
 		homeCallbacks.showProgress(true);
+		homeCallbacks.closeSlideDrawer();
 	}
 
 	private void search() {

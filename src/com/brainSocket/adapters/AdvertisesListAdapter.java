@@ -1,17 +1,16 @@
 package com.brainSocket.adapters;
 
 import java.util.List;
-
 import com.brainSocket.aswaq.R;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.views.TextViewCustomFont;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class AdvertisesListAdapter extends BaseAdapter{
@@ -51,21 +50,29 @@ public class AdvertisesListAdapter extends BaseAdapter{
 		ViewHolderItem viewHolder;
 		if(convertView==null)
 		{
-			convertView=inflater.inflate(R.layout.item_list_ad, parent, false);
+			convertView=inflater.inflate(R.layout.item_list_ad_full, parent, false);
 			viewHolder=new ViewHolderItem();
 			viewHolder.ivProduct =(ImageView)convertView.findViewById(R.id.ivProd);
+			viewHolder.rbUserRate=(RatingBar)convertView.findViewById(R.id.rbUserRate);
 			viewHolder.tvUserName =(TextViewCustomFont)convertView.findViewById(R.id.tvUserName);
 			viewHolder.tvAdvertiseDescription =(TextViewCustomFont)convertView.findViewById(R.id.tvAdvertiseDescription);
 			viewHolder.tvPrice =(TextViewCustomFont)convertView.findViewById(R.id.tvPrice);
+			viewHolder.tvPaid=(TextViewCustomFont)convertView.findViewById(R.id.tvPaid);
 			convertView.setTag(viewHolder);
 		}
 		else
 			viewHolder=(ViewHolderItem)convertView.getTag();
 		
 		viewHolder.ivProduct.setImageResource(R.drawable.ic_launcher);
+		viewHolder.rbUserRate.setRating(ads.get(position).getUser().getRate());
 		viewHolder.tvUserName.setText(ads.get(position).getUser().getName());
 		viewHolder.tvAdvertiseDescription.setText(ads.get(position).getDescription());
 		viewHolder.tvPrice.setText(Integer.toString(ads.get(position).getPrice()));
+		if(ads.get(position).IsPinned()==0)
+			viewHolder.tvPaid.setVisibility(View.INVISIBLE);
+		else
+			viewHolder.tvPaid.setVisibility(View.VISIBLE);
+			
 		
 		return convertView;
 	}
@@ -73,9 +80,12 @@ public class AdvertisesListAdapter extends BaseAdapter{
 	private static class ViewHolderItem
 	{
 		ImageView ivProduct;
+		RatingBar rbUserRate;
 		TextViewCustomFont tvUserName;
 		TextViewCustomFont tvAdvertiseDescription;
 		TextViewCustomFont tvPrice;
+		TextViewCustomFont tvPaid;
+		
 	}
 
 }

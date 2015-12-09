@@ -1,5 +1,6 @@
 package com.brainSocket.fragments;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.brainSocket.adapters.ClientsListAdapter;
@@ -43,7 +44,7 @@ public class FragClients extends Fragment{
 	private void init()
 	{
 		homeCallbacks=(HomeCallbacks)getActivity();
-		lvClients=(ListView)getActivity().findViewById(R.id.lstClients);
+		lvClients=(ListView)getActivity().findViewById(R.id.list);
 		homeCallbacks.closeSlideDrawer();
 		homeCallbacks.showProgress(true);
 		DataStore.getInstance().attemptGetClients(getClientsCallback);
@@ -56,7 +57,7 @@ public class FragClients extends Fragment{
 			// TODO Auto-generated method stub
 			if(success)
 			{
-				List<AppUser> clients=(List<AppUser>)data.getValue("clients");
+				ArrayList<AppUser> clients=(ArrayList<AppUser>)data.getValue("clients");
 				ClientsListAdapter clientsListAdapter=new ClientsListAdapter(getActivity(), clients);
 				lvClients.setAdapter(clientsListAdapter);
 				homeCallbacks.showProgress(false);

@@ -12,6 +12,7 @@ import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
 import com.brainSocket.enums.ImageType;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.models.AppUser;
@@ -39,6 +40,8 @@ public class FragUserPage extends Fragment implements OnClickListener{
 	private TextViewCustomFont tvFollow;
 	private TextViewCustomFont tvDesc;
 	private ListView lvAds;
+	private int isFollowedByMe; 
+	private int userId;
 	
 	
 	private FragUserPage()
@@ -63,13 +66,13 @@ public class FragUserPage extends Fragment implements OnClickListener{
 	{
 		homeCallbacks=(HomeCallbacks)getActivity();
 		homeCallbacks.showProgress(true);
-		int userId=getArguments().getInt("userId");
+		userId=getArguments().getInt("userId");
 		if(userId==0)
 		{
 			AppUser me=DataCacheProvider.getInstance().getMe();
 			if(me==null)
 				return;
-			userId=Integer.parseInt(me.getId());
+			userId=me.getId();
 		}
 		ivUser=(ImageView)getActivity().findViewById(R.id.ivUser);
 		tvUserName=(TextViewCustomFont)getActivity().findViewById(R.id.tvUserName);
@@ -91,11 +94,14 @@ public class FragUserPage extends Fragment implements OnClickListener{
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			try
+			{
 			if(success)
 			{
 				AppUser user=(AppUser)data.getValue("user");
 				List<AdvertiseModel> userAds=(List<AdvertiseModel>)data.getValue("userAds");
 				int followersCount=(Integer)data.getValue("followersCount");
+				isFollowedByMe=(Integer)data.getValue("isFollowedByMe");
 				String photoPath=AswaqApp.getImagePath(ImageType.User, user.getPicture());
 				Picasso.with(getActivity()).load(photoPath).into(ivUser);
 				tvUserName.setText(user.getName());
@@ -107,7 +113,20 @@ public class FragUserPage extends Fragment implements OnClickListener{
 				tvDesc.setText(user.getDescription());
 				//AdvertisesListAdapter advertisesListAdapter=new AdvertisesListAdapter(getActivity(), userAds);
 				//lvAds.setAdapter(advertisesListAdapter);
+				if(isFollowedByMe==0)
+				{
+					tvFollow.setText(getString(R.string.user_list_follow));
+				}
+				else
+				{
+					tvFollow.setText(getString(R.string.user_list_unfollow));
+				}
 				homeCallbacks.showProgress(false);
+			}
+		}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
 			}
 		}
 	};
@@ -115,7 +134,7 @@ public class FragUserPage extends Fragment implements OnClickListener{
 	private void follow(int userId)
 	{
 		
-		DataStore.getInstance().attemptFollowUser(userId,followUserCallback);
+		DataStore.getInstance().attemptFollowUser(userId,true,followUserCallback);
 	}
 	
 	private DataRequestCallback followUserCallback=new DataRequestCallback() {
@@ -127,7 +146,26 @@ public class FragUserPage extends Fragment implements OnClickListener{
 			{
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
 				{
-					
+					tvFollow.setText(getString(R.string.user_list_unfollow));
+					isFollowedByMe=1;
+					homeCallbacks.showProgress(false);
+				}
+			}
+		}
+	};
+	
+private DataRequestCallback unfollowUserCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			if(success)
+			{
+				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
+				{
+					tvFollow.setText(getString(R.string.user_list_follow));
+					isFollowedByMe=0;
+					homeCallbacks.showProgress(false);
 				}
 			}
 		}
@@ -139,8 +177,20 @@ public class FragUserPage extends Fragment implements OnClickListener{
 		int viewId=v.getId();
 		switch(viewId)
 		{
-		case 1:
-			
+		case R.id.tvFollow:
+			AppUser me=DataCacheProvider.getInstance().getMe();
+			if(me!=null)
+			{
+				homeCallbacks.showProgress(true);
+				if(isFollowedByMe==0)
+					DataStore.getInstance().attemptFollowUser(userId, true, followUserCallback);
+				else
+					DataStore.getInstance().attemptFollowUser(userId, false, unfollowUserCallback);
+			}
+			else
+			{
+				homeCallbacks.loadActivity();
+			}
 			break;
 		}
 	}

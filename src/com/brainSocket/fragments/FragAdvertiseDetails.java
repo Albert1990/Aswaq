@@ -107,7 +107,8 @@ public class FragAdvertiseDetails extends Fragment implements OnClickListener{
 					tvPaid.setVisibility(View.INVISIBLE);
 				
 					tvUserName.setText(ad.getUser().getName());
-					tvPrice.setText(Integer.toString(ad.getPrice()));
+					String price=Integer.toString(ad.getPrice())+getString(R.string.lbl_price_unit);
+					tvPrice.setText(price);
 					tvCat.setText(ad.getCategory().getName());
 					tvDate.setText(ad.getDate());
 					tvDesc.setText(ad.getDescription());

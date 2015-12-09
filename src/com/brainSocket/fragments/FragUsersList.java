@@ -18,6 +18,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.brainSocket.aswaq.R;
+import com.brainSocket.data.DataStore;
 import com.brainSocket.models.AppUser;
 
 public class FragUsersList extends Fragment{
@@ -84,6 +85,8 @@ public class FragUsersList extends Fragment{
         adapter = new CollectionsAdapter();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(adapter);
+        
+        //DataStore.getInstance().attemptGetClients(getClientsCallback);
     }
 
     public void updateData(ArrayList<AppUser> apps){

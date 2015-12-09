@@ -193,7 +193,8 @@ public class FragAdsList extends Fragment{
                 ivProduct.setImageResource(R.drawable.ic_launcher);
         		tvUserName.setText(ad.getUser().getName());
         		tvAdvertiseDescription.setText(ad.getDescription());
-        		tvPrice.setText(Integer.toString(ad.getPrice()));
+        		String price=Integer.toString(ad.getPrice())+getString(R.string.lbl_price_unit);
+        		tvPrice.setText(price);
         		//String photo_path=AswaqApp.getImagePath(ImageType.Ad, ad.getImages().get(0));
             } catch (Exception ignored) {}
         }

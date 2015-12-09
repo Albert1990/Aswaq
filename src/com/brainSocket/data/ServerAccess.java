@@ -453,7 +453,9 @@ public class ServerAccess {
 			// parameters
 			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
 			jsonPairs.add(new BasicNameValuePair("user_id", Integer.toString(userId)));
-			//jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			String accessToken=DataCacheProvider.getInstance().getAccessToken();
+			if(accessToken!=null)
+				jsonPairs.add(new BasicNameValuePair("access_token", accessToken));
 			
 			// url
 			String url = BASE_SERVICE_URL + "users_api/get_user_page";
@@ -470,6 +472,7 @@ public class ServerAccess {
 						result.addPair("jsonUser", ob.getJSONObject("user"));
 						result.addPair("followersCount", ob.getInt("followers_count"));
 						result.addPair("jsonUserAds", ob.getJSONArray("user_ads"));
+						result.addPair("isFollowedByMe", ob.getInt("is_followed_by_me"));
 					}
 				}
 			} else {
@@ -481,7 +484,7 @@ public class ServerAccess {
 		return result;
 	}
 	
-	public ServerResult followUser(int userId) {
+	public ServerResult followUser(int userId,boolean follow) {
 		ServerResult result = new ServerResult();
 		try {
 			// parameters
@@ -490,7 +493,11 @@ public class ServerAccess {
 			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			
 			// url
+			
 			String url = BASE_SERVICE_URL + "followers_api/follow";
+			if(follow==false)
+				url = BASE_SERVICE_URL + "followers_api/unfollow";
+			
 			// send request
 			String response = sendPostRequest(url, jsonPairs);
 			// parse response
@@ -515,13 +522,17 @@ public class ServerAccess {
 			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			
 			// url
-			String url = BASE_SERVICE_URL + "followers_api/follow";
+			String url = BASE_SERVICE_URL + "followers_api/get_clients";
 			// send request
 			String response = sendPostRequest(url, jsonPairs);
 			// parse response
 			if (response != null && !response.equals("")) { // check if response is empty
 				JSONObject jsonResponse = new JSONObject(response);
 				result.setFlag(jsonResponse.getInt(FLAG));
+				if(jsonResponse.has("object"))
+				{
+					result.addPair("jsonClients", jsonResponse.getJSONArray("object"));
+				}
 				
 			} else {
 				result.setFlag(CONNECTION_ERROR_CODE);

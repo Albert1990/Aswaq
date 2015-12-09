@@ -399,7 +399,7 @@ public class DataStore {
 		}).start();
 	}
 
-	public void attemptFollowUser(final int userId,
+	public void attemptFollowUser(final int userId,final boolean follow,
 			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
@@ -407,7 +407,7 @@ public class DataStore {
 			public void run() {
 				// TODO Auto-generated method stub
 				boolean success = true;
-				ServerResult result = serverHandler.followUser(userId);
+				ServerResult result = serverHandler.followUser(userId,follow);
 				if (result.connectionFailed())
 					success = false;
 				else {

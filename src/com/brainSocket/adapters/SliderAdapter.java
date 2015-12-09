@@ -1,13 +1,10 @@
 package com.brainSocket.adapters;
 
 import java.util.List;
-
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.enums.ImageType;
 import com.brainSocket.models.SlideModel;
-import com.squareup.picasso.Picasso;
-
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -35,6 +32,7 @@ public class SliderAdapter extends PagerAdapter{
 		ImageView imgSlider=(ImageView)v.findViewById(R.id.imgSlide);
 		String photo_path=AswaqApp.getImagePath(ImageType.Slide, slides.get(position).getPhoto_path());
 		//Picasso.with(context).load(photo_path).into(imgSlider);
+		
 		if((position %2) == 0){
 			imgSlider.setImageResource(R.drawable.banner1);
 		}else{
