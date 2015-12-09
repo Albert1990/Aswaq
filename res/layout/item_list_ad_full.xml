@@ -71,7 +71,7 @@
         app:fontId="1" />
 
     <com.brainSocket.views.TextViewCustomFont
-        android:id="@+id/tvPayed"
+        android:id="@+id/tvPaid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/ivProd"

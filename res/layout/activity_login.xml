@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="samer.shatta@gmail.com"/>
+            android:text="admin@admin.com"/>
 
         <com.brainSocket.views.TextViewCustomFont
             android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             android:inputType="textPassword"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="250314"/>
+            android:text="admin123"/>
 
         <com.brainSocket.views.TextViewCustomFont
             android:id="@+id/btnLogin"
