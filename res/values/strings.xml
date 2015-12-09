@@ -100,4 +100,5 @@
     <string name="profile_desc">الوصف</string>
     <string name="profile_ads">الاعلانات</string>
     <string name="lbl_price_unit">ل.س</string>
+    <string name="xx">xx</string>
 </resources>
