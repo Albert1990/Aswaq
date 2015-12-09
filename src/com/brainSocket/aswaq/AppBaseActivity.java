@@ -1,6 +1,8 @@
 package com.brainSocket.aswaq;
 
 
+import com.brainSocket.data.FacebookProvider;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -45,7 +47,7 @@ public class AppBaseActivity extends ActionBarActivity {
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		super.onActivityResult(arg0, arg1, arg2);
-		//FacebookProvider.getInstance().onActiviyResult(arg0, arg1, arg2);
+		FacebookProvider.getInstance().onActiviyResult(arg0, arg1, arg2);
 	}
 	
 }
