@@ -474,6 +474,33 @@ public class DataStore {
 			}
 		}).start();
 	}
+	
+	public void attemptUpdateUserProfile(final String userName,
+			final String mobileNumber,
+			final String address,
+			final String description,
+			final DataRequestCallback callback)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success=true;
+				ServerResult result=serverHandler.updateUserProfile(userName,mobileNumber,address,description);
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
+					JSONObject meJson=(JSONObject)result.getValue("meJson");
+					AppUser me=new AppUser(meJson);
+					result.addPair("me", me);
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
 
 	public void justWait(final int waitDelay, final DataRequestCallback callback) {
 		new Thread(new Runnable() {
@@ -490,5 +517,6 @@ public class DataStore {
 			}
 		}).start();
 	}
+	
 
 }

@@ -66,6 +66,7 @@
             android:value="@string/app_id" />
         <activity android:name="UserPageActivity"></activity>
         <activity android:name="AdvertiseDetailsActivity"></activity>
+        <activity android:name="UserProfileActivity"></activity>
     </application>
 
 </manifest>

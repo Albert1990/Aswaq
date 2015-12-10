@@ -19,7 +19,7 @@ public class AswaqApp extends Application{
 	private static Context AppContext ;
 	private static Activity currentAcivity ;
 	public static final String VERSIOIN_ID = "0.1";
-	public static final int SLIDER_TRANSITION_INTERVAL=2000;
+	public static final int SLIDER_TRANSITION_INTERVAL=1000;
 	public static final String DEFAULT_USER_IMAGE="x1.png";
 	
 	

@@ -101,4 +101,6 @@
     <string name="profile_ads">الاعلانات</string>
     <string name="lbl_price_unit">ل.س</string>
     <string name="xx">xx</string>
+    <string name="login_btnEditUserProfile">حفظ التعديلات</string>
+    <string name="actionbar_edit_user_profile">تعديل صفحتي الشخصية</string>
 </resources>

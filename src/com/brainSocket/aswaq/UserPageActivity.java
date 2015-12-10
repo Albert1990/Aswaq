@@ -48,6 +48,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 	
 	//actionbar
 		private ImageView ivMenu;
+		private ImageView ivEditUserProfile;
 		private TextViewCustomFont tvFragTitle;
 		private ImageView ivBackHome;
 		private ImageView ivLogo;
@@ -121,12 +122,23 @@ private void initCustomActionBar() {
 		
 		tvFragTitle = (TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle) ;
 		ivMenu = (ImageView) mCustomView.findViewById(R.id.ivMenu);
+		ivEditUserProfile=(ImageView)mCustomView.findViewById(R.id.ivEditUserProfile);
 		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
+		ivBackHome.setOnClickListener(this);
 		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
+		ivLogo.setVisibility(View.GONE);
 		//btnGroup = findViewById(R.id.btnGroup);
 		
 		ivMenu.setOnClickListener(this);
-		//btnGroup.setOnClickListener(this);
+		AppUser me=DataCacheProvider.getInstance().getMe();
+		if(me!=null)
+		{
+			if(userId==me.getId())
+			{
+				ivEditUserProfile.setVisibility(View.VISIBLE);
+				ivEditUserProfile.setOnClickListener(this);
+			}
+		}
 	}
 
 public void setActionBarColor(int color){
@@ -182,6 +194,10 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 				List<AdvertiseModel> userAds=(List<AdvertiseModel>)data.getValue("userAds");
 				int followersCount=(Integer)data.getValue("followersCount");
 				isFollowedByMe=(Integer)data.getValue("isFollowedByMe");
+				
+				tvFragTitle.setText(user.getName());
+				tvFragTitle.setVisibility(View.VISIBLE);
+				ivBackHome.setVisibility(View.VISIBLE);
 				String photoPath=AswaqApp.getImagePath(ImageType.User, user.getPicture());
 				Picasso.with(getApplicationContext()).load(photoPath).into(ivUser);
 				tvUserName.setText(user.getName());
@@ -255,6 +271,7 @@ private DataRequestCallback unfollowUserCallback=new DataRequestCallback() {
 public void onClick(View v) {
 	// TODO Auto-generated method stub
 	int viewId=v.getId();
+	Intent i=null;
 	switch(viewId)
 	{
 	case R.id.tvFollow:
@@ -269,8 +286,7 @@ public void onClick(View v) {
 		}
 		else
 		{
-			//loadActivity(LoginActivity.class,null);
-			Intent i=new Intent(UserPageActivity.this, LoginActivity.class);
+			i=new Intent(UserPageActivity.this, LoginActivity.class);
 			startActivity(i);
 		}
 		break;
@@ -279,6 +295,13 @@ public void onClick(View v) {
 		break;
 	case R.id.ivMenu:
 		toggleDrawer();
+		break;
+	case R.id.ivEditUserProfile:
+		i=new Intent(UserPageActivity.this, UserProfileActivity.class);
+		startActivity(i);
+		break;
+	case R.id.ivBack:
+		finish();
 		break;
 	}
 }

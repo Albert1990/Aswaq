@@ -570,6 +570,44 @@ public class ServerAccess {
 		return result;
 	}
 	
+	public ServerResult updateUserProfile(String userName,String mobileNumber,String address,String description)
+	{
+		ServerResult result=new ServerResult();
+		try
+		{
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>();
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			jsonPairs.add(new BasicNameValuePair("user_name", userName));
+			jsonPairs.add(new BasicNameValuePair("mobile_number", mobileNumber));
+			jsonPairs.add(new BasicNameValuePair("address", address));
+			jsonPairs.add(new BasicNameValuePair("description", description));
+			// url
+						String url = BASE_SERVICE_URL + "users_api/edit_user_profile";
+						// send request
+						String response = sendPostRequest(url, jsonPairs);
+						// parse response
+						if (response != null && !response.equals("")) { // check if response is empty
+							JSONObject jsonResponse = new JSONObject(response);
+							result.setFlag(jsonResponse.getInt(FLAG));
+							if(jsonResponse.has("object"))
+							{
+								if(!jsonResponse.isNull("object"))
+								{
+									result.addPair("meJson", jsonResponse.getJSONObject("object"));
+								}
+							}
+							
+						} else {
+							result.setFlag(CONNECTION_ERROR_CODE);
+						}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return result;
+	}
+	
 public ServerResult sendMultiPartHttpPOSTContact(String url , String msg ,String [] imgPath, String id , String accessTocken) throws JSONException {
 		
 		String responseString = null;
