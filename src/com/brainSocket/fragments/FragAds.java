@@ -67,7 +67,12 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			homeCallbacks=(HomeCallbacks)getActivity();
 			lstAds=(ListView)getActivity().findViewById(R.id.lstAds);
 			lstAds.setOnItemClickListener(this);
-			vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
+			//vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
+			
+			vpSliderAds = (ViewPager) getActivity().getLayoutInflater().inflate(R.layout.layout_slider, lstAds, false);
+
+			lstAds.addHeaderView(vpSliderAds, null, false);
+			
 			homeCallbacks.showProgress(true);
 			DataStore.getInstance().attemptGetCategoryAds(getArguments().getInt("selectedSubCategoryId"), getCategoryAdsCallback);
 		}
@@ -88,7 +93,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 				slides=(List<SlideModel>)data.getValue("slides");
 				
 				AdvertisesListAdapter advertisesListAdapter=new AdvertisesListAdapter(getActivity(), ads);
-				//lstAds.addHeaderView(vpSliderAds);
+				
 				lstAds.setAdapter(advertisesListAdapter);
 				
 				SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);
