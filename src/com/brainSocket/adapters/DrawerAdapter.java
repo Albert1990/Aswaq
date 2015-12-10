@@ -3,7 +3,9 @@ package com.brainSocket.adapters;
 import java.util.List;
 
 import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.LoginActivity;
 import com.brainSocket.aswaq.R;
+import com.brainSocket.aswaq.UserPageActivity;
 import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.enums.DrawerItemType;
 import com.brainSocket.enums.FragmentType;
@@ -11,6 +13,7 @@ import com.brainSocket.models.AppUser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,28 +125,44 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			//setSelectedItemIndex(arg2);
 			DrawerElement elem = elements[arg2];
-			switch (elem.itemType) {
-			case MAIN:
-				//backToHome();
-				break;
-			case PROFILE:
-				//switchSection(FRAG_TYPE.TODO);
-				break;
-			case AGENTS:
-				//switchSection(FRAG_TYPE.STATS);
-				AppUser me=DataCacheProvider.getInstance().getMe();
+			AppUser me=DataCacheProvider.getInstance().getMe();
+			if (elem.itemType==DrawerItemType.MAIN) {
+			}
+			else if(elem.itemType==DrawerItemType.PROFILE)
+			{
+				homeCallbacks.closeSlideDrawer();
+				if(me!=null)
+					{
+					Intent i=new Intent(context, UserPageActivity.class);
+					i.putExtra("userId", me.getId());
+					context.startActivity(i);
+					}
+				else
+				{
+					//homeCallbacks.loadActivity(LoginActivity.class,null);
+					Intent i=new Intent(context, LoginActivity.class);
+					context.startActivity(i);
+				}
+			}
+			else if(elem.itemType==DrawerItemType.AGENTS)
+			{
 				if(me!=null)
 					homeCallbacks.loadFragment(FragmentType.MyClients,null);
 				else
 				{
-					homeCallbacks.loadActivity();
+					//homeCallbacks.loadActivity(LoginActivity.class,null);
+					Intent i=new Intent(context, LoginActivity.class);
+					context.startActivity(i);
 				}
-				break;
-			case FAVOURITES:
-				//switchSection(FRAG_TYPE.ABOUT);
-				break;
-			case CALLUS:
-				break;
+			}
+			else if(elem.itemType==DrawerItemType.FAVOURITES)
+			{
+			}
+			else if(elem.itemType==DrawerItemType.CALLUS)
+			{
+			}
+			else
+			{
 			}
 		
 		}	

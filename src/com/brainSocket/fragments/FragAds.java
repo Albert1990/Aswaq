@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.brainSocket.adapters.AdvertisesListAdapter;
 import com.brainSocket.adapters.SliderAdapter;
+import com.brainSocket.aswaq.AdvertiseDetailsActivity;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.MainActivity;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
@@ -15,6 +17,7 @@ import com.brainSocket.enums.FragmentType;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.models.SlideModel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -125,10 +128,14 @@ private Runnable SliderTransition=new Runnable() {
 			long id) {
 		// TODO Auto-generated method stub
 		int adId=ads.get(position).getId();
-		HashMap<String, Object> params=new HashMap<String, Object>();
-		params.put("selectedAdId", adId);
 		//homeCallbacks.showToast(Integer.toString(adId));
-		homeCallbacks.loadFragment(FragmentType.AdvertiseDetails,params);
+		//homeCallbacks.loadFragment(FragmentType.AdvertiseDetails,params);
+		//Intent i=new Intent(MainActivity.this,AdvertiseDetailsActivity.class);
+		//homeCallbacks.loadActivity(AdvertiseDetailsActivity.class, params);
+		Intent i=new Intent(getActivity(), AdvertiseDetailsActivity.class);
+		i.putExtra("selectedAdId", adId);
+		startActivity(i);
+		
 	}
 	
 	public static FragAds newInstance(HashMap<String, Object> params)

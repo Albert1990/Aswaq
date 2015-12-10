@@ -182,7 +182,9 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 					homeCallbacks.loadFragment(FragmentType.AddAdvertise,null);
 				else
 				{
-					homeCallbacks.loadActivity();
+					//homeCallbacks.loadActivity(LoginActivity.class,null);
+					Intent i=new Intent(getActivity(), LoginActivity.class);
+					startActivity(i);
 				}
 			}
 			catch(Exception ex){}

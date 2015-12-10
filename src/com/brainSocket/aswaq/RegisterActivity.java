@@ -172,12 +172,6 @@ public class RegisterActivity extends AppBaseActivity implements
 	}
 
 	@Override
-	public void loadActivity() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void openSlideDrawer() {
 		// TODO Auto-generated method stub
 		

@@ -19,6 +19,7 @@ import com.brainSocket.views.TextViewCustomFont;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -149,9 +150,10 @@ public class ClientsListAdapter extends BaseAdapter implements OnClickListener{
 	private void openUserProfile(View v)
 	{
 		int clientId=(Integer)v.getTag();
-		HashMap<String, Object> params=new HashMap<String, Object>();
-		params.put("userId", clientId);
-		homeCallbacks.loadFragment(FragmentType.UserPage, params);
+//		HashMap<String, Object> params=new HashMap<String, Object>();
+//		params.put("userId", clientId);
+//		homeCallbacks.loadFragment(FragmentType.UserPage, params);
+		//Intent i=new Intent(, cls)
 	}
 
 	@Override

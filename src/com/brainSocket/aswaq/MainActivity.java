@@ -25,23 +25,25 @@ import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.enums.FragmentType;
 import com.brainSocket.fragments.FragAddAdvertise;
 import com.brainSocket.fragments.FragAds;
-import com.brainSocket.fragments.FragAdvertiseDetails;
 import com.brainSocket.fragments.FragClients;
 import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
-import com.brainSocket.fragments.FragUserPage;
 import com.brainSocket.fragments.FragVerification;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.views.TextViewCustomFont;
 
 public class MainActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
+	//slide drawer
 	private ListView lvDrawer ;
 	private DrawerAdapter adapter ;
 	private DrawerLayout dlDrawer ;
 	private View llLogout;
+	
 	private FragmentManager fragmentManager;
 	private FragmentType currentFragmentType;
 	private Dialog dialogLoading;
+	
+	//actionbar
 	private ImageView ivMenu;
 	private TextViewCustomFont tvFragTitle;
 	private ImageView ivBackHome;
@@ -56,26 +58,23 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 		setContentView(R.layout.activity_main);
 		init();
 		initCustomActionBar();
+		initSlideDrawer();
 	}
 	
 	private void init()
 	{
 		fragmentManager=getSupportFragmentManager();
-//		AppUser me=DataCacheProvider.getInstance().getMe();
-//		if(!me.isVerified())
-//		{
-//			loadFragment(FragmentType.Verification,null);
-//		}
-//		else
-//		{
-			lvDrawer = (ListView) findViewById(R.id.lvDrawer);
-			adapter = new DrawerAdapter(this, lvDrawer);
-			lvDrawer.setAdapter(adapter);
-			dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
-			llLogout=findViewById(R.id.llLogout);
-			llLogout.setOnClickListener(this);
 			loadFragment(FragmentType.Main,null);
-//		}
+	}
+	
+	private void initSlideDrawer()
+	{
+		lvDrawer = (ListView) findViewById(R.id.lvDrawer);
+		adapter = new DrawerAdapter(this, lvDrawer);
+		lvDrawer.setAdapter(adapter);
+		dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
+		llLogout=findViewById(R.id.llLogout);
+		llLogout.setOnClickListener(this);
 	}
 	
 private void initCustomActionBar() {
@@ -287,20 +286,6 @@ private void updateActionbar(FragmentType section) {
 			.addToBackStack(FragmentType.ShowAds.name())
 			.commit();
 			break;
-		case AdvertiseDetails:
-			FragAdvertiseDetails fragAdvertiseDetails=FragAdvertiseDetails.newInstance(params);
-			fragmentManager.beginTransaction()
-			.replace(R.id.content_frame, fragAdvertiseDetails)
-			.addToBackStack(FragmentType.AdvertiseDetails.name())
-			.commit();
-			break;
-		case UserPage:
-			FragUserPage fragUserPage=FragUserPage.newInstance(params);
-			fragmentManager.beginTransaction()
-			.replace(R.id.content_frame, fragUserPage)
-			.addToBackStack(FragmentType.UserPage.name())
-			.commit();
-			break;
 		case MyClients:
 			FragClients fragClients=FragClients.newInstance();
 			fragmentManager.beginTransaction()
@@ -311,13 +296,6 @@ private void updateActionbar(FragmentType section) {
 		}
 		currentFragmentType=fragmentType;
 		updateActionbar(currentFragmentType);
-	}
-
-	@Override
-	public void loadActivity() {
-		// TODO Auto-generated method stub
-		Intent i=new Intent(MainActivity.this, LoginActivity.class);
-		startActivity(i);
 	}
 
 	@Override

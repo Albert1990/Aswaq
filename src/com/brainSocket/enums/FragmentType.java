@@ -6,7 +6,5 @@ public enum FragmentType {
 	Verification,
 	SubCategories,
 	ShowAds,
-	AdvertiseDetails,
-	UserPage,
 	MyClients
 }

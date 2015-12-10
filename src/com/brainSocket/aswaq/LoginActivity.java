@@ -12,7 +12,6 @@ import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
 import com.brainSocket.fragments.FragAddAdvertise;
 import com.brainSocket.fragments.FragAds;
-import com.brainSocket.fragments.FragAdvertiseDetails;
 import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
 import com.brainSocket.fragments.FragVerification;
@@ -126,12 +125,8 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		
 		@Override
 		public void onFacebookSessionOpened(String accessToken, String userId) {
-			//mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-		
 		  Profile profile = com.facebook.Profile.getCurrentProfile();
-		  String name = profile.getName();
-		  String gender = "1"; // TODO cant retrieve gender, facebook login always results a male gender 
-		  //DataStore.getInstance().attemptSignUp(attemptingPhoneNum, name, genderType, String.valueOf(android.os.Build.VERSION.SDK_INT), RosaryApp.VERSIOIN_ID, apiLoginCallback);
+		  String name = profile.getName(); 
 		  DataStore.getInstance().attemptSignUp("samer.shatta@gmail.com", profile.getName(),
 					"", "123", "", "",
 					userId,accessToken,
@@ -140,8 +135,12 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		  //linkWithFB = true ;
 		  FacebookProvider.getInstance().unregisterListener();
 		}
+		
 		@Override
-		public void onFacebookSessionClosed() {}
+		public void onFacebookSessionClosed() {
+			
+		}
+		
 		@Override
 		public void onFacebookException(Exception exception) {
 			
@@ -244,12 +243,6 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 	}
 
 	@Override
-	public void loadActivity() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void openSlideDrawer() {
 		// TODO Auto-generated method stub
 		
@@ -258,7 +251,6 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 	@Override
 	public void closeSlideDrawer() {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
