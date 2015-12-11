@@ -176,7 +176,7 @@
         android:id="@+id/lvAds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
-
+<!-- dd -->
 </LinearLayout>
 <include
         android:layout_width="250dp"
