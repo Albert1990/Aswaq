@@ -48,7 +48,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	private TextViewCustomFont tvDesc;
 	private AdvertiseModel ad;
 
-//slide drawer
+////slide drawer
 	private ListView lvDrawer ;
 	private DrawerAdapter adapter ;
 	private DrawerLayout dlDrawer ;

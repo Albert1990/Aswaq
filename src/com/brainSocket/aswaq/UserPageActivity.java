@@ -46,7 +46,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 	private int isFollowedByMe; 
 	private int userId;
 	
-	//actionbar
+	////actionbar
 		private ImageView ivMenu;
 		private ImageView ivEditUserProfile;
 		private TextViewCustomFont tvFragTitle;

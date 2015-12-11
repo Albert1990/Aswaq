@@ -120,10 +120,8 @@ private void initCustomActionBar() {
 		ivBackHome.setOnClickListener(this);
 		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
 		ivLogo.setVisibility(View.GONE);
-		//btnGroup = findViewById(R.id.btnGroup);
 		
 		ivMenu.setOnClickListener(this);
-		//btnGroup.setOnClickListener(this);
 	}
 
 public void setActionBarColor(int color){
