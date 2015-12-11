@@ -124,10 +124,13 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		
 		@Override
-		public void onFacebookSessionOpened(String accessToken, String userId) {
-		  Profile profile = com.facebook.Profile.getCurrentProfile();
-		  String name = profile.getName(); 
-		  DataStore.getInstance().attemptSignUp("samer.shatta@gmail.com", profile.getName(),
+		public void onFacebookSessionOpened(String accessToken, String userId, HashMap<String, Object> map) {
+			
+		  //Profile profile = com.facebook.Profile.getCurrentProfile();
+		  //String name = profile.getName(); 
+		  String email = (String) map.get("email");
+		  String name = (String) map.get("name");
+		  DataStore.getInstance().attemptSignUp(email, name,
 					"", "123", "", "",
 					userId,accessToken,
 					registerCallback);
@@ -169,6 +172,7 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			showProgress(false);
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:

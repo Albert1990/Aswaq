@@ -1,9 +1,11 @@
 package com.brainSocket.data;
 
+import java.util.HashMap;
+
 
 public interface FacebookProviderListener 
 {
-	void onFacebookSessionOpened(String accessToken, String userId);
+	void onFacebookSessionOpened(String accessToken, String userId, HashMap<String, Object> map);
 	
 	void onFacebookSessionClosed();
 	

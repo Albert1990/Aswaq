@@ -3,6 +3,7 @@ package com.brainSocket.data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -67,15 +68,38 @@ public class FacebookProvider {
 		@Override
 		public void onSuccess(LoginResult loginResult) {
 			handlePendingAction();
-			AccessToken accessToken = loginResult.getAccessToken();
-			Profile profile = Profile.getCurrentProfile();
-			if (accessToken != null & !accessToken.isExpired())
-				broadcastSessionOpened(accessToken.getToken(),accessToken.getUserId());
+			final AccessToken accessToken = loginResult.getAccessToken();
+			//Profile profile = Profile.getCurrentProfile();
+			if (accessToken != null & !accessToken.isExpired()){
+				GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object,GraphResponse response) {
+                            	try{
+	                                // Application code
+	                                Log.v("LoginActivity", response.toString());
+	                                HashMap<String, Object> map = new HashMap<String, Object>();
+	                                JSONObject jsonResp = response.getJSONObject();
+	                                map.put("name", jsonResp.get("name"));
+	                                map.put("email", jsonResp.get("email"));
+	                                map.put("gender", jsonResp.get("gender"));
+	                                map.put("birthday", jsonResp.get("birthday"));
+	                                broadcastSessionOpened(accessToken.getToken(), accessToken.getUserId(), map);
+                            	}catch (Exception e) {
+									broadcastFacebookException(null);
+								}
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+			}	
 		}
 
 		@Override
 		public void onCancel() {
-			Log.d("FB", "login Canseled");
+			broadcastFacebookException(null);
 		}
 
 		@Override
@@ -190,6 +214,8 @@ public class FacebookProvider {
 		{
 			add("user_friends");
 			add("public_profile");
+			add("email");
+			add("user_birthday");
 		}
 	};
 	private static final String PUBLISH_PERMISSION = "publish_actions";
@@ -849,10 +875,10 @@ public class FacebookProvider {
 	 * 
 	 * @param accessToken
 	 */
-	private void broadcastSessionOpened(String accessToken, String userId) {
+	private void broadcastSessionOpened(String accessToken, String userId, HashMap<String, Object> map) {
 		try {
 			if (listener != null) {
-				listener.onFacebookSessionOpened(accessToken, userId);
+				listener.onFacebookSessionOpened(accessToken, userId, map);
 			}
 		} catch (Exception e) {
 		}
