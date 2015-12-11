@@ -100,8 +100,7 @@
                 android:id="@+id/ivUser"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/banner1" />
+                android:layout_centerVertical="true"/>
 
             <com.brainSocket.views.TextViewCustomFont
                 android:id="@+id/tvUserName"

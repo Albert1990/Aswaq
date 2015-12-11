@@ -21,15 +21,15 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:hint="@string/main_search_hint"
         android:background="@drawable/shape_rounded_search_box"
-        android:drawableRight="@drawable/ic_search"
         android:drawablePadding="8dp"
+        android:drawableRight="@drawable/ic_search"
+        android:hint="@string/main_search_hint"
         android:imeOptions="actionGo"
         android:lines="1"
         android:maxLines="1"
-        android:singleLine="true"
         android:padding="10dp"
+        android:singleLine="true"
         android:textColor="@color/txt_dark"
         android:textSize="@dimen/ts_text_normal"
         app:fontId="1" />
@@ -40,7 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etSearch"
         android:layout_marginTop="10dp"
+        android:clipToPadding="false"
         android:numColumns="4"
+        android:paddingBottom="70dp"
         tools:listitem="@layout/item_main_grid_category" >
     </GridView>
 

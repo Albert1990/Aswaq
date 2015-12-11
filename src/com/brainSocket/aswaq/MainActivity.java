@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Gravity;
@@ -32,7 +33,7 @@ import com.brainSocket.fragments.FragVerification;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.views.TextViewCustomFont;
 
-public class MainActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
+public class MainActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks, OnBackStackChangedListener{
 	//slide drawer
 	private ListView lvDrawer ;
 	private DrawerAdapter adapter ;
@@ -61,10 +62,10 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 		initSlideDrawer();
 	}
 	
-	private void init()
-	{
+	private void init(){
 		fragmentManager=getSupportFragmentManager();
-			loadFragment(FragmentType.Main,null);
+		fragmentManager.addOnBackStackChangedListener(this);
+		loadFragment(FragmentType.Main,null);
 	}
 	
 	private void initSlideDrawer()
@@ -87,7 +88,7 @@ private void initCustomActionBar() {
 		mActionBar.setHomeAsUpIndicator(null);
 		//LayoutInflater mInflater = LayoutInflater.from(this); 
 		mActionBar.setCustomView(R.layout.custom_actionbar);
-		setActionBarColor(Color.argb(30, 0, 0, 0));
+		setActionBarColor(Color.argb(0, 0, 0, 0));
 		mActionBar.setDisplayShowCustomEnabled(true);
 		View mCustomView = mActionBar.getCustomView() ;
 		mCustomView.invalidate();
@@ -97,7 +98,7 @@ private void initCustomActionBar() {
 		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
 		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
 		//btnGroup = findViewById(R.id.btnGroup);
-		
+		ivLogo.setVisibility(View.GONE);
 		ivMenu.setOnClickListener(this);
 		//btnGroup.setOnClickListener(this);
 	}
@@ -114,7 +115,7 @@ private  void backToHome(){
         }
 	    
 		adapter.onFragmentChange(FragmentType.Main);
-		updateActionbar(FragmentType.Main);
+		//updateActionbar(FragmentType.Main);
 		closeDrawer();
 		
 	} catch (Exception e) {
@@ -180,6 +181,20 @@ private void updateActionbar(FragmentType section) {
 //			e.printStackTrace();
 //		}
 //	}
+	
+	@Override
+	public void onBackStackChanged() {
+		try{
+			int  entrys = getSupportFragmentManager().getBackStackEntryCount() ;
+			if(entrys > 1){
+				updateActionbar(null);
+			}else
+				updateActionbar(FragmentType.Main);
+		}catch(Exception e){
+			
+		}
+		
+	}
 	
 	private void toggleDrawer(){
 		try{
@@ -295,7 +310,7 @@ private void updateActionbar(FragmentType section) {
 			break;
 		}
 		currentFragmentType=fragmentType;
-		updateActionbar(currentFragmentType);
+		//updateActionbar(currentFragmentType);
 	}
 
 	@Override

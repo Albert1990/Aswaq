@@ -83,6 +83,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/app_theme_light"
+            android:gravity="center_horizontal"
             android:orientation="vertical" >
 
             <com.brainSocket.views.TextViewCustomFont
@@ -99,8 +100,8 @@
 
             <RatingBar
                 android:id="@+id/rbUserRate"
-                style="?android:attr/ratingBarStyle"
-                android:layout_width="match_parent"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:numStars="5"

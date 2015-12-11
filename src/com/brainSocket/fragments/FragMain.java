@@ -3,12 +3,32 @@ package com.brainSocket.fragments;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+
 import com.brainSocket.adapters.MainCategoriesListAdapter;
 import com.brainSocket.adapters.SliderAdapter;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.LoginActivity;
-import com.brainSocket.aswaq.MainActivity;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.aswaq.SearchActivity;
 import com.brainSocket.data.DataCacheProvider;
@@ -22,29 +42,6 @@ import com.brainSocket.models.CategoryModel;
 import com.brainSocket.models.PageModel;
 import com.brainSocket.models.SlideModel;
 import com.github.clans.fab.FloatingActionButton;
-
-import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.TextView;
 
 public class FragMain extends Fragment implements OnClickListener,OnItemClickListener {
 	private HomeCallbacks homeCallbacks;
@@ -69,6 +66,24 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 	            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_GO)) {
 	                search();
 	                return true;
+	            }
+	            return false;
+	        }
+	    };
+	    
+	    OnTouchListener serchDrawableToutchLIstener = new OnTouchListener() {
+	        @Override
+	        public boolean onTouch(View v, MotionEvent event) {
+	            final int DRAWABLE_LEFT = 0;
+	            final int DRAWABLE_TOP = 1;
+	            final int DRAWABLE_RIGHT = 2;
+	            final int DRAWABLE_BOTTOM = 3;
+
+	            if(event.getAction() == MotionEvent.ACTION_UP) {
+	                if(event.getRawX() >= (etSearch.getRight() - etSearch.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+	                	search();
+	                 return true;
+	                }
 	            }
 	            return false;
 	        }
@@ -100,6 +115,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		btnAddAdvertise.setOnClickListener(this);
 		vpSlider=(ViewPager)getActivity().findViewById(R.id.vpSliderMain);
 		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
+		etSearch.setOnTouchListener(serchDrawableToutchLIstener);
 		
 		homeCallbacks.showProgress(true);
 		homeCallbacks.closeSlideDrawer();

@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/ivIcon"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:scaleType="fitCenter"
@@ -21,14 +21,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivIcon"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:lines="1"
-        android:maxLines="1"
+        android:gravity="center_horizontal"
+        android:lines="2"
+        android:maxLines="2"
         android:text="@string/place_holder"
         android:textColor="@color/txt_dark"
-        android:textSize="@dimen/ts_text_normal"
+        android:textSize="@dimen/ts_text_big"
         app:fontId="1" />
 
 </RelativeLayout>
