@@ -9,6 +9,7 @@ import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.enums.PhoneNumberCheckResult;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.views.TextViewCustomFont;
 
@@ -166,15 +167,50 @@ private void closeDrawer(){
 private void updateUserProfile()
 {
 	showProgress(true);
+	boolean cancel=false;
+	View focusView=null;
+	
 	String userName=txtUserNameRegister.getText().toString();
 	String mobileNumber=txtMobileNumberRegister.getText().toString();
 	String address=txtAddressRegister.getText().toString();
 	String description=txtDescriptionRegister.getText().toString();
-	DataStore.getInstance().attemptUpdateUserProfile(userName,
-			mobileNumber,
-			address,
-			description,
-			updateUserProfileCallback);
+	
+	if(AswaqApp.isEmptyOrNull(userName))
+	{
+		txtUserNameRegister.setError(getString(R.string.login_error_user_name_empty));
+		focusView=txtUserNameRegister;
+		cancel=true;
+	}
+	
+	if(!AswaqApp.isEmptyOrNull(mobileNumber))
+	{
+		String attemptingPhoneNum = txtMobileNumberRegister.getText().toString().replaceAll("\\s+","");
+		PhoneNumberCheckResult numValid = AswaqApp.validatePhoneNum(attemptingPhoneNum);
+		switch (numValid) {
+		case SHORT:
+			txtMobileNumberRegister.setError(getString(R.string.error_short_phone_num));
+			focusView = txtMobileNumberRegister;
+			cancel = true;
+			break;
+		case WRONG:
+			txtMobileNumberRegister.setError(getString(R.string.error_incorrect_phone_num));
+			focusView = txtMobileNumberRegister;
+			cancel = true;
+			break;
+		}
+	}
+	
+	
+	if(cancel)
+		focusView.requestFocus();
+	else
+	{
+		DataStore.getInstance().attemptUpdateUserProfile(userName,
+				mobileNumber,
+				address,
+				description,
+				updateUserProfileCallback);
+	}
 }
 
 private DataRequestCallback updateUserProfileCallback=new DataRequestCallback() {

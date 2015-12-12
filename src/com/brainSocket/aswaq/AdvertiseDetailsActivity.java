@@ -7,9 +7,12 @@ import com.brainSocket.adapters.SliderAdapter;
 import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
+import com.brainSocket.data.PhotoProvider;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.enums.ImageType;
+import com.brainSocket.enums.SliderType;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.views.TextViewCustomFont;
 import com.squareup.picasso.Picasso;
@@ -47,12 +50,6 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	private TextViewCustomFont tvPlace;
 	private TextViewCustomFont tvDesc;
 	private AdvertiseModel ad;
-
-////slide drawer
-	private ListView lvDrawer ;
-	private DrawerAdapter adapter ;
-	private DrawerLayout dlDrawer ;
-	private View llLogout;
 	
 	//actionbar
 		private ImageView ivMenu;
@@ -68,7 +65,6 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	    setContentView(R.layout.activity_advertise_details);
 	    init();
 	    initCustomActionBar();
-	    initSlideDrawer();
 	}
 	
 	private void init()
@@ -123,20 +119,10 @@ private void initCustomActionBar() {
 		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
 		//btnGroup = findViewById(R.id.btnGroup);
 		
-		ivMenu.setOnClickListener(this);
+		//ivMenu.setOnClickListener(this);
+		ivMenu.setVisibility(View.GONE);
 		//btnGroup.setOnClickListener(this);
 	}
-
-
-private void initSlideDrawer()
-{
-	lvDrawer = (ListView) findViewById(R.id.lvDrawer);
-	adapter = new DrawerAdapter(this, lvDrawer);
-	lvDrawer.setAdapter(adapter);
-	dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
-	llLogout=findViewById(R.id.llLogout);
-	llLogout.setOnClickListener(this);
-}
 	
 public void setActionBarColor(int color){
 	getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
@@ -156,19 +142,19 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 					tvPaid.setVisibility(View.INVISIBLE);
 				
 					tvUserName.setText(ad.getUser().getName());
-					String price=Integer.toString(ad.getPrice())+getString(R.string.lbl_price_unit);
-					tvPrice.setText(price);
+					tvPrice.setText(ad.getPriceWithUnit());
 					tvCat.setText(ad.getCategory().getName());
 					tvDate.setText(ad.getDate());
 					tvDesc.setText(ad.getDescription());
-					String imgPath=null;
-					if(ad.getUser().getPicture().length()==0)
-						imgPath= ServerAccess.IMAGE_SERVICE_URL+"users/"+AswaqApp.DEFAULT_USER_IMAGE;
-					else
-						imgPath=ServerAccess.IMAGE_SERVICE_URL+"users/"+ad.getUser().getPicture();
+					String imgPath=AswaqApp.getImagePath(ImageType.User, ad.getUser().getPicture());
+//					if(ad.getUser().getPicture().length()==0)
+//						imgPath= ServerAccess.IMAGE_SERVICE_URL+"users/"+AswaqApp.DEFAULT_USER_IMAGE;
+//					else
+//						imgPath=ServerAccess.IMAGE_SERVICE_URL+"users/"+ad.getUser().getPicture();
 					rbUserRate.setRating(ad.getUser().getRate());
-					Picasso.with(getApplicationContext()).load(imgPath).into(ivUser);
-					SliderAdapter adapter=new SliderAdapter(getApplicationContext(), ad.getImages());
+					//Picasso.with(getApplicationContext()).load(imgPath).into(ivUser);
+					PhotoProvider.getInstance().displayPhotoNormal(imgPath, ivUser);
+					SliderAdapter adapter=new SliderAdapter(getApplicationContext(), ad.getImages(),SliderType.Advertise);
 					vpSlider.setAdapter(adapter);
 					showProgress(false);
 					String rate=Float.toString(ad.getUser().getRate());
@@ -176,27 +162,6 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 			}
 		}
 	};
-	
-	private void toggleDrawer(){
-		try{
-			if(dlDrawer.isDrawerOpen(Gravity.RIGHT)){
-				dlDrawer.closeDrawer(Gravity.RIGHT);
-			}else{
-				dlDrawer.openDrawer(Gravity.RIGHT);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	private void closeDrawer(){
-		try{
-			if(dlDrawer.isDrawerOpen(Gravity.RIGHT)){
-				dlDrawer.closeDrawer(Gravity.RIGHT);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public void showProgress(boolean show) {
@@ -244,7 +209,6 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 	@Override
 	public void closeSlideDrawer() {
 		// TODO Auto-generated method stub
-		closeDrawer();
 	}
 	
 	private void showUserPage()
@@ -273,12 +237,6 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 			break;
 		case R.id.tvUserName:
 			showUserPage();
-			break;
-		case R.id.llLogout:
-			DataCacheProvider.getInstance().removeStoredMe();
-			break;
-		case R.id.ivMenu:
-			toggleDrawer();
 			break;
 		}
 	}

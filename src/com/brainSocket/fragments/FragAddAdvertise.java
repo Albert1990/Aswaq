@@ -54,6 +54,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private ImageView selectedImageView;
 	private TextViewCustomFont tvCategory;
 	int selectedCategoryId=-1;
+	String[] imagesURI={null,null,null,null};
 	
 	private FragAddAdvertise()
 	{
@@ -83,15 +84,19 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		btnSubmit.setOnClickListener(this);
 		
 		btnImg1=(ImageButton)getActivity().findViewById(R.id.btnImg1);
+		btnImg1.setTag(0);
 		btnImg1.setOnClickListener(this);
 		
 		btnImg2=(ImageButton)getActivity().findViewById(R.id.btnImg2);
+		btnImg2.setTag(1);
 		btnImg2.setOnClickListener(this);
 		
 		btnImg3=(ImageButton)getActivity().findViewById(R.id.btnImg3);
+		btnImg3.setTag(2);
 		btnImg3.setOnClickListener(this);
 		
 		btnImg4=(ImageButton)getActivity().findViewById(R.id.btnImg4);
+		btnImg4.setTag(3);
 		btnImg4.setOnClickListener(this);
 		
 		tvCategory=(TextViewCustomFont)getActivity().findViewById(R.id.tvCategory);
@@ -168,10 +173,24 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		public void onDataReady(ServerResult data, boolean success) {
 			if(success){
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done){
-					//homeCallback.showToast("the new advertise have been added successfully");
-					homeCallback.showProgress(false);
-					homeCallback.loadFragment(FragmentType.Main,null);
+					int adId=(Integer)data.getValue("adId");
+					DataStore.getInstance().attemptUploadAdPhotos(adId,imagesURI,adPhotosUploadCallback);
+					
 				}
+			}
+		}
+	};
+	
+	private DataRequestCallback adPhotosUploadCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			if(data.getFlag()==ServerAccess.ERROR_CODE_done)
+			{
+				homeCallback.showProgress(false);
+				homeCallback.loadFragment(FragmentType.Main,null);
+				homeCallback.showToast(getString(R.string.toast_ad_has_been_added));
 			}
 		}
 	};
@@ -192,6 +211,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		try
 		{
 			Uri selectedImage = data.getData();
+			
 			String[] filePathColumn = {MediaStore.Images.Media.DATA};
 			Cursor cursor =AswaqApp.getAppContext().getContentResolver().query(
                     selectedImage, filePathColumn, null, null, null);
@@ -203,8 +223,11 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 
 
             Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+            int imageIndex=(Integer)selectedImageView.getTag();
+			imagesURI[imageIndex]=filePath;
             AswaqApp.resizeImage(yourSelectedImage, selectedImage.toString());
             selectedImageView.setImageBitmap(yourSelectedImage);
+            //yourSelectedImage.get
 		}
 		catch(Exception ex){ex.printStackTrace();}
 	}

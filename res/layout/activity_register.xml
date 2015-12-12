@@ -19,6 +19,20 @@
             android:layout_height="170dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/logo_splash" />
+        
+        <com.brainSocket.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/lbl_user_name"
+            app:fontId="1" />
+
+        <EditText
+            android:id="@+id/txtUserNameRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
 
         <com.brainSocket.views.TextViewCustomFont
             android:layout_width="match_parent"
@@ -78,9 +92,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
-
-        <Button>
-        </Button>
     </LinearLayout>
 
 </ScrollView>

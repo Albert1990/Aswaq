@@ -1,9 +1,14 @@
 package com.brainSocket.adapters;
 
 import java.util.List;
+
+import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.R;
+import com.brainSocket.data.PhotoProvider;
+import com.brainSocket.enums.ImageType;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.views.TextViewCustomFont;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,11 +68,14 @@ public class AdvertisesListAdapter extends BaseAdapter{
 		else
 			viewHolder=(ViewHolderItem)convertView.getTag();
 		
-		viewHolder.ivProduct.setImageResource(R.drawable.ic_launcher);
+		//viewHolder.ivProduct.setImageResource(R.drawable.ic_launcher);
+		String imagePath=ads.get(position).getImages().get(0).getPhoto_path();
+		imagePath=AswaqApp.getImagePath(ImageType.AdThumb, imagePath);
+		PhotoProvider.getInstance().displayPhotoNormal(imagePath, viewHolder.ivProduct);
 		viewHolder.rbUserRate.setRating(ads.get(position).getUser().getRate());
 		viewHolder.tvUserName.setText(ads.get(position).getUser().getName());
 		viewHolder.tvAdvertiseDescription.setText(ads.get(position).getDescription());
-		viewHolder.tvPrice.setText(Integer.toString(ads.get(position).getPrice()));
+		viewHolder.tvPrice.setText(ads.get(position).getPriceWithUnit());
 		if(ads.get(position).IsPinned()==0)
 			viewHolder.tvPaid.setVisibility(View.INVISIBLE);
 		else

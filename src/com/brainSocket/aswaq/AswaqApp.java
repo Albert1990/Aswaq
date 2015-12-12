@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.enums.ImageType;
+import com.brainSocket.enums.PhoneNumberCheckResult;
 
 public class AswaqApp extends Application{
 	
@@ -82,8 +83,18 @@ public class AswaqApp extends Application{
 			break;
 		case User:
 			if(photo_path.length()<=0)
-				photo_path="x1.png";
+				photo_path=AswaqApp.DEFAULT_USER_IMAGE;
 			url=ServerAccess.IMAGE_SERVICE_URL+"users/";
+			break;
+		case Ad:
+			if(photo_path.length()<=0)
+				photo_path=AswaqApp.DEFAULT_USER_IMAGE;
+			url=ServerAccess.IMAGE_SERVICE_URL+"ads/";
+			break;
+		case AdThumb:
+			if(photo_path.length()<=0)
+				photo_path=AswaqApp.DEFAULT_USER_IMAGE;
+			url=ServerAccess.IMAGE_SERVICE_URL+"ads/thumbs/";
 			break;
 		}
 		return url+photo_path;
@@ -114,4 +125,19 @@ public class AswaqApp extends Application{
     	catch (Exception e) {}
     	return res;
     }
+    
+    public static PhoneNumberCheckResult validatePhoneNum(String num) {
+		if(num == null || "".equals(num.trim()))
+			return PhoneNumberCheckResult.EMPTY ;
+		
+		PhoneNumberCheckResult result = PhoneNumberCheckResult.OK;
+		if (num.length() <= 8) {
+			result = PhoneNumberCheckResult.SHORT;
+		}
+		
+		if(!(num.startsWith("00") || num.startsWith("+") ) )
+			result = PhoneNumberCheckResult.WRONG;
+		
+		return result;
+	}
 }

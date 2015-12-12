@@ -37,6 +37,7 @@ import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.enums.SliderType;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.models.CategoryModel;
 import com.brainSocket.models.PageModel;
@@ -144,7 +145,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 					MainCategoriesListAdapter categoryListAdapter=new MainCategoriesListAdapter(getActivity(), categories);
 					gridViewCategories.setAdapter(categoryListAdapter);
 					
-					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);
+					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides,SliderType.Banner);
 					vpSlider.setAdapter(sliderAdapter);
 					if(slides.size() > 0)
 					{

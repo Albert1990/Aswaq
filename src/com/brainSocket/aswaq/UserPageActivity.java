@@ -52,12 +52,6 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		private TextViewCustomFont tvFragTitle;
 		private ImageView ivBackHome;
 		private ImageView ivLogo;
-		
-		//slide drawer
-		private ListView lvDrawer ;
-		private DrawerAdapter adapter ;
-		private DrawerLayout dlDrawer ;
-		private View llLogout;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -66,7 +60,6 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 	    setContentView(R.layout.activity_user_page);
 	    init();
 	    initCustomActionBar();
-		initSlideDrawer();
 	}
 	
 	private void init()
@@ -95,16 +88,6 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		DataStore.getInstance().attemptGetUserPage(userId,getUserPageCallback);
 	}
 	
-	private void initSlideDrawer()
-	{
-		lvDrawer = (ListView) findViewById(R.id.lvDrawer);
-		adapter = new DrawerAdapter(this, lvDrawer);
-		lvDrawer.setAdapter(adapter);
-		dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
-		llLogout=findViewById(R.id.llLogout);
-		llLogout.setOnClickListener(this);
-	}
-	
 private void initCustomActionBar() {
 		
 		ActionBar mActionBar = getSupportActionBar();
@@ -129,7 +112,8 @@ private void initCustomActionBar() {
 		ivLogo.setVisibility(View.GONE);
 		//btnGroup = findViewById(R.id.btnGroup);
 		
-		ivMenu.setOnClickListener(this);
+		//ivMenu.setOnClickListener(this);
+		ivMenu.setVisibility(View.GONE);
 		AppUser me=DataCacheProvider.getInstance().getMe();
 		if(me!=null)
 		{
@@ -158,27 +142,6 @@ private void updateActionbar(FragmentType section) {
 		break;
 	}
 
-}
-
-private void toggleDrawer(){
-	try{
-		if(dlDrawer.isDrawerOpen(Gravity.RIGHT)){
-			dlDrawer.closeDrawer(Gravity.RIGHT);
-		}else{
-			dlDrawer.openDrawer(Gravity.RIGHT);
-		}
-	}catch(Exception e){
-		e.printStackTrace();
-	}
-}
-private void closeDrawer(){
-	try{
-		if(dlDrawer.isDrawerOpen(Gravity.RIGHT)){
-			dlDrawer.closeDrawer(Gravity.RIGHT);
-		}
-	}catch(Exception e){
-		e.printStackTrace();
-	}
 }
 	
 private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
@@ -290,12 +253,6 @@ public void onClick(View v) {
 			startActivity(i);
 		}
 		break;
-	case R.id.llLogout:
-		DataCacheProvider.getInstance().removeStoredMe();
-		break;
-	case R.id.ivMenu:
-		toggleDrawer();
-		break;
 	case R.id.ivEditUserProfile:
 		i=new Intent(UserPageActivity.this, UserProfileActivity.class);
 		startActivity(i);
@@ -351,7 +308,6 @@ public void openSlideDrawer() {
 @Override
 public void closeSlideDrawer() {
 	// TODO Auto-generated method stub
-	closeDrawer();
 }
 
 }

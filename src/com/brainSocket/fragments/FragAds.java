@@ -14,6 +14,7 @@ import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.enums.SliderType;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.models.SlideModel;
 
@@ -71,7 +72,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			
 			vpSliderAds = (ViewPager) getActivity().getLayoutInflater().inflate(R.layout.layout_slider, lstAds, false);
 
-			lstAds.addHeaderView(vpSliderAds, null, false);
+			lstAds.addHeaderView(vpSliderAds, null, true);
 			
 			homeCallbacks.showProgress(true);
 			DataStore.getInstance().attemptGetCategoryAds(getArguments().getInt("selectedSubCategoryId"), getCategoryAdsCallback);
@@ -96,7 +97,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 				
 				lstAds.setAdapter(advertisesListAdapter);
 				
-				SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides);
+				SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides,SliderType.Banner);
 				vpSliderAds.setAdapter(sliderAdapter);
 				if(slides.size() > 0)
 				{
@@ -132,7 +133,9 @@ private Runnable SliderTransition=new Runnable() {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		int adId=ads.get(position).getId();
+		if(position==0)
+			position=1;
+		int adId=ads.get(position-1).getId();
 		//homeCallbacks.showToast(Integer.toString(adId));
 		//homeCallbacks.loadFragment(FragmentType.AdvertiseDetails,params);
 		//Intent i=new Intent(MainActivity.this,AdvertiseDetailsActivity.class);

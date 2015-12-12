@@ -4,5 +4,6 @@ public enum ImageType {
 	Category,
 	Slide,
 	User,
-	Ad
+	Ad,
+	AdThumb
 }

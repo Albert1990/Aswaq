@@ -62,8 +62,7 @@ public class DataStore {
 	 * @param callback
 	 */
 	public void attemptSignUp(final String email, final String userName,
-			final String mobileNumber, final String password,
-			final String address, final String description,
+			final String password,
 			final String facebookId, final String facebookAccessToken,
 			final DataRequestCallback callback) {
 
@@ -72,7 +71,7 @@ public class DataStore {
 			public void run() {
 				boolean success = true;
 				ServerResult result = serverHandler.registerUser(email,
-						userName, mobileNumber, password, address, description,
+						userName, password,
 						facebookId, facebookAccessToken);
 				if (result.connectionFailed()) {
 					success = false;
@@ -495,6 +494,26 @@ public class DataStore {
 					JSONObject meJson=(JSONObject)result.getValue("meJson");
 					AppUser me=new AppUser(meJson);
 					result.addPair("me", me);
+				}
+				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptUploadAdPhotos(final int adId,final String[] photos,final DataRequestCallback callback)
+	{
+new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success=true;
+				ServerResult result=serverHandler.uploadAdvertisePhotos(adId, photos);
+				if(result.connectionFailed())
+					success=false;
+				else
+				{
 				}
 				if(callback!=null)
 					invokeCallback(callback, success, result);

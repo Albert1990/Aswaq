@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 public class RegisterActivity extends AppBaseActivity implements
 		OnClickListener,HomeCallbacks {
-	private EditText txtEmail, txtPassword,txtRepeatPassword;
+	private EditText txtUserNameRegister,txtEmail, txtPassword,txtRepeatPassword;
 	private Button btnRegister;
 	private Dialog dialogLoading;
 
@@ -35,6 +35,7 @@ public class RegisterActivity extends AppBaseActivity implements
 	}
 
 	private void initComponents() {
+		txtUserNameRegister=(EditText)findViewById(R.id.txtUserNameRegister);
 		txtEmail = (EditText) findViewById(R.id.txtEmailRegister);
 		txtPassword = (EditText) findViewById(R.id.txtPasswordRegister);
 		txtRepeatPassword=(EditText)findViewById(R.id.txtRepeatPasswordRegister);
@@ -61,10 +62,17 @@ public class RegisterActivity extends AppBaseActivity implements
 		boolean cancel = false;
 		View focusView = null;
 
+		String userName=txtUserNameRegister.getText().toString();
 		String email = txtEmail.getText().toString();
 		String password = txtPassword.getText().toString();
 		String repeatedPassword=txtRepeatPassword.getText().toString();
 
+		if(AswaqApp.isEmptyOrNull(userName))
+		{
+			txtUserNameRegister.setError(getString(R.string.login_error_user_name_empty));
+			focusView=txtUserNameRegister;
+			cancel=true;
+		}
 		if (AswaqApp.isEmptyOrNull(email)) {
 			txtEmail.setError(getString(R.string.login_error_email_empty));
 			focusView = txtEmail;
@@ -109,8 +117,8 @@ public class RegisterActivity extends AppBaseActivity implements
 			String facebookAccessToken="";
 			String facebookId="";
 			showProgress(true);
-			DataStore.getInstance().attemptSignUp(email, "",
-					"", password, "", "",
+			DataStore.getInstance().attemptSignUp(email, userName,
+					password,
 					facebookId,facebookAccessToken,
 					registerCallback);
 		}

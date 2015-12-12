@@ -153,6 +153,10 @@ public class AdvertiseModel {
 	public int getPrice() {
 		return price;
 	}
+	public String getPriceWithUnit()
+	{
+		return Integer.toString(price)+" ل.س";
+	}
 	public void setPrice(int price) {
 		this.price = price;
 	}

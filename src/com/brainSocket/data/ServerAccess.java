@@ -67,7 +67,7 @@ public class ServerAccess {
 
 	// api
 	public static final int MAIN_PORT_NUM = 80 ;
-	private boolean inProductionMode=true;
+	private boolean inProductionMode=false;
 	public static String IMAGE_SERVICE_URL="http://192.168.10.182:"+MAIN_PORT_NUM+"/aswaq/imgs/";
 	public static String BASE_SERVICE_URL = "http://192.168.10.182:"+MAIN_PORT_NUM+"/aswaq/index.php/";
 
@@ -153,12 +153,9 @@ public class ServerAccess {
 	 */
 	public ServerResult registerUser(final String email,
 			final String userName, 
-			final String mobileNumber,
 			final String password,
-			final String address,
 			final String facebookId,
-			final String facebookAccessToken,
-			final String description) {
+			final String facebookAccessToken) {
 		ServerResult result = new ServerResult();
 		AppUser me  = null ;
 		try {
@@ -166,14 +163,10 @@ public class ServerAccess {
 			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
 			jsonPairs.add(new BasicNameValuePair("email", email));
 			jsonPairs.add(new BasicNameValuePair("user_name", userName));
-			jsonPairs.add(new BasicNameValuePair("mobile_number", mobileNumber));
 			jsonPairs.add(new BasicNameValuePair("password", password));
-			jsonPairs.add(new BasicNameValuePair("address", address));
-			jsonPairs.add(new BasicNameValuePair("description", description));
 			jsonPairs.add(new BasicNameValuePair("version", "1.0"));
 			jsonPairs.add(new BasicNameValuePair("facebook_id", facebookId));
 			jsonPairs.add(new BasicNameValuePair("facebook_access_token", facebookAccessToken));
-			jsonPairs.add(new BasicNameValuePair("gender", "1"));
 			
 			try{
 				String deviceId = Secure.getString(AswaqApp.getAppContext().getContentResolver(),Secure.ANDROID_ID);
@@ -367,8 +360,8 @@ public class ServerAccess {
 								if(!jsonResponse.isNull("object"))
 								{
 									//TODO read response
-									JSONObject ob=jsonResponse.getJSONObject("object");
-									result.addPair("searchResults", ob);
+									//JSONObject ob=jsonResponse.getJSONObject("object");
+									result.addPair("adId", jsonResponse.getInt("object"));
 								}
 							}
 						} else {
@@ -608,8 +601,9 @@ public class ServerAccess {
 		return result;
 	}
 	
-public ServerResult sendMultiPartHttpPOSTContact(String url , String msg ,String [] imgPath, String id , String accessTocken) throws JSONException {
-		
+public ServerResult uploadAdvertisePhotos(int ad_id ,String [] imgPath) {
+
+	String url = BASE_SERVICE_URL + "ads_api/upload_ad_photos";
 		String responseString = null;
 		ServerResult res=new ServerResult();
 		HttpClient httpclient = new DefaultHttpClient();
@@ -630,15 +624,18 @@ public ServerResult sendMultiPartHttpPOSTContact(String url , String msg ,String
 				File sourceFile;
 				for(int i =0 ;i<imgPath.length ; i++)
 				{
-					sourceFile = new File( imgPath[i]);
-					entity.addPart("image"+i, new FileBody(sourceFile));
+					if(imgPath[i]!=null)
+					{
+						sourceFile = new File( imgPath[i]);
+						entity.addPart("ad_image"+i, new FileBody(sourceFile));
+					}
 				}
 			}
 
 			// Adding file data to http body
-			if(msg !=null)
-				entity.addPart("message", new StringBody(msg)); // Extra parameters if you want to pass to server
-			entity.addPart("id", new StringBody(id));
+			entity.addPart("ad_id", new StringBody(Integer.toString(ad_id))); // Extra parameters if you want to pass to server
+			String access_token=DataCacheProvider.getInstance().getAccessToken();
+			entity.addPart("access_token", new StringBody(access_token));
 
 			//totalSize = entity.getContentLength();
 			httppost.setEntity(entity);
@@ -649,6 +646,8 @@ public ServerResult sendMultiPartHttpPOSTContact(String url , String msg ,String
 
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (statusCode == 200) {
+				try
+				{
 				// Server response
 				responseString = EntityUtils.toString(r_entity);
 				if (responseString != null && !responseString.equals("")) { // check if response is empty
@@ -657,6 +656,12 @@ public ServerResult sendMultiPartHttpPOSTContact(String url , String msg ,String
 					
 				} else {
 					res.setFlag(CONNECTION_ERROR_CODE);
+				}
+			}
+				catch(Exception ex)
+				{
+					res.setFlag(CONNECTION_ERROR_CODE);
+					ex.printStackTrace();
 				}
 			} else {
 				responseString = "Error occurred! Http Status Code: "
