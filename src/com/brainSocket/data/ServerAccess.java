@@ -67,7 +67,7 @@ public class ServerAccess {
 
 	// api
 	public static final int MAIN_PORT_NUM = 80 ;
-	private boolean inProductionMode=false;
+	private boolean inProductionMode=true;
 	public static String IMAGE_SERVICE_URL="http://192.168.10.182:"+MAIN_PORT_NUM+"/aswaq/imgs/";
 	public static String BASE_SERVICE_URL = "http://192.168.10.182:"+MAIN_PORT_NUM+"/aswaq/index.php/";
 
