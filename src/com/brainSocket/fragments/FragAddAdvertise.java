@@ -30,12 +30,14 @@ import android.widget.Toast;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.R;
+import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.dialogs.DiagCategories;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.models.AppUser;
 import com.brainSocket.models.CategoryModel;
 import com.brainSocket.views.EditTextCustomFont;
 import com.brainSocket.views.TextViewCustomFont;
@@ -76,9 +78,13 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private void init()
 	{
 		homeCallback=(HomeCallbacks)getActivity();
+		AppUser me=DataCacheProvider.getInstance().getMe();
+		
 		txtProductDescription=(EditTextCustomFont)getActivity().findViewById(R.id.txtProductDescription);
 		tvPrice=(EditTextCustomFont)getActivity().findViewById(R.id.tvPrice);
 		tvPhone=(EditTextCustomFont)getActivity().findViewById(R.id.tvPhone);
+		tvPhone.setText(me.getPhoneNum());
+		
 		swhNew=(Switch)getActivity().findViewById(R.id.swhNew);
 		btnSubmit=(TextViewCustomFont)getActivity().findViewById(R.id.btnSubmit);
 		btnSubmit.setOnClickListener(this);

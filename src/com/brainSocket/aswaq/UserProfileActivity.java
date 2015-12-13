@@ -157,7 +157,7 @@ private void closeDrawer(){
 
 private void updateUserProfile()
 {
-	showProgress(true);
+	
 	boolean cancel=false;
 	View focusView=null;
 	
@@ -196,6 +196,7 @@ private void updateUserProfile()
 		focusView.requestFocus();
 	else
 	{
+		showProgress(true);
 		DataStore.getInstance().attemptUpdateUserProfile(userName,
 				mobileNumber,
 				address,
