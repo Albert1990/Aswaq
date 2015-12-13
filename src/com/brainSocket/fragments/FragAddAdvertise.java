@@ -227,7 +227,6 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			imagesURI[imageIndex]=filePath;
             AswaqApp.resizeImage(yourSelectedImage, selectedImage.toString());
             selectedImageView.setImageBitmap(yourSelectedImage);
-            //yourSelectedImage.get
 		}
 		catch(Exception ex){ex.printStackTrace();}
 	}

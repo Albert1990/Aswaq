@@ -7,6 +7,7 @@ import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.views.TextViewCustomFont;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 public class RegisterActivity extends AppBaseActivity implements
 		OnClickListener,HomeCallbacks {
 	private EditText txtUserNameRegister,txtEmail, txtPassword,txtRepeatPassword;
-	private Button btnRegister;
+	private TextViewCustomFont btnRegister;
 	private Dialog dialogLoading;
 
 	/** Called when the activity is first created. */
@@ -39,7 +40,7 @@ public class RegisterActivity extends AppBaseActivity implements
 		txtEmail = (EditText) findViewById(R.id.txtEmailRegister);
 		txtPassword = (EditText) findViewById(R.id.txtPasswordRegister);
 		txtRepeatPassword=(EditText)findViewById(R.id.txtRepeatPasswordRegister);
-		btnRegister = (Button) findViewById(R.id.btnRegister);
+		btnRegister = (TextViewCustomFont) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(this);
 	}
 

@@ -69,7 +69,9 @@ public class AdvertisesListAdapter extends BaseAdapter{
 			viewHolder=(ViewHolderItem)convertView.getTag();
 		
 		//viewHolder.ivProduct.setImageResource(R.drawable.ic_launcher);
-		String imagePath=ads.get(position).getImages().get(0).getPhoto_path();
+		String imagePath=null;
+		if(ads.get(position).getImages().size()>0)
+			imagePath=ads.get(position).getImages().get(0).getPhoto_path();
 		imagePath=AswaqApp.getImagePath(ImageType.AdThumb, imagePath);
 		PhotoProvider.getInstance().displayPhotoNormal(imagePath, viewHolder.ivProduct);
 		viewHolder.rbUserRate.setRating(ads.get(position).getUser().getRate());

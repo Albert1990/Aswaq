@@ -21,6 +21,7 @@ import com.brainSocket.models.AppUser;
 public class FragClients extends Fragment{
 	private HomeCallbacks homeCallbacks;
 	private ListView lvClients;
+	private View vNoDataPlaceHolder;
 	
 	private FragClients()
 	{
@@ -47,18 +48,22 @@ public class FragClients extends Fragment{
 		lvClients=(ListView)getActivity().findViewById(R.id.list);
 		homeCallbacks.closeSlideDrawer();
 		homeCallbacks.showProgress(true);
+		vNoDataPlaceHolder=getActivity().findViewById(R.id.vNoDataPlaceHolder);
 		DataStore.getInstance().attemptGetClients(getClientsCallback);
 	}
 	
 	private DataRequestCallback getClientsCallback=new DataRequestCallback() {
-		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
 			if(success){
 				List<AppUser> clients=(List<AppUser>)data.getValue("clients");
-				ClientsListAdapter clientsListAdapter=new ClientsListAdapter(getActivity(), clients);
-				lvClients.setAdapter(clientsListAdapter);
+				if(clients.size()>0)
+				{
+					vNoDataPlaceHolder.setVisibility(View.GONE);
+					ClientsListAdapter clientsListAdapter=new ClientsListAdapter(getActivity(), clients);
+					lvClients.setAdapter(clientsListAdapter);
+				}
 				homeCallbacks.showProgress(false);
 			}
 		}

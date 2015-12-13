@@ -36,10 +36,9 @@ public class UserProfileActivity extends AppBaseActivity implements OnClickListe
 		private View llLogout;
 		
 		//actionbar
-		private ImageView ivMenu;
+		private ImageView ivEditUserProfile;
 		private TextViewCustomFont tvFragTitle;
 		private ImageView ivBackHome;
-		private ImageView ivLogo;
 		
 		//view members
 		private EditText txtUserNameRegister;
@@ -97,16 +96,15 @@ public class UserProfileActivity extends AppBaseActivity implements OnClickListe
 		llLogout=findViewById(R.id.llLogout);
 		llLogout.setOnClickListener(this);
 	}
-private void initCustomActionBar() {
-		
+	
+	private void initCustomActionBar() {
 		ActionBar mActionBar = getSupportActionBar();
 		mActionBar.setDisplayShowHomeEnabled(false);
 		mActionBar.setDisplayShowTitleEnabled(false);
 		mActionBar.setDisplayUseLogoEnabled(false);
 		mActionBar.setDisplayHomeAsUpEnabled(false) ;
 		mActionBar.setHomeAsUpIndicator(null);
-		//LayoutInflater mInflater = LayoutInflater.from(this); 
-		mActionBar.setCustomView(R.layout.custom_actionbar);
+		mActionBar.setCustomView(R.layout.custom_actionbar1);
 		setActionBarColor(Color.argb(30, 0, 0, 0));
 		mActionBar.setDisplayShowCustomEnabled(true);
 		View mCustomView = mActionBar.getCustomView() ;
@@ -114,15 +112,8 @@ private void initCustomActionBar() {
 		
 		tvFragTitle = (TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle) ;
 		tvFragTitle.setText(getString(R.string.actionbar_edit_user_profile));
-		tvFragTitle.setVisibility(View.VISIBLE);
-		ivMenu = (ImageView) mCustomView.findViewById(R.id.ivMenu);
 		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
-		ivBackHome.setVisibility(View.VISIBLE);
 		ivBackHome.setOnClickListener(this);
-		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
-		ivLogo.setVisibility(View.GONE);
-		
-		ivMenu.setOnClickListener(this);
 	}
 
 public void setActionBarColor(int color){
@@ -247,12 +238,6 @@ public void onClick(View v) {
 	{
 	case R.id.btnEditUserProfile:
 		updateUserProfile();
-		break;
-	case R.id.llLogout:
-		DataCacheProvider.getInstance().removeStoredMe();
-		break;
-	case R.id.ivMenu:
-		toggleDrawer();
 		break;
 	case R.id.ivBack:
 		finish();

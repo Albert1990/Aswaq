@@ -46,8 +46,6 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 	
 	//actionbar
 	private ImageView ivMenu;
-	private TextViewCustomFont tvFragTitle;
-	private ImageView ivBackHome;
 	private ImageView ivLogo;
 	
 
@@ -93,14 +91,9 @@ private void initCustomActionBar() {
 		View mCustomView = mActionBar.getCustomView() ;
 		mCustomView.invalidate();
 		
-		tvFragTitle = (TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle) ;
 		ivMenu = (ImageView) mCustomView.findViewById(R.id.ivMenu);
-		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
 		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
-		//btnGroup = findViewById(R.id.btnGroup);
-		ivLogo.setVisibility(View.GONE);
 		ivMenu.setOnClickListener(this);
-		//btnGroup.setOnClickListener(this);
 	}
 
 public void setActionBarColor(int color){

@@ -73,7 +73,7 @@ public class DataStore {
 				ServerResult result = serverHandler.registerUser(email,
 						userName, password,
 						facebookId, facebookAccessToken);
-				if (result.connectionFailed()) {
+ 				if (result.connectionFailed()) {
 					success = false;
 				} else {
 					try {

@@ -40,6 +40,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 	private ViewPager vpSliderAds;
 	private int currentSlide=0;
 	private boolean stopSliderTransition;
+	private View vNoDataPlaceHolder;
 	
 	private FragAds()
 	{
@@ -69,6 +70,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			lstAds=(ListView)getActivity().findViewById(R.id.lstAds);
 			lstAds.setOnItemClickListener(this);
 			//vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
+			vNoDataPlaceHolder=getActivity().findViewById(R.id.vNoDataPlaceHolder);
 			
 			vpSliderAds = (ViewPager) getActivity().getLayoutInflater().inflate(R.layout.layout_slider, lstAds, false);
 
@@ -91,16 +93,19 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			if(success)
 			{
 				ads=(List<AdvertiseModel>)data.getValue("ads");
+				
+				if(ads.size()>0)
+				{
+					vNoDataPlaceHolder.setVisibility(View.GONE);
+					AdvertisesListAdapter advertisesListAdapter=new AdvertisesListAdapter(getActivity(), ads);
+					lstAds.setAdapter(advertisesListAdapter);
+				}
+				
 				slides=(List<SlideModel>)data.getValue("slides");
-				
-				AdvertisesListAdapter advertisesListAdapter=new AdvertisesListAdapter(getActivity(), ads);
-				
-				lstAds.setAdapter(advertisesListAdapter);
-				
-				SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides,SliderType.Banner);
-				vpSliderAds.setAdapter(sliderAdapter);
 				if(slides.size() > 0)
 				{
+					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides,SliderType.Banner);
+					vpSliderAds.setAdapter(sliderAdapter);
 					stopSliderTransition=false;
 					new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
 				}

@@ -87,12 +87,12 @@ public class AswaqApp extends Application{
 			url=ServerAccess.IMAGE_SERVICE_URL+"users/";
 			break;
 		case Ad:
-			if(photo_path.length()<=0)
+			if(photo_path==null)
 				photo_path=AswaqApp.DEFAULT_USER_IMAGE;
 			url=ServerAccess.IMAGE_SERVICE_URL+"ads/";
 			break;
 		case AdThumb:
-			if(photo_path.length()<=0)
+			if(photo_path==null)
 				photo_path=AswaqApp.DEFAULT_USER_IMAGE;
 			url=ServerAccess.IMAGE_SERVICE_URL+"ads/thumbs/";
 			break;

@@ -47,11 +47,9 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 	private int userId;
 	
 	////actionbar
-		private ImageView ivMenu;
 		private ImageView ivEditUserProfile;
 		private TextViewCustomFont tvFragTitle;
 		private ImageView ivBackHome;
-		private ImageView ivLogo;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -96,24 +94,17 @@ private void initCustomActionBar() {
 		mActionBar.setDisplayUseLogoEnabled(false);
 		mActionBar.setDisplayHomeAsUpEnabled(false) ;
 		mActionBar.setHomeAsUpIndicator(null);
-		//LayoutInflater mInflater = LayoutInflater.from(this); 
-		mActionBar.setCustomView(R.layout.custom_actionbar);
+		mActionBar.setCustomView(R.layout.custom_actionbar1);
 		setActionBarColor(Color.argb(30, 0, 0, 0));
 		mActionBar.setDisplayShowCustomEnabled(true);
 		View mCustomView = mActionBar.getCustomView() ;
 		mCustomView.invalidate();
 		
 		tvFragTitle = (TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle) ;
-		ivMenu = (ImageView) mCustomView.findViewById(R.id.ivMenu);
 		ivEditUserProfile=(ImageView)mCustomView.findViewById(R.id.ivEditUserProfile);
 		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
 		ivBackHome.setOnClickListener(this);
-		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
-		ivLogo.setVisibility(View.GONE);
-		//btnGroup = findViewById(R.id.btnGroup);
 		
-		//ivMenu.setOnClickListener(this);
-		ivMenu.setVisibility(View.GONE);
 		AppUser me=DataCacheProvider.getInstance().getMe();
 		if(me!=null)
 		{

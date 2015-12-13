@@ -52,10 +52,9 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	private AdvertiseModel ad;
 	
 	//actionbar
-		private ImageView ivMenu;
-		private TextViewCustomFont tvFragTitle;
-		private ImageView ivBackHome;
-		private ImageView ivLogo;
+	private ImageView ivEditUserProfile;
+	private TextViewCustomFont tvFragTitle;
+	private ImageView ivBackHome;
 	
 
 	/** Called when the activity is first created. */
@@ -105,23 +104,15 @@ private void initCustomActionBar() {
 		mActionBar.setDisplayShowTitleEnabled(false);
 		mActionBar.setDisplayUseLogoEnabled(false);
 		mActionBar.setDisplayHomeAsUpEnabled(false) ;
-		mActionBar.setHomeAsUpIndicator(null);
-		//LayoutInflater mInflater = LayoutInflater.from(this); 
-		mActionBar.setCustomView(R.layout.custom_actionbar);
+		mActionBar.setHomeAsUpIndicator(null); 
+		mActionBar.setCustomView(R.layout.custom_actionbar1);
 		setActionBarColor(Color.argb(30, 0, 0, 0));
 		mActionBar.setDisplayShowCustomEnabled(true);
 		View mCustomView = mActionBar.getCustomView() ;
 		mCustomView.invalidate();
 		
 		tvFragTitle = (TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle) ;
-		ivMenu = (ImageView) mCustomView.findViewById(R.id.ivMenu);
 		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
-		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
-		//btnGroup = findViewById(R.id.btnGroup);
-		
-		//ivMenu.setOnClickListener(this);
-		ivMenu.setVisibility(View.GONE);
-		//btnGroup.setOnClickListener(this);
 	}
 	
 public void setActionBarColor(int color){
@@ -213,9 +204,6 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 	
 	private void showUserPage()
 	{
-//		HashMap<String, Object> params=new HashMap<String, Object>();
-//		params.put("userId", ad.getUserId());
-//		homeCallbacks.loadFragment(FragmentType.UserPage, params);
 		Intent i = new Intent(AdvertiseDetailsActivity.this,
 				UserPageActivity.class);
 		i.putExtra("userId", ad.getUserId());
