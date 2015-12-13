@@ -1,6 +1,6 @@
 package com.brainSocket.enums;
 
-//greet
+//greezt
 public enum SliderType {
 	Banner,Advertise
 }
