@@ -2,21 +2,6 @@ package com.brainSocket.aswaq;
 
 import java.util.HashMap;
 
-import com.brainSocket.adapters.DrawerAdapter;
-import com.brainSocket.adapters.SliderAdapter;
-import com.brainSocket.data.DataCacheProvider;
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.PhotoProvider;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.data.ServerResult;
-import com.brainSocket.enums.FragmentType;
-import com.brainSocket.enums.ImageType;
-import com.brainSocket.enums.SliderType;
-import com.brainSocket.models.AdvertiseModel;
-import com.brainSocket.views.TextViewCustomFont;
-import com.squareup.picasso.Picasso;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,15 +9,23 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
+
+import com.brainSocket.adapters.SliderAdapter;
+import com.brainSocket.data.DataRequestCallback;
+import com.brainSocket.data.DataStore;
+import com.brainSocket.data.PhotoProvider;
+import com.brainSocket.data.ServerResult;
+import com.brainSocket.enums.FragmentType;
+import com.brainSocket.enums.ImageType;
+import com.brainSocket.enums.SliderType;
+import com.brainSocket.models.AdvertiseModel;
+import com.brainSocket.views.TextViewCustomFont;
 
 public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCallbacks,OnClickListener {
 	private Dialog dialogLoading;

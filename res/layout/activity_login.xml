@@ -8,9 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:paddingRight="24dp"
+        android:orientation="vertical"
         android:paddingLeft="24dp"
-        android:orientation="vertical" >
+        android:paddingRight="24dp" >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/lbl_email"
-            app:fontId="1"/>
+            app:fontId="1" />
 
         <EditText
             android:id="@+id/txtEmail"
@@ -31,7 +31,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="admin@admin.com"/>
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="admin@admin.com" />
 
         <com.brainSocket.views.TextViewCustomFont
             android:layout_width="match_parent"
@@ -43,50 +46,50 @@
             android:id="@+id/txtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="admin123"/>
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="admin123" />
 
         <com.brainSocket.views.TextViewCustomFont
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="@drawable/selector_btn_app_theme"
             android:gravity="center"
             android:padding="10dp"
+            android:text="@string/login_btn_login"
             android:textColor="@color/white"
             android:textSize="@dimen/ts_text_normal"
-            android:background="@drawable/selector_btn_app_theme"
-            android:text="@string/login_btn_login"
             app:fontId="1" />
-        
-        
+
         <com.brainSocket.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
+            android:text="@string/login_lbl_or"
             android:textColor="@color/txt_normal"
             android:textSize="@dimen/ts_text_small"
-            android:text="@string/login_lbl_or"
             app:fontId="1" />
-        
+
         <com.brainSocket.views.TextViewCustomFont
             android:id="@+id/btnLoginFB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:background="@drawable/shape_rounded_fb"
             android:gravity="center"
             android:padding="10dp"
+            android:text="@string/login_btn_login_fb"
             android:textColor="@color/white"
             android:textSize="@dimen/ts_text_normal"
-            android:background="@drawable/shape_rounded_fb"
-            android:text="@string/login_btn_login_fb"
             app:fontId="1" />
-        
 
-        
         <com.brainSocket.views.TextViewCustomFont
             android:id="@+id/btnDoesntHaveAccount"
             android:layout_width="match_parent"
@@ -94,9 +97,8 @@
             android:layout_marginTop="8dp"
             android:text="@string/btn_doesnt_have_account"
             android:textColor="@color/blue"
-            android:textSize="@dimen/ts_text_normal" 
-            app:fontId="1"/>
-        
+            android:textSize="@dimen/ts_text_normal"
+            app:fontId="1" />
     </LinearLayout>
 
 </ScrollView>

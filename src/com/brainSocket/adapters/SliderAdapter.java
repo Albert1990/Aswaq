@@ -2,20 +2,19 @@ package com.brainSocket.adapters;
 
 import java.util.List;
 
-import com.brainSocket.aswaq.AswaqApp;
-import com.brainSocket.aswaq.R;
-import com.brainSocket.data.PhotoProvider;
-import com.brainSocket.enums.ImageType;
-import com.brainSocket.enums.SliderType;
-import com.brainSocket.models.SlideModel;
-
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
+import com.brainSocket.aswaq.AswaqApp;
+import com.brainSocket.aswaq.R;
+import com.brainSocket.data.PhotoProvider;
+import com.brainSocket.enums.ImageType;
+import com.brainSocket.enums.SliderType;
+import com.brainSocket.models.SlideModel;
 
 public class SliderAdapter extends PagerAdapter{
 	private List<SlideModel> slides;

@@ -100,7 +100,7 @@ public class AswaqApp extends Application{
 		return url+photo_path;
 	}
 	
-	public static void resizeImage(Bitmap originalBitmap,String path)
+	public static void resizeImage(Bitmap originalBitmap, String path)
 	{
 		try
 		{
