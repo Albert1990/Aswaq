@@ -214,7 +214,6 @@ private DataRequestCallback updateUserProfileCallback=new DataRequestCallback() 
 		{
 			if(data.getFlag()==ServerAccess.ERROR_CODE_done)
 			{
-				showProgress(false);
 				AppUser recievedMe=(AppUser)data.getValue("me");
 				if(recievedMe!=null)
 				{
@@ -228,6 +227,11 @@ private DataRequestCallback updateUserProfileCallback=new DataRequestCallback() 
 				finish();
 			}
 		}
+		else
+		{
+			showToast(getString(R.string.error_connection_error));
+		}
+		showProgress(false);
 	}
 };
 

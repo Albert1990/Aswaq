@@ -3,6 +3,7 @@
 
     <item android:drawable="@drawable/shape_rounded_app_theme_dark" android:state_focused="true"></item>
     <item android:drawable="@drawable/shape_rounded_app_theme_dark" android:state_selected="true"></item>
+    <item android:drawable="@drawable/shape_rounded_app_theme_dark" android:state_pressed="true"></item>
     <item android:drawable="@drawable/shape_rounded_app_theme"></item>
 
 </selector>

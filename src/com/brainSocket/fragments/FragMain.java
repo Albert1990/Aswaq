@@ -31,6 +31,7 @@ import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.LoginActivity;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.aswaq.SearchActivity;
+import com.brainSocket.aswaq.VerificationActivity;
 import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
@@ -137,6 +138,7 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 			// TODO Auto-generated method stub
 			try
 			{
+				homeCallbacks.showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					PageModel page=(PageModel)data.getValue("page");
@@ -152,10 +154,15 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 						stopSliderTransition=false;
 						new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
 					}
-					homeCallbacks.showProgress(false);
+					
 				} else {
 					homeCallbacks.showToast("error in getting categories");
 				}
+				
+			}
+			else
+			{
+				homeCallbacks.showToast(getString(R.string.error_connection_error));
 			}
 		}
 			catch(Exception ex)
@@ -196,10 +203,19 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 				stopSliderTransition=true;
 				AppUser me=DataCacheProvider.getInstance().getMe();
 				if(me!=null)
-					homeCallbacks.loadFragment(FragmentType.AddAdvertise,null);
+				{
+					if(me.isVerified()==true)
+					{
+						homeCallbacks.loadFragment(FragmentType.AddAdvertise,null);
+					}
+					else{
+						Intent i=new Intent(getActivity(), VerificationActivity.class);
+						startActivity(i);
+					}
+					
+				}
 				else
 				{
-					//homeCallbacks.loadActivity(LoginActivity.class,null);
 					Intent i=new Intent(getActivity(), LoginActivity.class);
 					startActivity(i);
 				}

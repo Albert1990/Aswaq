@@ -2,11 +2,13 @@ package com.brainSocket.aswaq;
 
 import java.util.HashMap;
 
+import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
 import com.brainSocket.enums.FragmentType;
+import com.brainSocket.models.AppUser;
 import com.brainSocket.views.TextViewCustomFont;
 
 import android.app.Dialog;
@@ -133,14 +135,21 @@ public class RegisterActivity extends AppBaseActivity implements
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:
+					AppUser me=DataCacheProvider.getInstance().getMe();
 					Intent i = new Intent(RegisterActivity.this,
-							MainActivity.class);
+							VerificationActivity.class);
 					startActivity(i);
 					break;
 				case ServerAccess.ERROR_CODE_user_exists_before:
 					txtEmail.setError(getString(R.string.login_error_user_exists_before));
 					break;
+				
 				}
+				
+			}
+			else
+			{
+				showToast(getString(R.string.error_connection_error));
 			}
 		}
 	};

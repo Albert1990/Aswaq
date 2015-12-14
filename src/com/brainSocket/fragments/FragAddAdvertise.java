@@ -63,6 +63,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private ImageView btnImg4;
 	private ImageView selectedImageView;
 	private TextViewCustomFont tvCategory;
+	private EditTextCustomFont txtAddress;
 	int selectedCategoryId=-1;
 	String[] imagesURI={null,null,null,null};
 	
@@ -97,6 +98,9 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		tvPhone=(EditTextCustomFont)getActivity().findViewById(R.id.tvPhone);
 		tvPhone.setText(me.getPhoneNum());
 		
+		txtAddress=(EditTextCustomFont)getActivity().findViewById(R.id.txtAddress);
+		txtAddress.setText(me.getAddress());
+		
 		swhNew=(Switch)getActivity().findViewById(R.id.swhNew);
 		btnSubmit=(TextViewCustomFont)getActivity().findViewById(R.id.btnSubmit);
 		btnSubmit.setOnClickListener(this);
@@ -130,6 +134,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		View focusView=null;
 		//check description textbox
 		String description=txtProductDescription.getText().toString();
+		String address=txtAddress.getText().toString();
 		boolean isUsed=swhNew.isActivated();
 		int price=0;
 		String phone=tvPhone.getText().toString();
@@ -174,7 +179,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		}else{
 			telephones.put(phone);
 			homeCallback.showProgress(true);
-			DataStore.getInstance().attemptAddNewAdvertise(description,
+			DataStore.getInstance().attemptAddNewAdvertise(description,address,
 					selectedCategoryId,
 					isUsed,price,telephones,addNewAdvertiseCallback);
 		}
@@ -193,9 +198,13 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done){
 					int adId=(Integer)data.getValue("adId");
 					DataStore.getInstance().attemptUploadAdPhotos(adId,imagesURI,adPhotosUploadCallback);
-					
 				}
 			}
+			else
+			{
+				homeCallback.showToast(getString(R.string.error_connection_error));
+			}
+			
 		}
 	};
 	
@@ -204,12 +213,19 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			if(success)
+			{
 			if(data.getFlag()==ServerAccess.ERROR_CODE_done)
 			{
-				homeCallback.showProgress(false);
 				homeCallback.loadFragment(FragmentType.Main,null);
 				homeCallback.showToast(getString(R.string.toast_ad_has_been_added));
 			}
+			}
+			else
+			{
+				homeCallback.showToast(getString(R.string.error_connection_error));
+			}
+			homeCallback.showProgress(false);
 		}
 	};
 	

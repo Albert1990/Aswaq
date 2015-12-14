@@ -332,7 +332,7 @@ public class ServerAccess {
 		return result;
 	}
 	
-	public ServerResult addNewAdvertise(String description,
+	public ServerResult addNewAdvertise(String description,String address,
 			int categoryId,boolean isUsed,int price,
 			JSONArray telephones)
 	{
@@ -342,6 +342,7 @@ public class ServerAccess {
 			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>();
 
 			jsonPairs.add(new BasicNameValuePair("description", description));
+			jsonPairs.add(new BasicNameValuePair("address", address));
 			jsonPairs.add(new BasicNameValuePair("category_id", Integer.toString(categoryId)));
 			jsonPairs.add(new BasicNameValuePair("price", Integer.toString(price)));
 			jsonPairs.add(new BasicNameValuePair("is_used", Boolean.toString(isUsed)));

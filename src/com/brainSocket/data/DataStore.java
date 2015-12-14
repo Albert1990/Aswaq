@@ -263,7 +263,7 @@ public class DataStore {
 		}).start();
 	}
 
-	public void attemptAddNewAdvertise(final String description,
+	public void attemptAddNewAdvertise(final String description,final String address,
 			final int categoryId, final boolean isUsed, final int price,
 			final JSONArray telephones, final DataRequestCallback callback) {
 		new Thread(new Runnable() {
@@ -273,7 +273,7 @@ public class DataStore {
 				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.addNewAdvertise(
-						description, categoryId, isUsed, price, telephones);
+						description,address, categoryId, isUsed, price, telephones);
 				if (result.connectionFailed())
 					success = false;
 				else {

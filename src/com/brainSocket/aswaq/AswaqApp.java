@@ -21,7 +21,8 @@ public class AswaqApp extends Application{
 	private static Activity currentAcivity ;
 	public static final String VERSIOIN_ID = "0.1";
 	public static final int SLIDER_TRANSITION_INTERVAL=1000;
-	public static final String DEFAULT_USER_IMAGE="x1.png";
+	public static final String DEFAULT_USER_IMAGE="default_user.png";
+	public static final String DEFAULT_Ad_IMAGE="logo_splash.png";
 	
 	
 	@Override
@@ -88,12 +89,12 @@ public class AswaqApp extends Application{
 			break;
 		case Ad:
 			if(photo_path==null)
-				photo_path=AswaqApp.DEFAULT_USER_IMAGE;
+				photo_path=AswaqApp.DEFAULT_Ad_IMAGE;
 			url=ServerAccess.IMAGE_SERVICE_URL+"ads/";
 			break;
 		case AdThumb:
 			if(photo_path==null)
-				photo_path=AswaqApp.DEFAULT_USER_IMAGE;
+				photo_path=AswaqApp.DEFAULT_Ad_IMAGE;
 			url=ServerAccess.IMAGE_SERVICE_URL+"ads/thumbs/";
 			break;
 		}

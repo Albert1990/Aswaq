@@ -106,8 +106,21 @@
             android:textOff="@string/add_ad_used"
             android:textOn="@string/add_ad_new" />
     </LinearLayout>
+    
+    <com.brainSocket.views.EditTextCustomFont
+        android:id="@+id/txtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="top"
+        android:hint="@string/lbl_address"
+        android:lines="4"
+        android:maxLines="6"
+        app:fontId="1" />
 
-    <com.brainSocket.views.TextViewCustomFont
+    <!-- <com.brainSocket.views.TextViewCustomFont
         android:id="@+id/btnAddYourPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,7 +133,7 @@
         android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="@dimen/ts_text_normal"
-        app:fontId="1" />
+        app:fontId="1" />-->
 
     <FrameLayout
         android:layout_width="match_parent"

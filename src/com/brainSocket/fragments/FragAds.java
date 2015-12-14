@@ -109,8 +109,13 @@ public class FragAds extends Fragment implements OnItemClickListener{
 					stopSliderTransition=false;
 					new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
 				}
-				homeCallbacks.showProgress(false);
+				
 			}
+			else
+			{
+				homeCallbacks.showToast(getString(R.string.error_connection_error));
+			}
+			homeCallbacks.showProgress(false);
 		}
 	};
 	

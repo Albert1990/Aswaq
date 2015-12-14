@@ -30,7 +30,7 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 			  new DrawerElement(R.string.drawer_main, R.drawable.ic_home, R.drawable.ic_home,DrawerItemType.MAIN),
 			  new DrawerElement(R.string.drawer_profile, R.drawable.ic_profile, R.drawable.ic_profile, DrawerItemType.PROFILE) ,
 			  new DrawerElement(R.string.drawer_agents, R.drawable.ic_customers, R.drawable.ic_customers, DrawerItemType.AGENTS) ,
-			  new DrawerElement(R.string.drawer_favourites, R.drawable.ic_fav, R.drawable.ic_fav, DrawerItemType.FAVOURITES) ,
+			  //new DrawerElement(R.string.drawer_favourites, R.drawable.ic_fav, R.drawable.ic_fav, DrawerItemType.FAVOURITES) ,
 			  new DrawerElement(R.string.drawer_callus, R.drawable.ic_about, R.drawable.ic_about, DrawerItemType.CALLUS) ,
 			  };
 		

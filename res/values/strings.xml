@@ -74,7 +74,7 @@
     <string name="drawer_favourites">المفضلة</string>
     <string name="hint_password_repeat">تأكيد كلمة المرور</string>
     <string name="error_password_not_same">كلمتي المرور غير متطابقتين</string>
-    <string name="error_connection_error">حدث خطأ في الاتصال</string>
+    <string name="error_connection_error">حدث خطأ في الاتصال تأكد من عمل الانترنت</string>
     <string name="lbl_suitable_category">اختر الصنف المناسب لإعلانك</string>
     <string name="error_chose_suitable_category">اختر الصنف المناسب لإعلانك</string>
     <string name="error_verification_code_required">رمز التفعيل مطلوب</string>
@@ -108,4 +108,5 @@
     <string name="error_facebook_exception">حدث خطأ أثناء عملية التسجيل في فيس بوك</string>
     <string name="error_facebook_permissions_rejected">لايمكن تسجيل الدخول عبر فيس بوك دون موافقتك إعطائنا الصلاحيات المطلوبة</string>
     <string name="toast_ad_has_been_added">تم إضافة الإعلان بنجاح وسيتم نشره فور الموافقة عليه</string>
+    <string name="error_verification_attempts_exceeded">لقد تجاوزت عدد مرات طلب رمز التفعيل</string>
 </resources>

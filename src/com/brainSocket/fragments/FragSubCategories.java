@@ -77,8 +77,13 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 					//display categories in the list view
 					SubCategoriesListAdapter subCategoriesListAdapter=new SubCategoriesListAdapter(getActivity(), subCategories);
 					lstSubCategories.setAdapter(subCategoriesListAdapter);
-					homeCallbacks.showProgress(false);
+
 				}
+				else
+				{
+					homeCallbacks.showToast(getString(R.string.error_connection_error));
+				}
+				homeCallbacks.showProgress(false);
 			}
 			catch(Exception ex)
 			{

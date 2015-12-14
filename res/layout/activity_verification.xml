@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="170dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo_splash" />
+    
+    <com.brainSocket.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/verif_lbl_verification_text"
+            app:fontId="1" />
+    
+    <EditText
+            android:id="@+id/txtVerificationCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:inputType="number"
+            android:hint="@string/verif_hint_verification_code" />
+    
+    <com.brainSocket.views.TextViewCustomFont
+            android:id="@+id/btnResendVerificationCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="@string/btn_resend_verification_code"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/ts_text_normal"
+            app:fontId="1" />
+    
+    <com.brainSocket.views.TextViewCustomFont
+            android:id="@+id/btnVerifyCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_btn_app_theme"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/verif_btn_verifiy_code"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_text_normal"
+            app:fontId="1" />
+
+    
+</LinearLayout>

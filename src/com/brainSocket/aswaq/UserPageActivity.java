@@ -171,8 +171,12 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 				{
 					tvFollow.setText(getString(R.string.user_list_unfollow));
 				}
-				showProgress(false);
 			}
+			else
+			{
+				showToast(getString(R.string.error_connection_error));
+			}
+			showProgress(false);
 		}
 			catch(Exception ex)
 			{

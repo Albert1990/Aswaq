@@ -3,6 +3,7 @@ package com.brainSocket.aswaq;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.FacebookProvider;
@@ -14,7 +15,7 @@ import com.brainSocket.fragments.FragAddAdvertise;
 import com.brainSocket.fragments.FragAds;
 import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
-import com.brainSocket.fragments.FragVerification;
+import com.brainSocket.models.AppUser;
 import com.brainSocket.views.TextViewCustomFont;
 import com.facebook.Profile;
 
@@ -106,8 +107,18 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 			showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
-					Intent i = new Intent(LoginActivity.this,
+					AppUser me=DataCacheProvider.getInstance().getMe();
+					Intent i=null;
+					if(me.isVerified())
+					{
+					i = new Intent(LoginActivity.this,
 							MainActivity.class);
+					}
+					else
+					{
+						i = new Intent(LoginActivity.this,
+								VerificationActivity.class);
+					}
 					startActivity(i);
 				} else if (data.getFlag() == ServerAccess.ERROR_CODE_user_not_exists) {
 					txtEmail.setError(getString(R.string.login_error_email_or_password_wrong));
@@ -173,12 +184,21 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
-			showProgress(false);
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:
-					Intent i = new Intent(LoginActivity.this,
+					AppUser me=DataCacheProvider.getInstance().getMe();
+					Intent i=null;
+					if(me.isVerified())
+					{
+						i = new Intent(LoginActivity.this,
 							MainActivity.class);
+					}
+					else
+					{
+						i=new Intent(LoginActivity.this,VerificationActivity.class);
+					}
+						
 					startActivity(i);
 					break;
 				case ServerAccess.ERROR_CODE_user_exists_before:
@@ -186,6 +206,11 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 					break;
 				}
 			}
+			else
+			{
+				showToast(getString(R.string.error_connection_error));
+			}
+			showProgress(false);
 		}
 	};
 	

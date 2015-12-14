@@ -29,7 +29,6 @@ import com.brainSocket.fragments.FragAds;
 import com.brainSocket.fragments.FragClients;
 import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
-import com.brainSocket.fragments.FragVerification;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.views.TextViewCustomFont;
 
@@ -217,7 +216,9 @@ private void updateActionbar(FragmentType section) {
 		switch(viewId)
 		{
 		case R.id.llLogout:
-			DataCacheProvider.getInstance().removeStoredMe();
+			DataCacheProvider.getInstance().removeAllStoredData();
+			Intent i =new Intent(MainActivity.this,SplashScreen.class);
+			startActivity(i);
 			break;
 		case R.id.ivMenu:
 			toggleDrawer();
@@ -273,12 +274,6 @@ private void updateActionbar(FragmentType section) {
 				.replace(R.id.content_frame, fragAddAdvertise)
 				.addToBackStack(FragmentType.AddAdvertise.name())
 				.commit();
-			break;
-		case Verification:
-			FragVerification fragVerification=FragVerification.newInstance();
-			fragmentManager.beginTransaction()
-			.replace(R.id.content_frame, fragVerification)
-			.commit();
 			break;
 		case SubCategories:
 			FragSubCategories fragSubCategories=FragSubCategories.newInstance(params);

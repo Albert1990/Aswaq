@@ -64,8 +64,12 @@ public class FragClients extends Fragment{
 					ClientsListAdapter clientsListAdapter=new ClientsListAdapter(getActivity(), clients);
 					lvClients.setAdapter(clientsListAdapter);
 				}
-				homeCallbacks.showProgress(false);
 			}
+			else
+			{
+				homeCallbacks.showToast(getString(R.string.error_connection_error));
+			}
+			homeCallbacks.showProgress(false);
 		}
 	};
 	

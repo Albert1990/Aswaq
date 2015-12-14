@@ -11,6 +11,7 @@ public class AdvertiseModel {
 	private int userId;
 	private int categoryId;
 	private String description;
+	private String address;
 	private int price;
 	private boolean isUsed;
 	private String facebookPage;
@@ -51,6 +52,13 @@ public class AdvertiseModel {
 		{
 			if(ob.has("description"))
 				this.description=ob.getString("description");
+		}
+		catch(Exception ex){}
+		
+		try
+		{
+			if(ob.has("address"))
+				this.address=ob.getString("address");
 		}
 		catch(Exception ex){}
 		
@@ -147,8 +155,16 @@ public class AdvertiseModel {
 	public String getDescription() {
 		return description;
 	}
+	public String getAddress()
+	{
+		return address;
+	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public void setAddress(String address)
+	{
+		this.address=address;
 	}
 	public int getPrice() {
 		return price;
@@ -228,6 +244,7 @@ public class AdvertiseModel {
 		try{ob.put("user_id", userId);}catch(Exception ex){}
 		try{ob.put("category_id", categoryId);}catch(Exception ex){}
 		try{ob.put("description", description);}catch(Exception ex){}
+		try{ob.put("address",address);}catch(Exception ex){}
 		try{ob.put("price", price);}catch(Exception ex){}
 		try{ob.put("is_used", isUsed);}catch(Exception ex){}
 		try{ob.put("facebook_page", facebookPage);}catch(Exception ex){}

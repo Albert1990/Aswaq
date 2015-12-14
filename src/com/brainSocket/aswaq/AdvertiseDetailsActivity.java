@@ -127,6 +127,7 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 				
 					tvUserName.setText(ad.getUser().getName());
 					tvPrice.setText(ad.getPriceWithUnit());
+					tvPlace.setText(ad.getAddress());
 					tvCat.setText(ad.getCategory().getName());
 					tvDate.setText(ad.getDate());
 					tvDesc.setText(ad.getDescription());
