@@ -112,4 +112,6 @@
     <string name="error_photo_required">يجب عليك تحديد صورة واحد على الأقل للإعلان</string>
     <string name="lbl_rate_user">تقييم المستخدم</string>
     <string name="lbl_choose_rate">اختر التقييم التي تراه مناسباً :</string>
+    
+    <string name="diag_rating_ok">موافق</string>
 </resources>
