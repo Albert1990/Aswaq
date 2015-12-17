@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.brainSocket.aswaq.R;
+import com.brainSocket.aswaq.UserPageActivity;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.models.AppUser;
 
@@ -126,12 +128,12 @@ public class FragUsersList extends Fragment{
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//            AppUser collection = mItems.get(arg2).product;
-//            if(arrayUsers != null ){
-//                Intent i = new Intent(getActivity(), CollectionDetailsActiviy.class);
-//                i.putExtra("collection", collection.getJsonObject().toString());
-//                startActivity(i);
-//            }
+            AppUser selectedUser = mItems.get(arg2).product;
+            if(arrayUsers != null ){
+                Intent i = new Intent(getActivity(), UserPageActivity.class);
+                i.putExtra("userId", selectedUser.getId());
+                startActivity(i);
+            }
         }
 
         @Override

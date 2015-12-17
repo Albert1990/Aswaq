@@ -30,7 +30,7 @@ public class FragFavourites extends Fragment implements OnItemClickListener{
 	
 	private FragFavourites()
 	{
-		
+		//constructer
 	}
 	
 	@Override

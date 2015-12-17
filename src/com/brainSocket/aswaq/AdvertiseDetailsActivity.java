@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.brainSocket.adapters.SliderAdapter;
 import com.brainSocket.data.DataCacheProvider;
@@ -69,7 +70,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	{
 		try
 		{
-			showProgress(true);
+			
 			tvPaid=(TextViewCustomFont)findViewById(R.id.tvPaid);
 			vpSlider=(ViewPager)findViewById(R.id.vpSlider);
 			btnFbPage=(ImageView)findViewById(R.id.btnFbPage);
@@ -91,6 +92,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 			ivFav.setOnClickListener(this);
 			
 			int selectedAdId=getIntent().getIntExtra("selectedAdId", 0);
+			showProgress(true);
 			DataStore.getInstance().attemptGetAdvertiseDetails(selectedAdId, getAdvertiseDetailsCallback);
 		}
 		catch(Exception ex)
@@ -127,6 +129,7 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			showProgress(false);
 			if(success)
 			{
 				ad=(AdvertiseModel)data.getValue("adDetails");
@@ -137,6 +140,11 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 				if(isFavourite)
 					ivFav.setBackgroundResource(R.drawable.ic_star_active);
 					
+				if(ad.getUser().getFacebookId().length()<=0)
+				{
+					btnFbPage.setVisibility(View.GONE);
+				}
+				
 					tvUserName.setText(ad.getUser().getName());
 					tvPrice.setText(ad.getPriceWithUnit());
 					tvPlace.setText(ad.getAddress());
@@ -153,10 +161,12 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 					PhotoProvider.getInstance().displayPhotoNormal(imgPath, ivUser);
 					SliderAdapter adapter=new SliderAdapter(getApplicationContext(), ad.getImages(),SliderType.Advertise);
 					vpSlider.setAdapter(adapter);
-					showProgress(false);
+					
 					String rate=Float.toString(ad.getUser().getRate());
 					tvUserRate.setText(rate);
 			}
+			else
+				showToast(getString(R.string.error_connection_error));
 		}
 	};
 	
@@ -232,8 +242,7 @@ private DataRequestCallback removeFromFavouriteCallback=new DataRequestCallback(
 
 	@Override
 	public void showToast(String msg) {
-		// TODO Auto-generated method stub
-		
+		Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -290,11 +299,12 @@ private DataRequestCallback removeFromFavouriteCallback=new DataRequestCallback(
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		int viewId=v.getId();
+		Intent i=null;
 		switch(viewId)
 		{
 		case R.id.btnCall:
-			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +ad.getUser().getPhoneNum()));
-			startActivity(intent);
+			i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +ad.getUser().getPhoneNum()));
+			startActivity(i);
 			break;
 		case R.id.ivUser:
 			showUserPage();
@@ -304,6 +314,12 @@ private DataRequestCallback removeFromFavouriteCallback=new DataRequestCallback(
 			break;
 		case R.id.ivFav:
 			handleFavouriteRequest();
+			break;
+		case R.id.btnFbPage:
+			String url="https://www.facebook.com/"+ad.getUser().getFacebookId();
+			Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
+			i = new Intent(Intent.ACTION_VIEW, uri);
+			startActivity(i);
 			break;
 		}
 	}

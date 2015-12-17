@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -32,6 +33,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 public class UserPageActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
 	private Dialog dialogLoading;
@@ -77,7 +79,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		tvUserName=(TextViewCustomFont)findViewById(R.id.tvUserName);
 		tvFollowers=(TextViewCustomFont)findViewById(R.id.tvFollowers);
 		btnFbPage=(ImageView)findViewById(R.id.btnFbPage);
-		//btnFbPage.setOnClickListener(this);
+		btnFbPage.setOnClickListener(this);
 		tvUserRating=(TextViewCustomFont)findViewById(R.id.tvUserRating);
 		rbUserRate=(RatingBar)findViewById(R.id.rbUserRate);
 		findViewById(R.id.llUserRating).setOnClickListener(this);
@@ -116,6 +118,7 @@ private void initCustomActionBar() {
 			{
 				ivEditUserProfile.setVisibility(View.VISIBLE);
 				ivEditUserProfile.setOnClickListener(this);
+				tvFollow.setVisibility(View.GONE);
 			}
 		}
 	}
@@ -146,6 +149,7 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 			// TODO Auto-generated method stub
 			try
 			{
+				showProgress(false);
 			if(success)
 			{
 				user=(AppUser)data.getValue("user");
@@ -154,14 +158,15 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 				isFollowedByMe=(Integer)data.getValue("isFollowedByMe");
 				
 				tvFragTitle.setText(user.getName());
-				tvFragTitle.setVisibility(View.VISIBLE);
-				ivBackHome.setVisibility(View.VISIBLE);
+//				tvFragTitle.setVisibility(View.VISIBLE);
+//				ivBackHome.setVisibility(View.VISIBLE);
+				
 				String photoPath=AswaqApp.getImagePath(ImageType.User, user.getPicture());
 				Picasso.with(getApplicationContext()).load(photoPath).into(ivUser);
 				tvUserName.setText(user.getName());
 				tvFollowers.setText(Integer.toString(followersCount));
-				if(user.getFacebookId()==-1)
-					btnFbPage.setVisibility(View.INVISIBLE);
+				if(user.getFacebookId().length()<=1)
+					btnFbPage.setVisibility(View.GONE);
 				tvUserRating.setText(Float.toString(user.getRate()));
 				rbUserRate.setRating(user.getRate());
 				tvDesc.setText(user.getDescription());
@@ -180,7 +185,7 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 			{
 				showToast(getString(R.string.error_connection_error));
 			}
-			showProgress(false);
+			
 		}
 			catch(Exception ex)
 			{
@@ -293,6 +298,12 @@ public void onClick(View v) {
 		DiagRating ratingDialog=new DiagRating(user.getRate(), onRatingCallback);
 		ratingDialog.show(getSupportFragmentManager(), "DiagRating");
 		break;
+	case R.id.btnFbPage:
+		String url="https://www.facebook.com/"+user.getFacebookId();
+		Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
+		i = new Intent(Intent.ACTION_VIEW, uri);
+		startActivity(i);
+		break;
 	}
 }
 
@@ -316,7 +327,7 @@ public void showProgress(boolean show) {
 @Override
 public void showToast(String msg) {
 	// TODO Auto-generated method stub
-	
+	Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT).show();
 }
 
 @Override

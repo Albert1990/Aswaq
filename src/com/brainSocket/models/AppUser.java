@@ -31,7 +31,7 @@ public class AppUser /*implements Parcelable */{
 	int isVerified=0;
 	String password;
 	String version;
-	long facebookId;
+	String facebookId;
 	float rate=0;
 	String description;
 	String address;
@@ -100,7 +100,7 @@ public class AppUser /*implements Parcelable */{
 		}catch (Exception e) {}
 		try {
 			if(json.has("facebook_id")) 
-				facebookId = json.getLong("facebook_id");
+				facebookId = json.getString("facebook_id");
 		} 
 		catch (Exception e) {}
 		try {
@@ -269,11 +269,11 @@ public class AppUser /*implements Parcelable */{
 		this.version = version;
 	}
 
-	public long getFacebookId() {
+	public String getFacebookId() {
 		return facebookId;
 	}
 
-	public void setFacebookId(long facebookId) {
+	public void setFacebookId(String facebookId) {
 		this.facebookId = facebookId;
 	}
 
