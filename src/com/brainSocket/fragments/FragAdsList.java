@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.brainSocket.aswaq.AdvertiseDetailsActivity;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.enums.ImageType;
@@ -118,13 +120,13 @@ public class FragAdsList extends Fragment{
         }
 
         @Override
-        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//            AdvertiseModel collection = mItems.get(arg2).product;
-//            if(arrayCollections != null ){
-//                Intent i = new Intent(getActivity(), CollectionDetailsActiviy.class);
-//                i.putExtra("collection", collection.getJsonObject().toString());
-//                startActivity(i);
-//            }
+        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+        	if(arrayCollections.size()>0)
+        	{
+        	Intent i=new Intent(getActivity(),AdvertiseDetailsActivity.class);
+        	i.putExtra("selectedAdId", arrayCollections.get(position).getId());
+        	getActivity().startActivity(i);
+        	}
         }
 
         @Override
