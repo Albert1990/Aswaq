@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.models.AppUser;
 import com.brainSocket.models.CategoryModel;
@@ -419,6 +420,28 @@ public class DataStore {
 			}
 		}).start();
 	}
+	
+	public void attemptAddAdvertiseToFavourite(final int ad_id,final boolean add,
+			final DataRequestCallback callback) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result = serverHandler.addAdvertiseToFavourite(ad_id,add);
+				if (result.connectionFailed())
+					success = false;
+				else {
+					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+
+					}
+				}
+				if (callback != null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
 
 	public void attemptGetClients(final DataRequestCallback callback) {
 		new Thread(new Runnable() {
@@ -496,6 +519,59 @@ public class DataStore {
 					result.addPair("me", me);
 				}
 				if(callback!=null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptGetMyFavourites(final DataRequestCallback callback) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result = serverHandler.getMyFavourites();
+				if (result.connectionFailed())
+					success = false;
+				else {
+					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+						try {
+							JSONArray jsonAds = (JSONArray) result
+									.getValue("jsonAds");
+							List<AdvertiseModel> ads = new ArrayList<AdvertiseModel>();
+							for (int i = 0; i < jsonAds.length(); i++) {
+								ads.add(new AdvertiseModel((JSONObject) jsonAds
+										.get(i)));
+							}
+							result.addPair("ads", ads);
+						} catch (Exception ex) {
+							success = false;
+						}
+					}
+				}
+				if (callback != null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptRateUser(final int userId,final String rate,final DataRequestCallback callback) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result = serverHandler.rateUser(userId,rate);
+				if (result.connectionFailed())
+					success = false;
+				else {
+					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+						
+					}
+				}
+				if (callback != null)
 					invokeCallback(callback, success, result);
 			}
 		}).start();

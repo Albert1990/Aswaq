@@ -109,4 +109,7 @@
     <string name="error_facebook_permissions_rejected">لايمكن تسجيل الدخول عبر فيس بوك دون موافقتك إعطائنا الصلاحيات المطلوبة</string>
     <string name="toast_ad_has_been_added">تم إضافة الإعلان بنجاح وسيتم نشره فور الموافقة عليه</string>
     <string name="error_verification_attempts_exceeded">لقد تجاوزت عدد مرات طلب رمز التفعيل</string>
+    <string name="error_photo_required">يجب عليك تحديد صورة واحد على الأقل للإعلان</string>
+    <string name="lbl_rate_user">تقييم المستخدم</string>
+    <string name="lbl_choose_rate">اختر التقييم التي تراه مناسباً :</string>
 </resources>

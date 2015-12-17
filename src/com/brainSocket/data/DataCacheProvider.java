@@ -23,7 +23,6 @@ public class DataCacheProvider {
 		public static final String PREF_PHOTO_CACHE_CLEARED = "image_cache_clear" ;
 		public static final String PREF_APP_ACCESS_MODE = "access_mode";
 		public static final String PREF_APP_VERSION_STATUS = "version_status";
-		public static final String PREF_APP_MAIN_CATEGORIES="main_categories";
 		public static final String PREF_APP_PAGES="pages";
 		public static final String PREF_APP_CATEGORIES_PAIRS="categories_pairs";
 		
@@ -32,10 +31,6 @@ public class DataCacheProvider {
 		// shared preferences
 		SharedPreferences prefData;
 		SharedPreferences.Editor prefDataEditor;
-		
-		//members
-		private String accessToken;
-		private AppUser me;
 	
 	private static DataCacheProvider instance;
 
@@ -90,11 +85,8 @@ public class DataCacheProvider {
 	public void storeAccessToken(String accessToken)
 	{
 		try {
-			//if(accessToken != null) {
-				prefDataEditor.putString(PREF_API_ACCESS_TOKEN, accessToken);
-				prefDataEditor.commit();
-			//}
-			this.accessToken=accessToken;
+			prefDataEditor.putString(PREF_API_ACCESS_TOKEN, accessToken);
+			prefDataEditor.commit();
 		}
 		catch (Exception e) {}
 	}
@@ -105,13 +97,12 @@ public class DataCacheProvider {
 	 */
 	public String getAccessToken()
 	{
-		if(accessToken==null)
-		{
+		String accessToken=null;
+
 			try {
 				accessToken = prefData.getString(PREF_API_ACCESS_TOKEN, null);
 			}
 			catch(Exception e) {}
-		}
 		return accessToken;
 	}
 	
@@ -121,13 +112,9 @@ public class DataCacheProvider {
 	 */
 	public void storeMe(AppUser me) {
 		try {
-			//if(me == null) {
 				String str = me.getJsonString();
 				prefDataEditor.putString(PREF_APP_USER, str);
 				prefDataEditor.commit();
-//			}else
-//				removeStoredMe();
-			this.me=me;
 		}
 		catch (Exception e) {}
 	}
@@ -149,8 +136,7 @@ public class DataCacheProvider {
 	 * null otherwise
 	 */
 	public AppUser getMe() {
-		if(me==null)
-		{
+		AppUser me=null;
 			try {
 				String str = prefData.getString(PREF_APP_USER, null);
 				if(str != null) {
@@ -161,7 +147,6 @@ public class DataCacheProvider {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
 		return me;
 	}
 	
@@ -294,9 +279,11 @@ public class DataCacheProvider {
 	{
 		try
 		{
-			removeStoredMe();
-			removePages();
-			removeSubCategoriesPairs();
+			prefDataEditor.clear();
+			prefDataEditor.commit();
+			//removeStoredMe();
+			//removePages();
+			//removeSubCategoriesPairs();
 		}
 		catch(Exception ex){}
 	}

@@ -17,14 +17,18 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import com.brainSocket.adapters.SliderAdapter;
+import com.brainSocket.data.DataCacheProvider;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.PhotoProvider;
+import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.dialogs.DiagRating;
 import com.brainSocket.enums.FragmentType;
 import com.brainSocket.enums.ImageType;
 import com.brainSocket.enums.SliderType;
 import com.brainSocket.models.AdvertiseModel;
+import com.brainSocket.models.AppUser;
 import com.brainSocket.views.TextViewCustomFont;
 
 public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCallbacks,OnClickListener {
@@ -42,7 +46,9 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	private TextViewCustomFont tvCat;
 	private TextViewCustomFont tvPlace;
 	private TextViewCustomFont tvDesc;
+	private ImageView ivFav;
 	private AdvertiseModel ad;
+	private boolean isFavourite=false;
 	
 	//actionbar
 	private ImageView ivEditUserProfile;
@@ -81,6 +87,8 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 			tvCat=(TextViewCustomFont)findViewById(R.id.tvCat);
 			tvPlace=(TextViewCustomFont)findViewById(R.id.tvPlace);
 			tvDesc=(TextViewCustomFont)findViewById(R.id.tvDesc);
+			ivFav=(ImageView)findViewById(R.id.ivFav);
+			ivFav.setOnClickListener(this);
 			
 			int selectedAdId=getIntent().getIntExtra("selectedAdId", 0);
 			DataStore.getInstance().attemptGetAdvertiseDetails(selectedAdId, getAdvertiseDetailsCallback);
@@ -122,9 +130,13 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 			if(success)
 			{
 				ad=(AdvertiseModel)data.getValue("adDetails");
+				isFavourite=(Boolean)data.getValue("isFavourite");
 				if(ad.IsPinned()==0)
 					tvPaid.setVisibility(View.INVISIBLE);
 				
+				if(isFavourite)
+					ivFav.setBackgroundResource(R.drawable.ic_star_active);
+					
 					tvUserName.setText(ad.getUser().getName());
 					tvPrice.setText(ad.getPriceWithUnit());
 					tvPlace.setText(ad.getAddress());
@@ -144,6 +156,58 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 					showProgress(false);
 					String rate=Float.toString(ad.getUser().getRate());
 					tvUserRate.setText(rate);
+			}
+		}
+	};
+	
+	private void addToFavourite()
+	{
+		showProgress(true);
+		DataStore.getInstance().attemptAddAdvertiseToFavourite(ad.getId(), true, addToFavouriteCallback);
+	}
+	
+	private void removeFromFavourite()
+	{
+		showProgress(true);
+		DataStore.getInstance().attemptAddAdvertiseToFavourite(ad.getId(), false, removeFromFavouriteCallback);
+	}
+	
+	private DataRequestCallback addToFavouriteCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			showProgress(false);
+			if(success)
+			{
+				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
+				{
+					ivFav.setBackgroundResource(R.drawable.ic_star_active);
+					isFavourite=true;
+				}
+			}else
+			{
+				showToast(getString(R.string.error_connection_error));
+			}
+		}
+	};
+	
+private DataRequestCallback removeFromFavouriteCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			showProgress(false);
+			if(success)
+			{
+				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
+				{
+					ivFav.setBackgroundResource(R.drawable.ic_star);
+					isFavourite=false;
+				}
+			}else
+			{
+				showToast(getString(R.string.error_connection_error));
 			}
 		}
 	};
@@ -203,6 +267,24 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 		i.putExtra("userId", ad.getUserId());
 		startActivity(i);
 	}
+	
+	private void handleFavouriteRequest()
+	{
+		AppUser me=DataCacheProvider.getInstance().getMe();
+		if(me==null)
+		{
+			Intent i=new Intent(AdvertiseDetailsActivity.this,LoginActivity.class);
+			startActivity(i);
+		}
+		else
+		{
+			if(isFavourite)
+				removeFromFavourite();
+			else
+				addToFavourite();
+		}
+		
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -219,6 +301,9 @@ private DataRequestCallback getAdvertiseDetailsCallback=new DataRequestCallback(
 			break;
 		case R.id.tvUserName:
 			showUserPage();
+			break;
+		case R.id.ivFav:
+			handleFavouriteRequest();
 			break;
 		}
 	}

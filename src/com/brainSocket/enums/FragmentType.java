@@ -5,5 +5,6 @@ public enum FragmentType {
 	AddAdvertise,
 	SubCategories,
 	ShowAds,
-	MyClients
+	MyClients,
+	Favourites
 }

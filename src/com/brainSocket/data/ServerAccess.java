@@ -409,13 +409,44 @@ public class ServerAccess {
 		return result;
 	}
 	
+	public ServerResult getMyFavourites() {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			
+			// url
+			String url = BASE_SERVICE_URL + "favourites_api/get_my_favourites";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				if(jsonResponse.has("object")){
+					if(!jsonResponse.isNull("object"))
+					{
+						result.addPair("jsonAds", jsonResponse.getJSONArray("object"));
+					}
+				}
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
 	public ServerResult getAdvertiseDetails(int adId) {
 		ServerResult result = new ServerResult();
 		try {
 			// parameters
 			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
 			jsonPairs.add(new BasicNameValuePair("ad_id", Integer.toString(adId)));
-			//jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			if(DataCacheProvider.getInstance().getMe()!=null)
+				jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
 			
 			// url
 			String url = BASE_SERVICE_URL + "ads_api/get_ad_details";
@@ -429,7 +460,16 @@ public class ServerAccess {
 					if(!jsonResponse.isNull("object"))
 					{
 						JSONObject ob=jsonResponse.getJSONObject("object");
-						result.addPair("jsonAdDetails", ob);
+						if(ob.has("ad"))
+						{
+							if(!ob.isNull("ad"))
+								result.addPair("jsonAdDetails", ob.getJSONObject("ad"));
+						}
+						if(ob.has("is_favourite"))
+						{
+							if(!ob.isNull("is_favourite"))
+								result.addPair("isFavourite", ob.getBoolean("is_favourite"));
+						}
 					}
 				}
 			} else {
@@ -491,6 +531,36 @@ public class ServerAccess {
 			String url = BASE_SERVICE_URL + "followers_api/follow";
 			if(follow==false)
 				url = BASE_SERVICE_URL + "followers_api/unfollow";
+			
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
+	
+	public ServerResult addAdvertiseToFavourite(int adId,boolean add) {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>() ;
+			jsonPairs.add(new BasicNameValuePair("ad_id", Integer.toString(adId)));
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			
+			// url
+			
+			String url = BASE_SERVICE_URL + "favourites_api/add_advertise_to_favourites";
+			if(add==false)
+				url = BASE_SERVICE_URL + "favourites_api/remove_advertise_from_favourites";
 			
 			// send request
 			String response = sendPostRequest(url, jsonPairs);
@@ -588,6 +658,42 @@ public class ServerAccess {
 								if(!jsonResponse.isNull("object"))
 								{
 									result.addPair("meJson", jsonResponse.getJSONObject("object"));
+								}
+							}
+							
+						} else {
+							result.setFlag(CONNECTION_ERROR_CODE);
+						}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return result;
+	}
+	
+	public ServerResult rateUser(int userId,String rate)
+	{
+		ServerResult result=new ServerResult();
+		try
+		{
+			List<NameValuePair> jsonPairs=new ArrayList<NameValuePair>();
+			jsonPairs.add(new BasicNameValuePair("access_token", DataCacheProvider.getInstance().getAccessToken()));
+			jsonPairs.add(new BasicNameValuePair("user_id", Integer.toString(userId)));
+			jsonPairs.add(new BasicNameValuePair("rate", rate));
+			// url
+						String url = BASE_SERVICE_URL + "users_api/rate_user";
+						// send request
+						String response = sendPostRequest(url, jsonPairs);
+						// parse response
+						if (response != null && !response.equals("")) { // check if response is empty
+							JSONObject jsonResponse = new JSONObject(response);
+							result.setFlag(jsonResponse.getInt(FLAG));
+							if(jsonResponse.has("object"))
+							{
+								if(!jsonResponse.isNull("object"))
+								{
+									result.addPair("newRate", jsonResponse.getDouble("object"));
 								}
 							}
 							

@@ -26,6 +26,7 @@ import android.widget.ListView;
 public class FragSubCategories extends Fragment implements OnItemClickListener {
 	private ListView lstSubCategories;
 	private HomeCallbacks homeCallbacks;
+	private View vNoDataPlaceHolder;
 	private List<CategoryModel> subCategories=null;
 	
 	private FragSubCategories()
@@ -54,6 +55,7 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 			homeCallbacks=(HomeCallbacks)getActivity();
 			lstSubCategories=(ListView)getActivity().findViewById(R.id.lstSubCategories);
 			lstSubCategories.setOnItemClickListener(this);
+			vNoDataPlaceHolder=getActivity().findViewById(R.id.vNoDataPlaceHolder);
 			homeCallbacks.showProgress(true);
 			DataStore.getInstance().attemptGetPageComponents(getArguments().getInt("selectedCategoryId"), getPageComponentsCallback);
 		}
@@ -70,20 +72,24 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 			// TODO Auto-generated method stub
 			try
 			{
+				homeCallbacks.showProgress(false);
 				if(success)
 				{
 					PageModel page=(PageModel)data.getValue("page");
 					subCategories=page.getCategories();
-					//display categories in the list view
-					SubCategoriesListAdapter subCategoriesListAdapter=new SubCategoriesListAdapter(getActivity(), subCategories);
-					lstSubCategories.setAdapter(subCategoriesListAdapter);
+					if(subCategories.size()>0)
+					{
+						//display categories in the list view
+						vNoDataPlaceHolder.setVisibility(View.GONE);
+						SubCategoriesListAdapter subCategoriesListAdapter=new SubCategoriesListAdapter(getActivity(), subCategories);
+						lstSubCategories.setAdapter(subCategoriesListAdapter);
+					}
 
 				}
 				else
 				{
 					homeCallbacks.showToast(getString(R.string.error_connection_error));
 				}
-				homeCallbacks.showProgress(false);
 			}
 			catch(Exception ex)
 			{

@@ -68,6 +68,7 @@
         <activity android:name=".AdvertiseDetailsActivity"></activity>
         <activity android:name=".UserProfileActivity"></activity>
         <activity android:name="VerificationActivity"></activity>
+        <activity android:name="FavouritesActivity"></activity>
     </application>
 
 </manifest>

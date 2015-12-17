@@ -9,6 +9,7 @@ import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.DataStore;
 import com.brainSocket.data.ServerAccess;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.dialogs.DiagRating;
 import com.brainSocket.enums.FragmentType;
 import com.brainSocket.enums.ImageType;
 import com.brainSocket.models.AdvertiseModel;
@@ -45,6 +46,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 	private ListView lvAds;
 	private int isFollowedByMe; 
 	private int userId;
+	private AppUser user;
 	
 	////actionbar
 		private ImageView ivEditUserProfile;
@@ -78,6 +80,8 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		//btnFbPage.setOnClickListener(this);
 		tvUserRating=(TextViewCustomFont)findViewById(R.id.tvUserRating);
 		rbUserRate=(RatingBar)findViewById(R.id.rbUserRate);
+		findViewById(R.id.llUserRating).setOnClickListener(this);
+		
 		tvFollow=(TextViewCustomFont)findViewById(R.id.tvFollow);
 		tvFollow.setOnClickListener(this);
 		tvDesc=(TextViewCustomFont)findViewById(R.id.tvDesc);
@@ -144,7 +148,7 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 			{
 			if(success)
 			{
-				AppUser user=(AppUser)data.getValue("user");
+				user=(AppUser)data.getValue("user");
 				List<AdvertiseModel> userAds=(List<AdvertiseModel>)data.getValue("userAds");
 				int followersCount=(Integer)data.getValue("followersCount");
 				isFollowedByMe=(Integer)data.getValue("isFollowedByMe");
@@ -224,6 +228,36 @@ private DataRequestCallback unfollowUserCallback=new DataRequestCallback() {
 			}
 		}
 	};
+	
+private DataRequestCallback onRatingCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			String strRating=(String)data.getValue("rating");
+			//float rating=Float.parseFloat((String)data.getValue("rate"));
+			showProgress(true);
+			DataStore.getInstance().attemptRateUser(user.getId(),strRating,userRateCallback);
+			
+		}
+	};
+	
+	private DataRequestCallback userRateCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			// TODO Auto-generated method stub
+			showProgress(false);
+			if(success)
+			{
+				float newRate=(Float)data.getValue("newRate");
+				rbUserRate.setRating(newRate);
+			}
+			else
+			{
+				showToast(getString(R.string.error_connection_error));
+			}
+		}
+	};
 
 @Override
 public void onClick(View v) {
@@ -254,6 +288,10 @@ public void onClick(View v) {
 		break;
 	case R.id.ivBack:
 		finish();
+		break;
+	case R.id.llUserRating:
+		DiagRating ratingDialog=new DiagRating(user.getRate(), onRatingCallback);
+		ratingDialog.show(getSupportFragmentManager(), "DiagRating");
 		break;
 	}
 }

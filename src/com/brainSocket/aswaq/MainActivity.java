@@ -27,6 +27,7 @@ import com.brainSocket.enums.FragmentType;
 import com.brainSocket.fragments.FragAddAdvertise;
 import com.brainSocket.fragments.FragAds;
 import com.brainSocket.fragments.FragClients;
+import com.brainSocket.fragments.FragFavourites;
 import com.brainSocket.fragments.FragMain;
 import com.brainSocket.fragments.FragSubCategories;
 import com.brainSocket.models.AppUser;
@@ -294,6 +295,13 @@ private void updateActionbar(FragmentType section) {
 			fragmentManager.beginTransaction()
 			.replace(R.id.content_frame, fragClients)
 			.addToBackStack(FragmentType.MyClients.name())
+			.commit();
+			break;
+		case Favourites:
+			FragFavourites fragFavourites=FragFavourites.newInstance();
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, fragFavourites)
+			.addToBackStack(FragmentType.Favourites.name())
 			.commit();
 			break;
 		}

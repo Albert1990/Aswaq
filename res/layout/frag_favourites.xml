@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/actionbar_height"
     android:orientation="vertical" >
     
     <include
         android:id="@+id/vNoDataPlaceHolder"
         layout="@layout/layout_place_holder"/>
-
+    
     <ListView
-        android:id="@+id/lstSubCategories"
+        android:id="@+id/lvFavouritesAds"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipToPadding="false"
+        android:drawSelectorOnTop="true"
+        android:fastScrollEnabled="false"
+        android:listSelector="@android:color/transparent"
+        android:overScrollMode="always"
         android:divider="@drawable/shape_divider"
         android:dividerHeight="1dp"
-        tools:listitem="@layout/item_list_sub_category" >
-    </ListView>
-
+        android:scrollbars="none"
+        android:scrollbarStyle="outsideOverlay"
+        android:paddingTop="50dp"/>
+    
 </LinearLayout>

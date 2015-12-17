@@ -42,7 +42,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_star_active" />
+            android:src="@drawable/ic_star" />
     </RelativeLayout>
 
     <LinearLayout

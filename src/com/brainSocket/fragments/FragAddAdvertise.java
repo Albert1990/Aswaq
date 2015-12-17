@@ -140,6 +140,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		String phone=tvPhone.getText().toString();
 		JSONArray telephones=new JSONArray();
 		
+		
 		if(AswaqApp.isEmptyOrNull(description))
 		{
 			txtProductDescription.setError(getString(R.string.error_description_required));
@@ -177,11 +178,22 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			if(focusView!=null)
 				focusView.requestFocus();
 		}else{
+			boolean hasOnePhotoAtLeast=false;
+			for(int i=0;i<imagesURI.length;i++)
+			{
+				if(imagesURI[i]!=null)
+					hasOnePhotoAtLeast=true;
+			}
+			if(hasOnePhotoAtLeast)
+			{
 			telephones.put(phone);
 			homeCallback.showProgress(true);
 			DataStore.getInstance().attemptAddNewAdvertise(description,address,
 					selectedCategoryId,
 					isUsed,price,telephones,addNewAdvertiseCallback);
+			}
+			else
+				homeCallback.showToast(getString(R.string.error_photo_required));
 		}
 	}
 		catch(Exception ex)
