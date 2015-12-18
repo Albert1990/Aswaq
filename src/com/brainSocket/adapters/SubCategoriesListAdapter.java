@@ -62,9 +62,9 @@ public class SubCategoriesListAdapter extends BaseAdapter{
 		return convertView;
 	}
 	
-	private static class ViewHolderItem
+	public static class ViewHolderItem
 	{
-		TextView lblSubCategoryName;
+		public TextView lblSubCategoryName;
 	}
 
 }

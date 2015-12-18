@@ -54,6 +54,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		private ImageView ivEditUserProfile;
 		private TextViewCustomFont tvFragTitle;
 		private ImageView ivBackHome;
+		private ImageView ivMenu;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -113,16 +114,19 @@ private void initCustomActionBar() {
 		mActionBar.setDisplayUseLogoEnabled(false);
 		mActionBar.setDisplayHomeAsUpEnabled(false) ;
 		mActionBar.setHomeAsUpIndicator(null);
-		mActionBar.setCustomView(R.layout.custom_actionbar1);
-		setActionBarColor(Color.argb(30, 0, 0, 0));
+		mActionBar.setCustomView(R.layout.custom_actionbar);
+		setActionBarColor(Color.WHITE);
 		mActionBar.setDisplayShowCustomEnabled(true);
 		View mCustomView = mActionBar.getCustomView() ;
 		mCustomView.invalidate();
 		
 		tvFragTitle = (TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle) ;
 		ivEditUserProfile=(ImageView)mCustomView.findViewById(R.id.ivEditUserProfile);
+		ivMenu=(ImageView)mCustomView.findViewById(R.id.ivMenu);
 		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
 		ivBackHome.setOnClickListener(this);
+		
+		ivMenu.setVisibility(View.GONE);
 		
 		AppUser me=DataCacheProvider.getInstance().getMe();
 		if(me!=null)

@@ -57,6 +57,8 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 			lstSubCategories.setOnItemClickListener(this);
 			vNoDataPlaceHolder=getActivity().findViewById(R.id.vNoDataPlaceHolder);
 			homeCallbacks.showProgress(true);
+			String selectedCategoryName=getArguments().getString("selectedCategoryName");
+			homeCallbacks.setTitle(selectedCategoryName);
 			DataStore.getInstance().attemptGetPageComponents(getArguments().getInt("selectedCategoryId"), getPageComponentsCallback);
 		}
 		catch(Exception ex)
@@ -102,9 +104,12 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
+		SubCategoriesListAdapter.ViewHolderItem viewHolder=(SubCategoriesListAdapter.ViewHolderItem)view.getTag();
+		String subCategoryName=viewHolder.lblSubCategoryName.getText().toString();
 		int subCategoryId=subCategories.get(position).getId();
 		HashMap<String, Object> params=new HashMap<String, Object>();
 		params.put("selectedSubCategoryId", subCategoryId);
+		params.put("selectedSubCategoryName", subCategoryName);
 		homeCallbacks.loadFragment(FragmentType.ShowAds,params);
 	}
 	
@@ -116,6 +121,8 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 			Bundle extras=new Bundle();
 			if(params.containsKey("selectedCategoryId"))
 				extras.putInt("selectedCategoryId", (Integer)params.get("selectedCategoryId"));
+			if(params.containsKey("selectedCategoryName"))
+				extras.putString("selectedCategoryName", (String)params.get("selectedCategoryName"));
 			fragSubCategories.setArguments(extras);
 		}
 		catch(Exception ex)

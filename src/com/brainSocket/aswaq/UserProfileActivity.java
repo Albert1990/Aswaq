@@ -36,9 +36,9 @@ public class UserProfileActivity extends AppBaseActivity implements OnClickListe
 		private View llLogout;
 		
 		//actionbar
-		private ImageView ivEditUserProfile;
 		private TextViewCustomFont tvFragTitle;
 		private ImageView ivBackHome;
+		private ImageView ivMenu;
 		
 		//view members
 		private EditText txtUserNameRegister;
@@ -104,7 +104,7 @@ public class UserProfileActivity extends AppBaseActivity implements OnClickListe
 		mActionBar.setDisplayUseLogoEnabled(false);
 		mActionBar.setDisplayHomeAsUpEnabled(false) ;
 		mActionBar.setHomeAsUpIndicator(null);
-		mActionBar.setCustomView(R.layout.custom_actionbar1);
+		mActionBar.setCustomView(R.layout.custom_actionbar);
 		setActionBarColor(Color.argb(30, 0, 0, 0));
 		mActionBar.setDisplayShowCustomEnabled(true);
 		View mCustomView = mActionBar.getCustomView() ;
@@ -114,6 +114,9 @@ public class UserProfileActivity extends AppBaseActivity implements OnClickListe
 		tvFragTitle.setText(getString(R.string.actionbar_edit_user_profile));
 		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
 		ivBackHome.setOnClickListener(this);
+		ivMenu=(ImageView)mCustomView.findViewById(R.id.ivMenu);
+		
+		ivMenu.setVisibility(View.GONE);
 	}
 
 public void setActionBarColor(int color){

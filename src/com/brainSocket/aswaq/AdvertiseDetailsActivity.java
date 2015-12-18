@@ -52,9 +52,9 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	private boolean isFavourite=false;
 	
 	//actionbar
-	private ImageView ivEditUserProfile;
 	private TextViewCustomFont tvFragTitle;
 	private ImageView ivBackHome;
+	private ImageView ivMenu;
 	
 
 	/** Called when the activity is first created. */
@@ -108,14 +108,19 @@ private void initCustomActionBar() {
 		mActionBar.setDisplayUseLogoEnabled(false);
 		mActionBar.setDisplayHomeAsUpEnabled(false) ;
 		mActionBar.setHomeAsUpIndicator(null); 
-		mActionBar.setCustomView(R.layout.custom_actionbar1);
-		setActionBarColor(Color.argb(30, 0, 0, 0));
+		mActionBar.setCustomView(R.layout.custom_actionbar);
+		setActionBarColor(Color.WHITE);
 		mActionBar.setDisplayShowCustomEnabled(true);
 		View mCustomView = mActionBar.getCustomView() ;
 		mCustomView.invalidate();
 		
 		tvFragTitle = (TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle) ;
 		ivBackHome = (ImageView) mCustomView.findViewById(R.id.ivBack);
+		ivBackHome.setOnClickListener(this);
+		ivMenu=(ImageView)mCustomView.findViewById(R.id.ivMenu);
+		
+		ivMenu.setVisibility(View.GONE);
+		tvFragTitle.setText(getString(R.string.lbl_ad_details));
 	}
 	
 public void setActionBarColor(int color){
@@ -320,6 +325,9 @@ private DataRequestCallback removeFromFavouriteCallback=new DataRequestCallback(
 			Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
 			i = new Intent(Intent.ACTION_VIEW, uri);
 			startActivity(i);
+			break;
+		case R.id.ivBack:
+			finish();
 			break;
 		}
 	}

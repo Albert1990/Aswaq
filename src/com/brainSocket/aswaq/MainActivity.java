@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.widget.DrawerLayout;
@@ -43,11 +44,13 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 	
 	private FragmentManager fragmentManager;
 	private FragmentType currentFragmentType;
+	private Fragment currentFragment;
 	private Dialog dialogLoading;
 	
 	//actionbar
 	private ImageView ivMenu;
-	private ImageView ivLogo;
+	private TextViewCustomFont tvFragTitle;
+	private ImageView ivBack;
 	
 
 	@Override
@@ -56,9 +59,10 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 		//getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		
 		setContentView(R.layout.activity_main);
-		init();
 		initCustomActionBar();
 		initSlideDrawer();
+		init();
+		
 	}
 	
 	private void init(){
@@ -97,8 +101,10 @@ private void initCustomActionBar() {
 		mCustomView.invalidate();
 		
 		ivMenu = (ImageView) mCustomView.findViewById(R.id.ivMenu);
-		ivLogo = (ImageView) mCustomView.findViewById(R.id.ivLogo);
 		ivMenu.setOnClickListener(this);
+		tvFragTitle=(TextViewCustomFont) mCustomView.findViewById(R.id.tvFragTitle);
+		ivBack=(ImageView)mCustomView.findViewById(R.id.ivBack);
+		ivBack.setOnClickListener(this);
 	}
 
 public void setActionBarColor(int color){
@@ -110,12 +116,36 @@ public void setActionBarColor(int color){
  * @param section
  */
 private void updateActionbar(FragmentType section) {
+	setActionBarColor(Color.WHITE);
+	ivMenu.setVisibility(View.VISIBLE);
+	ivBack.setVisibility(View.VISIBLE);
+	tvFragTitle.setVisibility(View.VISIBLE);
+	
 	switch(section) {
 	case Main:
 		setActionBarColor(Color.TRANSPARENT);
+		ivBack.setVisibility(View.GONE);
+		tvFragTitle.setVisibility(View.GONE);
+		break;
+	case AddAdvertise:
+		ivMenu.setVisibility(View.GONE);
+		break;
+	case SubCategories:
+		ivMenu.setVisibility(View.GONE);
+		break;
+	case MyClients:
+		ivMenu.setVisibility(View.GONE);
+		tvFragTitle.setText(getString(R.string.drawer_agents));
+		break;
+	case Favourites:
+		ivMenu.setVisibility(View.GONE);
+		tvFragTitle.setText(getString(R.string.drawer_favourites));
+		break;
+	case ShowAds:
+		ivMenu.setVisibility(View.GONE);
 		break;
 	default:
-		setActionBarColor(getResources().getColor(R.color.app_theme));
+		//setActionBarColor(getResources().getColor(R.color.app_theme));
 		break;
 	}
 
@@ -168,10 +198,14 @@ private void updateActionbar(FragmentType section) {
 	public void onBackStackChanged() {
 		try{
 			int  entrys = getSupportFragmentManager().getBackStackEntryCount() ;
+			String fragmentName=getSupportFragmentManager().getBackStackEntryAt(entrys-1).getName();
+			FragmentType backFrag =FragmentType.valueOf(fragmentName);
 			if(entrys > 1){
-				updateActionbar(null);
+				updateActionbar(backFrag);
 			}else
+			{
 				updateActionbar(FragmentType.Main);
+			}
 		}catch(Exception e){
 			
 		}
@@ -198,6 +232,11 @@ private void updateActionbar(FragmentType section) {
 			e.printStackTrace();
 		}
 	}
+	
+	private void finishCurrentFragment()
+	{
+		getSupportFragmentManager().popBackStackImmediate();
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -212,6 +251,9 @@ private void updateActionbar(FragmentType section) {
 			break;
 		case R.id.ivMenu:
 			toggleDrawer();
+			break;
+		case R.id.ivBack:
+			finishCurrentFragment();
 			break;
 		}
 	}
@@ -241,7 +283,7 @@ private void updateActionbar(FragmentType section) {
 	@Override
 	public void setTitle(String title) {
 		// TODO Auto-generated method stub
-		
+		tvFragTitle.setText(title);
 	}
 	
 	@Override
@@ -250,52 +292,52 @@ private void updateActionbar(FragmentType section) {
 		switch(fragmentType)
 		{
 		case Main:
-			FragMain mainFrag = FragMain.newInstance();
+			currentFragment = FragMain.newInstance();
 			fragmentManager.beginTransaction()
 				//.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right,R.anim.slide_in_from_right,R.anim.slide_out_to_left)
-				.replace(R.id.content_frame, mainFrag)
-				//.addToBackStack(FragmentType.Main.name())
+				.replace(R.id.content_frame, currentFragment)
+				.addToBackStack(FragmentType.Main.name())
 				.commit();
 			break;
 		case AddAdvertise:
-			FragAddAdvertise fragAddAdvertise = FragAddAdvertise.newInstance(params);
+			currentFragment = FragAddAdvertise.newInstance(params);
 			fragmentManager.beginTransaction()
 				//.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right,R.anim.slide_in_from_right,R.anim.slide_out_to_left)
-				.replace(R.id.content_frame, fragAddAdvertise)
+				.replace(R.id.content_frame, currentFragment)
 				.addToBackStack(FragmentType.AddAdvertise.name())
 				.commit();
 			break;
 		case SubCategories:
-			FragSubCategories fragSubCategories=FragSubCategories.newInstance(params);
+			currentFragment=FragSubCategories.newInstance(params);
 			fragmentManager.beginTransaction()
-			.replace(R.id.content_frame, fragSubCategories)
+			.replace(R.id.content_frame, currentFragment)
 			.addToBackStack(FragmentType.SubCategories.name())
 			.commit();
 			break;
 		case ShowAds:
-			FragAds fragAds=FragAds.newInstance(params);
+			currentFragment=FragAds.newInstance(params);
 			fragmentManager.beginTransaction()
-			.replace(R.id.content_frame, fragAds)
+			.replace(R.id.content_frame, currentFragment)
 			.addToBackStack(FragmentType.ShowAds.name())
 			.commit();
 			break;
 		case MyClients:
-			FragClients fragClients=FragClients.newInstance();
+			currentFragment=FragClients.newInstance();
 			fragmentManager.beginTransaction()
-			.replace(R.id.content_frame, fragClients)
+			.replace(R.id.content_frame, currentFragment)
 			.addToBackStack(FragmentType.MyClients.name())
 			.commit();
 			break;
 		case Favourites:
-			FragFavourites fragFavourites=FragFavourites.newInstance();
+			currentFragment=FragFavourites.newInstance();
 			fragmentManager.beginTransaction()
-			.replace(R.id.content_frame, fragFavourites)
+			.replace(R.id.content_frame, currentFragment)
 			.addToBackStack(FragmentType.Favourites.name())
 			.commit();
 			break;
 		}
 		currentFragmentType=fragmentType;
-		//updateActionbar(currentFragmentType);
+		updateActionbar(currentFragmentType);
 	}
 
 	@Override
@@ -320,7 +362,7 @@ private void updateActionbar(FragmentType section) {
 	        }
 		    
 			adapter.onFragmentChange(FragmentType.Main);
-			//updateActionbar(FragmentType.Main);
+			updateActionbar(FragmentType.Main);
 			closeDrawer();
 			
 		} catch (Exception e) {

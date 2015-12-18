@@ -77,6 +77,8 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			lstAds.addHeaderView(vpSliderAds, null, true);
 			
 			homeCallbacks.showProgress(true);
+			String selectedSubCategoryName=getArguments().getString("selectedSubCategoryName");
+			homeCallbacks.setTitle(selectedSubCategoryName);
 			DataStore.getInstance().attemptGetCategoryAds(getArguments().getInt("selectedSubCategoryId"), getCategoryAdsCallback);
 		}
 		catch(Exception ex)
@@ -164,6 +166,8 @@ private Runnable SliderTransition=new Runnable() {
 			Bundle extras=new Bundle();
 			if(params.containsKey("selectedSubCategoryId"))
 				extras.putInt("selectedSubCategoryId", (Integer)params.get("selectedSubCategoryId"));
+			if(params.containsKey("selectedSubCategoryName"))
+				extras.putString("selectedSubCategoryName", (String)params.get("selectedSubCategoryName"));
 			fragAds.setArguments(extras);
 		}
 		catch(Exception ex)

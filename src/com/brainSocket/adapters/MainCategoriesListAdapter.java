@@ -70,10 +70,10 @@ public class MainCategoriesListAdapter extends BaseAdapter{
 		return convertView;
 	}
 	
-	private static class ViewHolderItem
+	public static class ViewHolderItem
 	{
-		TextViewCustomFont lblCategoryName;
-		ImageView ivIcon;
+		public TextViewCustomFont lblCategoryName;
+		public ImageView ivIcon;
 	}
 
 }

@@ -229,9 +229,12 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
+		MainCategoriesListAdapter.ViewHolderItem viewHolder=(MainCategoriesListAdapter.ViewHolderItem)view.getTag();
+		String categoryName=viewHolder.lblCategoryName.getText().toString();
 		int categoryId=categories.get(position).getId();
 		HashMap<String, Object> params=new HashMap<String, Object>();
 		params.put("selectedCategoryId", categoryId);
+		params.put("selectedCategoryName", categoryName);
 		stopSliderTransition=true;
 		homeCallbacks.loadFragment(FragmentType.SubCategories,params);
 	}
