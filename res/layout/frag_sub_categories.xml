@@ -10,6 +10,10 @@
         android:id="@+id/vNoDataPlaceHolder"
         layout="@layout/layout_place_holder"/>
 
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_theme"/>
     <ListView
         android:id="@+id/lstSubCategories"
         android:layout_width="match_parent"

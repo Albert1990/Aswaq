@@ -55,7 +55,7 @@ public class SearchActivity extends AppBaseActivity implements OnClickListener{
                 vNoDataPlaceHolder.setVisibility(View.GONE);
             }else{
                 //clear lists
-                tabsAdapter.updateAdapter(null,null);
+                //tabsAdapter.updateAdapter(null,null);
                 vNoDataPlaceHolder.setVisibility(View.VISIBLE);
                 tvPlaceHolderMsg.setText(R.string.error_connection_error);
             }

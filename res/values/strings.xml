@@ -115,4 +115,10 @@
     
     <string name="diag_rating_ok">موافق</string>
     <string name="lbl_ad_details">تفاصيل الإعلان</string>
+    
+    <!-- diag pick foto from -->
+    <string name="pick_photo_gallery">اختيار صورة من الملفات</string>
+    <string name="pick_photo_cam">التقاط صورة</string>
+    <string name="pick_photo_cancel">إلغاء الأمر</string>
+    
 </resources>
