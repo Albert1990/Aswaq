@@ -127,6 +127,7 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 			DrawerElement elem = elements[arg2];
 			AppUser me=DataCacheProvider.getInstance().getMe();
 			if (elem.itemType==DrawerItemType.MAIN) {
+				homeCallbacks.backToHome();
 			}
 			else if(elem.itemType==DrawerItemType.PROFILE)
 			{

@@ -297,6 +297,12 @@ public void closeSlideDrawer() {
 	// TODO Auto-generated method stub
 	
 }
+
+@Override
+public void backToHome() {
+	// TODO Auto-generated method stub
+	
+}
 	
 
 }

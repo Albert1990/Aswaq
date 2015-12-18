@@ -205,15 +205,18 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			showProgress(false);
 			if(success)
 			{
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
 				{
 					tvFollow.setText(getString(R.string.user_list_unfollow));
 					isFollowedByMe=1;
-					showProgress(false);
+					
 				}
 			}
+			else
+				showToast(getString(R.string.error_connection_error));
 		}
 	};
 	
@@ -222,15 +225,18 @@ private DataRequestCallback unfollowUserCallback=new DataRequestCallback() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			// TODO Auto-generated method stub
+			showProgress(false);
 			if(success)
 			{
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
 				{
 					tvFollow.setText(getString(R.string.user_list_follow));
 					isFollowedByMe=0;
-					showProgress(false);
+					
 				}
 			}
+			else
+				showToast(getString(R.string.error_connection_error));
 		}
 	};
 	
@@ -352,6 +358,12 @@ public void openSlideDrawer() {
 @Override
 public void closeSlideDrawer() {
 	// TODO Auto-generated method stub
+}
+
+@Override
+public void backToHome() {
+	// TODO Auto-generated method stub
+	
 }
 
 }

@@ -100,22 +100,6 @@ public void setActionBarColor(int color){
 	getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
 }
 
-private  void backToHome(){
-	try {
-        final FragmentManager fm = getSupportFragmentManager();
-        while (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStackImmediate();
-        }
-	    
-		adapter.onFragmentChange(FragmentType.Main);
-		//updateActionbar(FragmentType.Main);
-		closeDrawer();
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-}
-
 /**
  * update content of the actionBar accourding to the current fragment
  * @param section
@@ -319,5 +303,23 @@ private void updateActionbar(FragmentType section) {
 	public void closeSlideDrawer() {
 		// TODO Auto-generated method stub
 		closeDrawer();
+	}
+
+	@Override
+	public void backToHome() {
+		// TODO Auto-generated method stub
+		try {
+	        final FragmentManager fm = getSupportFragmentManager();
+	        while (fm.getBackStackEntryCount() > 0) {
+	            fm.popBackStackImmediate();
+	        }
+		    
+			adapter.onFragmentChange(FragmentType.Main);
+			//updateActionbar(FragmentType.Main);
+			closeDrawer();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

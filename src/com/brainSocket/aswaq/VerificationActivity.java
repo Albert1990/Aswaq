@@ -198,5 +198,11 @@ case R.id.btnResendVerificationCode:
 	@Override
 	public void closeSlideDrawer() {	
 	}
+
+	@Override
+	public void backToHome() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

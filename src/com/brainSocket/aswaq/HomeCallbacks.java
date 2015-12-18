@@ -11,4 +11,5 @@ public interface HomeCallbacks {
 	public void loadFragment(FragmentType fragmentType,HashMap<String, Object> params);
 	public void openSlideDrawer();
 	public void closeSlideDrawer();
+	public void backToHome();
 }

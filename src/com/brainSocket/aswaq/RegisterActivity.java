@@ -200,5 +200,11 @@ public class RegisterActivity extends AppBaseActivity implements
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void backToHome() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
