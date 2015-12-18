@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name="AswaqApp"
         android:allowBackup="true"
@@ -27,15 +28,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/MainActivityTheme" >
         </activity>
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider974683922588212"
-            android:exported="true"/>
+            android:exported="true" />
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoDisplay"/>
+            android:theme="@android:style/Theme.NoDisplay" />
         <activity
             android:name="LoginActivity"
             android:screenOrientation="portrait"
@@ -61,13 +64,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
-        <activity android:name=".UserPageActivity"></activity>
-        <activity android:name=".AdvertiseDetailsActivity"></activity>
-        <activity android:name=".UserProfileActivity"></activity>
-        <activity android:name="VerificationActivity"></activity>
+
+        <activity
+            android:name=".UserPageActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".AdvertiseDetailsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".UserProfileActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="VerificationActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

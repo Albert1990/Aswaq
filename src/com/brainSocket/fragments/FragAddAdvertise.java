@@ -1,7 +1,6 @@
 package com.brainSocket.fragments;
 
 import java.io.File;
-import java.io.FileDescriptor;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,9 +28,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
+import android.widget.TextView;
 
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
@@ -54,8 +54,8 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private HomeCallbacks homeCallback;
 	private EditTextCustomFont txtProductDescription;
 	private EditTextCustomFont tvPrice;
-	private EditTextCustomFont tvPhone;
-	private Switch swhNew;
+	private EditText tvPhone;
+	TextView tvRadioButtonUsed, tvRadioButtonNew; 
 	private TextViewCustomFont btnSubmit;
 	private ImageView btnImg1;
 	private ImageView btnImg2;
@@ -67,6 +67,8 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	int selectedCategoryId=-1;
 	String[] imagesURI={null,null,null,null};
 	
+	// data
+	boolean isNew = false;
 	
 	///temp 
 	Uri outputFileUri; //holder for the image picked from the camera
@@ -95,13 +97,16 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		
 		txtProductDescription=(EditTextCustomFont)getActivity().findViewById(R.id.txtProductDescription);
 		tvPrice=(EditTextCustomFont)getActivity().findViewById(R.id.tvPrice);
-		tvPhone=(EditTextCustomFont)getActivity().findViewById(R.id.tvPhone);
+		tvPhone=(EditText)getActivity().findViewById(R.id.tvPhone);
 		tvPhone.setText(me.getPhoneNum());
 		
 		txtAddress=(EditTextCustomFont)getActivity().findViewById(R.id.txtAddress);
 		txtAddress.setText(me.getAddress());
 		
-		swhNew=(Switch)getActivity().findViewById(R.id.swhNew);
+		tvRadioButtonUsed = (TextView) getView().findViewById(R.id.tvRadioButtonUsed);
+		tvRadioButtonNew = (TextView) getView().findViewById(R.id.tvRadioButtonNew);
+		tvRadioButtonNew.setOnClickListener(this);
+		tvRadioButtonUsed.setOnClickListener(this);
 		btnSubmit=(TextViewCustomFont)getActivity().findViewById(R.id.btnSubmit);
 		btnSubmit.setOnClickListener(this);
 		
@@ -124,6 +129,9 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		tvCategory=(TextViewCustomFont)getActivity().findViewById(R.id.tvCategory);
 		tvCategory.setOnClickListener(this);
 		
+		// initial State
+		setProductNew(false);
+		
 	}
 	
 	private void addNewAdvertise()
@@ -135,11 +143,10 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		//check description textbox
 		String description=txtProductDescription.getText().toString();
 		String address=txtAddress.getText().toString();
-		boolean isUsed=swhNew.isActivated();
+		boolean isUsed = !isNew;
 		int price=0;
 		String phone=tvPhone.getText().toString();
 		JSONArray telephones=new JSONArray();
-		
 		
 		if(AswaqApp.isEmptyOrNull(description))
 		{
@@ -248,6 +255,17 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 //		intent.setAction(Intent.ACTION_GET_CONTENT);
 //		startActivityForResult(Intent.createChooser(intent, "Select Picture"),200);
 //	}
+	
+	private void setProductNew(boolean isNew){
+		if(isNew){
+			tvRadioButtonNew.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_radio_active, 0);
+			tvRadioButtonUsed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_radio, 0);
+		}else{
+			tvRadioButtonNew.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_radio, 0);
+			tvRadioButtonUsed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_radio_active, 0);
+		}
+		this.isNew = isNew;
+	}
 	
 	private void browseImage(View v){
 
@@ -380,7 +398,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		case R.id.tvCategory:
 			DiagCategories categoriesDialog= new DiagCategories(onCategorySelectedCallback);
 			categoriesDialog.show(getFragmentManager(), "Select Category");
-			
+			break;
+		case R.id.tvRadioButtonNew:
+			setProductNew(true);
+			break;
+		case R.id.tvRadioButtonUsed:
+			setProductNew(false);
 			break;
 		}
 	}

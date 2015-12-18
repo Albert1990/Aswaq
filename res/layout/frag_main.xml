@@ -13,11 +13,18 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_slider_height" />
 
+    <View
+        android:id="@+id/vSep"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/vpSliderMain"
+        android:background="@color/app_theme" />
+
     <com.brainSocket.views.EditTextCustomFont
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vpSliderMain"
+        android:layout_below="@id/vSep"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"

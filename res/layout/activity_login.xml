@@ -65,7 +65,7 @@
             android:text="@string/login_btn_login"
             android:textColor="@color/white"
             android:textSize="@dimen/ts_text_normal"
-            app:fontId="1" />
+            app:fontId="2" />
 
         <com.brainSocket.views.TextViewCustomFont
             android:layout_width="match_parent"

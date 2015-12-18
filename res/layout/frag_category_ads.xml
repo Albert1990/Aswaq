@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+    android:orientation="vertical">
+
     <include
         android:id="@+id/vNoDataPlaceHolder"
         layout="@layout/layout_place_holder"/>
@@ -11,9 +12,10 @@
     <ListView
         android:id="@+id/lstAds"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:divider="@null"
-        android:dividerHeight="0dp">
+        android:dividerHeight="0dp"
+        tools:listitem="@layout/item_list_ad_full" >
     </ListView>
 
 </LinearLayout>

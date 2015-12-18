@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.brainSocket.aswaq.R;
 
-public class EditTextCustomFont extends EditText{
+public class EditTextCustomFont extends android.support.v7.internal.widget.TintEditText{
 		
 	public EditTextCustomFont(Context context, AttributeSet attrs) {
 		super(context, attrs);

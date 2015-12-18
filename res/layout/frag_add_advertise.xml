@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="@dimen/actionbar_height"
+        android:orientation="horizontal"
         android:paddingBottom="8dp"
         android:paddingTop="8dp" >
 
@@ -53,13 +54,13 @@
             android:id="@+id/tvPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:hint="@string/add_ad_price_hint"
+            android:inputType="number"
             android:lines="1"
             android:maxLines="1"
             android:padding="10dp"
-            android:inputType="number"
             app:fontId="1" />
 
         <com.brainSocket.views.TextViewCustomFont
@@ -85,42 +86,61 @@
             android:id="@+id/tvPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:hint="@string/add_ad_phone_hint"
+            android:inputType="phone"
             android:lines="1"
             android:maxLines="1"
             android:padding="10dp"
-            android:inputType="phone"
             app:fontId="1" />
 
-        <Switch
-            android:id="@+id/swhNew"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:padding="10dp"
-            android:textOff="@string/add_ad_used"
-            android:textOn="@string/add_ad_new" />
+            android:paddingRight="10dp"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <com.brainSocket.views.TextViewCustomFont
+                android:id="@+id/tvRadioButtonUsed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:drawableRight="@drawable/ic_radio"
+                android:text="@string/add_ad_used"
+                android:textSize="@dimen/ts_text_normal"
+                app:fontId="1" />
+
+            <com.brainSocket.views.TextViewCustomFont
+                android:id="@+id/tvRadioButtonNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:layout_marginTop="10dp"
+                android:drawableRight="@drawable/ic_radio"
+                android:text="@string/add_ad_new"
+                android:textSize="@dimen/ts_text_normal"
+                app:fontId="1" />
+        </LinearLayout>
     </LinearLayout>
-    
+
     <com.brainSocket.views.EditTextCustomFont
         android:id="@+id/txtAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:gravity="top"
         android:hint="@string/lbl_address"
         android:lines="4"
         android:maxLines="6"
         app:fontId="1" />
 
-    <!-- <com.brainSocket.views.TextViewCustomFont
+    <!--
+         <com.brainSocket.views.TextViewCustomFont
         android:id="@+id/btnAddYourPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -133,7 +153,8 @@
         android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="@dimen/ts_text_normal"
-        app:fontId="1" />-->
+        app:fontId="1" />
+    -->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -145,16 +166,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
             android:background="@drawable/shape_rounded_fb"
             android:gravity="center"
-            android:text="@string/add_ad_send"
             android:padding="10dp"
+            android:text="@string/add_ad_send"
             android:textColor="@color/white"
-            android:textSize="@dimen/ts_text_normal"
-            app:fontId="1" />
+            android:textSize="@dimen/ts_text_big"
+            app:fontId="2" />
     </FrameLayout>
 
 </LinearLayout>
