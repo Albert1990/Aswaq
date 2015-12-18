@@ -172,4 +172,37 @@ private Runnable SliderTransition=new Runnable() {
 		}
 		return fragAds;
 	}
+	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		stopSliderTransition=true;
+	}
+	
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		stopSliderTransition=true;
+	}
+	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		stopSliderTransition=true;
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if(stopSliderTransition)
+		{
+			homeCallbacks.showToast("ss");
+			stopSliderTransition=false;
+			new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+		}
+	}
 }
