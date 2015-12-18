@@ -269,7 +269,6 @@ public class FragMain extends Fragment implements OnClickListener,OnItemClickLis
 		super.onResume();
 		if(stopSliderTransition)
 		{
-			homeCallbacks.showToast("ss");
 			stopSliderTransition=false;
 			new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
 		}
