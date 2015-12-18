@@ -13,6 +13,7 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.data.DataRequestCallback;
 import com.brainSocket.data.ServerResult;
+import com.brainSocket.views.TextViewCustomFont;
 
 public class DiagRating extends DialogFragment implements OnClickListener{
 	private DataRequestCallback onRatingCallback;
@@ -42,25 +43,17 @@ public class DiagRating extends DialogFragment implements OnClickListener{
 		View btnOk = getView().findViewById(R.id.btnOk);
 		
 		btnOk.setOnClickListener(this);
-		
 		rbUserRate.setRating(oldUserRate);
-		rbUserRate.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
-			
-			@Override
-			public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-				ServerResult result = new ServerResult();
-				result.addPair("rating", Float.toString(rating));
-				dismiss();
-				onRatingCallback.onDataReady(result, true);
-			}
-		});
 	}
 	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btnOk:
-			rbUserRate.getRating();
+			ServerResult result = new ServerResult();
+			result.addPair("rating", Float.toString(rbUserRate.getRating()));
+			dismiss();
+			onRatingCallback.onDataReady(result, true);
 			break;
 
 		default:

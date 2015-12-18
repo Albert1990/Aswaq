@@ -693,7 +693,7 @@ public class ServerAccess {
 							{
 								if(!jsonResponse.isNull("object"))
 								{
-									result.addPair("newRate", jsonResponse.getDouble("object"));
+									result.addPair("newRate", Double.toString(jsonResponse.getDouble("object")));
 								}
 							}
 							

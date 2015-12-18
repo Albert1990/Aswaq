@@ -39,6 +39,7 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 	private DrawerAdapter adapter ;
 	private DrawerLayout dlDrawer ;
 	private View llLogout;
+	private TextViewCustomFont tvUserName;
 	
 	private FragmentManager fragmentManager;
 	private FragmentType currentFragmentType;
@@ -74,6 +75,10 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 		dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
 		llLogout=findViewById(R.id.llLogout);
 		llLogout.setOnClickListener(this);
+		tvUserName=(TextViewCustomFont)findViewById(R.id.tvUserName);
+		AppUser me=DataCacheProvider.getInstance().getMe();
+		if(me!=null)
+			tvUserName.setText(me.getName());
 	}
 	
 private void initCustomActionBar() {

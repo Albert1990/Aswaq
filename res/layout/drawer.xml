@@ -49,6 +49,17 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:src="@drawable/logo_splash" />
+    
+    <com.brainSocket.views.TextViewCustomFont
+        android:id="@+id/tvUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="User name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ts_text_small"
+        app:fontId="1" />
 
     <View
         android:layout_width="150dp"

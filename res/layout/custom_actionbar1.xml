@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/ivBack"
-        android:text="@string/place_holder"
+        android:text="@string/lbl_ad_details"
         android:textColor="@color/txt_normal"
         android:textSize="@dimen/ts_text_big"
         app:fontId="2" />

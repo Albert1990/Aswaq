@@ -82,13 +82,26 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		btnFbPage.setOnClickListener(this);
 		tvUserRating=(TextViewCustomFont)findViewById(R.id.tvUserRating);
 		rbUserRate=(RatingBar)findViewById(R.id.rbUserRate);
-		findViewById(R.id.llUserRating).setOnClickListener(this);
+		
 		
 		tvFollow=(TextViewCustomFont)findViewById(R.id.tvFollow);
-		tvFollow.setOnClickListener(this);
+		
 		tvDesc=(TextViewCustomFont)findViewById(R.id.tvDesc);
 		lvAds=(ListView)findViewById(R.id.lvAds);
 		
+		AppUser me=DataCacheProvider.getInstance().getMe();
+		if(me!=null)
+		{
+			if(userId==me.getId())
+			{
+				tvFollow.setVisibility(View.GONE);
+				tvFollow.setOnClickListener(this);
+			}
+			else
+				findViewById(R.id.llUserRating).setOnClickListener(this);
+		}
+		else
+			findViewById(R.id.llUserRating).setOnClickListener(this);
 		DataStore.getInstance().attemptGetUserPage(userId,getUserPageCallback);
 	}
 	
@@ -118,7 +131,6 @@ private void initCustomActionBar() {
 			{
 				ivEditUserProfile.setVisibility(View.VISIBLE);
 				ivEditUserProfile.setOnClickListener(this);
-				tvFollow.setVisibility(View.GONE);
 			}
 		}
 	}
@@ -260,7 +272,9 @@ private DataRequestCallback onRatingCallback=new DataRequestCallback() {
 			showProgress(false);
 			if(success)
 			{
-				float newRate=(Float)data.getValue("newRate");
+				String strNewRate=(String)data.getValue("newRate");
+				float newRate=Float.parseFloat(strNewRate);
+				user.setRate(newRate);
 				rbUserRate.setRating(newRate);
 			}
 			else
@@ -275,10 +289,11 @@ public void onClick(View v) {
 	// TODO Auto-generated method stub
 	int viewId=v.getId();
 	Intent i=null;
+	AppUser me=null;
 	switch(viewId)
 	{
 	case R.id.tvFollow:
-		AppUser me=DataCacheProvider.getInstance().getMe();
+		me=DataCacheProvider.getInstance().getMe();
 		if(me!=null)
 		{
 			showProgress(true);
@@ -301,8 +316,18 @@ public void onClick(View v) {
 		finish();
 		break;
 	case R.id.llUserRating:
-		DiagRating ratingDialog=new DiagRating(user.getRate(), onRatingCallback);
-		ratingDialog.show(getSupportFragmentManager(), "DiagRating");
+		me=DataCacheProvider.getInstance().getMe();
+		if(me!=null)
+		{
+			DiagRating ratingDialog=new DiagRating(user.getRate(), onRatingCallback);
+			ratingDialog.show(getSupportFragmentManager(), "DiagRating");
+		}
+		else
+		{
+			i= new Intent(UserPageActivity.this,LoginActivity.class);
+			startActivity(i);
+		}
+		
 		break;
 	case R.id.btnFbPage:
 		String url="https://www.facebook.com/"+user.getFacebookId();

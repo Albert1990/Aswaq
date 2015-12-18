@@ -114,4 +114,5 @@
     <string name="lbl_choose_rate">اختر التقييم التي تراه مناسباً :</string>
     
     <string name="diag_rating_ok">موافق</string>
+    <string name="lbl_ad_details">تفاصيل الإعلان</string>
 </resources>
