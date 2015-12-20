@@ -27,6 +27,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class UserProfileActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
 	//slide drawer
@@ -228,6 +229,15 @@ private DataRequestCallback updateUserProfileCallback=new DataRequestCallback() 
 					DataCacheProvider.getInstance().storeMe(originalMe);
 				}
 				finish();
+			}
+			else if(data.getFlag()==ServerAccess.ERROR_CODE_error_in_mobile_number_format)
+			{
+				txtMobileNumberRegister.setError(getString(R.string.error_incorrect_phone_num));
+				txtMobileNumberRegister.requestFocus();
+			}
+			else
+			{
+				showToast(getString(R.string.error_server_error));
 			}
 		}
 		else

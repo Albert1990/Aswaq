@@ -8,8 +8,7 @@
     
     <include
         android:id="@+id/vNoDataPlaceHolder"
-        layout="@layout/layout_place_holder"
-        android:visibility="gone"/>
+        layout="@layout/layout_place_holder"/>
 
     <View 
         android:layout_width="match_parent"

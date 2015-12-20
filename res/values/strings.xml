@@ -120,5 +120,6 @@
     <string name="pick_photo_gallery">اختيار صورة من الملفات</string>
     <string name="pick_photo_cam">التقاط صورة</string>
     <string name="pick_photo_cancel">إلغاء الأمر</string>
+    <string name="error_server_error">هناك خطأ في المخدم</string>
     
 </resources>

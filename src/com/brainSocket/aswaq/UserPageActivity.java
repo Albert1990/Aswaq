@@ -96,13 +96,19 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 			if(userId==me.getId())
 			{
 				tvFollow.setVisibility(View.GONE);
-				tvFollow.setOnClickListener(this);
+				
 			}
 			else
+			{
 				findViewById(R.id.llUserRating).setOnClickListener(this);
+				tvFollow.setOnClickListener(this);
+			}
 		}
 		else
+		{
 			findViewById(R.id.llUserRating).setOnClickListener(this);
+			tvFollow.setOnClickListener(this);
+		}
 		DataStore.getInstance().attemptGetUserPage(userId,getUserPageCallback);
 	}
 	

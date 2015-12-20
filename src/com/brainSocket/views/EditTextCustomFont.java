@@ -2,12 +2,12 @@ package com.brainSocket.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.internal.widget.TintEditText;
 import android.util.AttributeSet;
+import android.widget.EditText;
 
 import com.brainSocket.aswaq.R;
 
-public class EditTextCustomFont extends TintEditText{
+public class EditTextCustomFont extends EditText{
 		
 	public EditTextCustomFont(Context context, AttributeSet attrs) {
 		super(context, attrs);
