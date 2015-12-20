@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract.Contacts.Data;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Gravity;
@@ -71,7 +72,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		userId=getIntent().getIntExtra("userId", 0);//getArguments().getInt("userId");
 		if(userId==0)
 		{
-			AppUser me=DataCacheProvider.getInstance().getMe();
+			AppUser me=DataStore.getInstance().getMe();
 			if(me==null)
 				return;
 			userId=me.getId();
@@ -90,7 +91,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		tvDesc=(TextViewCustomFont)findViewById(R.id.tvDesc);
 		lvAds=(ListView)findViewById(R.id.lvAds);
 		
-		AppUser me=DataCacheProvider.getInstance().getMe();
+		AppUser me=DataStore.getInstance().getMe();
 		if(me!=null)
 		{
 			if(userId==me.getId())
@@ -134,7 +135,7 @@ private void initCustomActionBar() {
 		
 		ivMenu.setVisibility(View.GONE);
 		
-		AppUser me=DataCacheProvider.getInstance().getMe();
+		AppUser me=DataStore.getInstance().getMe();
 		if(me!=null)
 		{
 			if(userId==me.getId())
@@ -303,7 +304,7 @@ public void onClick(View v) {
 	switch(viewId)
 	{
 	case R.id.tvFollow:
-		me=DataCacheProvider.getInstance().getMe();
+		me=DataStore.getInstance().getMe();
 		if(me!=null)
 		{
 			showProgress(true);
@@ -326,7 +327,7 @@ public void onClick(View v) {
 		finish();
 		break;
 	case R.id.llUserRating:
-		me=DataCacheProvider.getInstance().getMe();
+		me=DataStore.getInstance().getMe();
 		if(me!=null)
 		{
 			DiagRating ratingDialog=new DiagRating(user.getRate(), onRatingCallback);

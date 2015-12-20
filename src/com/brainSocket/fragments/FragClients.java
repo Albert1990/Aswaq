@@ -45,10 +45,10 @@ public class FragClients extends Fragment{
 	private void init()
 	{
 		homeCallbacks=(HomeCallbacks)getActivity();
-		lvClients=(ListView)getActivity().findViewById(R.id.list);
+		lvClients=(ListView)getView().findViewById(R.id.list);
 		homeCallbacks.closeSlideDrawer();
 		homeCallbacks.showProgress(true);
-		vNoDataPlaceHolder=getActivity().findViewById(R.id.vNoDataPlaceHolder);
+		vNoDataPlaceHolder=getView().findViewById(R.id.vNoDataPlaceHolder);
 		DataStore.getInstance().attemptGetClients(getClientsCallback);
 	}
 	

@@ -49,9 +49,9 @@ public class FragFavourites extends Fragment implements OnItemClickListener{
 	private void init()
 	{
 		homeCallbacks=(HomeCallbacks)getActivity();
-		lvFavouritesAds=(ListView)getActivity().findViewById(R.id.lvFavouritesAds);
+		lvFavouritesAds=(ListView)getView().findViewById(R.id.lvFavouritesAds);
 		lvFavouritesAds.setOnItemClickListener(this);
-		vNoDataPlaceHolder=getActivity().findViewById(R.id.vNoDataPlaceHolder);
+		vNoDataPlaceHolder=getView().findViewById(R.id.vNoDataPlaceHolder);
 		homeCallbacks.closeSlideDrawer();
 		homeCallbacks.showProgress(true);
 		DataStore.getInstance().attemptGetMyFavourites(getMyFavouritesCallback);

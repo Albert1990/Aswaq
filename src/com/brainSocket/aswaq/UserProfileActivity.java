@@ -64,7 +64,7 @@ public class UserProfileActivity extends AppBaseActivity implements OnClickListe
 	{
 		try
 		{
-			AppUser me=DataCacheProvider.getInstance().getMe();
+			AppUser me=DataStore.getInstance().getMe();
 			if(me!=null)
 			{
 				txtUserNameRegister=(EditText)findViewById(R.id.txtUserNameRegister);
@@ -221,7 +221,7 @@ private DataRequestCallback updateUserProfileCallback=new DataRequestCallback() 
 				AppUser recievedMe=(AppUser)data.getValue("me");
 				if(recievedMe!=null)
 				{
-					AppUser originalMe=DataCacheProvider.getInstance().getMe();
+					AppUser originalMe=DataStore.getInstance().getMe();
 					originalMe.setName(recievedMe.getName());
 					originalMe.setPhoneNum(recievedMe.getPhoneNum());
 					originalMe.setAddress(recievedMe.getAddress());

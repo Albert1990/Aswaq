@@ -1,6 +1,8 @@
 package com.brainSocket.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -19,7 +21,7 @@ public class DataCacheProvider {
 		public static final String PREF_DATA = "AswaqData";
 		public static final String PREF_FIRST_TIME = "isFirstTime" ; 
 		public static final String PREF_APP_USER  = "userMe" ;
-		public static final String PREF_API_ACCESS_TOKEN = "accessToken" ;
+		//public static final String PREF_API_ACCESS_TOKEN = "accessToken" ;
 		public static final String PREF_PHOTO_CACHE_CLEARED = "image_cache_clear" ;
 		public static final String PREF_APP_ACCESS_MODE = "access_mode";
 		public static final String PREF_APP_VERSION_STATUS = "version_status";
@@ -82,29 +84,29 @@ public class DataCacheProvider {
 	 * in shared preferences
 	 * @param accessToken
 	 */
-	public void storeAccessToken(String accessToken)
-	{
-		try {
-			prefDataEditor.putString(PREF_API_ACCESS_TOKEN, accessToken);
-			prefDataEditor.commit();
-		}
-		catch (Exception e) {}
-	}
+//	public void storeAccessToken(String accessToken)
+//	{
+//		try {
+//			prefDataEditor.putString(PREF_API_ACCESS_TOKEN, accessToken);
+//			prefDataEditor.commit();
+//		}
+//		catch (Exception e) {}
+//	}
 	
 	/**
 	 * Returns the cached API accessToken from Shared Preferences,
 	 *  null if it wasn't stored before
 	 */
-	public String getAccessToken()
-	{
-		String accessToken=null;
-
-			try {
-				accessToken = prefData.getString(PREF_API_ACCESS_TOKEN, null);
-			}
-			catch(Exception e) {}
-		return accessToken;
-	}
+//	public String getAccessToken1()
+//	{
+//		String accessToken=null;
+//
+//			try {
+//				accessToken = prefData.getString(PREF_API_ACCESS_TOKEN, null);
+//			}
+//			catch(Exception e) {}
+//		return accessToken;
+//	}
 	
 	/**
 	 * Stores the {@link AppUser} object in Shared Preferences
@@ -150,35 +152,19 @@ public class DataCacheProvider {
 		return me;
 	}
 	
-	public void storePage(PageModel page)
+	public void storePages(HashMap<Integer, PageModel> pages)
 	{
 		try
 		{
-			String str=prefData.getString(PREF_APP_PAGES, null);
-			JSONArray jsonPages=null;
-			if(str!=null)
-				jsonPages=new JSONArray(str);
-			else
-				jsonPages=new JSONArray();
-			int objectIndex=-1;
-			for(int i=0;i<jsonPages.length();i++)
-			{
-				JSONObject ob=jsonPages.getJSONObject(i);
-				if(ob.getInt("categoryId")==page.getCategoryId())
-				{
-					objectIndex=i;
-					break;
-				}
+			JSONArray jsonPages=new JSONArray();
+			
+			for (Object ob : pages.values()) {
+				PageModel page=(PageModel)ob;
+				JSONObject pageJsonObject= page.getJsonObject();
+				jsonPages.put(pageJsonObject.toString());
 			}
-			JSONObject jsonPage=page.getJsonObject();
-			if(objectIndex!=-1)
-			{
-				// we have to replace the old object
-				jsonPages.put(objectIndex, jsonPage);
-			}
-			else
-				jsonPages.put(jsonPage);
-			str=jsonPages.toString();
+
+			String str=jsonPages.toString();
 			prefDataEditor.putString(PREF_APP_PAGES, str);
 			prefDataEditor.commit();
 		}
@@ -188,30 +174,28 @@ public class DataCacheProvider {
 		}
 	}
 	
-	public PageModel getStoredPage(int categoryId)
+	public HashMap<Integer, PageModel> getStoredPages()
 	{
-		PageModel page=null;
+		HashMap<Integer, PageModel> pages=null;
 		try
 		{
 			String str=prefData.getString(PREF_APP_PAGES, null);
 			if(str==null)
 				return null;
+			pages=new HashMap<Integer, PageModel>();
 			JSONArray jsonPages=new JSONArray(str);
 			for(int i=0;i<jsonPages.length();i++)
 			{
 				JSONObject ob=jsonPages.getJSONObject(i);
-				if(ob.getInt("categoryId")==categoryId)
-				{
-					page=new PageModel(ob);
-					break;
-				}
+				PageModel page=new PageModel(ob);
+				pages.put(page.getCategoryId(), page);
 			}
 		}
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
 		}
-		return page;
+		return pages;
 	}
 	
 	public void removePages()
@@ -281,9 +265,6 @@ public class DataCacheProvider {
 		{
 			prefDataEditor.clear();
 			prefDataEditor.commit();
-			//removeStoredMe();
-			//removePages();
-			//removeSubCategoriesPairs();
 		}
 		catch(Exception ex){}
 	}

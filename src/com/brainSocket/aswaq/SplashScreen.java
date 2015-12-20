@@ -2,6 +2,7 @@ package com.brainSocket.aswaq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,44 +23,18 @@ public class SplashScreen extends AppBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_splash);
-	    // TODO Auto-generated method stub
-	    DataStore.getInstance().justWait(2000, afterWaitCallback);
-	    init();
 	    animateLogo();
+		new Handler().postDelayed(startApp, 2000);
 	}
 	
-	private DataRequestCallback afterWaitCallback=new DataRequestCallback() {
+	private Runnable startApp=new Runnable() {
 		
 		@Override
-		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
+		public void run() {
 			Intent i=new Intent(SplashScreen.this,MainActivity.class);
 			startActivityForResult(i, MAIN_ACTIVITY_REQUIEST_CODE);
 		}
 	};
-	
-	private void init()
-	{
-		try
-		{
-			DataCacheProvider cacheProvider=DataCacheProvider.getInstance();
-			cacheProvider.removePages();
-			cacheProvider.removeSubCategoriesPairs();
-			//cacheProvider.removeAllStoredData();
-//			AppUser me= cacheProvider.getMe();
-//			if(me==null)
-//			{
-//				i=new Intent(SplashScreen.this,LoginActivity.class);
-//			}
-//			else
-//			{
-				
-//			}
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-		}
-	}
 	
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {

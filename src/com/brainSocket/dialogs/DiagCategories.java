@@ -52,7 +52,7 @@ public class DiagCategories extends DialogFragment implements OnItemClickListene
 	{
 		homeCallbacks=(HomeCallbacks)getActivity();
 		homeCallbacks.showProgress(true);
-		DataStore.getInstance().attemptgetSubCategoriesAsPairs(getSubCategoriesCallback);
+		DataStore.getInstance().attemptGetSubCategoriesAsPairs(getSubCategoriesCallback);
 	}
 	
 	private DataRequestCallback getSubCategoriesCallback=new DataRequestCallback() {

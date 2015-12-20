@@ -53,9 +53,9 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 		try
 		{
 			homeCallbacks=(HomeCallbacks)getActivity();
-			lstSubCategories=(ListView)getActivity().findViewById(R.id.lstSubCategories);
+			lstSubCategories=(ListView)getView().findViewById(R.id.lstSubCategories);
 			lstSubCategories.setOnItemClickListener(this);
-			vNoDataPlaceHolder=getActivity().findViewById(R.id.vNoDataPlaceHolder);
+			vNoDataPlaceHolder=getView().findViewById(R.id.vNoDataPlaceHolder);
 			homeCallbacks.showProgress(true);
 			String selectedCategoryName=getArguments().getString("selectedCategoryName");
 			homeCallbacks.setTitle(selectedCategoryName);

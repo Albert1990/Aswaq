@@ -7,6 +7,7 @@ import com.brainSocket.aswaq.LoginActivity;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.aswaq.UserPageActivity;
 import com.brainSocket.data.DataCacheProvider;
+import com.brainSocket.data.DataStore;
 import com.brainSocket.enums.DrawerItemType;
 import com.brainSocket.enums.FragmentType;
 import com.brainSocket.models.AppUser;
@@ -125,7 +126,7 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			//setSelectedItemIndex(arg2);
 			DrawerElement elem = elements[arg2];
-			AppUser me=DataCacheProvider.getInstance().getMe();
+			AppUser me=DataStore.getInstance().getMe();
 			if (elem.itemType==DrawerItemType.MAIN) {
 				homeCallbacks.backToHome();
 			}

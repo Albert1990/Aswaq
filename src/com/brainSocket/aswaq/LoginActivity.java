@@ -107,7 +107,7 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 			showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
-					AppUser me=DataCacheProvider.getInstance().getMe();
+					AppUser me=DataStore.getInstance().getMe();
 					Intent i=null;
 					if(me.isVerified())
 					{
@@ -187,7 +187,7 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:
-					AppUser me=DataCacheProvider.getInstance().getMe();
+					AppUser me=DataStore.getInstance().getMe();
 					Intent i=null;
 					if(me.isVerified())
 					{

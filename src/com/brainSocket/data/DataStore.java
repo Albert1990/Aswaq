@@ -1,6 +1,7 @@
 package com.brainSocket.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -20,6 +21,9 @@ public class DataStore {
 	private static Handler handler = null;
 	private static DataStore instance;
 	private DataCacheProvider cacheProvider = null;
+	private AppUser me = null;
+	private List<CategoryModel> subCategoriesPairs=null;
+	private HashMap<Integer, PageModel> pages=null;
 
 	public static DataStore getInstance() {
 		if (instance == null)
@@ -32,9 +36,29 @@ public class DataStore {
 			serverHandler = ServerAccess.getInstance();
 			cacheProvider = DataCacheProvider.getInstance();
 			handler = new Handler();
+			loadLocalData();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void loadLocalData()
+	{
+		me=cacheProvider.getMe();
+		subCategoriesPairs=DataCacheProvider.getInstance().getStoredCategoriesPairs();
+		pages=DataCacheProvider.getInstance().getStoredPages();
+	}
+	
+	public AppUser getMe()
+	{
+		return me;
+	}
+	
+	public String getAccessToken()
+	{
+		if(me!=null)
+			return me.getAccessToken();
+		return null;
 	}
 
 	/**
@@ -63,25 +87,22 @@ public class DataStore {
 	 * @param callback
 	 */
 	public void attemptSignUp(final String email, final String userName,
-			final String password,
-			final String facebookId, final String facebookAccessToken,
-			final DataRequestCallback callback) {
+			final String password, final String facebookId,
+			final String facebookAccessToken, final DataRequestCallback callback) {
 
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				boolean success = true;
 				ServerResult result = serverHandler.registerUser(email,
-						userName, password,
-						facebookId, facebookAccessToken);
- 				if (result.connectionFailed()) {
+						userName, password, facebookId, facebookAccessToken);
+				if (result.connectionFailed()) {
 					success = false;
 				} else {
 					try {
 						if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
-							AppUser me = (AppUser) result.getPairs().get(
-									"appUser");
-							cacheProvider.storeAccessToken(me.getAccessToken());
+							me = (AppUser) result.getPairs().get("appUser");
+							//cacheProvider.storeAccessToken(me.getAccessToken());
 							cacheProvider.storeMe(me);
 						}
 					} catch (Exception e) {
@@ -112,8 +133,8 @@ public class DataStore {
 					success = false;
 				} else {
 					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
-						AppUser me = (AppUser) result.getPairs().get("appUser");
-						cacheProvider.storeAccessToken(me.getAccessToken());
+						me = (AppUser) result.getPairs().get("appUser");
+						//cacheProvider.storeAccessToken(me.getAccessToken());
 						cacheProvider.storeMe(me);
 					}
 				}
@@ -126,15 +147,14 @@ public class DataStore {
 	public void attemptGetPageComponents(final int categoryId,
 			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				//cacheProvider.removePages();
+				// cacheProvider.removePages();
 				boolean success = true;
 				PageModel page = null;
 				ServerResult result = null;
-				page = cacheProvider.getStoredPage(categoryId);
+				page = pages.get(categoryId);
 				if (page == null) {
 					result = serverHandler.getPageComponents(categoryId);
 					if (result.connectionFailed())
@@ -143,27 +163,9 @@ public class DataStore {
 						// parsing categories
 						if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 							try {
-								JSONArray jsonCategories = (JSONArray) result
-										.getValue("jsonCategories");
-								List<CategoryModel> categories = new ArrayList<CategoryModel>();
-								for (int i = 0; i < jsonCategories.length(); i++) {
-									categories
-											.add(new CategoryModel(
-													(JSONObject) jsonCategories
-															.get(i)));
-								}
-
-								JSONArray jsonSlides = (JSONArray) result
-										.getValue("jsonSlides");
-								List<SlideModel> slides = new ArrayList<SlideModel>();
-								for (int i = 0; i < jsonSlides.length(); i++) {
-									slides.add(new SlideModel(
-											(JSONObject) jsonSlides.get(i)));
-								}
-
-								page = new PageModel(categoryId, categories,
-										slides);
-								cacheProvider.storePage(page);
+								page = (PageModel) result.getValue("page");
+								pages.put(page.getCategoryId(), page);
+								cacheProvider.storePages(pages);
 								result.addPair("page", page);
 							} catch (Exception ex) {
 								ex.printStackTrace();
@@ -182,7 +184,7 @@ public class DataStore {
 		}).start();
 	}
 
-	public void attemptgetSubCategoriesAsPairs(
+	public void attemptGetSubCategoriesAsPairs(
 			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
@@ -193,9 +195,7 @@ public class DataStore {
 				ServerResult result = new ServerResult();
 
 				try {
-					List<CategoryModel> categories = cacheProvider
-							.getStoredCategoriesPairs();
-					if (categories == null) {
+					if (subCategoriesPairs == null) {
 						result = serverHandler.getSubCategoriesAsPairs();
 						if (result.connectionFailed())
 							success = false;
@@ -203,23 +203,18 @@ public class DataStore {
 							// parsing categories
 							if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 								try {
-									JSONArray jsonCategories = (JSONArray) result
-											.getValue("jsonCategories");
-									categories = new ArrayList<CategoryModel>();
-									for (int i = 0; i < jsonCategories.length(); i++) {
-										categories.add(new CategoryModel(
-												(JSONObject) jsonCategories
-														.get(i)));
-									}
-									cacheProvider.storeSubCategoriesPairs(categories);
-									result.addPair("categories", categories);
+									subCategoriesPairs = (List<CategoryModel>) result
+											.getValue("categories");
+									cacheProvider
+											.storeSubCategoriesPairs(subCategoriesPairs);
+									result.addPair("categories", subCategoriesPairs);
 								} catch (Exception ex) {
 								}
 							}
 						}
 					} else {
 						result.setFlag(ServerAccess.ERROR_CODE_done);
-						result.addPair("categories", categories);
+						result.addPair("categories", subCategoriesPairs);
 					}
 				} catch (Exception ex) {
 				}
@@ -241,6 +236,12 @@ public class DataStore {
 						.verifyUser(verificationCode);
 				if (result.connectionFailed())
 					success = false;
+				if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+				{
+					me.setVerified(1);
+					cacheProvider.removeStoredMe();
+					cacheProvider.storeMe(me);
+				}
 				if (callback != null)
 					invokeCallback(callback, success, result);
 			}
@@ -250,7 +251,6 @@ public class DataStore {
 	public void attemptSearchFor(final String keyword,
 			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -264,9 +264,10 @@ public class DataStore {
 		}).start();
 	}
 
-	public void attemptAddNewAdvertise(final String description,final String address,
-			final int categoryId, final boolean isUsed, final int price,
-			final JSONArray telephones, final DataRequestCallback callback) {
+	public void attemptAddNewAdvertise(final String description,
+			final String address, final int categoryId, final boolean isUsed,
+			final int price, final JSONArray telephones,
+			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
@@ -274,7 +275,8 @@ public class DataStore {
 				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.addNewAdvertise(
-						description,address, categoryId, isUsed, price, telephones);
+						description, address, categoryId, isUsed, price,
+						telephones);
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -305,23 +307,7 @@ public class DataStore {
 				else {
 					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 						try {
-							JSONArray jsonAds = (JSONArray) result
-									.getValue("jsonAds");
-							List<AdvertiseModel> ads = new ArrayList<AdvertiseModel>();
-							for (int i = 0; i < jsonAds.length(); i++) {
-								ads.add(new AdvertiseModel((JSONObject) jsonAds
-										.get(i)));
-							}
-							result.addPair("ads", ads);
 
-							JSONArray jsonSlides = (JSONArray) result
-									.getValue("jsonSlides");
-							List<SlideModel> slides = new ArrayList<SlideModel>();
-							for (int i = 0; i < jsonSlides.length(); i++) {
-								slides.add(new SlideModel(
-										(JSONObject) jsonSlides.get(i)));
-							}
-							result.addPair("slides", slides);
 						} catch (Exception ex) {
 							success = false;
 						}
@@ -347,10 +333,6 @@ public class DataStore {
 				else {
 					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 						try {
-							JSONObject jsonAdDetails = (JSONObject) result
-									.getValue("jsonAdDetails");
-							result.addPair("adDetails", new AdvertiseModel(
-									jsonAdDetails));
 						} catch (Exception ex) {
 							success = false;
 						}
@@ -376,18 +358,6 @@ public class DataStore {
 				else {
 					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 						try {
-							JSONObject jsonUser = (JSONObject) result
-									.getValue("jsonUser");
-							result.addPair("user", new AppUser(jsonUser));
-
-							List<AdvertiseModel> ads = new ArrayList<AdvertiseModel>();
-							JSONArray jsonUserAds = (JSONArray) result
-									.getValue("jsonUserAds");
-							for (int i = 0; i < jsonUserAds.length(); i++) {
-								ads.add(new AdvertiseModel(jsonUserAds
-										.getJSONObject(i)));
-							}
-							result.addPair("userAds", ads);
 						} catch (Exception ex) {
 							success = false;
 						}
@@ -399,7 +369,7 @@ public class DataStore {
 		}).start();
 	}
 
-	public void attemptFollowUser(final int userId,final boolean follow,
+	public void attemptFollowUser(final int userId, final boolean follow,
 			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
@@ -407,7 +377,7 @@ public class DataStore {
 			public void run() {
 				// TODO Auto-generated method stub
 				boolean success = true;
-				ServerResult result = serverHandler.followUser(userId,follow);
+				ServerResult result = serverHandler.followUser(userId, follow);
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -420,16 +390,17 @@ public class DataStore {
 			}
 		}).start();
 	}
-	
-	public void attemptAddAdvertiseToFavourite(final int ad_id,final boolean add,
-			final DataRequestCallback callback) {
+
+	public void attemptAddAdvertiseToFavourite(final int ad_id,
+			final boolean add, final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				boolean success = true;
-				ServerResult result = serverHandler.addAdvertiseToFavourite(ad_id,add);
+				ServerResult result = serverHandler.addAdvertiseToFavourite(
+						ad_id, add);
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -456,14 +427,6 @@ public class DataStore {
 				else {
 					try {
 						if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
-							List<AppUser> clients = new ArrayList<AppUser>();
-							JSONArray jsonClients = (JSONArray) result
-									.getValue("jsonClients");
-							for (int i = 0; i < jsonClients.length(); i++) {
-								clients.add(new AppUser(
-										(JSONObject) jsonClients.get(i)));
-							}
-							result.addPair("clients", clients);
 						}
 					} catch (Exception ex) {
 						success = false;
@@ -496,34 +459,29 @@ public class DataStore {
 			}
 		}).start();
 	}
-	
+
 	public void attemptUpdateUserProfile(final String userName,
-			final String mobileNumber,
-			final String address,
-			final String description,
-			final DataRequestCallback callback)
-	{
+			final String mobileNumber, final String address,
+			final String description, final DataRequestCallback callback) {
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				boolean success=true;
-				ServerResult result=serverHandler.updateUserProfile(userName,mobileNumber,address,description);
-				if(result.connectionFailed())
-					success=false;
-				else
-				{
-					JSONObject meJson=(JSONObject)result.getValue("meJson");
-					AppUser me=new AppUser(meJson);
-					result.addPair("me", me);
+				boolean success = true;
+				ServerResult result = serverHandler.updateUserProfile(userName,
+						mobileNumber, address, description);
+				if (result.connectionFailed())
+					success = false;
+				else {
+
 				}
-				if(callback!=null)
+				if (callback != null)
 					invokeCallback(callback, success, result);
 			}
 		}).start();
 	}
-	
+
 	public void attemptGetMyFavourites(final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
@@ -537,14 +495,7 @@ public class DataStore {
 				else {
 					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 						try {
-							JSONArray jsonAds = (JSONArray) result
-									.getValue("jsonAds");
-							List<AdvertiseModel> ads = new ArrayList<AdvertiseModel>();
-							for (int i = 0; i < jsonAds.length(); i++) {
-								ads.add(new AdvertiseModel((JSONObject) jsonAds
-										.get(i)));
-							}
-							result.addPair("ads", ads);
+
 						} catch (Exception ex) {
 							success = false;
 						}
@@ -555,20 +506,21 @@ public class DataStore {
 			}
 		}).start();
 	}
-	
-	public void attemptRateUser(final int userId,final String rate,final DataRequestCallback callback) {
+
+	public void attemptRateUser(final int userId, final String rate,
+			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				boolean success = true;
-				ServerResult result = serverHandler.rateUser(userId,rate);
+				ServerResult result = serverHandler.rateUser(userId, rate);
 				if (result.connectionFailed())
 					success = false;
 				else {
 					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
-						
+
 					}
 				}
 				if (callback != null)
@@ -576,42 +528,41 @@ public class DataStore {
 			}
 		}).start();
 	}
-	
-	public void attemptUploadAdPhotos(final int adId,final String[] photos,final DataRequestCallback callback)
-	{
-new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				boolean success=true;
-				ServerResult result=serverHandler.uploadAdvertisePhotos(adId, photos);
-				if(result.connectionFailed())
-					success=false;
-				else
-				{
-				}
-				if(callback!=null)
-					invokeCallback(callback, success, result);
-			}
-		}).start();
-	}
 
-	public void justWait(final int waitDelay, final DataRequestCallback callback) {
+	public void attemptUploadAdPhotos(final int adId, final String[] photos,
+			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				try {
-					Thread.sleep(waitDelay);
-				} catch (Exception ex) {
-					ex.printStackTrace();
+				boolean success = true;
+				ServerResult result = serverHandler.uploadAdvertisePhotos(adId,
+						photos);
+				if (result.connectionFailed())
+					success = false;
+				else {
 				}
-				invokeCallback(callback, true, null);
+				if (callback != null)
+					invokeCallback(callback, success, result);
 			}
 		}).start();
 	}
 	
+	public void removeAllStoredData()
+	{
+		DataCacheProvider.getInstance().removeAllStoredData();
+		me=null;
+	}
+	
+	public void removePages()
+	{
+		DataCacheProvider.getInstance().removePages();
+	}
+	
+	public void removeSubCategoriesPairs()
+	{
+		DataCacheProvider.getInstance().removeSubCategoriesPairs();
+	}
 
 }

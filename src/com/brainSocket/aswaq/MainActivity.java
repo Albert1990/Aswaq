@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.brainSocket.adapters.DrawerAdapter;
 import com.brainSocket.data.DataCacheProvider;
+import com.brainSocket.data.DataStore;
 import com.brainSocket.enums.FragmentType;
 import com.brainSocket.fragments.FragAddAdvertise;
 import com.brainSocket.fragments.FragAds;
@@ -80,7 +81,7 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,Hom
 		llLogout=findViewById(R.id.llLogout);
 		llLogout.setOnClickListener(this);
 		tvUserName=(TextViewCustomFont)findViewById(R.id.tvUserName);
-		AppUser me=DataCacheProvider.getInstance().getMe();
+		AppUser me=DataStore.getInstance().getMe();
 		if(me!=null)
 			tvUserName.setText(me.getName());
 	}
@@ -245,7 +246,7 @@ private void updateActionbar(FragmentType section) {
 		switch(viewId)
 		{
 		case R.id.llLogout:
-			DataCacheProvider.getInstance().removeAllStoredData();
+			DataStore.getInstance().removeAllStoredData();
 			Intent i =new Intent(MainActivity.this,SplashScreen.class);
 			startActivity(i);
 			break;

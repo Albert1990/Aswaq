@@ -135,7 +135,7 @@ public class RegisterActivity extends AppBaseActivity implements
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:
-					AppUser me=DataCacheProvider.getInstance().getMe();
+					AppUser me=DataStore.getInstance().getMe();
 					Intent i = new Intent(RegisterActivity.this,
 							VerificationActivity.class);
 					startActivity(i);

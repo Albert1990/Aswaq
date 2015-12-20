@@ -39,25 +39,22 @@ public class FragAds extends Fragment implements OnItemClickListener{
 	private List<SlideModel> slides;
 	private ViewPager vpSliderAds;
 	private int currentSlide=0;
-	private boolean stopSliderTransition;
+	private Handler sliderHandler=null;
 	private View vNoDataPlaceHolder;
 	
 	private FragAds()
 	{
-		
+		sliderHandler=new Handler();
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		//return super.onCreateView(inflater, container, savedInstanceState);
 		return inflater.inflate(R.layout.frag_category_ads, container, false);
 	}
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		init();
 	}
@@ -67,10 +64,9 @@ public class FragAds extends Fragment implements OnItemClickListener{
 		try
 		{
 			homeCallbacks=(HomeCallbacks)getActivity();
-			lstAds=(ListView)getActivity().findViewById(R.id.lstAds);
+			lstAds=(ListView)getView().findViewById(R.id.lstAds);
 			lstAds.setOnItemClickListener(this);
-			//vpSliderAds=(ViewPager)getActivity().findViewById(R.id.vpSliderAds);
-			vNoDataPlaceHolder=getActivity().findViewById(R.id.vNoDataPlaceHolder);
+			vNoDataPlaceHolder=getView().findViewById(R.id.vNoDataPlaceHolder);
 			
 			vpSliderAds = (ViewPager) getActivity().getLayoutInflater().inflate(R.layout.layout_slider, lstAds, false);
 
@@ -91,7 +87,6 @@ public class FragAds extends Fragment implements OnItemClickListener{
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			if(success)
 			{
 				ads=(List<AdvertiseModel>)data.getValue("ads");
@@ -108,8 +103,11 @@ public class FragAds extends Fragment implements OnItemClickListener{
 				{
 					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides,SliderType.Banner);
 					vpSliderAds.setAdapter(sliderAdapter);
-					stopSliderTransition=false;
-					new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+					try
+					{
+						sliderHandler.removeCallbacks(SliderTransition);
+					}catch(Exception ex){ex.printStackTrace();}
+					sliderHandler.postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
 				}
 				
 			}
@@ -131,8 +129,7 @@ private Runnable SliderTransition=new Runnable() {
 					currentSlide=0;
 				vpSliderAds.setCurrentItem(currentSlide, true);
 				currentSlide++;
-				if(!stopSliderTransition)
-					new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+				sliderHandler.postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
 			}
 			catch(Exception ex)
 			{
@@ -144,14 +141,9 @@ private Runnable SliderTransition=new Runnable() {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
 		if(position==0)
 			position=1;
 		int adId=ads.get(position-1).getId();
-		//homeCallbacks.showToast(Integer.toString(adId));
-		//homeCallbacks.loadFragment(FragmentType.AdvertiseDetails,params);
-		//Intent i=new Intent(MainActivity.this,AdvertiseDetailsActivity.class);
-		//homeCallbacks.loadActivity(AdvertiseDetailsActivity.class, params);
 		Intent i=new Intent(getActivity(), AdvertiseDetailsActivity.class);
 		i.putExtra("selectedAdId", adId);
 		startActivity(i);
@@ -179,33 +171,27 @@ private Runnable SliderTransition=new Runnable() {
 	
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
-		stopSliderTransition=true;
-	}
-	
-	@Override
-	public void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-		stopSliderTransition=true;
-	}
-	
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		stopSliderTransition=true;
+		try
+		{
+			sliderHandler.removeCallbacks(SliderTransition);
+		}catch(Exception ex){ex.printStackTrace();}
 	}
 	
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-		if(stopSliderTransition)
+		try
 		{
-			stopSliderTransition=false;
-			new Handler().postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+			try
+			{
+				sliderHandler.removeCallbacks(SliderTransition);
+			}catch(Exception ex){ex.printStackTrace();}
+			sliderHandler.postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 	}
 }

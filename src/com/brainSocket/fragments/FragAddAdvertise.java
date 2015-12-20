@@ -98,40 +98,40 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private void init()
 	{
 		homeCallback=(HomeCallbacks)getActivity();
-		AppUser me=DataCacheProvider.getInstance().getMe();
+		AppUser me=DataStore.getInstance().getMe();
 		
-		txtProductDescription=(EditTextCustomFont)getActivity().findViewById(R.id.txtProductDescription);
-		tvPrice=(EditTextCustomFont)getActivity().findViewById(R.id.tvPrice);
-		tvPhone=(EditText)getActivity().findViewById(R.id.tvPhone);
+		txtProductDescription=(EditTextCustomFont)getView().findViewById(R.id.txtProductDescription);
+		tvPrice=(EditTextCustomFont)getView().findViewById(R.id.tvPrice);
+		tvPhone=(EditText)getView().findViewById(R.id.tvPhone);
 		tvPhone.setText(me.getPhoneNum());
 		
-		txtAddress=(EditTextCustomFont)getActivity().findViewById(R.id.txtAddress);
+		txtAddress=(EditTextCustomFont)getView().findViewById(R.id.txtAddress);
 		txtAddress.setText(me.getAddress());
 		
 		tvRadioButtonUsed = (TextView) getView().findViewById(R.id.tvRadioButtonUsed);
 		tvRadioButtonNew = (TextView) getView().findViewById(R.id.tvRadioButtonNew);
 		tvRadioButtonNew.setOnClickListener(this);
 		tvRadioButtonUsed.setOnClickListener(this);
-		btnSubmit=(TextViewCustomFont)getActivity().findViewById(R.id.btnSubmit);
+		btnSubmit=(TextViewCustomFont)getView().findViewById(R.id.btnSubmit);
 		btnSubmit.setOnClickListener(this);
 		
-		btnImg1=(ImageButton)getActivity().findViewById(R.id.btnImg1);
+		btnImg1=(ImageButton)getView().findViewById(R.id.btnImg1);
 		btnImg1.setTag(0);
 		btnImg1.setOnClickListener(this);
 		
-		btnImg2=(ImageButton)getActivity().findViewById(R.id.btnImg2);
+		btnImg2=(ImageButton)getView().findViewById(R.id.btnImg2);
 		btnImg2.setTag(1);
 		btnImg2.setOnClickListener(this);
 		
-		btnImg3=(ImageButton)getActivity().findViewById(R.id.btnImg3);
+		btnImg3=(ImageButton)getView().findViewById(R.id.btnImg3);
 		btnImg3.setTag(2);
 		btnImg3.setOnClickListener(this);
 		
-		btnImg4=(ImageButton)getActivity().findViewById(R.id.btnImg4);
+		btnImg4=(ImageButton)getView().findViewById(R.id.btnImg4);
 		btnImg4.setTag(3);
 		btnImg4.setOnClickListener(this);
 		
-		tvCategory=(TextViewCustomFont)getActivity().findViewById(R.id.tvCategory);
+		tvCategory=(TextViewCustomFont)getView().findViewById(R.id.tvCategory);
 		tvCategory.setOnClickListener(this);
 		
 		// initial State

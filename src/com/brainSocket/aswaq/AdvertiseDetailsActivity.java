@@ -284,7 +284,7 @@ private DataRequestCallback removeFromFavouriteCallback=new DataRequestCallback(
 	
 	private void handleFavouriteRequest()
 	{
-		AppUser me=DataCacheProvider.getInstance().getMe();
+		AppUser me=DataStore.getInstance().getMe();
 		if(me==null)
 		{
 			Intent i=new Intent(AdvertiseDetailsActivity.this,LoginActivity.class);
