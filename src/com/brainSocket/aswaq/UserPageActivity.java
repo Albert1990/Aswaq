@@ -84,10 +84,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		btnFbPage.setOnClickListener(this);
 		tvUserRating=(TextViewCustomFont)findViewById(R.id.tvUserRating);
 		rbUserRate=(RatingBar)findViewById(R.id.rbUserRate);
-		
-		
 		tvFollow=(TextViewCustomFont)findViewById(R.id.tvFollow);
-		
 		tvDesc=(TextViewCustomFont)findViewById(R.id.tvDesc);
 		lvAds=(ListView)findViewById(R.id.lvAds);
 		
@@ -179,11 +176,7 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 				List<AdvertiseModel> userAds=(List<AdvertiseModel>)data.getValue("userAds");
 				int followersCount=(Integer)data.getValue("followersCount");
 				isFollowedByMe=(Integer)data.getValue("isFollowedByMe");
-				
 				tvFragTitle.setText(user.getName());
-//				tvFragTitle.setVisibility(View.VISIBLE);
-//				ivBackHome.setVisibility(View.VISIBLE);
-				
 				String photoPath=AswaqApp.getImagePath(ImageType.User, user.getPicture());
 				Picasso.with(getApplicationContext()).load(photoPath).into(ivUser);
 				tvUserName.setText(user.getName());
@@ -193,8 +186,6 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 				tvUserRating.setText(Float.toString(user.getRate()));
 				rbUserRate.setRating(user.getRate());
 				tvDesc.setText(user.getDescription());
-				//AdvertisesListAdapter advertisesListAdapter=new AdvertisesListAdapter(getActivity(), userAds);
-				//lvAds.setAdapter(advertisesListAdapter);
 				if(isFollowedByMe==0)
 				{
 					tvFollow.setText(getString(R.string.user_list_follow));
@@ -400,6 +391,18 @@ public void closeSlideDrawer() {
 public void backToHome() {
 	// TODO Auto-generated method stub
 	
+}
+
+@Override
+protected void onResume() {
+	// TODO Auto-generated method stub
+	super.onResume();
+	AppUser me=DataStore.getInstance().getMe();
+	if(me.getId()==userId)
+	{
+		tvUserName.setText(me.getName());
+		tvDesc.setText(me.getDescription());
+	}
 }
 
 }

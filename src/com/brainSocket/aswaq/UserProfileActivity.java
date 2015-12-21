@@ -68,19 +68,12 @@ public class UserProfileActivity extends AppBaseActivity implements OnClickListe
 			if(me!=null)
 			{
 				txtUserNameRegister=(EditText)findViewById(R.id.txtUserNameRegister);
-				txtUserNameRegister.setText(me.getName());
-				
 				txtMobileNumberRegister=(EditText)findViewById(R.id.txtMobileNumberRegister);
-				txtMobileNumberRegister.setText(me.getPhoneNum());
-				
 				txtAddressRegister=(EditText)findViewById(R.id.txtAddressRegister);
-				txtAddressRegister.setText(me.getAddress());
-				
 				txtDescriptionRegister=(EditText)findViewById(R.id.txtDescriptionRegister);
-				txtDescriptionRegister.setText(me.getDescription());
-				
 				btnEdit=(TextViewCustomFont)findViewById(R.id.btnEditUserProfile);
 				btnEdit.setOnClickListener(this);
+				bindUiData(me);
 			}
 		}
 		catch(Exception ex)
@@ -88,6 +81,15 @@ public class UserProfileActivity extends AppBaseActivity implements OnClickListe
 			ex.printStackTrace();
 		}
 	}
+	
+	private void bindUiData(AppUser me)
+	{
+		txtUserNameRegister.setText(me.getName());
+		txtMobileNumberRegister.setText(me.getPhoneNum());
+		txtAddressRegister.setText(me.getAddress());
+		txtDescriptionRegister.setText(me.getDescription());
+	}
+	
 	private void initSlideDrawer()
 	{
 		lvDrawer = (ListView) findViewById(R.id.lvDrawer);

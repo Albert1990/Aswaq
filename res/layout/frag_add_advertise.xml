@@ -79,7 +79,8 @@
                 android:maxLines="1"
                 android:padding="10dp"
                 android:text="@string/add_ad_cat_hint"
-                app:fontId="1" />
+                app:fontId="1" 
+                android:textSize="@dimen/ts_text_normal"/>
         </LinearLayout>
 
         <LinearLayout

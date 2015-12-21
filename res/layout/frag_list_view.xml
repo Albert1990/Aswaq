@@ -23,7 +23,7 @@
         android:listSelector="@android:color/transparent"
         android:overScrollMode="always"
         android:divider="@drawable/shape_divider"
-        android:dividerHeight="1dp"
+        android:dividerHeight="0dp"
         android:scrollbars="none"
         android:scrollbarStyle="outsideOverlay"
         tools:listitem="@layout/row_apps_tab"/>
