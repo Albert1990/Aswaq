@@ -15,10 +15,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 
 import com.brainSocket.aswaq.AdvertiseDetailsActivity;
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.R;
+import com.brainSocket.data.PhotoProvider;
 import com.brainSocket.enums.ImageType;
 import com.brainSocket.models.AdvertiseModel;
 import com.brainSocket.views.TextViewCustomFont;
@@ -181,23 +183,34 @@ public class FragAdsList extends Fragment{
 		TextViewCustomFont tvUserName;
 		TextViewCustomFont tvAdvertiseDescription;
 		TextViewCustomFont tvPrice;
+		RatingBar rbUserRate;
+		View tvPaid;
 		
         ProductViewHolder(View view) {            
             ivProduct=(ImageView) view.findViewById(R.id.ivProd);
     		tvUserName=(TextViewCustomFont) view.findViewById(R.id.tvUserName);
     		tvAdvertiseDescription=(TextViewCustomFont) view.findViewById(R.id.tvAdvertiseDescription);
     		tvPrice=(TextViewCustomFont) view.findViewById(R.id.tvPrice);
+    		rbUserRate=(RatingBar) view.findViewById(R.id.rbUserRate);
+    		tvPaid=view.findViewById(R.id.tvPaid);
         }
 
         public void bindItem(LineItem mItems) {
             try {
                 AdvertiseModel ad = mItems.product;
-                ivProduct.setImageResource(R.drawable.ic_launcher);
+                
+                String imagePath=null;
+        		if(ad.getImages().size()>0)
+        			imagePath=ad.getImages().get(0).getPhoto_path();
+        		imagePath=AswaqApp.getImagePath(ImageType.AdThumb, imagePath);
+        		PhotoProvider.getInstance().displayPhotoNormal(imagePath, ivProduct);
         		tvUserName.setText(ad.getUser().getName());
         		tvAdvertiseDescription.setText(ad.getDescription());
         		String price=Integer.toString(ad.getPrice())+getString(R.string.lbl_price_unit);
         		tvPrice.setText(price);
-        		//String photo_path=AswaqApp.getImagePath(ImageType.Ad, ad.getImages().get(0));
+        		rbUserRate.setRating(ad.getUser().getRate());
+        		if(ad.IsPinned()==1)
+        			tvPaid.setVisibility(View.VISIBLE);
             } catch (Exception ignored) {}
         }
     }

@@ -87,23 +87,23 @@ public class PageModel {
 		}
 		catch(Exception ex){}
 		
-//		try
-//		{
-//			JSONArray jsonCategories=new JSONArray();
-//			for(int i=0;i<categories.size();i++)
-//				jsonCategories.put(categories.get(i).getJsonObject());
-//			ob.put("categories", jsonCategories);
-//		}
-//		catch(Exception ex){}
-//		
-//		try
-//		{
-//			JSONArray jsonSlides=new JSONArray();
-//			for(int i=0;i<slides.size();i++)
-//				jsonSlides.put(slides.get(i).getJsonObject());
-//			ob.put("slides", jsonSlides);
-//		}
-//		catch(Exception ex){}
+		try
+		{
+			JSONArray jsonCategories=new JSONArray();
+			for(int i=0;i<categories.size();i++)
+				jsonCategories.put(categories.get(i).getJsonObject());
+			ob.put("categories", jsonCategories);
+		}
+		catch(Exception ex){}
+		
+		try
+		{
+			JSONArray jsonSlides=new JSONArray();
+			for(int i=0;i<slides.size();i++)
+				jsonSlides.put(slides.get(i).getJsonObject());
+			ob.put("slides", jsonSlides);
+		}
+		catch(Exception ex){}
 		
 		return ob;
 	}

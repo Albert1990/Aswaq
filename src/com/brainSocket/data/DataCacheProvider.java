@@ -161,7 +161,7 @@ public class DataCacheProvider {
 			for (Object ob : pages.values()) {
 				PageModel page=(PageModel)ob;
 				JSONObject pageJsonObject= page.getJsonObject();
-				jsonPages.put(pageJsonObject.toString());
+				jsonPages.put(pageJsonObject);
 			}
 
 			String str=jsonPages.toString();

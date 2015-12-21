@@ -51,7 +51,7 @@ public class SearchActivity extends AppBaseActivity implements OnClickListener{
                 ArrayList<AppUser> users= (ArrayList) data.getValue("users");
                 tabsAdapter.updateAdapter(ads,users);
                 tabs.setViewPager(tabView);
-                tabView.setCurrentItem(tabsAdapter.getCount()-1); // select the last item cuz its an RTL app
+                //tabView.setCurrentItem(tabsAdapter.getCount()-1); // select the last item cuz its an RTL app
                 vNoDataPlaceHolder.setVisibility(View.GONE);
             }else{
                 //clear lists

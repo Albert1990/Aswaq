@@ -24,6 +24,7 @@ public class DataStore {
 	private AppUser me = null;
 	private List<CategoryModel> subCategoriesPairs=null;
 	private HashMap<Integer, PageModel> pages=null;
+	private final int TIMER_TICK=15*60*1000; //15 mins
 
 	public static DataStore getInstance() {
 		if (instance == null)
@@ -49,8 +50,58 @@ public class DataStore {
 		pages=DataCacheProvider.getInstance().getStoredPages();
 	}
 	
+	public void startScheduledUpdates() {
+		try {
+			handler.postDelayed(runnableUpdate, TIMER_TICK);
+		}catch (Exception e) {}
+	}
 	
-	public void loadAllPages()
+	public void stopScheduledUpdates() {
+		try {
+			handler.removeCallbacks(runnableUpdate);
+		}catch (Exception e) {}
+	}
+	
+	private Runnable runnableUpdate=new Runnable() {
+		
+		@Override
+		public void run() {
+			attemptLoadAllPages();
+			handler.postDelayed(runnableUpdate, TIMER_TICK);
+		}
+	};
+	
+	private void attemptLoadAllPages()
+	{
+		new Thread(new Runnable() {
+		
+		@Override
+		public void run() {
+			boolean success=true;
+			ServerResult result=serverHandler.getAllPages();
+			if(result.connectionFailed())
+				success=false;
+			else
+			{
+				try
+				{
+					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+					{
+						pages=(HashMap<Integer, PageModel>)result.getValue("pages");
+						DataCacheProvider.getInstance().storePages(pages);
+					}
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+			//invokeCallback(callback, success, result);
+		}
+	}).start();
+	}
+	
+	private void loadAllPages()
 	{
 		boolean success=true;
 		ServerResult result=serverHandler.getAllPages();
@@ -71,32 +122,6 @@ public class DataStore {
 				ex.printStackTrace();
 			}
 		}
-//		new Thread(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				boolean success=true;
-//				ServerResult result=serverHandler.getAllPages();
-//				if(result.connectionFailed())
-//					success=false;
-//				else
-//				{
-//					try
-//					{
-//						if(result.getFlag()==ServerAccess.ERROR_CODE_done)
-//						{
-//							pages=(HashMap<Integer, PageModel>)result.getValue("pages");
-//							DataCacheProvider.getInstance().storePages(pages);
-//						}
-//					}
-//					catch(Exception ex)
-//					{
-//						ex.printStackTrace();
-//					}
-//				}
-//				invokeCallback(callback, success, result);
-//			}
-//		}).start();
 	}
 	
 	public AppUser getMe()
@@ -594,6 +619,7 @@ public class DataStore {
 		me=null;
 		subCategoriesPairs=null;
 		pages=null;
+		stopScheduledUpdates();
 	}
 	
 	public void removePages()

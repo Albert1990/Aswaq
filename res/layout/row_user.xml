@@ -21,7 +21,6 @@
         android:layout_marginTop="16dp"
         android:layout_toRightOf="@id/ivUser"
         android:ellipsize="end"
-        android:gravity="center"
         android:lines="1"
         android:maxLines="1"
         android:text="@string/place_holder"
@@ -64,6 +63,7 @@
         android:text="@string/user_list_unfollow"
         android:textColor="@color/txt_white"
         android:textSize="@dimen/ts_text_normal"
-        app:fontId="1" />
+        app:fontId="1" 
+        android:visibility="gone"/>
 
 </RelativeLayout>

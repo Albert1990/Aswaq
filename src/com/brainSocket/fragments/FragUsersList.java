@@ -18,9 +18,12 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.aswaq.UserPageActivity;
 import com.brainSocket.data.DataStore;
+import com.brainSocket.data.PhotoProvider;
+import com.brainSocket.enums.ImageType;
 import com.brainSocket.models.AppUser;
 
 public class FragUsersList extends Fragment{
@@ -199,7 +202,8 @@ public class FragUsersList extends Fragment{
                 AppUser user = mItems.product;
                 tvName1.setText(user.getName());
                 rbUserRate.setRating(user.getRate());
-                //PhotoProvider.getInstance().displayPhotoNormal(user.getPicture(), ivPic);
+                String photo_path=AswaqApp.getImagePath(ImageType.User, user.getPicture());
+        		PhotoProvider.getInstance().displayPhotoNormal(photo_path, ivPic);
                 
             } catch (Exception ignored) {}
         }
