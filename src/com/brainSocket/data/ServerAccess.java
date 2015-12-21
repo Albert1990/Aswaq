@@ -257,61 +257,59 @@ public class ServerAccess {
 		return result;
 	}
 	
-//	public ServerResult getAllPages() {
-//		ServerResult result = new ServerResult();
-//		try {
-//			// parameters
-//			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
-//
-//			// url
-//			String url = BASE_SERVICE_URL
-//					+ "categories_api/get_all_pages";
-//			// send request
-//			String response = sendPostRequest(url, jsonPairs);
-//			// parse response
-//			if (response != null && !response.equals("")) { // check if response
-//															// is empty
-//				JSONObject jsonResponse = new JSONObject(response);
-//				result.setFlag(jsonResponse.getInt(FLAG));
-//				if (jsonResponse.has("object")) {
-//					if (!jsonResponse.isNull("object")) {
-//						JSONArray jsonPages = jsonResponse.getJSONArray("object");
-//						HashMap<Integer, PageModel> pages=new HashMap<Integer, PageModel>();
-//						for(int k=0;k<jsonPages.length();k++)
-//						{
-//							JSONObject jsonPage=jsonPages.getJSONObject(k);
-//							JSONArray jsonCategories = jsonPage
-//									.getJSONArray("categories");
-//							List<CategoryModel> categories = new ArrayList<CategoryModel>();
-//							for (int i = 0; i < jsonCategories.length(); i++) {
-//								categories.add(new CategoryModel(
-//										(JSONObject) jsonCategories.get(i)));
-//							}
-//
-//							JSONArray jsonSlides = jsonPage.getJSONArray("slides");
-//							List<SlideModel> slides = new ArrayList<SlideModel>();
-//							for (int i = 0; i < jsonSlides.length(); i++) {
-//								slides.add(new SlideModel((JSONObject) jsonSlides
-//										.get(i)));
-//							}
-//							PageModel page = new PageModel(categoryId, categories,
-//									slides);
-//						}
-//						
-//						
-//
-//						
-//						result.addPair("page", page);
-//					}
-//				}
-//			} else {
-//				result.setFlag(CONNECTION_ERROR_CODE);
-//			}
-//		} catch (Exception e) {
-//			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
-//		}
-//		return result;
-//	}
+	public ServerResult getAllPages() {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
+
+			// url
+			String url = BASE_SERVICE_URL
+					+ "categories_api/get_all_pages";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response
+															// is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				if (jsonResponse.has("object")) {
+					if (!jsonResponse.isNull("object")) {
+						JSONArray jsonPages = jsonResponse.getJSONArray("object");
+						HashMap<Integer, PageModel> pages=new HashMap<Integer, PageModel>();
+						for(int k=0;k<jsonPages.length();k++)
+						{
+							JSONObject jsonPage=jsonPages.getJSONObject(k);
+							JSONArray jsonSubCategories = jsonPage
+									.getJSONArray("sub_categories");
+							List<CategoryModel> categories = new ArrayList<CategoryModel>();
+							for (int i = 0; i < jsonSubCategories.length(); i++) {
+								categories.add(new CategoryModel(
+										(JSONObject) jsonSubCategories.get(i)));
+							}
+
+							JSONArray jsonSlides = jsonPage.getJSONArray("slides");
+							List<SlideModel> slides = new ArrayList<SlideModel>();
+							for (int i = 0; i < jsonSlides.length(); i++) {
+								slides.add(new SlideModel((JSONObject) jsonSlides
+										.get(i)));
+							}
+							int parentCategoryId=jsonPage.getInt("category_id");
+							PageModel page = new PageModel(parentCategoryId, categories,
+									slides);
+							pages.put(parentCategoryId, page);
+						}
+						result.addPair("pages", pages);
+					}
+				}
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
 
 	public ServerResult getSubCategoriesAsPairs() {
 		ServerResult result = new ServerResult();

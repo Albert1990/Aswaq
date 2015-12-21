@@ -49,6 +49,56 @@ public class DataStore {
 		pages=DataCacheProvider.getInstance().getStoredPages();
 	}
 	
+	
+	public void loadAllPages()
+	{
+		boolean success=true;
+		ServerResult result=serverHandler.getAllPages();
+		if(result.connectionFailed())
+			success=false;
+		else
+		{
+			try
+			{
+				if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+				{
+					pages=(HashMap<Integer, PageModel>)result.getValue("pages");
+					DataCacheProvider.getInstance().storePages(pages);
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+//		new Thread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				boolean success=true;
+//				ServerResult result=serverHandler.getAllPages();
+//				if(result.connectionFailed())
+//					success=false;
+//				else
+//				{
+//					try
+//					{
+//						if(result.getFlag()==ServerAccess.ERROR_CODE_done)
+//						{
+//							pages=(HashMap<Integer, PageModel>)result.getValue("pages");
+//							DataCacheProvider.getInstance().storePages(pages);
+//						}
+//					}
+//					catch(Exception ex)
+//					{
+//						ex.printStackTrace();
+//					}
+//				}
+//				invokeCallback(callback, success, result);
+//			}
+//		}).start();
+	}
+	
 	public AppUser getMe()
 	{
 		return me;
@@ -154,30 +204,19 @@ public class DataStore {
 				boolean success = true;
 				PageModel page = null;
 				ServerResult result = null;
+				
+				if(pages==null)
+					loadAllPages();
+				
 				page = pages.get(categoryId);
-				if (page == null) {
-					result = serverHandler.getPageComponents(categoryId);
-					if (result.connectionFailed())
-						success = false;
-					else {
-						// parsing categories
-						if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
-							try {
-								page = (PageModel) result.getValue("page");
-								pages.put(page.getCategoryId(), page);
-								cacheProvider.storePages(pages);
-								result.addPair("page", page);
-							} catch (Exception ex) {
-								ex.printStackTrace();
-							}
-						}
-					}
-				} else {
+				if(page!=null)
+				{
 					result = new ServerResult();
 					result.setFlag(ServerAccess.ERROR_CODE_done);
 					result.addPair("page", page);
 				}
-
+				
+				
 				if (callback != null)
 					invokeCallback(callback, success, result);
 			}
@@ -553,6 +592,8 @@ public class DataStore {
 	{
 		DataCacheProvider.getInstance().removeAllStoredData();
 		me=null;
+		subCategoriesPairs=null;
+		pages=null;
 	}
 	
 	public void removePages()

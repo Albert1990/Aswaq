@@ -24,6 +24,7 @@ public class SplashScreen extends AppBaseActivity {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_splash);
 	    animateLogo();
+	    //DataStore.getInstance().removeAllStoredData();
 		new Handler().postDelayed(startApp, 2000);
 	}
 	

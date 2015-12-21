@@ -143,6 +143,8 @@ public class FragMain extends Fragment implements OnClickListener,
 				if (success) {
 					if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 						PageModel page = (PageModel) data.getValue("page");
+						if(page!=null)
+						{
 						categories = page.getCategories();
 						slides = page.getSlides();
 						MainCategoriesListAdapter categoryListAdapter = new MainCategoriesListAdapter(
@@ -156,6 +158,9 @@ public class FragMain extends Fragment implements OnClickListener,
 							new Handler().postDelayed(SliderTransition,
 									AswaqApp.SLIDER_TRANSITION_INTERVAL);
 						}
+					}
+						else
+							homeCallbacks.showToast(getString(R.string.error_connection_error));
 
 					} else {
 						homeCallbacks.showToast("error in getting categories");
