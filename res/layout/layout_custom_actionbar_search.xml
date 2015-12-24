@@ -16,7 +16,7 @@
         android:padding="1dp"
         android:src="@drawable/ic_back"/>
 
-    <com.brainSocket.views.EditTextCustomFont
+    <com.brainSocket.aswaq.views.EditTextCustomFont
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,6 +36,6 @@
         android:textColorHint="@color/txt_xlight"
         android:textSize="@dimen/ts_text_normal"
         app:fontId="1">
-    </com.brainSocket.views.EditTextCustomFont>
+    </com.brainSocket.aswaq.views.EditTextCustomFont>
     
 </RelativeLayout>

@@ -2,8 +2,10 @@ package com.brainSocket.aswaq;
 
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -17,20 +19,22 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.brainSocket.adapters.SliderAdapter;
-import com.brainSocket.data.DataCacheProvider;
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.PhotoProvider;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.data.ServerResult;
-import com.brainSocket.dialogs.DiagRating;
-import com.brainSocket.enums.FragmentType;
-import com.brainSocket.enums.ImageType;
-import com.brainSocket.enums.SliderType;
-import com.brainSocket.models.AdvertiseModel;
-import com.brainSocket.models.AppUser;
-import com.brainSocket.views.TextViewCustomFont;
+import com.brainSocket.aswaq.adapters.SliderAdapter;
+import com.brainSocket.aswaq.data.DataCacheProvider;
+import com.brainSocket.aswaq.data.DataRequestCallback;
+import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.FacebookProvider;
+import com.brainSocket.aswaq.data.PhotoProvider;
+import com.brainSocket.aswaq.data.ServerAccess;
+import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.data.FacebookProvider.STORY_TYPE;
+import com.brainSocket.aswaq.dialogs.DiagRating;
+import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.enums.ImageType;
+import com.brainSocket.aswaq.enums.SliderType;
+import com.brainSocket.aswaq.models.AdvertiseModel;
+import com.brainSocket.aswaq.models.AppUser;
+import com.brainSocket.aswaq.views.TextViewCustomFont;
 
 public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCallbacks,OnClickListener {
 	private Dialog dialogLoading;
@@ -49,6 +53,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	private TextViewCustomFont tvDesc;
 	private ImageView ivFav;
 	private AdvertiseModel ad;
+	private Activity currentActivity;
 	private boolean isFavourite=false;
 	
 	//actionbar
@@ -62,6 +67,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_advertise_details);
+	    currentActivity=this;
 	    init();
 	    initCustomActionBar();
 	}
@@ -90,6 +96,8 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements HomeCal
 			tvDesc=(TextViewCustomFont)findViewById(R.id.tvDesc);
 			ivFav=(ImageView)findViewById(R.id.ivFav);
 			ivFav.setOnClickListener(this);
+			View btnFacebookShare=findViewById(R.id.btnFacebookShare);
+			btnFacebookShare.setOnClickListener(this);
 			
 			int selectedAdId=getIntent().getIntExtra("selectedAdId", 0);
 			showProgress(true);
@@ -299,6 +307,43 @@ private DataRequestCallback removeFromFavouriteCallback=new DataRequestCallback(
 		}
 		
 	}
+	
+	private void shareAdvertiseOnFacebook()
+	{
+		try
+		{
+			if(ad.getImages().size()>0)
+			{
+				showProgress(true);
+			String photoPath=AswaqApp.getImagePath(ImageType.Ad, ad.getImages().get(0).getPhoto_path());
+			DataStore.getInstance().attemptDownloadPhoto(photoPath, downloadAdPhotoCallback);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+	
+	private DataRequestCallback downloadAdPhotoCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			
+			if(success)
+			{
+				Bitmap photo=(Bitmap)data.getValue("photo");
+				FacebookProvider.getInstance().sharePhotoViaFacebook(currentActivity, photo, ad.getDescription());
+				showProgress(false);
+			}
+			else
+			{
+				showProgress(false);
+				showToast(getString(R.string.error_connection_error));
+			}
+			
+		}
+	};
 
 	@Override
 	public void onClick(View v) {
@@ -328,6 +373,9 @@ private DataRequestCallback removeFromFavouriteCallback=new DataRequestCallback(
 			break;
 		case R.id.ivBack:
 			finish();
+			break;
+		case R.id.btnFacebookShare:
+			shareAdvertiseOnFacebook();
 			break;
 		}
 	}

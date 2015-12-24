@@ -3,18 +3,18 @@ package com.brainSocket.aswaq;
 import java.util.HashMap;
 import java.util.List;
 
-import com.brainSocket.adapters.DrawerAdapter;
-import com.brainSocket.data.DataCacheProvider;
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.data.ServerResult;
-import com.brainSocket.dialogs.DiagRating;
-import com.brainSocket.enums.FragmentType;
-import com.brainSocket.enums.ImageType;
-import com.brainSocket.models.AdvertiseModel;
-import com.brainSocket.models.AppUser;
-import com.brainSocket.views.TextViewCustomFont;
+import com.brainSocket.aswaq.adapters.DrawerAdapter;
+import com.brainSocket.aswaq.data.DataCacheProvider;
+import com.brainSocket.aswaq.data.DataRequestCallback;
+import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.ServerAccess;
+import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.dialogs.DiagRating;
+import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.enums.ImageType;
+import com.brainSocket.aswaq.models.AdvertiseModel;
+import com.brainSocket.aswaq.models.AppUser;
+import com.brainSocket.aswaq.views.TextViewCustomFont;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
@@ -359,49 +359,43 @@ public void showProgress(boolean show) {
 
 @Override
 public void showToast(String msg) {
-	// TODO Auto-generated method stub
 	Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT).show();
 }
 
 @Override
 public void setTitle(String title) {
-	// TODO Auto-generated method stub
-	
+	tvFragTitle.setText(title);
 }
 
 @Override
 public void loadFragment(FragmentType fragmentType,
 		HashMap<String, Object> params) {
-	// TODO Auto-generated method stub
 	
 }
 
 @Override
 public void openSlideDrawer() {
-	// TODO Auto-generated method stub
 	
 }
 
 @Override
 public void closeSlideDrawer() {
-	// TODO Auto-generated method stub
 }
 
 @Override
 public void backToHome() {
-	// TODO Auto-generated method stub
 	
 }
 
 @Override
 protected void onResume() {
-	// TODO Auto-generated method stub
 	super.onResume();
 	AppUser me=DataStore.getInstance().getMe();
 	if(me.getId()==userId)
 	{
 		tvUserName.setText(me.getName());
 		tvDesc.setText(me.getDescription());
+		setTitle(me.getName());
 	}
 }
 

@@ -85,6 +85,7 @@
             android:name="VerificationActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity android:name="SliderPreviewerActivity"></activity>
     </application>
 
 </manifest>

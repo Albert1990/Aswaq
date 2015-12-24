@@ -12,7 +12,7 @@
         android:layout_height="80dp"
         android:scaleType="fitCenter" />
 
-    <com.brainSocket.views.TextViewCustomFont
+    <com.brainSocket.aswaq.views.TextViewCustomFont
         android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         android:numStars="5"
         android:stepSize="1" />
 
-    <com.brainSocket.views.TextViewCustomFont
+    <com.brainSocket.aswaq.views.TextViewCustomFont
         android:id="@+id/btnFollow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

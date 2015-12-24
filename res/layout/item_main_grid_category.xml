@@ -16,7 +16,7 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_job_2" />
 
-    <com.brainSocket.views.TextViewCustomFont
+    <com.brainSocket.aswaq.views.TextViewCustomFont
         android:id="@+id/lblCategoryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

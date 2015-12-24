@@ -20,7 +20,7 @@
         android:layout_below="@id/vpSliderMain"
         android:background="@color/app_theme" />
 
-    <com.brainSocket.views.EditTextCustomFont
+    <com.brainSocket.aswaq.views.EditTextCustomFont
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

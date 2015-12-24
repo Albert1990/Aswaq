@@ -12,7 +12,7 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/logo_splash" />
     
-    <com.brainSocket.views.TextViewCustomFont
+    <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -32,7 +32,7 @@
             android:inputType="number"
             android:hint="@string/verif_hint_verification_code" />
     
-    <com.brainSocket.views.TextViewCustomFont
+    <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnResendVerificationCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
     
-    <com.brainSocket.views.TextViewCustomFont
+    <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnVerifyCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

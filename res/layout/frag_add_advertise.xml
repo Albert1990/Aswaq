@@ -39,7 +39,7 @@
                 style="@style/add_advertisement_prod_photo" />
         </LinearLayout>
 
-        <com.brainSocket.views.EditTextCustomFont
+        <com.brainSocket.aswaq.views.EditTextCustomFont
             android:id="@+id/txtProductDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <com.brainSocket.views.EditTextCustomFont
+            <com.brainSocket.aswaq.views.EditTextCustomFont
                 android:id="@+id/tvPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                 android:padding="10dp"
                 app:fontId="1" />
 
-            <com.brainSocket.views.TextViewCustomFont
+            <com.brainSocket.aswaq.views.TextViewCustomFont
                 android:id="@+id/tvCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal" >
 
-            <com.brainSocket.views.EditTextCustomFont
+            <com.brainSocket.aswaq.views.EditTextCustomFont
                 android:id="@+id/tvPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 android:paddingRight="10dp"
                 android:weightSum="1" >
 
-                <com.brainSocket.views.TextViewCustomFont
+                <com.brainSocket.aswaq.views.TextViewCustomFont
                     android:id="@+id/tvRadioButtonUsed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                     android:textSize="@dimen/ts_text_normal"
                     app:fontId="1" />
 
-                <com.brainSocket.views.TextViewCustomFont
+                <com.brainSocket.aswaq.views.TextViewCustomFont
                     android:id="@+id/tvRadioButtonNew"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <com.brainSocket.views.EditTextCustomFont
+        <com.brainSocket.aswaq.views.EditTextCustomFont
             android:id="@+id/txtAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
 
-            <com.brainSocket.views.TextViewCustomFont
+            <com.brainSocket.aswaq.views.TextViewCustomFont
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

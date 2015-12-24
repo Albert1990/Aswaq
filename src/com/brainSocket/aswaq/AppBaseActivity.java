@@ -1,7 +1,7 @@
 package com.brainSocket.aswaq;
 
 
-import com.brainSocket.data.FacebookProvider;
+import com.brainSocket.aswaq.data.FacebookProvider;
 
 import android.content.Intent;
 import android.os.Bundle;

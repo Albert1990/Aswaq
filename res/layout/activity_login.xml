@@ -18,7 +18,7 @@
             android:layout_marginTop="30dp"
             android:src="@drawable/logo_splash" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -36,7 +36,7 @@
             android:singleLine="true"
             android:text="admin@admin.com" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/lbl_password"
@@ -54,7 +54,7 @@
             android:singleLine="true"
             android:text="admin123" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:textSize="@dimen/ts_text_normal"
             app:fontId="2" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -77,7 +77,7 @@
             android:textSize="@dimen/ts_text_small"
             app:fontId="1" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnLoginFB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
             android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnDoesntHaveAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

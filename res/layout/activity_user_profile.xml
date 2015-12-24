@@ -26,7 +26,7 @@
             android:layout_marginTop="30dp"
             android:src="@drawable/logo_splash" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -40,7 +40,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -56,7 +56,7 @@
             android:inputType="phone" />
 
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -70,7 +70,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -84,7 +84,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnEditUserProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -25,7 +25,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/ic_timeline" />
 
-    <com.brainSocket.views.TextViewCustomFont
+    <com.brainSocket.aswaq.views.TextViewCustomFont
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

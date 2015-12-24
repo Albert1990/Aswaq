@@ -14,7 +14,7 @@
         android:layout_height="70dp"
         android:src="@drawable/logo_splash"/>
 
-    <com.brainSocket.views.TextViewCustomFont
+    <com.brainSocket.aswaq.views.TextViewCustomFont
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

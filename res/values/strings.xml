@@ -121,5 +121,8 @@
     <string name="pick_photo_cam">التقاط صورة</string>
     <string name="pick_photo_cancel">إلغاء الأمر</string>
     <string name="error_server_error">هناك خطأ في المخدم</string>
+    <string name="diag_confirm_btn_yes">موافق</string>
+    <string name="diag_confirm_btn_cancel">إلغاء</string>
+    <string name="advertise_details_btn_facebook_share">مشاركة على فيس بوك</string>
     
 </resources>

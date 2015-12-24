@@ -22,18 +22,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.brainSocket.adapters.DrawerAdapter;
-import com.brainSocket.data.DataCacheProvider;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.enums.FragmentType;
-import com.brainSocket.fragments.FragAddAdvertise;
-import com.brainSocket.fragments.FragAds;
-import com.brainSocket.fragments.FragClients;
-import com.brainSocket.fragments.FragFavourites;
-import com.brainSocket.fragments.FragMain;
-import com.brainSocket.fragments.FragSubCategories;
-import com.brainSocket.models.AppUser;
-import com.brainSocket.views.TextViewCustomFont;
+import com.brainSocket.aswaq.adapters.DrawerAdapter;
+import com.brainSocket.aswaq.data.DataCacheProvider;
+import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.fragments.FragAddAdvertise;
+import com.brainSocket.aswaq.fragments.FragAds;
+import com.brainSocket.aswaq.fragments.FragClients;
+import com.brainSocket.aswaq.fragments.FragFavourites;
+import com.brainSocket.aswaq.fragments.FragMain;
+import com.brainSocket.aswaq.fragments.FragSubCategories;
+import com.brainSocket.aswaq.models.AppUser;
+import com.brainSocket.aswaq.views.TextViewCustomFont;
 
 public class MainActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks, OnBackStackChangedListener{
 	//slide drawer

@@ -10,7 +10,7 @@
         android:background="@android:color/white"
         android:orientation="vertical" >
 
-        <com.brainSocket.views.SlidingTabLayout
+        <com.brainSocket.aswaq.views.SlidingTabLayout
             android:id="@+id/slidingTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -55,7 +55,7 @@
             android:layout_height="20dp"
             android:src="@drawable/ic_search" />
 
-        <com.brainSocket.views.TextViewCustomFont
+        <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/tvPlaceHolderMsg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

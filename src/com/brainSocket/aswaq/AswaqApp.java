@@ -10,10 +10,10 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.enums.ImageType;
-import com.brainSocket.enums.PhoneNumberCheckResult;
+import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.ServerAccess;
+import com.brainSocket.aswaq.enums.ImageType;
+import com.brainSocket.aswaq.enums.PhoneNumberCheckResult;
 
 public class AswaqApp extends Application{
 	

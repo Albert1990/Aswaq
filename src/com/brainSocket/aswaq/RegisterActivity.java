@@ -2,14 +2,14 @@ package com.brainSocket.aswaq;
 
 import java.util.HashMap;
 
-import com.brainSocket.data.DataCacheProvider;
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.data.ServerResult;
-import com.brainSocket.enums.FragmentType;
-import com.brainSocket.models.AppUser;
-import com.brainSocket.views.TextViewCustomFont;
+import com.brainSocket.aswaq.data.DataCacheProvider;
+import com.brainSocket.aswaq.data.DataRequestCallback;
+import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.ServerAccess;
+import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.models.AppUser;
+import com.brainSocket.aswaq.views.TextViewCustomFont;
 
 import android.app.Dialog;
 import android.content.Intent;

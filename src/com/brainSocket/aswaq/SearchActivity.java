@@ -17,15 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.ServerResult;
-import com.brainSocket.fragments.FragAdsList;
-import com.brainSocket.fragments.FragUsersList;
-import com.brainSocket.fragments.FragUsersList.FRAG_USERS_TYPE;
-import com.brainSocket.models.AdvertiseModel;
-import com.brainSocket.models.AppUser;
-import com.brainSocket.views.SlidingTabLayout;
+import com.brainSocket.aswaq.data.DataRequestCallback;
+import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.fragments.FragAdsList;
+import com.brainSocket.aswaq.fragments.FragUsersList;
+import com.brainSocket.aswaq.fragments.FragUsersList.FRAG_USERS_TYPE;
+import com.brainSocket.aswaq.models.AdvertiseModel;
+import com.brainSocket.aswaq.models.AppUser;
+import com.brainSocket.aswaq.views.SlidingTabLayout;
 
 
 

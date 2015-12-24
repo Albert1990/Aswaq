@@ -3,20 +3,20 @@ package com.brainSocket.aswaq;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.brainSocket.data.DataCacheProvider;
-import com.brainSocket.data.DataRequestCallback;
-import com.brainSocket.data.DataStore;
-import com.brainSocket.data.FacebookProvider;
-import com.brainSocket.data.FacebookProviderListener;
-import com.brainSocket.data.ServerAccess;
-import com.brainSocket.data.ServerResult;
-import com.brainSocket.enums.FragmentType;
-import com.brainSocket.fragments.FragAddAdvertise;
-import com.brainSocket.fragments.FragAds;
-import com.brainSocket.fragments.FragMain;
-import com.brainSocket.fragments.FragSubCategories;
-import com.brainSocket.models.AppUser;
-import com.brainSocket.views.TextViewCustomFont;
+import com.brainSocket.aswaq.data.DataCacheProvider;
+import com.brainSocket.aswaq.data.DataRequestCallback;
+import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.FacebookProvider;
+import com.brainSocket.aswaq.data.FacebookProviderListener;
+import com.brainSocket.aswaq.data.ServerAccess;
+import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.fragments.FragAddAdvertise;
+import com.brainSocket.aswaq.fragments.FragAds;
+import com.brainSocket.aswaq.fragments.FragMain;
+import com.brainSocket.aswaq.fragments.FragSubCategories;
+import com.brainSocket.aswaq.models.AppUser;
+import com.brainSocket.aswaq.views.TextViewCustomFont;
 import com.facebook.Profile;
 
 import android.app.Activity;
@@ -136,9 +136,6 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		
 		@Override
 		public void onFacebookSessionOpened(String accessToken, String userId, HashMap<String, Object> map) {
-			
-		  //Profile profile = com.facebook.Profile.getCurrentProfile();
-		  //String name = profile.getName(); 
 		  String email = (String) map.get("email");
 		  String name = (String) map.get("name");
 		  String password="5982";
@@ -175,6 +172,8 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		//Session.openActiveSession(this, true, permissions, callback)
 		FacebookProvider.getInstance().registerListener(facebookLoginListner);
 		FacebookProvider.getInstance().requestFacebookLogin(this);
+		
+		
 		//Session.StatusCallback callback =  new LoginStatsCallback() ;
 		//Session.openActiveSession(LoginActivity.this, true, perm1, callback ) ;
 		showProgress(true);

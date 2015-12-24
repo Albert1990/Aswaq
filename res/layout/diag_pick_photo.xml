@@ -31,7 +31,7 @@
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/ic_gallery"/>
 
-                <com.brainSocket.views.TextViewCustomFont
+                <com.brainSocket.aswaq.views.TextViewCustomFont
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -59,7 +59,7 @@
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/ic_cam"/>
 
-                <com.brainSocket.views.TextViewCustomFont
+                <com.brainSocket.aswaq.views.TextViewCustomFont
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -83,7 +83,7 @@
             android:gravity="center"
             android:padding="14dp">
 
-            <com.brainSocket.views.TextViewCustomFont
+            <com.brainSocket.aswaq.views.TextViewCustomFont
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"

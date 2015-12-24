@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <com.brainSocket.aswaq.views.TextViewCustomFont 
+        android:id="@+id/tvConfirmTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="5dp"
+        android:text="@string/lbl_ad_details"
+        android:textSize="@dimen/ts_text_normal"/>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <com.brainSocket.aswaq.views.TextViewCustomFont 
+            android:id="@+id/btnConfirmCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/diag_confirm_btn_cancel"
+            android:textSize="@dimen/ts_text_normal"
+            android:layout_gravity="left"/>
+        
+        <com.brainSocket.aswaq.views.TextViewCustomFont 
+            android:id="@+id/btnConfirmYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/diag_confirm_btn_yes"
+            android:textSize="@dimen/ts_text_normal"
+            android:layout_weight="1"
+            android:gravity="right"/>
+        
+        
+        
+    </LinearLayout>
+
+</LinearLayout>
