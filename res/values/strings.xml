@@ -50,7 +50,7 @@
     <!-- add Adv -->
     <string name="add_ad_price_hint">السعر؟</string>
     <string name="add_ad_cat_hint">نوع المنتج؟</string>
-    <string name="add_ad_phone_hint">رقم الهاتف؟</string>
+    <string name="add_ad_phone_hint">اضافة رقم جديد</string>
     <string name="add_ad_new">جديد</string>
     <string name="add_ad_used">مستعمل</string>
     <string name="add_ad_add_ur_fb_page">اضافة صفحتك على الفيسبوك</string>

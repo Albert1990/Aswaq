@@ -5,302 +5,312 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
-    
-   <LinearLayout 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/global_bg_color"
-    android:orientation="vertical" >
-        <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/app_theme" >
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/tvPaid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/payed_ad"
-            android:padding="6dp"
-            android:text="@string/details_payed"
-            android:textColor="@color/txt_dark"
-            android:textSize="@dimen/ts_text_small"
-            app:fontId="1" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vpSlider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/main_slider_height" />
-
-        <ImageView
-            android:id="@+id/ivFav"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_star" />
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/app_theme"
-        android:orientation="horizontal"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp" >
-
-        <ImageView
-            android:id="@+id/btnFbPage"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:background="@color/app_theme_light"
-            android:padding="6dp"
-            android:src="@drawable/ic_face" />
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/btnCall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:background="@color/app_theme_light"
-            android:drawableLeft="@drawable/ic_call"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="@string/details_call"
-            android:textColor="@color/txt_white"
-            android:textSize="@dimen/ts_text_big"
-            app:fontId="1" />
-    </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/app_theme"
-        android:orientation="horizontal"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp" >
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/btnFacebookShare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:background="@color/app_theme_light"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="@string/advertise_details_btn_facebook_share"
-            android:textColor="@color/txt_white"
-            android:textSize="@dimen/ts_text_big"
-            app:fontId="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:background="@color/app_theme"
-        android:orientation="horizontal"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp" >
+        android:layout_height="match_parent"
+        android:background="@color/global_bg_color"
+        android:orientation="vertical" >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp" >
-
-            <ImageView
-                android:id="@+id/ivUser"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/app_theme" >
 
             <com.brainSocket.aswaq.views.TextViewCustomFont
-                android:id="@+id/tvUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/ivUser"
-                android:gravity="center"
-                android:lines="1"
-                android:maxLines="1"
-                android:text="@string/place_holder"
-                android:textColor="@color/txt_white"
-                android:textSize="@dimen/ts_text_small"
-                app:fontId="1" />
-
-            <com.brainSocket.aswaq.views.TextViewCustomFont
-                android:id="@+id/tvUserRate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvUserName"
-                android:layout_toRightOf="@id/ivUser"
-                android:gravity="center"
-                android:lines="1"
-                android:maxLines="1"
-                android:text="@string/place_holder"
-                android:textColor="@color/txt_white"
-                android:textSize="@dimen/ts_text_small"
-                app:fontId="1" />
-
-            <RatingBar
-                android:id="@+id/rbUserRate"
-                style="?android:attr/ratingBarStyleSmall"
+                android:id="@+id/tvPaid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvUserRate"
-                android:layout_toRightOf="@id/ivUser"
-                android:gravity="center"
-                android:numStars="5"
-                android:stepSize="1"/>
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/payed_ad"
+                android:padding="6dp"
+                android:text="@string/details_payed"
+                android:textColor="@color/txt_dark"
+                android:textSize="@dimen/ts_text_small"
+                app:fontId="1" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vpSlider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/main_slider_height" />
+
+            <ImageView
+                android:id="@+id/ivFav"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_star" />
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_theme"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp" >
+
+            <ImageView
+                android:id="@+id/btnFbPage"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@color/app_theme_light"
+                android:padding="6dp"
+                android:src="@drawable/ic_face" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@color/app_theme_light"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="6dp" >
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_call" />
+
+                <Spinner
+                    android:id="@+id/spnrPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    
+                    android:dropDownWidth="200dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_theme"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp" >
+
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                android:id="@+id/btnFacebookShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@color/app_theme_light"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/advertise_details_btn_facebook_share"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/ts_text_big"
+                app:fontId="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:background="@color/app_theme"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp" >
+
+                <ImageView
+                    android:id="@+id/ivUser"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true" />
+
+                <com.brainSocket.aswaq.views.TextViewCustomFont
+                    android:id="@+id/tvUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ivUser"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:text="@string/place_holder"
+                    android:textColor="@color/txt_white"
+                    android:textSize="@dimen/ts_text_small"
+                    app:fontId="1" />
+
+                <com.brainSocket.aswaq.views.TextViewCustomFont
+                    android:id="@+id/tvUserRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvUserName"
+                    android:layout_toRightOf="@id/ivUser"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:text="@string/place_holder"
+                    android:textColor="@color/txt_white"
+                    android:textSize="@dimen/ts_text_small"
+                    app:fontId="1" />
+
+                <RatingBar
+                    android:id="@+id/rbUserRate"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvUserRate"
+                    android:layout_toRightOf="@id/ivUser"
+                    android:gravity="center"
+                    android:numStars="5"
+                    android:stepSize="1" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="1.6dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_theme_light" />
+
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                android:id="@+id/tvPrice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.3"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="@string/place_holder"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/ts_text_normal"
+                app:fontId="1" />
+
+            <View
+                android:layout_width="1.6dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_theme_light" />
+
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.3"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="@string/place_holder"
+                android:textColor="@color/txt_white"
+                android:textSize="@dimen/ts_text_small"
+                app:fontId="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
+
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                android:id="@+id/tvCat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/place_holder"
+                android:textColor="@color/txt_normal"
+                android:textSize="@dimen/ts_text_normal"
+                app:fontId="1" />
+
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                android:id="@+id/txtCat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/details_category"
+                android:textColor="@color/txt_normal"
+                android:textSize="@dimen/ts_text_normal"
+                android:textStyle="bold"
+                app:fontId="1" />
+        </LinearLayout>
+
         <View
-            android:layout_width="1.6dp"
-            android:layout_height="match_parent"
-            android:background="@color/app_theme_light" />
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/tvPrice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.3"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:text="@string/place_holder"
-            android:textColor="@color/txt_white"
-            android:textSize="@dimen/ts_text_normal"
-            app:fontId="1" />
+            android:layout_height="1dp"
+            android:background="@color/txt_light" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
+
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                android:id="@+id/tvPlace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/place_holder"
+                android:textColor="@color/txt_normal"
+                android:textSize="@dimen/ts_text_normal"
+                app:fontId="1" />
+
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                android:id="@+id/txtPLace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/details_place"
+                android:textColor="@color/txt_normal"
+                android:textSize="@dimen/ts_text_normal"
+                android:textStyle="bold"
+                app:fontId="1" />
+        </LinearLayout>
 
         <View
-            android:layout_width="1.6dp"
-            android:layout_height="match_parent"
-            android:background="@color/app_theme_light" />
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/tvDate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.3"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:text="@string/place_holder"
-            android:textColor="@color/txt_white"
-            android:textSize="@dimen/ts_text_small"
-            app:fontId="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
+            android:layout_height="1dp"
+            android:background="@color/txt_light" />
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/tvCat"
+            android:id="@+id/txtDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/place_holder"
+            android:gravity="right"
+            android:padding="8dp"
+            android:text="@string/details_desc"
             android:textColor="@color/txt_normal"
             android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/txtCat"
+            android:id="@+id/tvDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/details_category"
-            android:textColor="@color/txt_normal"
-            android:textSize="@dimen/ts_text_normal"
-            android:textStyle="bold"
-            app:fontId="1" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/txt_light" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/tvPlace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/place_holder"
-            android:textColor="@color/txt_normal"
-            android:textSize="@dimen/ts_text_normal"
-            app:fontId="1" />
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/txtPLace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="right"
+            android:padding="8dp"
             android:text="@string/details_place"
             android:textColor="@color/txt_normal"
             android:textSize="@dimen/ts_text_normal"
-            android:textStyle="bold"
             app:fontId="1" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/txt_light" />
-
-    <com.brainSocket.aswaq.views.TextViewCustomFont
-        android:id="@+id/txtDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:padding="8dp"
-        android:text="@string/details_desc"
-        android:textColor="@color/txt_normal"
-        android:textSize="@dimen/ts_text_normal"
-        app:fontId="1" />
-
-    <com.brainSocket.aswaq.views.TextViewCustomFont
-        android:id="@+id/tvDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:padding="8dp"
-        android:text="@string/details_place"
-        android:textColor="@color/txt_normal"
-        android:textSize="@dimen/ts_text_normal"
-        app:fontId="1" />
-    
-    </LinearLayout>
-    
 </ScrollView>

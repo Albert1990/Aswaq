@@ -79,8 +79,8 @@
                 android:maxLines="1"
                 android:padding="10dp"
                 android:text="@string/add_ad_cat_hint"
-                app:fontId="1" 
-                android:textSize="@dimen/ts_text_normal"/>
+                android:textSize="@dimen/ts_text_normal"
+                app:fontId="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,18 +89,30 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal" >
 
-            <com.brainSocket.aswaq.views.EditTextCustomFont
-                android:id="@+id/tvPhone"
+            <LinearLayout
+                android:id="@+id/vPhoneNumbersContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:hint="@string/add_ad_phone_hint"
-                android:inputType="phone"
-                android:lines="1"
-                android:maxLines="1"
-                android:padding="10dp"
-                app:fontId="1" />
+                android:orientation="vertical" >
+
+                <include layout="@layout/row_phone_number" />
+
+                <com.brainSocket.aswaq.views.TextViewCustomFont
+                    android:id="@+id/btnAddPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_ad_phone_hint"
+                    android:drawableRight="@drawable/ic_plus"
+                    android:gravity="center"
+                    android:drawablePadding="8dp"
+                    android:inputType="phone"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    app:fontId="1" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

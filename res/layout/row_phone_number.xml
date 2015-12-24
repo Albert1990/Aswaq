@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vPhoneNumberContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical" >
+
+    <com.brainSocket.aswaq.views.EditTextCustomFont
+        android:id="@+id/tvPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:inputType="phone"
+        android:lines="1"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:textSize="@dimen/ts_text_small"
+        android:text="@string/place_holder"
+        app:fontId="1" />
+
+    <ImageView
+        android:id="@+id/btnDel"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:padding="10dp"
+        android:src="@drawable/ic_close" />
+
+</LinearLayout>
