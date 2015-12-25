@@ -16,7 +16,7 @@ public class AdvertiseModel {
 	private boolean isUsed;
 	private String facebookPage;
 	private int isPinned;
-	private String telephones;
+	private List<String> telephones=new ArrayList<String>();
 	private AppUser user;
 	private CategoryModel category;
 	private List<SlideModel> images=new ArrayList<SlideModel>();
@@ -93,9 +93,15 @@ public class AdvertiseModel {
 		try
 		{
 			if(ob.has("telephones"))
-				this.telephones=ob.getString("telephones");
+			{
+				JSONArray tels=ob.getJSONArray("telephones");
+				for(int i=0;i<tels.length();i++)
+					telephones.add(tels.getString(i));
+			}
 		}
-		catch(Exception ex){}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
 		
 		try
 		{
@@ -194,11 +200,8 @@ public class AdvertiseModel {
 	public void setIsPinned(int isPinned) {
 		this.isPinned = isPinned;
 	}
-	public String getTelephones() {
+	public List<String> getTelephones() {
 		return telephones;
-	}
-	public void setTelephones(String telephones) {
-		this.telephones = telephones;
 	}
 	
 	
@@ -249,7 +252,12 @@ public class AdvertiseModel {
 		try{ob.put("is_used", isUsed);}catch(Exception ex){}
 		try{ob.put("facebook_page", facebookPage);}catch(Exception ex){}
 		try{ob.put("is_pinned", isPinned);}catch(Exception ex){}
-		try{ob.put("telephones", telephones);}catch(Exception ex){}
+		try{
+			JSONArray tels=new JSONArray();
+			for(int i=0;i<telephones.size();i++)
+				tels.put(telephones.get(i));
+			ob.put("telephones", tels);
+			}catch(Exception ex){}
 		try{ob.put("user", user.getJsonObject());}catch(Exception ex){}
 		try{ob.put("category", category.getJsonObject());}catch(Exception ex){}
 		try

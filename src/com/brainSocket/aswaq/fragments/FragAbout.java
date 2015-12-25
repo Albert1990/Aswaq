@@ -34,5 +34,10 @@ public class FragAbout extends Fragment{
 	{
 		
 	}
+	
+	public static FragAbout newInstance()
+	{
+		return new FragAbout();
+	}
 
 }

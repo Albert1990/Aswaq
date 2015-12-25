@@ -136,6 +136,7 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		
 		@Override
 		public void onFacebookSessionOpened(String accessToken, String userId, HashMap<String, Object> map) {
+			showProgress(false);
 		  String email = (String) map.get("email");
 		  String name = (String) map.get("name");
 		  String password="5982";
@@ -150,11 +151,13 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 		
 		@Override
 		public void onFacebookSessionClosed() {
+			showProgress(false);
 			showToast(getString(R.string.error_facebook_permissions_rejected));
 		}
 		
 		@Override
 		public void onFacebookException(Exception exception) {
+			showProgress(false);
 			showToast(getString(R.string.error_facebook_exception));
 		}
 	};

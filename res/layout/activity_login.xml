@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/lbl_email"
+            android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
         <EditText
@@ -40,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/lbl_password"
+            android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
         <EditText
@@ -97,7 +99,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/btn_doesnt_have_account"
             android:textColor="@color/blue"
-            android:textSize="@dimen/ts_text_normal"
+            android:textSize="@dimen/ts_text_big"
             app:fontId="1" />
     </LinearLayout>
 

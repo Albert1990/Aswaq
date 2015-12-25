@@ -215,7 +215,7 @@ private DataRequestCallback updateUserProfileCallback=new DataRequestCallback() 
 	
 	@Override
 	public void onDataReady(ServerResult data, boolean success) {
-		// TODO Auto-generated method stub
+		showProgress(false);
 		if(success)
 		{
 			if(data.getFlag()==ServerAccess.ERROR_CODE_done)
@@ -246,7 +246,7 @@ private DataRequestCallback updateUserProfileCallback=new DataRequestCallback() 
 		{
 			showToast(getString(R.string.error_connection_error));
 		}
-		showProgress(false);
+		
 	}
 };
 

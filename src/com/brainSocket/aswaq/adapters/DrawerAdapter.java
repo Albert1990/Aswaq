@@ -152,7 +152,6 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 					homeCallbacks.loadFragment(FragmentType.MyClients,null);
 				else
 				{
-					//homeCallbacks.loadActivity(LoginActivity.class,null);
 					Intent i=new Intent(context, LoginActivity.class);
 					context.startActivity(i);
 				}
@@ -163,6 +162,7 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener{
 			}
 			else if(elem.itemType==DrawerItemType.CALLUS)
 			{
+				homeCallbacks.loadFragment(FragmentType.About, null);
 			}
 			else
 			{

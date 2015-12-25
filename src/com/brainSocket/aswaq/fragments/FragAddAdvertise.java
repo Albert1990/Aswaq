@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.brainSocket.aswaq.AswaqApp;
@@ -59,8 +60,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private HomeCallbacks homeCallback;
 	private EditTextCustomFont txtProductDescription;
 	private EditTextCustomFont tvPrice;
-	private EditText tvPhone;
-	TextView tvRadioButtonUsed, tvRadioButtonNew; 
+	private TextView tvRadioButtonUsed, tvRadioButtonNew; 
 	private TextViewCustomFont btnSubmit;
 	private ImageView btnImg1;
 	private ImageView btnImg2;
@@ -69,8 +69,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private ImageView selectedImageView;
 	private TextViewCustomFont tvCategory;
 	private EditTextCustomFont txtAddress;
+	private TextViewCustomFont btnAddPhone;
+	private LinearLayout vPhoneNumbersContainer;
+	private LayoutInflater inflater;
 	int selectedCategoryId=-1;
 	String[] imagesURI={null,null,null,null};
+	private int phoneNumberIndex=0;
 	
 	// data
 	boolean isNew = false;
@@ -98,12 +102,11 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private void init()
 	{
 		homeCallback=(HomeCallbacks)getActivity();
+		inflater=(LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
 		AppUser me=DataStore.getInstance().getMe();
 		
 		txtProductDescription=(EditTextCustomFont)getView().findViewById(R.id.txtProductDescription);
 		tvPrice=(EditTextCustomFont)getView().findViewById(R.id.tvPrice);
-		tvPhone=(EditText)getView().findViewById(R.id.tvPhone);
-		tvPhone.setText(me.getPhoneNum());
 		
 		txtAddress=(EditTextCustomFont)getView().findViewById(R.id.txtAddress);
 		txtAddress.setText(me.getAddress());
@@ -134,6 +137,17 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		tvCategory=(TextViewCustomFont)getView().findViewById(R.id.tvCategory);
 		tvCategory.setOnClickListener(this);
 		
+		vPhoneNumbersContainer=(LinearLayout)getView().findViewById(R.id.vPhoneNumbersContainer);
+		
+		btnAddPhone=(TextViewCustomFont)getView().findViewById(R.id.btnAddPhone);
+		btnAddPhone.setOnClickListener(this);
+		
+		if(me.getPhoneNum().length()>0)
+		{
+			addPhoneNumberView(me.getPhoneNum());
+		}
+		
+		
 		// initial State
 		setProductNew(false);
 		
@@ -150,8 +164,26 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		String address=txtAddress.getText().toString();
 		boolean isUsed = !isNew;
 		int price=0;
-		String phone=tvPhone.getText().toString();
+		
 		JSONArray telephones=new JSONArray();
+		
+		int phoneNumberCount=vPhoneNumbersContainer.getChildCount();
+		if(phoneNumberCount <= 1)
+		{
+			homeCallback.showToast(getString(R.string.error_phone_required));
+			cancel=true;
+		}
+		else
+		{
+			EditTextCustomFont firstPhoneNumber=(EditTextCustomFont)vPhoneNumbersContainer.getChildAt(1).findViewById(R.id.tvPhone);
+			String firstPhone=firstPhoneNumber.getText().toString();
+			if(AswaqApp.isEmptyOrNull(firstPhone))
+			{
+				firstPhoneNumber.setError(getString(R.string.error_phone_required));
+				focusView=firstPhoneNumber;
+				cancel=true;
+			}
+		}
 		
 		if(AswaqApp.isEmptyOrNull(description))
 		{
@@ -169,13 +201,6 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		else
 		{
 			price=Integer.parseInt(tvPrice.getText().toString());
-		}
-		
-		if(AswaqApp.isEmptyOrNull(phone))
-		{
-			tvPhone.setError(getString(R.string.error_phone_required));
-			focusView=tvPhone;
-			cancel=true;
 		}
 		
 		if(selectedCategoryId==-1)
@@ -198,7 +223,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			}
 			if(hasOnePhotoAtLeast)
 			{
-			telephones.put(phone);
+				// we have to collect all inserted phone numbers
+				for(int i=1;i<phoneNumberCount;i++)
+				{
+					String phone=((EditTextCustomFont)vPhoneNumbersContainer.getChildAt(i).findViewById(R.id.tvPhone)).getText().toString();
+					telephones.put(phone);
+				}
 			homeCallback.showProgress(true);
 			DataStore.getInstance().attemptAddNewAdvertise(description,address,
 					selectedCategoryId,
@@ -404,6 +434,20 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 //	        cursor.moveToFirst();
 //	        return cursor.getString(column_index);
 //	    }
+	
+	private void addPhoneNumberView(String phoneNumber)
+	{
+		View phoneRowView=inflater.inflate(R.layout.row_phone_number, vPhoneNumbersContainer, false);
+		vPhoneNumbersContainer.addView(phoneRowView);
+		if(phoneNumber!=null)
+		{
+			((EditTextCustomFont)phoneRowView.findViewById(R.id.tvPhone)).setText(phoneNumber);
+		}
+		View btnDeletePhoneNumber=phoneRowView.findViewById(R.id.btnDel);
+		btnDeletePhoneNumber.setTag(phoneNumberIndex);
+		phoneNumberIndex++;
+		btnDeletePhoneNumber.setOnClickListener(this);
+	}
 	 
 	@Override
 	public void onClick(View v) {
@@ -434,6 +478,14 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		case R.id.tvRadioButtonUsed:
 			setProductNew(false);
 			break;
+		case R.id.btnAddPhone:
+			View phoneRowView=inflater.inflate(R.layout.row_phone_number, vPhoneNumbersContainer, false);
+			vPhoneNumbersContainer.addView(phoneRowView);
+			break;
+		case R.id.btnDel:
+			int selectedPhoneNumberIndex=(Integer)v.getTag();
+			vPhoneNumbersContainer.removeViewAt(selectedPhoneNumberIndex+1); //+1 because of the btnAddNewPhoneNumber .
+			break;
 		}
 	}
 	
@@ -441,7 +493,6 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			try
 			{
 				CategoryModel selectedCategory=(CategoryModel)data.getValue("selectedCategory");

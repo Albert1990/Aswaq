@@ -26,6 +26,7 @@ import com.brainSocket.aswaq.adapters.DrawerAdapter;
 import com.brainSocket.aswaq.data.DataCacheProvider;
 import com.brainSocket.aswaq.data.DataStore;
 import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.fragments.FragAbout;
 import com.brainSocket.aswaq.fragments.FragAddAdvertise;
 import com.brainSocket.aswaq.fragments.FragAds;
 import com.brainSocket.aswaq.fragments.FragClients;
@@ -334,6 +335,13 @@ private void updateActionbar(FragmentType section) {
 			fragmentManager.beginTransaction()
 			.replace(R.id.content_frame, currentFragment)
 			.addToBackStack(FragmentType.Favourites.name())
+			.commit();
+			break;
+		case About:
+			currentFragment=FragAbout.newInstance();
+			fragmentManager.beginTransaction()
+			.replace(R.id.content_frame, currentFragment)
+			.addToBackStack(FragmentType.About.name())
 			.commit();
 			break;
 		}

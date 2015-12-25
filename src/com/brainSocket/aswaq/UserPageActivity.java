@@ -3,10 +3,12 @@ package com.brainSocket.aswaq;
 import java.util.HashMap;
 import java.util.List;
 
+import com.brainSocket.aswaq.adapters.AdvertisesListAdapter;
 import com.brainSocket.aswaq.adapters.DrawerAdapter;
 import com.brainSocket.aswaq.data.DataCacheProvider;
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.PhotoProvider;
 import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
 import com.brainSocket.aswaq.dialogs.DiagRating;
@@ -31,12 +33,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-public class UserPageActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
+public class UserPageActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks,OnItemClickListener{
 	private Dialog dialogLoading;
 	private ImageView ivUser;
 	private TextViewCustomFont tvUserName;
@@ -87,6 +91,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 		tvFollow=(TextViewCustomFont)findViewById(R.id.tvFollow);
 		tvDesc=(TextViewCustomFont)findViewById(R.id.tvDesc);
 		lvAds=(ListView)findViewById(R.id.lvAds);
+		lvAds.setOnItemClickListener(this);
 		
 		AppUser me=DataStore.getInstance().getMe();
 		if(me!=null)
@@ -174,11 +179,13 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 			{
 				user=(AppUser)data.getValue("user");
 				List<AdvertiseModel> userAds=(List<AdvertiseModel>)data.getValue("userAds");
+				AdvertisesListAdapter adsAdapter=new AdvertisesListAdapter(getApplicationContext(), userAds);
+				lvAds.setAdapter(adsAdapter);
 				int followersCount=(Integer)data.getValue("followersCount");
 				isFollowedByMe=(Integer)data.getValue("isFollowedByMe");
 				tvFragTitle.setText(user.getName());
 				String photoPath=AswaqApp.getImagePath(ImageType.User, user.getPicture());
-				Picasso.with(getApplicationContext()).load(photoPath).into(ivUser);
+				PhotoProvider.getInstance().displayPhotoNormal(photoPath, ivUser);
 				tvUserName.setText(user.getName());
 				tvFollowers.setText(Integer.toString(followersCount));
 				if(user.getFacebookId().length()<=1)
@@ -397,6 +404,12 @@ protected void onResume() {
 		tvDesc.setText(me.getDescription());
 		setTitle(me.getName());
 	}
+}
+
+@Override
+public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	// TODO Auto-generated method stub
+	
 }
 
 }

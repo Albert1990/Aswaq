@@ -6,5 +6,6 @@ public enum FragmentType {
 	SubCategories,
 	ShowAds,
 	MyClients,
-	Favourites
+	Favourites,
+	About
 }

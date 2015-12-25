@@ -97,8 +97,6 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <include layout="@layout/row_phone_number" />
-
                 <com.brainSocket.aswaq.views.TextViewCustomFont
                     android:id="@+id/btnAddPhone"
                     android:layout_width="match_parent"
@@ -112,6 +110,8 @@
                     android:maxLines="1"
                     android:padding="8dp"
                     app:fontId="1" />
+                
+                <!-- <include layout="@layout/row_phone_number" />-->
             </LinearLayout>
 
             <LinearLayout

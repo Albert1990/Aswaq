@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/lbl_user_name"
+            android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
         <EditText
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/lbl_email"
+            android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
         <EditText
@@ -54,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/lbl_password"
+            android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
         <EditText
@@ -69,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/lbl_password_repeat"
+            android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
         <EditText
@@ -90,7 +94,7 @@
             android:padding="10dp"
             android:text="@string/login_btnRegister"
             android:textColor="@color/white"
-            android:textSize="@dimen/ts_text_normal"
+            android:textSize="@dimen/ts_text_big"
             app:fontId="1" />
     </LinearLayout>
 
