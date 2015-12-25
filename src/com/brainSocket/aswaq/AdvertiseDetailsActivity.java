@@ -62,6 +62,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 	private Activity currentActivity;
 	private boolean isFavourite = false;
 	private Spinner spnrPhone;
+	
 
 	// actionbar
 	private TextViewCustomFont tvFragTitle;
@@ -101,6 +102,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 			View btnFacebookShare = findViewById(R.id.btnFacebookShare);
 			btnFacebookShare.setOnClickListener(this);
 			spnrPhone = (Spinner) findViewById(R.id.spnrPhone);
+			findViewById(R.id.btnCall).setOnClickListener(this);
 
 			int selectedAdId = getIntent().getIntExtra("selectedAdId", 0);
 			showProgress(true);
@@ -174,20 +176,21 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 				String rate = Float.toString(ad.getUser().getRate());
 				tvUserRate.setText(rate);
 
-				TelephonesAdapter phonesAdapter = new TelephonesAdapter(
-						getApplicationContext(),
-						android.R.layout.simple_spinner_dropdown_item,
-						ad.getTelephones());
-				phonesAdapter
+//				TelephonesAdapter phonesAdapter = new TelephonesAdapter(
+//						getApplicationContext(),
+//						android.R.layout.simple_spinner_dropdown_item,
+//						ad.getTelephones());
+				ArrayAdapter<String> telsAdapter=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,ad.getTelephones());
+				telsAdapter
 						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				
-				List<String> tels=ad.getTelephones();
-				for(int i=0;i<tels.size();i++)
-				{
-					phonesAdapter.add(tels.get(i));
-				}
-				phonesAdapter.add("Hint to be displayed");
-				spnrPhone.setAdapter(phonesAdapter);
+//				List<String> tels=ad.getTelephones();
+//				for(int i=0;i<tels.size();i++)
+//				{
+//					phonesAdapter.add(tels.get(i));
+//				}
+//				phonesAdapter.add("Hint to be displayed");
+				spnrPhone.setAdapter(telsAdapter);
 			} else
 				showToast(getString(R.string.error_connection_error));
 		}
@@ -347,11 +350,12 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 		int viewId = v.getId();
 		Intent i = null;
 		switch (viewId) {
-		// case R.id.btnCall:
-		// i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-		// +ad.getUser().getPhoneNum()));
-		// startActivity(i);
-		// break;
+		 case R.id.btnCall:
+			 String selectedPhoneNumber=spnrPhone.getSelectedItem().toString();
+		 i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+		 +selectedPhoneNumber));
+		 startActivity(i);
+		 break;
 		case R.id.ivUser:
 			showUserPage();
 			break;
@@ -388,7 +392,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 		public TelephonesAdapter(Context context, int resource,
 				List<String> tels) {
-			super(context, resource);
+			super(context, resource,tels);
 			this.tels = tels;
 		}
 
