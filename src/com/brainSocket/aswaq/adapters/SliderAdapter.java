@@ -76,9 +76,16 @@ public class SliderAdapter extends PagerAdapter implements OnClickListener{
 	
 	private void previewSlideImage(String photoPath)
 	{
+		try
+		{
 		Intent i=new Intent(context,SliderPreviewerActivity.class);
 		i.putExtra("photoPath", photoPath);
 		context.startActivity(i);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 
 	@Override

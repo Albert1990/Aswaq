@@ -54,6 +54,7 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 	private int isFollowedByMe; 
 	private int userId;
 	private AppUser user;
+	private List<AdvertiseModel> userAds;
 	
 	////actionbar
 		private ImageView ivEditUserProfile;
@@ -171,14 +172,13 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			try
 			{
 				showProgress(false);
 			if(success)
 			{
 				user=(AppUser)data.getValue("user");
-				List<AdvertiseModel> userAds=(List<AdvertiseModel>)data.getValue("userAds");
+				userAds=(List<AdvertiseModel>)data.getValue("userAds");
 				AdvertisesListAdapter adsAdapter=new AdvertisesListAdapter(getApplicationContext(), userAds);
 				lvAds.setAdapter(adsAdapter);
 				int followersCount=(Integer)data.getValue("followersCount");
@@ -408,8 +408,15 @@ protected void onResume() {
 
 @Override
 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	// TODO Auto-generated method stub
-	
+	if(position==0)
+		position=1;
+	if(userAds!=null)
+	{
+	int adId=userAds.get(position).getId();
+	Intent i=new Intent(UserPageActivity.this, AdvertiseDetailsActivity.class);
+	i.putExtra("selectedAdId", adId);
+	startActivity(i);
+	}
 }
 
 }

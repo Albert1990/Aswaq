@@ -29,7 +29,7 @@
                 android:padding="6dp"
                 android:text="@string/details_payed"
                 android:textColor="@color/txt_dark"
-                android:textSize="@dimen/ts_text_small"
+                android:textSize="@dimen/ts_text_big"
                 app:fontId="1" />
 
             <android.support.v4.view.ViewPager

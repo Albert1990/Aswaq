@@ -109,6 +109,7 @@
                     android:lines="1"
                     android:maxLines="1"
                     android:padding="8dp"
+                    android:textSize="@dimen/ts_text_big"
                     app:fontId="1" />
                 
                 <!-- <include layout="@layout/row_phone_number" />-->

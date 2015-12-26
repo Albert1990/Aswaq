@@ -600,7 +600,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.uploadAdvertisePhotos(adId,
 						photos);

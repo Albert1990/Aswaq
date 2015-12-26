@@ -179,23 +179,23 @@ private void updateUserProfile()
 		cancel=true;
 	}
 	
-	if(!AswaqApp.isEmptyOrNull(mobileNumber))
-	{
-		String attemptingPhoneNum = txtMobileNumberRegister.getText().toString().replaceAll("\\s+","");
-		PhoneNumberCheckResult numValid = AswaqApp.validatePhoneNum(attemptingPhoneNum);
-		switch (numValid) {
-		case SHORT:
-			txtMobileNumberRegister.setError(getString(R.string.error_short_phone_num));
-			focusView = txtMobileNumberRegister;
-			cancel = true;
-			break;
-		case WRONG:
-			txtMobileNumberRegister.setError(getString(R.string.error_incorrect_phone_num));
-			focusView = txtMobileNumberRegister;
-			cancel = true;
-			break;
-		}
-	}
+//	if(!AswaqApp.isEmptyOrNull(mobileNumber))
+//	{
+//		String attemptingPhoneNum = txtMobileNumberRegister.getText().toString().replaceAll("\\s+","");
+//		PhoneNumberCheckResult numValid = AswaqApp.validatePhoneNum(attemptingPhoneNum);
+//		switch (numValid) {
+//		case SHORT:
+//			txtMobileNumberRegister.setError(getString(R.string.error_short_phone_num));
+//			focusView = txtMobileNumberRegister;
+//			cancel = true;
+//			break;
+//		case WRONG:
+//			txtMobileNumberRegister.setError(getString(R.string.error_incorrect_phone_num));
+//			focusView = txtMobileNumberRegister;
+//			cancel = true;
+//			break;
+//		}
+//	}
 	
 	
 	if(cancel)

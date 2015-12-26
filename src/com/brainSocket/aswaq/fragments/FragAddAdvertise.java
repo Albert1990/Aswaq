@@ -253,9 +253,16 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 					int adId=(Integer)data.getValue("adId");
 					DataStore.getInstance().attemptUploadAdPhotos(adId,imagesURI,adPhotosUploadCallback);
 				}
+				else
+				{
+					
+					homeCallback.showProgress(false);
+					homeCallback.showToast(getString(R.string.error_connection_error));
+				}
 			}
 			else
 			{
+				homeCallback.showProgress(false);
 				homeCallback.showToast(getString(R.string.error_connection_error));
 			}
 			
@@ -266,7 +273,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
+			homeCallback.showProgress(false);
 			if(success)
 			{
 			if(data.getFlag()==ServerAccess.ERROR_CODE_done)
@@ -274,12 +281,16 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 				homeCallback.loadFragment(FragmentType.Main,null);
 				homeCallback.showToast(getString(R.string.toast_ad_has_been_added));
 			}
+			else
+			{
+				homeCallback.showToast(getString(R.string.error_connection_error));
+			}
 			}
 			else
 			{
 				homeCallback.showToast(getString(R.string.error_connection_error));
 			}
-			homeCallback.showProgress(false);
+			
 		}
 	};
 	
@@ -479,12 +490,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			setProductNew(false);
 			break;
 		case R.id.btnAddPhone:
-			View phoneRowView=inflater.inflate(R.layout.row_phone_number, vPhoneNumbersContainer, false);
-			vPhoneNumbersContainer.addView(phoneRowView);
+			addPhoneNumberView(null);
 			break;
 		case R.id.btnDel:
 			int selectedPhoneNumberIndex=(Integer)v.getTag();
 			vPhoneNumbersContainer.removeViewAt(selectedPhoneNumberIndex+1); //+1 because of the btnAddNewPhoneNumber .
+			phoneNumberIndex--;
 			break;
 		}
 	}

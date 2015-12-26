@@ -121,6 +121,7 @@ public class FragMain extends Fragment implements OnClickListener,
 		vpSlider.setOnClickListener(this);
 		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
 		etSearch.setOnTouchListener(serchDrawableToutchLIstener);
+		
 
 		homeCallbacks.showProgress(true);
 		homeCallbacks.closeSlideDrawer();
