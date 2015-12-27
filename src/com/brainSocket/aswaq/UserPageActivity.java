@@ -27,6 +27,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts.Data;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Gravity;
@@ -82,40 +83,34 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 				return;
 			userId=me.getId();
 		}
-		ivUser=(ImageView)findViewById(R.id.ivUser);
-		tvUserName=(TextViewCustomFont)findViewById(R.id.tvUserName);
-		tvFollowers=(TextViewCustomFont)findViewById(R.id.tvFollowers);
-		btnFbPage=(ImageView)findViewById(R.id.btnFbPage);
-		btnFbPage.setOnClickListener(this);
-		tvUserRating=(TextViewCustomFont)findViewById(R.id.tvUserRating);
-		rbUserRate=(RatingBar)findViewById(R.id.rbUserRate);
-		tvFollow=(TextViewCustomFont)findViewById(R.id.tvFollow);
-		tvDesc=(TextViewCustomFont)findViewById(R.id.tvDesc);
-		lvAds=(ListView)findViewById(R.id.lvAds);
+		lvAds = (ListView) findViewById(R.id.lvAds);
+		View llheader = this.getLayoutInflater().inflate(R.layout.layout_user_page_header, lvAds, false);
+		ivUser = (ImageView) llheader.findViewById(R.id.ivUser);
+		tvUserName = (TextViewCustomFont) llheader.findViewById(R.id.tvUserName);
+		tvFollowers = (TextViewCustomFont) llheader.findViewById(R.id.tvFollowers);
+		btnFbPage = (ImageView) llheader.findViewById(R.id.btnFbPage);
+		tvUserRating = (TextViewCustomFont) llheader.findViewById(R.id.tvUserRating);
+		rbUserRate = (RatingBar) llheader.findViewById(R.id.rbUserRate);
+		tvFollow = (TextViewCustomFont) llheader.findViewById(R.id.tvFollow);
+		tvDesc = (TextViewCustomFont) llheader.findViewById(R.id.tvDesc);
+		
 		lvAds.setOnItemClickListener(this);
+		btnFbPage.setOnClickListener(this);
+		lvAds.addHeaderView(llheader, null, true);
 		
 		AppUser me=DataStore.getInstance().getMe();
-		if(me!=null)
-		{
-			if(userId==me.getId())
-			{
+		if(me!=null){
+			if(userId==me.getId()){
 				tvFollow.setVisibility(View.GONE);
 				
-			}
-			else
-			{
+			}else{
 				findViewById(R.id.llUserRating).setOnClickListener(this);
 				tvFollow.setOnClickListener(this);
 			}
-		}
-		else
-		{
+		}else{
 			findViewById(R.id.llUserRating).setOnClickListener(this);
 			tvFollow.setOnClickListener(this);
 		}
-		
-		View llheader=findViewById(R.id.llheader);
-		lvAds.addHeaderView(llheader, null, false);
 		DataStore.getInstance().attemptGetUserPage(userId,getUserPageCallback);
 	}
 	

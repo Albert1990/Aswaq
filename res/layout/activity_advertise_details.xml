@@ -59,7 +59,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
                 android:layout_weight="1"
                 android:background="@color/app_theme_light"
                 android:padding="6dp"
@@ -68,6 +67,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
                 android:layout_weight="1"
                 android:background="@color/app_theme_light"
@@ -88,8 +88,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    
-                    android:dropDownWidth="200dp"/>
+                    android:dropDownWidth="200dp" />
             </LinearLayout>
         </LinearLayout>
 
