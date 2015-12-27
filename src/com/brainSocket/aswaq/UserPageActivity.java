@@ -113,6 +113,9 @@ public class UserPageActivity extends AppBaseActivity implements OnClickListener
 			findViewById(R.id.llUserRating).setOnClickListener(this);
 			tvFollow.setOnClickListener(this);
 		}
+		
+		View llheader=findViewById(R.id.llheader);
+		lvAds.addHeaderView(llheader, null, false);
 		DataStore.getInstance().attemptGetUserPage(userId,getUserPageCallback);
 	}
 	

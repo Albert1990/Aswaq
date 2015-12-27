@@ -141,6 +141,7 @@ public class FragMain extends Fragment implements OnClickListener,
 		public void onDataReady(ServerResult data, boolean success) {
 			try {
 				homeCallbacks.showProgress(false);
+				vpSlider.requestFocus();
 				if (success) {
 					if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 						PageModel page = (PageModel) data.getValue("page");
