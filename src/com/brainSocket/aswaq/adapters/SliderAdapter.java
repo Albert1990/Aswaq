@@ -19,7 +19,7 @@ import com.brainSocket.aswaq.enums.ImageType;
 import com.brainSocket.aswaq.enums.SliderType;
 import com.brainSocket.aswaq.models.SlideModel;
 
-public class SliderAdapter extends PagerAdapter implements OnClickListener{
+public class SliderAdapter extends PagerAdapter implements OnClickListener {
 	private List<SlideModel> slides;
 	private Context context;
 	private LayoutInflater inflater;
@@ -41,8 +41,7 @@ public class SliderAdapter extends PagerAdapter implements OnClickListener{
 		try {
 			v = inflater.inflate(R.layout.item_slider, container, false);
 			ImageView imgSlider = (ImageView) v.findViewById(R.id.imgSlide);
-			
-			
+
 			ImageType imgType = ImageType.Slide;
 			if (sliderType == SliderType.Advertise)
 				imgType = ImageType.Ad;
@@ -73,28 +72,24 @@ public class SliderAdapter extends PagerAdapter implements OnClickListener{
 	public void destroyItem(ViewGroup container, int position, Object view) {
 		container.removeView((View) view);
 	}
-	
-	private void previewSlideImage(String photoPath)
-	{
-		try
-		{
-		Intent i=new Intent(context,SliderPreviewerActivity.class);
-		i.putExtra("photoPath", photoPath);
-		context.startActivity(i);
-		}
-		catch(Exception ex)
-		{
+
+	private void previewSlideImage(String photoPath) {
+		try {
+			Intent i = new Intent(context, SliderPreviewerActivity.class);
+			i.putExtra("photoPath", photoPath);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startActivity(i);
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		int viewId=v.getId();
-		switch(viewId)
-		{
+		int viewId = v.getId();
+		switch (viewId) {
 		case R.id.imgSlide:
-			String photoPath=v.getTag().toString();
+			String photoPath = v.getTag().toString();
 			previewSlideImage(photoPath);
 			break;
 		}

@@ -16,12 +16,12 @@ public class SliderPreviewerActivity extends Activity {
 		setContentView(R.layout.activity_slider_previewer);
 		init();
 	}
-	
-	private void init()
-	{
-		String photoPath=getIntent().getStringExtra("photoPath");
-		ImageView ivSlidePreview=(ImageView)findViewById(R.id.ivSlidePreview);
-		PhotoProvider.getInstance().displayPhotoNormal(photoPath, ivSlidePreview);
+
+	private void init() {
+		String photoPath = getIntent().getStringExtra("photoPath");
+		ImageView ivSlidePreview = (ImageView) findViewById(R.id.ivSlidePreview);
+		PhotoProvider.getInstance().displayPhotoNormal(photoPath,
+				ivSlidePreview);
 	}
 
 }

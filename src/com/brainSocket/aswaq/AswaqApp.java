@@ -15,130 +15,125 @@ import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.enums.ImageType;
 import com.brainSocket.aswaq.enums.PhoneNumberCheckResult;
 
-public class AswaqApp extends Application{
-	
-	private static Context AppContext ;
-	private static Activity currentAcivity ;
+public class AswaqApp extends Application {
+
+	private static Context AppContext;
+	private static Activity currentAcivity;
 	public static final String VERSIOIN_ID = "0.1";
-	public static final int SLIDER_TRANSITION_INTERVAL=3000;
-	public static final String DEFAULT_USER_IMAGE="default_user.png";
-	public static final String DEFAULT_Ad_IMAGE="logo_splash.png";
-	
-	
+	public static final int SLIDER_TRANSITION_INTERVAL = 3000;
+	public static final String DEFAULT_USER_IMAGE = "default_user.png";
+	public static final String DEFAULT_Ad_IMAGE = "logo_splash.png";
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		AppContext = this ;
-		DataStore.getInstance() ; // to make sure DataStore is initalized
+		AppContext = this;
+		DataStore.getInstance(); // to make sure DataStore is initalized
 	}
-	
+
 	public static Context getAppContext() {
 		return AppContext;
 	}
-	
+
 	/**
 	 * used by the GCM receiver to change context on receive if not set
+	 * 
 	 * @param appContext
 	 */
 	public static void setAppContext(Context appContext) {
-		//AppContext = appContext;
+		// AppContext = appContext;
 	}
+
 	public static void setCurrentAcivity(Activity currentAcivity) {
 		AswaqApp.currentAcivity = currentAcivity;
 	}
+
 	public static Activity getCurrentAcivity() {
 		return currentAcivity;
 	}
-	
-	public static boolean isEmailValid(final String email)
-	{
+
+	public static boolean isEmailValid(final String email) {
 		return true;
 	}
-	
-	public static boolean isEmptyOrNull(final String txt)
-	{
-		if(txt==null)
+
+	public static boolean isEmptyOrNull(final String txt) {
+		if (txt == null)
 			return true;
-		if(txt.equals(""))
+		if (txt.equals(""))
 			return true;
-		if(txt.length()==0)
+		if (txt.length() == 0)
 			return true;
 		return false;
 	}
-	
-	public static boolean checkMobileNumber(final String mobileNumber)
-	{
+
+	public static boolean checkMobileNumber(final String mobileNumber) {
 		return true;
 	}
-	
-	public static String getImagePath(ImageType imageType,String photo_path)
-	{
-		String url=null;
-		switch(imageType)
-		{
+
+	public static String getImagePath(ImageType imageType, String photo_path) {
+		String url = null;
+		switch (imageType) {
 		case Category:
-			url=ServerAccess.IMAGE_SERVICE_URL+"categories/";
+			url = ServerAccess.IMAGE_SERVICE_URL + "categories/";
 			break;
 		case Slide:
-			url=ServerAccess.IMAGE_SERVICE_URL+"slides/";
+			url = ServerAccess.IMAGE_SERVICE_URL + "slides/";
 			break;
 		case User:
-			if(photo_path.length()<=0)
-				photo_path=AswaqApp.DEFAULT_USER_IMAGE;
-			url=ServerAccess.IMAGE_SERVICE_URL+"users/";
+			if (photo_path.length() <= 0)
+				photo_path = AswaqApp.DEFAULT_USER_IMAGE;
+			url = ServerAccess.IMAGE_SERVICE_URL + "users/";
 			break;
 		case Ad:
-			if(photo_path==null)
-				photo_path=AswaqApp.DEFAULT_Ad_IMAGE;
-			url=ServerAccess.IMAGE_SERVICE_URL+"ads/";
+			if (photo_path == null)
+				photo_path = AswaqApp.DEFAULT_Ad_IMAGE;
+			url = ServerAccess.IMAGE_SERVICE_URL + "ads/";
 			break;
 		case AdThumb:
-			if(photo_path==null)
-				photo_path=AswaqApp.DEFAULT_Ad_IMAGE;
-			url=ServerAccess.IMAGE_SERVICE_URL+"ads/thumbs/";
+			if (photo_path == null)
+				photo_path = AswaqApp.DEFAULT_Ad_IMAGE;
+			url = ServerAccess.IMAGE_SERVICE_URL + "ads/thumbs/";
 			break;
 		}
-		return url+photo_path;
+		return url + photo_path;
 	}
-	
-	public static void resizeImage(Bitmap originalBitmap, String path)
-	{
-		try
-		{
+
+	public static void resizeImage(Bitmap originalBitmap, String path) {
+		try {
 			File imageFile = new File(path);
-			Bitmap bmScreenshot = Bitmap.createScaledBitmap(originalBitmap, 120, 120, false);
+			Bitmap bmScreenshot = Bitmap.createScaledBitmap(originalBitmap,
+					1024, 800, false);
 			OutputStream fOut = new FileOutputStream(imageFile);
 			bmScreenshot.compress(Bitmap.CompressFormat.JPEG, 90, fOut);
 			fOut.flush();
-			fOut.close();           
+			fOut.close();
 			bmScreenshot.recycle();
-		}
-		catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-    public static long getTimestampNow(){
-    	long res = 0;
-    	try {
-    		res = Calendar.getInstance().getTimeInMillis();
-    	}
-    	catch (Exception e) {}
-    	return res;
-    }
-    
-    public static PhoneNumberCheckResult validatePhoneNum(String num) {
-		if(num == null || "".equals(num.trim()))
-			return PhoneNumberCheckResult.EMPTY ;
-		
+	public static long getTimestampNow() {
+		long res = 0;
+		try {
+			res = Calendar.getInstance().getTimeInMillis();
+		} catch (Exception e) {
+		}
+		return res;
+	}
+
+	public static PhoneNumberCheckResult validatePhoneNum(String num) {
+		if (num == null || "".equals(num.trim()))
+			return PhoneNumberCheckResult.EMPTY;
+
 		PhoneNumberCheckResult result = PhoneNumberCheckResult.OK;
 		if (num.length() <= 8) {
 			result = PhoneNumberCheckResult.SHORT;
 		}
-		
-//		if(!(num.startsWith("00") || num.startsWith("+") ) )
-//			result = PhoneNumberCheckResult.WRONG;
-		
+
+		// if(!(num.startsWith("00") || num.startsWith("+") ) )
+		// result = PhoneNumberCheckResult.WRONG;
+
 		return result;
 	}
 }

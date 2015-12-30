@@ -1,9 +1,6 @@
 package com.brainSocket.aswaq;
 
 import java.util.HashMap;
-
-import android.app.Activity;
-
 import com.brainSocket.aswaq.enums.FragmentType;
 
 public interface HomeCallbacks {

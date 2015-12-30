@@ -1,7 +1,6 @@
 package com.brainSocket.aswaq;
 
 import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
 import com.brainSocket.aswaq.data.ServerResult;
@@ -27,196 +25,201 @@ import com.brainSocket.aswaq.models.AdvertiseModel;
 import com.brainSocket.aswaq.models.AppUser;
 import com.brainSocket.aswaq.views.SlidingTabLayout;
 
+public class SearchActivity extends AppBaseActivity implements OnClickListener {
 
+	LinearLayout llLoading;
+	TabsPagerAdapter tabsAdapter;
+	ViewPager tabView;
+	SlidingTabLayout tabs;
+	EditText etSearch;
+	View btnBack;
+	View vNoDataPlaceHolder;
+	TextView tvPlaceHolderMsg;
 
-public class SearchActivity extends AppBaseActivity implements OnClickListener{
+	String keyWord;
 
-    LinearLayout llLoading;
-    TabsPagerAdapter tabsAdapter ;
-    ViewPager tabView;
-    SlidingTabLayout tabs;
-    EditText etSearch;
-    View btnBack;
-    View vNoDataPlaceHolder;
-    TextView tvPlaceHolderMsg;
+	DataRequestCallback callbackSearch = new DataRequestCallback() {
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			showProgress(false);
+			if (success) {
+				ArrayList<AdvertiseModel> ads = (ArrayList) data
+						.getValue("ads");
+				ArrayList<AppUser> users = (ArrayList) data.getValue("users");
+				tabsAdapter.updateAdapter(ads, users);
+				tabs.setViewPager(tabView);
+				// tabView.setCurrentItem(tabsAdapter.getCount()-1); // select
+				// the last item cuz its an RTL app
+				vNoDataPlaceHolder.setVisibility(View.GONE);
+			} else {
+				// clear lists
+				// tabsAdapter.updateAdapter(null,null);
+				vNoDataPlaceHolder.setVisibility(View.VISIBLE);
+				tvPlaceHolderMsg.setText(R.string.error_connection_error);
+			}
+		}
+	};
 
-    String keyWord;
+	OnEditorActionListener callbackSearchQueryChange = new OnEditorActionListener() {
+		@Override
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
+					|| (actionId == EditorInfo.IME_ACTION_GO)) {
+				searachForKeyword(v.getText().toString());
+				return true;
+			}
+			return false;
+		}
+	};
 
-    DataRequestCallback callbackSearch = new DataRequestCallback() {
-        @Override
-        public void onDataReady(ServerResult data, boolean success) {
-            showProgress(false);
-            if(success){
-                ArrayList<AdvertiseModel> ads = (ArrayList) data.getValue("ads");
-                ArrayList<AppUser> users= (ArrayList) data.getValue("users");
-                tabsAdapter.updateAdapter(ads,users);
-                tabs.setViewPager(tabView);
-                //tabView.setCurrentItem(tabsAdapter.getCount()-1); // select the last item cuz its an RTL app
-                vNoDataPlaceHolder.setVisibility(View.GONE);
-            }else{
-                //clear lists
-                //tabsAdapter.updateAdapter(null,null);
-                vNoDataPlaceHolder.setVisibility(View.VISIBLE);
-                tvPlaceHolderMsg.setText(R.string.error_connection_error);
-            }
-        }
-    };
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_search);
 
-    OnEditorActionListener callbackSearchQueryChange =new OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event)  {
-            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_GO)) {
-                searachForKeyword(v.getText().toString());
-                return true;
-            }
-            return false;
-        }
-    };
+		try {
+			keyWord = getIntent().getExtras().getString("keyword");
+		} catch (Exception e) {
+		}
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        
-        try {
-        	keyWord = getIntent().getExtras().getString("keyword");
-		} catch (Exception e) {}
-        
-        init();
-        initCustomActionBar();
-        
-        if(keyWord != null && !keyWord.isEmpty())
-        	searachForKeyword(keyWord);
-    }
+		init();
+		initCustomActionBar();
 
-    private void initCustomActionBar() {
+		if (keyWord != null && !keyWord.isEmpty())
+			searachForKeyword(keyWord);
+	}
 
-        ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(this);
-        View mCustomView = mInflater.inflate(R.layout.layout_custom_actionbar_search, null);
-        mActionBar.setDisplayShowCustomEnabled(true);
-        mActionBar.setCustomView(mCustomView);
+	private void initCustomActionBar() {
 
-        btnBack = mCustomView.findViewById(R.id.btnBack);
-        etSearch = (EditText) mCustomView.findViewById(R.id.etSearch);
+		ActionBar mActionBar = getSupportActionBar();
+		mActionBar.setDisplayShowHomeEnabled(false);
+		mActionBar.setDisplayShowTitleEnabled(false);
+		LayoutInflater mInflater = LayoutInflater.from(this);
+		View mCustomView = mInflater.inflate(
+				R.layout.layout_custom_actionbar_search, null);
+		mActionBar.setDisplayShowCustomEnabled(true);
+		mActionBar.setCustomView(mCustomView);
 
-        etSearch.setOnEditorActionListener(callbackSearchQueryChange);
-        btnBack.setOnClickListener(this);
-        
-        if(keyWord != null)
-        	etSearch.setText(keyWord);
-    }
+		btnBack = mCustomView.findViewById(R.id.btnBack);
+		etSearch = (EditText) mCustomView.findViewById(R.id.etSearch);
 
-    private void init() {
-        llLoading = (LinearLayout) findViewById(R.id.llLoading);
-        tabView = (ViewPager) findViewById(R.id.viewPager);
-        tabs = (SlidingTabLayout) findViewById(R.id.slidingTabLayout);
-        vNoDataPlaceHolder = findViewById(R.id.vNoDataPlaceHolder);
-        tvPlaceHolderMsg = (TextView) findViewById(R.id.tvPlaceHolderMsg);
+		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
+		btnBack.setOnClickListener(this);
 
-        tabs.setDistributeEvenly(true);
-        int[] colors = {getResources().getColor(R.color.app_theme)};
-        tabs.setSelectedIndicatorColors(colors);
-        //tabs.setCustomTabView(R.layout.row_tab_view_title_small_gray, R.id.tvTitle);
+		if (keyWord != null)
+			etSearch.setText(keyWord);
+	}
 
-        tabsAdapter = new TabsPagerAdapter (getSupportFragmentManager());
-        tabView.setAdapter(tabsAdapter);
+	private void init() {
+		llLoading = (LinearLayout) findViewById(R.id.llLoading);
+		tabView = (ViewPager) findViewById(R.id.viewPager);
+		tabs = (SlidingTabLayout) findViewById(R.id.slidingTabLayout);
+		vNoDataPlaceHolder = findViewById(R.id.vNoDataPlaceHolder);
+		tvPlaceHolderMsg = (TextView) findViewById(R.id.tvPlaceHolderMsg);
 
-        // initial state
-        tabs.setVisibility(View.INVISIBLE);
-        vNoDataPlaceHolder.setVisibility(View.VISIBLE); /// used as a placeholder for now
-        showProgress(false);
-    }
+		tabs.setDistributeEvenly(true);
+		int[] colors = { getResources().getColor(R.color.app_theme) };
+		tabs.setSelectedIndicatorColors(colors);
+		// tabs.setCustomTabView(R.layout.row_tab_view_title_small_gray,
+		// R.id.tvTitle);
 
+		tabsAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+		tabView.setAdapter(tabsAdapter);
 
-    public void showProgress(boolean show) {
+		// initial state
+		tabs.setVisibility(View.INVISIBLE);
+		vNoDataPlaceHolder.setVisibility(View.VISIBLE); // / used as a
+														// placeholder for now
+		showProgress(false);
+	}
 
-        if (show) {
-            llLoading.setVisibility(View.VISIBLE);
-        } else {
-            llLoading.setVisibility(View.GONE);
-        }
-    }
+	public void showProgress(boolean show) {
 
-    private void searachForKeyword(String keyword){
-        DataStore.getInstance().attemptSearchFor(keyword,callbackSearch);
-        showProgress(true);
-        vNoDataPlaceHolder.setVisibility(View.GONE);
-    }
+		if (show) {
+			llLoading.setVisibility(View.VISIBLE);
+		} else {
+			llLoading.setVisibility(View.GONE);
+		}
+	}
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.btnBack:
-                finish();
-            break;
-        }
-    }
+	private void searachForKeyword(String keyword) {
+		DataStore.getInstance().attemptSearchFor(keyword, callbackSearch);
+		showProgress(true);
+		vNoDataPlaceHolder.setVisibility(View.GONE);
+	}
 
-    public class TabsPagerAdapter extends FragmentPagerAdapter {
+	@Override
+	public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
+		case R.id.btnBack:
+			finish();
+			break;
+		}
+	}
 
-        FragAdsList fragAds;
-        FragUsersList fragPeople;
+	public class TabsPagerAdapter extends FragmentPagerAdapter {
 
-        public TabsPagerAdapter(android.support.v4.app.FragmentManager fm) {
-            super(fm);
-        }
+		FragAdsList fragAds;
+		FragUsersList fragPeople;
 
-        
-        public void updateAdapter( ArrayList<AdvertiseModel> apps, ArrayList<AppUser> users){
-            if(fragAds == null)
-                fragAds = FragAdsList.newInstance(apps);
-            else
-                fragAds.updateData(apps);
+		public TabsPagerAdapter(android.support.v4.app.FragmentManager fm) {
+			super(fm);
+		}
 
-            if(fragPeople == null)
-                fragPeople = FragUsersList.newInstance(users, FRAG_USERS_TYPE.SEARCH_RESULTS);
-            else
-                fragPeople.updateData(users);
+		public void updateAdapter(ArrayList<AdvertiseModel> apps,
+				ArrayList<AppUser> users) {
+			if (fragAds == null)
+				fragAds = FragAdsList.newInstance(apps);
+			else
+				fragAds.updateData(apps);
 
-            tabs.setVisibility(View.VISIBLE);
-            notifyDataSetChanged();
-        }
+			if (fragPeople == null)
+				fragPeople = FragUsersList.newInstance(users,
+						FRAG_USERS_TYPE.SEARCH_RESULTS);
+			else
+				fragPeople.updateData(users);
 
-        @Override
-        public Fragment getItem(int index) {
-            switch (index) {
-                case 0:
-                    return fragAds;
-                case 1:
-                	return fragPeople;
-                    
-            }
-            return null;
-        }
+			tabs.setVisibility(View.VISIBLE);
+			notifyDataSetChanged();
+		}
 
-        @Override
-        public int getCount() {
-            if(fragAds !=null)
-                return 2;
-            else
-               return 0;
-        }
+		@Override
+		public Fragment getItem(int index) {
+			switch (index) {
+			case 0:
+				return fragAds;
+			case 1:
+				return fragPeople;
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            String title = "";
-            try {
-                switch (position) {
-                    case 0:
-                        title = getString(R.string.search_tab_title_ads);
-                        break;
-                    case 1:
-                        title = getString(R.string.search_tab_title_users);
-                        break;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return title;
-        }
-    }
+			}
+			return null;
+		}
+
+		@Override
+		public int getCount() {
+			if (fragAds != null)
+				return 2;
+			else
+				return 0;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			String title = "";
+			try {
+				switch (position) {
+				case 0:
+					title = getString(R.string.search_tab_title_ads);
+					break;
+				case 1:
+					title = getString(R.string.search_tab_title_users);
+					break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return title;
+		}
+	}
 }

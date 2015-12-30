@@ -426,8 +426,8 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		            	filePath = new File(filePath).getAbsolutePath(); // make sure we have a valid absolute path
 			            Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
 			            int imageIndex = (Integer) selectedImageView.getTag();
-						imagesURI[imageIndex] = filePath;
 			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath());
+			            imagesURI[imageIndex] = getNewTempImgFile(true).getAbsolutePath();
 			            selectedImageView.setImageBitmap(yourSelectedImage);
 		            }
 	            }

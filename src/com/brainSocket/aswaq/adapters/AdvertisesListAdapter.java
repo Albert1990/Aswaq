@@ -71,10 +71,11 @@ public class AdvertisesListAdapter extends BaseAdapter {
 					viewHolder.ivProduct);
 			viewHolder.rbUserRate.setRating(ads.get(position).getUser()
 					.getRate());
-		//	LayerDrawable stars= (LayerDrawable)viewHolder.rbUserRate.getProgressDrawable();
-			
-//			int userRate=(Integer)ads.get(position).getUser().getRate();
-//					stars.getDrawable((Integer)ads.get(position).getUser().getRate()).setColorFilter(Color.YELLOW,Mode.SRC_ATOP);
+			// LayerDrawable stars=
+			// (LayerDrawable)viewHolder.rbUserRate.getProgressDrawable();
+
+			// int userRate=(Integer)ads.get(position).getUser().getRate();
+			// stars.getDrawable((Integer)ads.get(position).getUser().getRate()).setColorFilter(Color.YELLOW,Mode.SRC_ATOP);
 			viewHolder.tvUserName
 					.setText(ads.get(position).getUser().getName());
 			viewHolder.tvAdvertiseDescription.setText(ads.get(position)
@@ -97,13 +98,10 @@ public class AdvertisesListAdapter extends BaseAdapter {
 		TextViewCustomFont tvAdvertiseDescription;
 		TextViewCustomFont tvPrice;
 		TextViewCustomFont tvPaid;
-		
-		public void bindViews(View convertView)
-		{
-			ivProduct = (ImageView) convertView
-					.findViewById(R.id.ivProd);
-			rbUserRate = (RatingBar) convertView
-					.findViewById(R.id.rbUserRate);
+
+		public void bindViews(View convertView) {
+			ivProduct = (ImageView) convertView.findViewById(R.id.ivProd);
+			rbUserRate = (RatingBar) convertView.findViewById(R.id.rbUserRate);
 			tvUserName = (TextViewCustomFont) convertView
 					.findViewById(R.id.tvUserName);
 			tvAdvertiseDescription = (TextViewCustomFont) convertView

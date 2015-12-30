@@ -9,6 +9,7 @@ import com.brainSocket.aswaq.HomeCallbacks;
 import com.brainSocket.aswaq.MainActivity;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.aswaq.adapters.AdvertisesListAdapter;
+import com.brainSocket.aswaq.adapters.CirclePageIndicator;
 import com.brainSocket.aswaq.adapters.SliderAdapter;
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
@@ -41,6 +42,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 	private int currentSlide=0;
 	private Handler sliderHandler=null;
 	private View vNoDataPlaceHolder;
+	private CirclePageIndicator circleIndicator;
 	
 	private FragAds()
 	{
@@ -68,13 +70,16 @@ public class FragAds extends Fragment implements OnItemClickListener{
 			lstAds.setOnItemClickListener(this);
 			vNoDataPlaceHolder=getView().findViewById(R.id.vNoDataPlaceHolder);
 			
-			vpSliderAds = (ViewPager) getActivity().getLayoutInflater().inflate(R.layout.layout_slider, lstAds, false);
-
-			lstAds.addHeaderView(vpSliderAds, null, true);
+			View sliderHeader=getActivity().getLayoutInflater().inflate(R.layout.layout_slider, lstAds, false);
+			
+			vpSliderAds = (ViewPager) sliderHeader.findViewById(R.id.vpSliderAds);
+			circleIndicator=(CirclePageIndicator)sliderHeader.findViewById(R.id.titles);
+			lstAds.addHeaderView(sliderHeader, null, true);
 			
 			homeCallbacks.showProgress(true);
 			String selectedSubCategoryName=getArguments().getString("selectedSubCategoryName");
 			homeCallbacks.setTitle(selectedSubCategoryName);
+			
 			DataStore.getInstance().attemptGetCategoryAds(getArguments().getInt("selectedSubCategoryId"), getCategoryAdsCallback);
 		}
 		catch(Exception ex)
@@ -99,16 +104,17 @@ public class FragAds extends Fragment implements OnItemClickListener{
 				}
 				
 				slides=(List<SlideModel>)data.getValue("slides");
+				SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides,SliderType.Banner);
+				vpSliderAds.setAdapter(sliderAdapter);
+				circleIndicator.setViewPager(vpSliderAds);
 				if(slides.size() > 1)
 				{
-					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides,SliderType.Banner);
-					vpSliderAds.setAdapter(sliderAdapter);
 					try
 					{
 						sliderHandler.removeCallbacks(SliderTransition);
 					}catch(Exception ex){ex.printStackTrace();}
 					sliderHandler.postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);
-				}
+				}				
 				
 			}
 			else

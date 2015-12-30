@@ -12,6 +12,12 @@
         android:id="@+id/vpSliderMain"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_slider_height" />
+    
+    <com.brainSocket.aswaq.adapters.CirclePageIndicator
+	android:id="@+id/titles"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent" 
+	android:layout_marginTop="200dp"/>
 
     <View
         android:id="@+id/vSep"

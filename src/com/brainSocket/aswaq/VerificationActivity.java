@@ -68,7 +68,6 @@ public class VerificationActivity extends AppBaseActivity implements
 
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
@@ -85,13 +84,13 @@ public class VerificationActivity extends AppBaseActivity implements
 
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					Intent i = new Intent(VerificationActivity.this,
 							MainActivity.class);
 					startActivity(i);
+					finish();
 				} else if (data.getFlag() == ServerAccess.ERROR_CODE_wrong_verification_code) {
 					txtVerificationCode
 							.setError(getString(R.string.verif_error_verification_message_wrong));
@@ -123,7 +122,6 @@ public class VerificationActivity extends AppBaseActivity implements
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		int viewId = v.getId();
 		switch (viewId) {
 		case R.id.btnVerifyCode:
@@ -138,7 +136,6 @@ public class VerificationActivity extends AppBaseActivity implements
 
 	@Override
 	public void showProgress(boolean show) {
-		// TODO Auto-generated method stub
 		if (dialogLoading == null) {
 			dialogLoading = new Dialog(this);
 			dialogLoading.setCancelable(false);
@@ -155,14 +152,12 @@ public class VerificationActivity extends AppBaseActivity implements
 
 	@Override
 	public void showToast(String msg) {
-		// TODO Auto-generated method stub
 		Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT)
 				.show();
 	}
 
 	@Override
 	public void setTitle(String title) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -173,7 +168,6 @@ public class VerificationActivity extends AppBaseActivity implements
 
 	@Override
 	public void openSlideDrawer() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -183,7 +177,6 @@ public class VerificationActivity extends AppBaseActivity implements
 
 	@Override
 	public void backToHome() {
-		// TODO Auto-generated method stub
 
 	}
 

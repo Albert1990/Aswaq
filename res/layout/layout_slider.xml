@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    <android.support.v4.view.ViewPager
     android:id="@+id/vpSliderAds"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/main_slider_height"
-    android:layout_marginTop="@dimen/actionbar_height" />
+    android:layout_height="@dimen/main_slider_height" />
+    
+    <com.brainSocket.aswaq.adapters.CirclePageIndicator
+	android:id="@+id/titles"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent" 
+	android:layout_marginTop="200dp"/>
+    
+</RelativeLayout>
+

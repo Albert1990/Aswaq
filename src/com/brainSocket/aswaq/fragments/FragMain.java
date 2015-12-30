@@ -30,6 +30,7 @@ import com.brainSocket.aswaq.LoginActivity;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.aswaq.SearchActivity;
 import com.brainSocket.aswaq.VerificationActivity;
+import com.brainSocket.aswaq.adapters.CirclePageIndicator;
 import com.brainSocket.aswaq.adapters.MainCategoriesListAdapter;
 import com.brainSocket.aswaq.adapters.SliderAdapter;
 import com.brainSocket.aswaq.data.DataCacheProvider;
@@ -57,6 +58,7 @@ public class FragMain extends Fragment implements OnClickListener,
 	private int currentSlide = 0;
 	private Dialog dialogLoading;
 	private Handler sliderHandler = null;
+	private CirclePageIndicator circleIndicator;
 
 	private FragMain() {
 		sliderHandler = new Handler();
@@ -112,8 +114,7 @@ public class FragMain extends Fragment implements OnClickListener,
 				R.id.gridViewCategories);
 		etSearch = (EditText) getView().findViewById(R.id.etSearch);
 		gridViewCategories.setOnItemClickListener(this);
-		DataStore.getInstance().attemptGetPageComponents(
-				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
+		
 		btnAddAdvertise = (FloatingActionButton) getView().findViewById(
 				R.id.btnAddAdvertise);
 		btnAddAdvertise.setOnClickListener(this);
@@ -124,9 +125,12 @@ public class FragMain extends Fragment implements OnClickListener,
 		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
 		etSearch.setOnTouchListener(serchDrawableToutchLIstener);
 		btnAddAdvertise.requestFocus();
+		circleIndicator=(CirclePageIndicator)getView().findViewById(R.id.titles);
 
 		homeCallbacks.showProgress(true);
 		homeCallbacks.closeSlideDrawer();
+		DataStore.getInstance().attemptGetPageComponents(
+				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
 	}
 
 	private void search() {
@@ -159,6 +163,7 @@ public class FragMain extends Fragment implements OnClickListener,
 						SliderAdapter sliderAdapter = new SliderAdapter(
 								getActivity(), slides, SliderType.Banner);
 						vpSlider.setAdapter(sliderAdapter);
+						circleIndicator.setViewPager(vpSlider);
 						if (slides.size() > 1) {
 							new Handler().postDelayed(SliderTransition,
 									AswaqApp.SLIDER_TRANSITION_INTERVAL);

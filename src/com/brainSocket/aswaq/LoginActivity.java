@@ -2,8 +2,6 @@ package com.brainSocket.aswaq;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.brainSocket.aswaq.data.DataCacheProvider;
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
 import com.brainSocket.aswaq.data.FacebookProvider;
@@ -11,15 +9,8 @@ import com.brainSocket.aswaq.data.FacebookProviderListener;
 import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
 import com.brainSocket.aswaq.enums.FragmentType;
-import com.brainSocket.aswaq.fragments.FragAddAdvertise;
-import com.brainSocket.aswaq.fragments.FragAds;
-import com.brainSocket.aswaq.fragments.FragMain;
-import com.brainSocket.aswaq.fragments.FragSubCategories;
 import com.brainSocket.aswaq.models.AppUser;
 import com.brainSocket.aswaq.views.TextViewCustomFont;
-import com.facebook.Profile;
-
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -27,11 +18,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends AppBaseActivity implements OnClickListener,HomeCallbacks{
+public class LoginActivity extends AppBaseActivity implements OnClickListener,
+		HomeCallbacks {
 	private EditText txtEmail;
 	private EditText txtPassword;
 	private TextViewCustomFont btnLogin;
@@ -46,7 +37,7 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 		setContentView(R.layout.activity_login);
 		initComponents();
 		AswaqApp.setAppContext(getApplicationContext());
-		
+
 	}
 
 	private void initComponents() {
@@ -54,7 +45,7 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 		txtPassword = (EditText) findViewById(R.id.txtPassword);
 		btnLogin = (TextViewCustomFont) findViewById(R.id.btnLogin);
 		btnDoesntHaveAccount = (TextViewCustomFont) findViewById(R.id.btnDoesntHaveAccount);
-		btnLoginFB=(TextViewCustomFont)findViewById(R.id.btnLoginFB);
+		btnLoginFB = (TextViewCustomFont) findViewById(R.id.btnLoginFB);
 		btnLogin.setOnClickListener(this);
 		btnDoesntHaveAccount.setOnClickListener(this);
 		btnLoginFB.setOnClickListener(this);
@@ -80,12 +71,14 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 			}
 		}
 		if (AswaqApp.isEmptyOrNull(password)) {
-			txtPassword.setError(getString(R.string.login_error_password_empty));
+			txtPassword
+					.setError(getString(R.string.login_error_password_empty));
 			cancel = true;
 			focusView = txtPassword;
 		} else {
 			if (password.length() < 4) {
-				txtPassword.setError(getString(R.string.login_error_password_length));
+				txtPassword
+						.setError(getString(R.string.login_error_password_length));
 				cancel = true;
 				focusView = txtPassword;
 			}
@@ -107,19 +100,16 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 			showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
-					AppUser me=DataStore.getInstance().getMe();
-					Intent i=null;
-					if(me.isVerified())
-					{
-					i = new Intent(LoginActivity.this,
-							MainActivity.class);
-					}
-					else
-					{
+					AppUser me = DataStore.getInstance().getMe();
+					Intent i = null;
+					if (me.isVerified()) {
+						i = new Intent(LoginActivity.this, MainActivity.class);
+					} else {
 						i = new Intent(LoginActivity.this,
 								VerificationActivity.class);
 					}
 					startActivity(i);
+					finish();
 				} else if (data.getFlag() == ServerAccess.ERROR_CODE_user_not_exists) {
 					txtEmail.setError(getString(R.string.login_error_email_or_password_wrong));
 					txtEmail.requestFocus();
@@ -129,93 +119,86 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,Ho
 			}
 		}
 	};
-	
 
-	
-FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
-		
+	FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
+
 		@Override
-		public void onFacebookSessionOpened(String accessToken, String userId, HashMap<String, Object> map) {
+		public void onFacebookSessionOpened(String accessToken, String userId,
+				HashMap<String, Object> map) {
 			showProgress(false);
-		  String email = (String) map.get("email");
-		  String name = (String) map.get("name");
-		  String password="5982";
-		  String facebookAccessToken="";
-		  DataStore.getInstance().attemptSignUp(email, name,
-					 password, userId, accessToken,
-					registerCallback);
-		  
-		  //linkWithFB = true ;
-		  FacebookProvider.getInstance().unregisterListener();
+			String email = (String) map.get("email");
+			String name = (String) map.get("name");
+			String password = "5982";
+			DataStore.getInstance().attemptSignUp(email, name, password,
+					userId, accessToken, registerCallback);
+
+			// linkWithFB = true ;
+			FacebookProvider.getInstance().unregisterListener();
 		}
-		
+
 		@Override
 		public void onFacebookSessionClosed() {
 			showProgress(false);
 			showToast(getString(R.string.error_facebook_permissions_rejected));
 		}
-		
+
 		@Override
 		public void onFacebookException(Exception exception) {
 			showProgress(false);
 			showToast(getString(R.string.error_facebook_exception));
 		}
 	};
-	
+
 	/**
-	 * try login first using facebook if success then singning up to the API Server using the 
-	 * facebook Id and phone number entered in the previous stage 
+	 * try login first using facebook if success then singning up to the API
+	 * Server using the facebook Id and phone number entered in the previous
+	 * stage
 	 */
 	public void attempFBtLogin() {
-		ArrayList<String> perm1=new ArrayList<String>();
+		ArrayList<String> perm1 = new ArrayList<String>();
 		perm1.add("public_profile");
-		//perm1.add("user_friends");
+		// perm1.add("user_friends");
 		perm1.add("email");
-		
-		//Session.openActiveSession(this, true, permissions, callback)
+
+		// Session.openActiveSession(this, true, permissions, callback)
 		FacebookProvider.getInstance().registerListener(facebookLoginListner);
 		FacebookProvider.getInstance().requestFacebookLogin(this);
-		
-		
-		//Session.StatusCallback callback =  new LoginStatsCallback() ;
-		//Session.openActiveSession(LoginActivity.this, true, perm1, callback ) ;
+
+		// Session.StatusCallback callback = new LoginStatsCallback() ;
+		// Session.openActiveSession(LoginActivity.this, true, perm1, callback )
+		// ;
 		showProgress(true);
 	}
-	
+
 	private DataRequestCallback registerCallback = new DataRequestCallback() {
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			if (success) {
 				switch (data.getFlag()) {
 				case ServerAccess.ERROR_CODE_done:
-					AppUser me=DataStore.getInstance().getMe();
-					Intent i=null;
-					if(me.isVerified())
-					{
+					AppUser me = DataStore.getInstance().getMe();
+					Intent i = null;
+					if (me.isVerified()) {
+						i = new Intent(LoginActivity.this, MainActivity.class);
+					} else {
 						i = new Intent(LoginActivity.this,
-							MainActivity.class);
+								VerificationActivity.class);
 					}
-					else
-					{
-						i=new Intent(LoginActivity.this,VerificationActivity.class);
-					}
-						
+
 					startActivity(i);
+					finish();
 					break;
 				case ServerAccess.ERROR_CODE_user_exists_before:
 					showToast(getString(R.string.login_error_user_exists_before));
 					break;
 				}
-			}
-			else
-			{
+			} else {
 				showToast(getString(R.string.error_connection_error));
 			}
 			showProgress(false);
 		}
 	};
-	
+
 	@Override
 	public void onClick(View v) {
 		try {
@@ -228,6 +211,7 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 				Intent registerActivityIntent = new Intent(LoginActivity.this,
 						RegisterActivity.class);
 				startActivity(registerActivityIntent);
+				finish();
 				break;
 			case R.id.btnLoginFB:
 				attempFBtLogin();
@@ -239,18 +223,18 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 
 		}
 	}
-	
+
 	@Override
 	public void showProgress(boolean show) {
-		if(dialogLoading==null)
-		{
+		if (dialogLoading == null) {
 			dialogLoading = new Dialog(this);
 			dialogLoading.setCancelable(false);
 			dialogLoading.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			dialogLoading.setContentView(R.layout.dialog_custom_loading);
-			dialogLoading.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+			dialogLoading.getWindow().setBackgroundDrawable(
+					new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		}
-		if(show)
+		if (show)
 			dialogLoading.show();
 		else
 			dialogLoading.dismiss();
@@ -258,37 +242,33 @@ FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
 
 	@Override
 	public void showToast(String msg) {
-		// TODO Auto-generated method stub
-		Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT).show();
+		Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT)
+				.show();
 	}
 
 	@Override
 	public void setTitle(String title) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void loadFragment(FragmentType fragmentType,HashMap<String, Object> params) {
-		// TODO Auto-generated method stub
-		
+	public void loadFragment(FragmentType fragmentType,
+			HashMap<String, Object> params) {
+
 	}
 
 	@Override
 	public void openSlideDrawer() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void closeSlideDrawer() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void backToHome() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

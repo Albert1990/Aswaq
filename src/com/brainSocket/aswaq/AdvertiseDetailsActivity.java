@@ -2,7 +2,6 @@ package com.brainSocket.aswaq;
 
 import java.util.HashMap;
 import java.util.List;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -25,17 +24,14 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.brainSocket.aswaq.adapters.CirclePageIndicator;
 import com.brainSocket.aswaq.adapters.SliderAdapter;
-import com.brainSocket.aswaq.data.DataCacheProvider;
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
 import com.brainSocket.aswaq.data.FacebookProvider;
 import com.brainSocket.aswaq.data.PhotoProvider;
 import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
-import com.brainSocket.aswaq.data.FacebookProvider.STORY_TYPE;
-import com.brainSocket.aswaq.dialogs.DiagRating;
 import com.brainSocket.aswaq.enums.FragmentType;
 import com.brainSocket.aswaq.enums.ImageType;
 import com.brainSocket.aswaq.enums.SliderType;
@@ -64,9 +60,9 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 	private boolean isFavourite = false;
 	private Spinner spnrPhone;
 	private TextViewCustomFont tvIsUsed;
+	private CirclePageIndicator circleIndicator;
 	private Handler sliderHandler = null;
 	private int currentSlide = 0;
-	
 
 	// actionbar
 	private TextViewCustomFont tvFragTitle;
@@ -85,7 +81,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 	private void init() {
 		try {
-			sliderHandler=new Handler();
+			sliderHandler = new Handler();
 			tvPaid = (TextViewCustomFont) findViewById(R.id.tvPaid);
 			vpSlider = (ViewPager) findViewById(R.id.vpSlider);
 			btnFbPage = (ImageView) findViewById(R.id.btnFbPage);
@@ -107,7 +103,8 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 			btnFacebookShare.setOnClickListener(this);
 			spnrPhone = (Spinner) findViewById(R.id.spnrPhone);
 			findViewById(R.id.btnCall).setOnClickListener(this);
-			tvIsUsed=(TextViewCustomFont)findViewById(R.id.tvIsUsed);
+			tvIsUsed = (TextViewCustomFont) findViewById(R.id.tvIsUsed);
+			circleIndicator = (CirclePageIndicator) findViewById(R.id.titles);
 
 			int selectedAdId = getIntent().getIntExtra("selectedAdId", 0);
 			showProgress(true);
@@ -177,33 +174,32 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 						getApplicationContext(), ad.getImages(),
 						SliderType.Advertise);
 				vpSlider.setAdapter(adapter);
-				
-				if(ad.getImages().size()>1)
-				{
+				circleIndicator.setViewPager(vpSlider);
+
+				if (ad.getImages().size() > 1) {
 					new Handler().postDelayed(SliderTransition,
 							AswaqApp.SLIDER_TRANSITION_INTERVAL);
 				}
 
 				String rate = Float.toString(ad.getUser().getRate());
 				tvUserRate.setText(rate);
-				ArrayAdapter<String> telsAdapter=new ArrayAdapter<String>(getApplicationContext(), R.layout.item_spinner_phone,ad.getTelephones());
+				ArrayAdapter<String> telsAdapter = new ArrayAdapter<String>(
+						getApplicationContext(), R.layout.item_spinner_phone,
+						ad.getTelephones());
 				telsAdapter
-						.setDropDownViewResource(R.layout.item_spinner_phone);//android.R.layout.simple_spinner_dropdown_item
+						.setDropDownViewResource(R.layout.item_spinner_phone);// android.R.layout.simple_spinner_dropdown_item
 				spnrPhone.setAdapter(telsAdapter);
-				
-				if(ad.isUsed()==1)
-				{
+
+				if (ad.isUsed() == 1) {
 					tvIsUsed.setText(getString(R.string.advertise_details_lbl_used));
-				}
-				else
-				{
+				} else {
 					tvIsUsed.setText(getString(R.string.advertise_details_lbl_new));
 				}
 			} else
 				showToast(getString(R.string.error_connection_error));
 		}
 	};
-	
+
 	private Runnable SliderTransition = new Runnable() {
 
 		@Override
@@ -373,12 +369,12 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 		int viewId = v.getId();
 		Intent i = null;
 		switch (viewId) {
-		 case R.id.btnCall:
-			 String selectedPhoneNumber=spnrPhone.getSelectedItem().toString();
-		 i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-		 +selectedPhoneNumber));
-		 startActivity(i);
-		 break;
+		case R.id.btnCall:
+			String selectedPhoneNumber = spnrPhone.getSelectedItem().toString();
+			i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+					+ selectedPhoneNumber));
+			startActivity(i);
+			break;
 		case R.id.ivUser:
 			showUserPage();
 			break;
@@ -389,7 +385,8 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 			handleFavouriteRequest();
 			break;
 		case R.id.btnFbPage:
-			Uri uri = Uri.parse(ad.getFacebookPage()); // missing 'http://' will cause crashed
+			Uri uri = Uri.parse(ad.getFacebookPage()); // missing 'http://' will
+														// cause crashed
 			i = new Intent(Intent.ACTION_VIEW, uri);
 			startActivity(i);
 			break;
@@ -412,7 +409,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 		public TelephonesAdapter(Context context, int resource,
 				List<String> tels) {
-			super(context, resource,tels);
+			super(context, resource, tels);
 			this.tels = tels;
 		}
 
@@ -438,7 +435,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 		}
 
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
