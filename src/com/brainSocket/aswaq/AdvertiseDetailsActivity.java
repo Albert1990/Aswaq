@@ -156,7 +156,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 				if (isFavourite)
 					ivFav.setBackgroundResource(R.drawable.ic_star_active);
 
-				if (AswaqApp.isEmptyOrNull(ad.getFacebookPage())) {
+				if (ad.getFacebookPage().length()<2) {
 					btnFbPage.setVisibility(View.GONE);
 				}
 
