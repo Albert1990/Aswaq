@@ -54,7 +54,7 @@
     <string name="add_ad_new">جديد</string>
     <string name="add_ad_used">مستعمل</string>
     <string name="add_ad_add_ur_fb_page">اضافة صفحتك على الفيسبوك</string>
-    <string name="add_ad_send">ارسال</string>
+    <string name="add_ad_send">إضافة الإعلان</string>
     <string name="error_description_required">مطلوب شرح عن المنتج</string>
     <string name="error_price_required">السعر مطلوب</string>
     <string name="error_phone_required">رقم الهاتف مطلوب</string>
@@ -128,5 +128,11 @@
     <!-- about -->
     <string name="frag_about_number">099999998</string>
     <string name="frag_about_fb_page">/aswaq-app</string>
+    <string name="user_page_activity_lbl_follower">متابع</string>
+    <string name="advertise_details_lbl_used">مستعمل</string>
+    <string name="advertise_details_lbl_new">جديد</string>
+    <string name="diag_facebook_page_lbl_link">ضع رابط صفحتك على فيس بوك</string>
+    <string name="diag_facebook_page_ok">موافق</string>
+    <string name="facebook_page_link_prefix">https://www.facebook.com/</string>
     
 </resources>

@@ -427,7 +427,8 @@ public class ServerAccess {
 	}
 
 	public ServerResult addNewAdvertise(String description, String address,
-			int categoryId, boolean isUsed, int price, JSONArray telephones) {
+			int categoryId, int isUsed, int price, JSONArray telephones,
+			String facebookPageLink) {
 		ServerResult result = new ServerResult();
 		try {
 			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
@@ -438,10 +439,11 @@ public class ServerAccess {
 					.toString(categoryId)));
 			jsonPairs.add(new BasicNameValuePair("price", Integer
 					.toString(price)));
-			jsonPairs.add(new BasicNameValuePair("is_used", Boolean
+			jsonPairs.add(new BasicNameValuePair("is_used", Integer
 					.toString(isUsed)));
 			jsonPairs.add(new BasicNameValuePair("telephones", telephones
 					.toString()));
+			jsonPairs.add(new BasicNameValuePair("facebook_page", facebookPageLink));
 			jsonPairs.add(new BasicNameValuePair("access_token",
 					DataStore.getInstance().getAccessToken()));
 			jsonPairs.add(new BasicNameValuePair("pay_type", "1"));

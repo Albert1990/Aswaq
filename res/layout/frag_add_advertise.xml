@@ -163,8 +163,7 @@
             android:maxLines="6"
             app:fontId="1" />
 
-        <!--
-         <com.brainSocket.views.TextViewCustomFont
+         <com.brainSocket.aswaq.views.TextViewCustomFont
         android:id="@+id/btnAddYourPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -175,10 +174,10 @@
         android:gravity="center"
         android:text="@string/add_ad_add_ur_fb_page"
         android:padding="10dp"
+        android:layout_marginBottom="20dp"
         android:textColor="@color/white"
         android:textSize="@dimen/ts_text_normal"
         app:fontId="1" />
-        -->
 
         <FrameLayout
             android:layout_width="match_parent"

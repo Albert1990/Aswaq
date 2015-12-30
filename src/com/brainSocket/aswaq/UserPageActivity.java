@@ -185,7 +185,8 @@ private DataRequestCallback getUserPageCallback=new DataRequestCallback() {
 				String photoPath=AswaqApp.getImagePath(ImageType.User, user.getPicture());
 				PhotoProvider.getInstance().displayPhotoNormal(photoPath, ivUser);
 				tvUserName.setText(user.getName());
-				tvFollowers.setText(Integer.toString(followersCount));
+				String followersCountStr=Integer.toString(followersCount)+" "+getString(R.string.user_page_activity_lbl_follower);
+				tvFollowers.setText(followersCountStr);
 				if(user.getFacebookId().length()<=1)
 					btnFbPage.setVisibility(View.GONE);
 				tvUserRating.setText(Float.toString(user.getRate()));
@@ -406,14 +407,16 @@ protected void onResume() {
 
 @Override
 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	if(position==0)
-		position=1;
+	if(position>0)
+	{
+		position--;
 	if(userAds!=null)
 	{
 	int adId=userAds.get(position).getId();
 	Intent i=new Intent(UserPageActivity.this, AdvertiseDetailsActivity.class);
 	i.putExtra("selectedAdId", adId);
 	startActivity(i);
+	}
 	}
 }
 

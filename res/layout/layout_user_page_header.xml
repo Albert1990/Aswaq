@@ -35,7 +35,7 @@
             android:maxLines="1"
             android:text="@string/place_holder"
             android:textColor="@color/txt_white"
-            android:textSize="@dimen/ts_text_big"
+            android:textSize="@dimen/ts_title_big"
             android:textStyle="bold"
             app:fontId="1" />
 
@@ -60,7 +60,6 @@
         android:background="@color/app_theme"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="6dp"
         android:paddingTop="6dp" >
 
         <ImageView
@@ -79,7 +78,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/app_theme_light"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <com.brainSocket.aswaq.views.TextViewCustomFont
@@ -88,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="@string/place_holder"
                 android:textColor="@color/txt_white"
@@ -98,7 +98,7 @@
                 android:id="@+id/rbUserRate"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:gravity="center"
                 android:numStars="5"
                 android:stepSize="1" />
@@ -132,11 +132,11 @@
         android:textStyle="bold"
         app:fontId="1" />
 
-    <View
+    <!-- <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="80dp"
-        android:background="@color/app_theme" />
+        android:background="@color/app_theme" />-->
 
     <com.brainSocket.aswaq.views.TextViewCustomFont
         android:id="@+id/tvDesc"
@@ -162,10 +162,10 @@
         android:textStyle="bold"
         app:fontId="1" />
 
-    <View
+    <!-- <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="80dp"
-        android:background="@color/app_theme" />
+        android:background="@color/app_theme" />-->
 
 </LinearLayout>

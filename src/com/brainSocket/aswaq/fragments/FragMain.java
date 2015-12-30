@@ -56,7 +56,7 @@ public class FragMain extends Fragment implements OnClickListener,
 	private ViewPager vpSlider;
 	private int currentSlide = 0;
 	private Dialog dialogLoading;
-	Handler sliderHandler = null;
+	private Handler sliderHandler = null;
 
 	private FragMain() {
 		sliderHandler = new Handler();
@@ -119,9 +119,11 @@ public class FragMain extends Fragment implements OnClickListener,
 		btnAddAdvertise.setOnClickListener(this);
 		vpSlider = (ViewPager) getView().findViewById(R.id.vpSliderMain);
 		vpSlider.setOnClickListener(this);
+		getView().clearFocus();
+		
 		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
 		etSearch.setOnTouchListener(serchDrawableToutchLIstener);
-		
+		btnAddAdvertise.requestFocus();
 
 		homeCallbacks.showProgress(true);
 		homeCallbacks.closeSlideDrawer();
@@ -140,8 +142,9 @@ public class FragMain extends Fragment implements OnClickListener,
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			try {
+				btnAddAdvertise.requestFocus();
 				homeCallbacks.showProgress(false);
-				vpSlider.requestFocus();
+				
 				if (success) {
 					if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 						PageModel page = (PageModel) data.getValue("page");
@@ -156,7 +159,7 @@ public class FragMain extends Fragment implements OnClickListener,
 						SliderAdapter sliderAdapter = new SliderAdapter(
 								getActivity(), slides, SliderType.Banner);
 						vpSlider.setAdapter(sliderAdapter);
-						if (slides.size() > 0) {
+						if (slides.size() > 1) {
 							new Handler().postDelayed(SliderTransition,
 									AswaqApp.SLIDER_TRANSITION_INTERVAL);
 						}
@@ -172,6 +175,9 @@ public class FragMain extends Fragment implements OnClickListener,
 					homeCallbacks
 							.showToast(getString(R.string.error_connection_error));
 				}
+				//vpSlider.requestFocus();
+				//getView().clearFocus();
+				btnAddAdvertise.requestFocus();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

@@ -40,9 +40,11 @@ import com.brainSocket.aswaq.R;
 import com.brainSocket.aswaq.data.DataCacheProvider;
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.PageTransitionCallback;
 import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
 import com.brainSocket.aswaq.dialogs.DiagCategories;
+import com.brainSocket.aswaq.dialogs.DiagFacebookPage;
 import com.brainSocket.aswaq.dialogs.DiagPickPhoto;
 import com.brainSocket.aswaq.dialogs.DiagPickPhoto.PickDiagActions;
 import com.brainSocket.aswaq.dialogs.DiagPickPhoto.PickDiagCallBack;
@@ -71,10 +73,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private EditTextCustomFont txtAddress;
 	private TextViewCustomFont btnAddPhone;
 	private LinearLayout vPhoneNumbersContainer;
+	private TextViewCustomFont btnAddYourPage;
 	private LayoutInflater inflater;
 	int selectedCategoryId=-1;
 	String[] imagesURI={null,null,null,null};
 	private int phoneNumberIndex=0;
+	private String facebookPageLink="";
 	
 	// data
 	boolean isNew = false;
@@ -139,6 +143,9 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		
 		vPhoneNumbersContainer=(LinearLayout)getView().findViewById(R.id.vPhoneNumbersContainer);
 		
+		btnAddYourPage=(TextViewCustomFont)getView().findViewById(R.id.btnAddYourPage);
+		btnAddYourPage.setOnClickListener(this);
+		
 		btnAddPhone=(TextViewCustomFont)getView().findViewById(R.id.btnAddPhone);
 		btnAddPhone.setOnClickListener(this);
 		
@@ -162,7 +169,9 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		//check description textbox
 		String description=txtProductDescription.getText().toString();
 		String address=txtAddress.getText().toString();
-		boolean isUsed = !isNew;
+		int isUsed = 1;
+		if(isNew)
+			isUsed=0;
 		int price=0;
 		
 		JSONArray telephones=new JSONArray();
@@ -232,7 +241,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			homeCallback.showProgress(true);
 			DataStore.getInstance().attemptAddNewAdvertise(description,address,
 					selectedCategoryId,
-					isUsed,price,telephones,addNewAdvertiseCallback);
+					isUsed,price,telephones,facebookPageLink,addNewAdvertiseCallback);
 			}
 			else
 				homeCallback.showToast(getString(R.string.error_photo_required));
@@ -459,6 +468,25 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		phoneNumberIndex++;
 		btnDeletePhoneNumber.setOnClickListener(this);
 	}
+	
+	private PageTransitionCallback facebookPageCallback=new PageTransitionCallback() {
+		
+		@Override
+		public void onDataReady(HashMap<String, Object> params) {
+			try
+			{
+				if(params.containsKey("facebookPageLink"))
+				{
+					facebookPageLink="https://www.facebook.com/"+(String)params.get("facebookPageLink");
+					btnAddYourPage.setText(facebookPageLink);
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+	};
 	 
 	@Override
 	public void onClick(View v) {
@@ -496,6 +524,10 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			int selectedPhoneNumberIndex=(Integer)v.getTag();
 			vPhoneNumbersContainer.removeViewAt(selectedPhoneNumberIndex+1); //+1 because of the btnAddNewPhoneNumber .
 			phoneNumberIndex--;
+			break;
+		case R.id.btnAddYourPage:
+			DiagFacebookPage diagFacebookPage=new DiagFacebookPage(facebookPageCallback);
+			diagFacebookPage.show(getFragmentManager(), "");
 			break;
 		}
 	}

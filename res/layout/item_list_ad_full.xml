@@ -75,10 +75,10 @@
         app:fontId="1" />
 
     <com.brainSocket.aswaq.views.TextViewCustomFont
-        android:id="@+id/tvPaid"
+        android:id="@+id/tvPaid1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/ivProd"
+        android:layout_alignBottom="@+id/ivProd"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="4dp"
         android:layout_marginRight="6dp"
@@ -89,12 +89,11 @@
         android:text="@string/details_payed"
         android:textColor="@color/txt_normal"
         android:textSize="@dimen/ts_text_xsmall"
-        app:fontId="1" 
-        android:visibility="gone"/>
+        app:fontId="1" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="1dp"
         android:background="@color/app_theme" >
     </View>
 

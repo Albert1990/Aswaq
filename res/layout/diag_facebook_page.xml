@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <com.brainSocket.aswaq.views.TextViewCustomFont 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/ts_text_normal"
+        android:padding="10dp"
+        android:layout_gravity="right"
+        android:text="@string/diag_facebook_page_lbl_link"/>
+    
+    
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <com.brainSocket.aswaq.views.TextViewCustomFont
+            android:id="@+id/tvlinkPrefix" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/ts_text_normal"
+            android:layout_marginLeft="5dp"
+            android:text="@string/facebook_page_link_prefix"/>
+        
+        <com.brainSocket.aswaq.views.EditTextCustomFont 
+        android:id="@+id/txtFacebookPageLink"
+        android:layout_width="match_parent"
+        android:layout_toRightOf="@+id/tvlinkPrefix"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"/>
+        
+        
+        
+    </RelativeLayout>
+    
+    <com.brainSocket.aswaq.views.TextViewCustomFont 
+        android:id="@+id/btnAccept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/diag_facebook_page_ok"
+        android:background="@drawable/selector_btn_app_theme"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/ts_text_big"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:layout_margin="10dp"/>
+
+</LinearLayout>

@@ -99,7 +99,7 @@ public class FragAds extends Fragment implements OnItemClickListener{
 				}
 				
 				slides=(List<SlideModel>)data.getValue("slides");
-				if(slides.size() > 0)
+				if(slides.size() > 1)
 				{
 					SliderAdapter sliderAdapter=new SliderAdapter(getActivity(), slides,SliderType.Banner);
 					vpSliderAds.setAdapter(sliderAdapter);

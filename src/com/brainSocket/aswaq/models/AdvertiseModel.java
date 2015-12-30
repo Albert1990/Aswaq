@@ -13,7 +13,7 @@ public class AdvertiseModel {
 	private String description;
 	private String address;
 	private int price;
-	private boolean isUsed;
+	private int isUsed;
 	private String facebookPage;
 	private int isPinned;
 	private List<String> telephones=new ArrayList<String>();
@@ -72,7 +72,7 @@ public class AdvertiseModel {
 		try
 		{
 			if(ob.has("is_used"))
-				this.isUsed=ob.getBoolean("is_used");
+				this.isUsed=ob.getInt("is_used");
 		}
 		catch(Exception ex){}
 		
@@ -182,10 +182,10 @@ public class AdvertiseModel {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public boolean isUsed() {
+	public int isUsed() {
 		return isUsed;
 	}
-	public void setUsed(boolean isUsed) {
+	public void setUsed(int isUsed) {
 		this.isUsed = isUsed;
 	}
 	public String getFacebookPage() {

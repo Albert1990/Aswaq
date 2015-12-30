@@ -330,18 +330,18 @@ public class DataStore {
 	}
 
 	public void attemptAddNewAdvertise(final String description,
-			final String address, final int categoryId, final boolean isUsed,
+			final String address, final int categoryId, final int isUsed,
 			final int price, final JSONArray telephones,
+			final String facebookPageLink,
 			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.addNewAdvertise(
 						description, address, categoryId, isUsed, price,
-						telephones);
+						telephones,facebookPageLink);
 				if (result.connectionFailed())
 					success = false;
 				else {

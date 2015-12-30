@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.View;
@@ -62,6 +63,9 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 	private Activity currentActivity;
 	private boolean isFavourite = false;
 	private Spinner spnrPhone;
+	private TextViewCustomFont tvIsUsed;
+	private Handler sliderHandler = null;
+	private int currentSlide = 0;
 	
 
 	// actionbar
@@ -81,7 +85,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 	private void init() {
 		try {
-
+			sliderHandler=new Handler();
 			tvPaid = (TextViewCustomFont) findViewById(R.id.tvPaid);
 			vpSlider = (ViewPager) findViewById(R.id.vpSlider);
 			btnFbPage = (ImageView) findViewById(R.id.btnFbPage);
@@ -103,6 +107,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 			btnFacebookShare.setOnClickListener(this);
 			spnrPhone = (Spinner) findViewById(R.id.spnrPhone);
 			findViewById(R.id.btnCall).setOnClickListener(this);
+			tvIsUsed=(TextViewCustomFont)findViewById(R.id.tvIsUsed);
 
 			int selectedAdId = getIntent().getIntExtra("selectedAdId", 0);
 			showProgress(true);
@@ -154,7 +159,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 				if (isFavourite)
 					ivFav.setBackgroundResource(R.drawable.ic_star_active);
 
-				if (ad.getUser().getFacebookId().length() <= 0) {
+				if (AswaqApp.isEmptyOrNull(ad.getFacebookPage())) {
 					btnFbPage.setVisibility(View.GONE);
 				}
 
@@ -172,27 +177,53 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 						getApplicationContext(), ad.getImages(),
 						SliderType.Advertise);
 				vpSlider.setAdapter(adapter);
+				
+				if(ad.getImages().size()>1)
+				{
+					new Handler().postDelayed(SliderTransition,
+							AswaqApp.SLIDER_TRANSITION_INTERVAL);
+				}
 
 				String rate = Float.toString(ad.getUser().getRate());
 				tvUserRate.setText(rate);
-
-//				TelephonesAdapter phonesAdapter = new TelephonesAdapter(
-//						getApplicationContext(),
-//						android.R.layout.simple_spinner_dropdown_item,
-//						ad.getTelephones());
-				ArrayAdapter<String> telsAdapter=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,ad.getTelephones());
+				ArrayAdapter<String> telsAdapter=new ArrayAdapter<String>(getApplicationContext(), R.layout.item_spinner_phone,ad.getTelephones());
 				telsAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				
-//				List<String> tels=ad.getTelephones();
-//				for(int i=0;i<tels.size();i++)
-//				{
-//					phonesAdapter.add(tels.get(i));
-//				}
-//				phonesAdapter.add("Hint to be displayed");
+						.setDropDownViewResource(R.layout.item_spinner_phone);//android.R.layout.simple_spinner_dropdown_item
 				spnrPhone.setAdapter(telsAdapter);
+				
+				if(ad.isUsed()==1)
+				{
+					tvIsUsed.setText(getString(R.string.advertise_details_lbl_used));
+				}
+				else
+				{
+					tvIsUsed.setText(getString(R.string.advertise_details_lbl_new));
+				}
 			} else
 				showToast(getString(R.string.error_connection_error));
+		}
+	};
+	
+	private Runnable SliderTransition = new Runnable() {
+
+		@Override
+		public void run() {
+			try {
+				if (currentSlide >= ad.getImages().size())
+					currentSlide = 0;
+				vpSlider.setCurrentItem(currentSlide, true);
+				currentSlide++;
+				try {
+					sliderHandler.removeCallbacks(SliderTransition);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+				sliderHandler.postDelayed(SliderTransition,
+						AswaqApp.SLIDER_TRANSITION_INTERVAL);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	};
 
@@ -212,7 +243,6 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
@@ -229,7 +259,6 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
-			// TODO Auto-generated method stub
 			showProgress(false);
 			if (success) {
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
@@ -244,7 +273,6 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 	@Override
 	public void showProgress(boolean show) {
-		// TODO Auto-generated method stub
 		if (dialogLoading == null) {
 			dialogLoading = new Dialog(this);
 			dialogLoading.setCancelable(false);
@@ -268,26 +296,22 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 	@Override
 	public void setTitle(String title) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void loadFragment(FragmentType fragmentType,
 			HashMap<String, Object> params) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void openSlideDrawer() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void closeSlideDrawer() {
-		// TODO Auto-generated method stub
 	}
 
 	private void showUserPage() {
@@ -346,7 +370,6 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		int viewId = v.getId();
 		Intent i = null;
 		switch (viewId) {
@@ -366,9 +389,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 			handleFavouriteRequest();
 			break;
 		case R.id.btnFbPage:
-			String url = "https://www.facebook.com/"
-					+ ad.getUser().getFacebookId();
-			Uri uri = Uri.parse(url); // missing 'http://' will cause crashed
+			Uri uri = Uri.parse(ad.getFacebookPage()); // missing 'http://' will cause crashed
 			i = new Intent(Intent.ACTION_VIEW, uri);
 			startActivity(i);
 			break;
@@ -383,7 +404,6 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 
 	@Override
 	public void backToHome() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -417,6 +437,32 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 			return v;
 		}
 
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		try {
+			sliderHandler.removeCallbacks(SliderTransition);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		try {
+			try {
+				sliderHandler.removeCallbacks(SliderTransition);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			sliderHandler.postDelayed(SliderTransition,
+					AswaqApp.SLIDER_TRANSITION_INTERVAL);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
