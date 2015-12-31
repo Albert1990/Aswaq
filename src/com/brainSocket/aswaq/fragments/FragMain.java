@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -44,6 +46,7 @@ import com.brainSocket.aswaq.models.AppUser;
 import com.brainSocket.aswaq.models.CategoryModel;
 import com.brainSocket.aswaq.models.PageModel;
 import com.brainSocket.aswaq.models.SlideModel;
+import com.brainSocket.aswaq.views.EditTextCustomFont;
 import com.github.clans.fab.FloatingActionButton;
 
 public class FragMain extends Fragment implements OnClickListener,
@@ -51,7 +54,7 @@ public class FragMain extends Fragment implements OnClickListener,
 	private HomeCallbacks homeCallbacks;
 	private FloatingActionButton btnAddAdvertise;
 	private GridView gridViewCategories;
-	private EditText etSearch;
+	private EditTextCustomFont etSearch;
 	private List<CategoryModel> categories = null;
 	private List<SlideModel> slides = null;
 	private ViewPager vpSlider;
@@ -112,7 +115,8 @@ public class FragMain extends Fragment implements OnClickListener,
 		homeCallbacks = (HomeCallbacks) getActivity();
 		gridViewCategories = (GridView) getView().findViewById(
 				R.id.gridViewCategories);
-		etSearch = (EditText) getView().findViewById(R.id.etSearch);
+		etSearch = (EditTextCustomFont) getView().findViewById(R.id.etSearch);
+		etSearch.setEnabled(false);
 		gridViewCategories.setOnItemClickListener(this);
 		
 		btnAddAdvertise = (FloatingActionButton) getView().findViewById(
@@ -120,17 +124,29 @@ public class FragMain extends Fragment implements OnClickListener,
 		btnAddAdvertise.setOnClickListener(this);
 		vpSlider = (ViewPager) getView().findViewById(R.id.vpSliderMain);
 		vpSlider.setOnClickListener(this);
-		getView().clearFocus();
 		
 		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
 		etSearch.setOnTouchListener(serchDrawableToutchLIstener);
-		btnAddAdvertise.requestFocus();
 		circleIndicator=(CirclePageIndicator)getView().findViewById(R.id.titles);
 
 		homeCallbacks.showProgress(true);
 		homeCallbacks.closeSlideDrawer();
+		
+		new Handler().postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				//getView().clearFocus();
+				View view = getActivity().getCurrentFocus();
+				if (view != null) {  
+				    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+				    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+				}
+			}
+		}, 2500);
 		DataStore.getInstance().attemptGetPageComponents(
 				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
+		
 	}
 
 	private void search() {
@@ -146,7 +162,6 @@ public class FragMain extends Fragment implements OnClickListener,
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			try {
-				btnAddAdvertise.requestFocus();
 				homeCallbacks.showProgress(false);
 				
 				if (success) {
@@ -180,9 +195,7 @@ public class FragMain extends Fragment implements OnClickListener,
 					homeCallbacks
 							.showToast(getString(R.string.error_connection_error));
 				}
-				//vpSlider.requestFocus();
-				//getView().clearFocus();
-				btnAddAdvertise.requestFocus();
+				etSearch.setEnabled(true);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

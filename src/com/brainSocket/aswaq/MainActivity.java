@@ -61,6 +61,7 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 		initCustomActionBar();
 		initSlideDrawer();
 		init();
+		ivMenu.requestFocus();
 
 	}
 

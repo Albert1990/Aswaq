@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Toast;
 
 import com.brainSocket.aswaq.data.DataCacheProvider;
 import com.brainSocket.aswaq.data.DataRequestCallback;
@@ -22,8 +23,23 @@ public class SplashScreen extends AppBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		try
+		{
 		animateLogo();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		try
+		{
 		DataStore.getInstance().startScheduledUpdates();
+		}
+		catch(Exception ex)
+		{
+			Toast.makeText(this, getString(R.string.error_connection_error), Toast.LENGTH_SHORT).show();
+			ex.printStackTrace();
+		}
 		new Handler().postDelayed(startApp, 2000);
 	}
 
@@ -33,6 +49,7 @@ public class SplashScreen extends AppBaseActivity {
 		public void run() {
 			Intent i = new Intent(SplashScreen.this, MainActivity.class);
 			startActivityForResult(i, MAIN_ACTIVITY_REQUIEST_CODE);
+			finish();
 		}
 	};
 
