@@ -134,5 +134,6 @@
     <string name="diag_facebook_page_lbl_link">ضع رابط صفحتك على فيس بوك</string>
     <string name="diag_facebook_page_ok">موافق</string>
     <string name="facebook_page_link_prefix">https://www.facebook.com/</string>
+    <string name="user_profile_change_photo">غير صورتك الشخصية</string>
     
 </resources>

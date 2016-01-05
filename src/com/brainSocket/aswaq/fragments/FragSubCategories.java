@@ -37,8 +37,6 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		//return super.onCreateView(inflater, container, savedInstanceState);
 		return inflater.inflate(R.layout.frag_sub_categories, container, false);
 	}
 	
@@ -103,7 +101,6 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
 		SubCategoriesListAdapter.ViewHolderItem viewHolder=(SubCategoriesListAdapter.ViewHolderItem)view.getTag();
 		String subCategoryName=viewHolder.lblSubCategoryName.getText().toString();
 		int subCategoryId=subCategories.get(position).getId();

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,9 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -678,6 +683,13 @@ public class ServerAccess {
 															// is empty
 				JSONObject jsonResponse = new JSONObject(response);
 				result.setFlag(jsonResponse.getInt(FLAG));
+				if(jsonResponse.has("object"))
+				{
+					if(!jsonResponse.isNull("object"))
+					{
+						result.addPair("newFollowersCount", jsonResponse.getString("object"));
+					}
+				}
 
 			} else {
 				result.setFlag(CONNECTION_ERROR_CODE);
@@ -784,45 +796,6 @@ public class ServerAccess {
 		return result;
 	}
 
-	public ServerResult updateUserProfile(String userName, String mobileNumber,
-			String address, String description) {
-		ServerResult result = new ServerResult();
-		try {
-			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
-			jsonPairs.add(new BasicNameValuePair("access_token",
-					DataStore.getInstance().getAccessToken()));
-			jsonPairs.add(new BasicNameValuePair("user_name", userName));
-			jsonPairs
-					.add(new BasicNameValuePair("mobile_number", mobileNumber));
-			jsonPairs.add(new BasicNameValuePair("address", address));
-			jsonPairs.add(new BasicNameValuePair("description", description));
-			// url
-			String url = BASE_SERVICE_URL + "users_api/edit_user_profile";
-			// send request
-			String response = sendPostRequest(url, jsonPairs);
-			// parse response
-			if (response != null && !response.equals("")) { // check if response
-															// is empty
-				JSONObject jsonResponse = new JSONObject(response);
-				result.setFlag(jsonResponse.getInt(FLAG));
-				if (jsonResponse.has("object")) {
-					if (!jsonResponse.isNull("object")) {
-						JSONObject meJson = jsonResponse
-								.getJSONObject("object");
-						AppUser me = new AppUser(meJson);
-						result.addPair("me", me);
-					}
-				}
-
-			} else {
-				result.setFlag(CONNECTION_ERROR_CODE);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return result;
-	}
-
 	public ServerResult rateUser(int userId, String rate) {
 		ServerResult result = new ServerResult();
 		try {
@@ -858,7 +831,6 @@ public class ServerAccess {
 	}
 
 	public ServerResult uploadAdvertisePhotos(int ad_id, String[] imgPath) {
-
 		String url = BASE_SERVICE_URL + "ads_api/upload_ad_photos";
 		String responseString = null;
 		ServerResult res = new ServerResult();
@@ -939,6 +911,132 @@ public class ServerAccess {
 		}
 		return res;
 	}
+	
+	public ServerResult updateUserProfile(String userName, String mobileNumber,
+			String address, String description, String imgPath) {
+		String url = BASE_SERVICE_URL + "users_api/edit_user_profile";
+		String responseString = null;
+		ServerResult res = new ServerResult();
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
+
+		try {
+			AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
+					new ProgressListener() {
+
+						@Override
+						public void transferred(long num) {
+							// publishProgress((int) ((num / (float) totalSize)
+							// * 100));
+						}
+					});
+
+			if (imgPath != "") {
+				File sourceFile;
+				sourceFile = new File(imgPath);
+				entity.addPart("user_photo", new FileBody(sourceFile));
+			}
+
+			// Adding file data to http body
+			entity.addPart("user_name", new StringBody(userName,Charset.forName(HTTP.UTF_8)));
+			entity.addPart("mobile_number", new StringBody(mobileNumber,Charset.forName(HTTP.UTF_8)));
+			entity.addPart("address", new StringBody(address,Charset.forName(HTTP.UTF_8)));
+			entity.addPart("description", new StringBody(description,Charset.forName(HTTP.UTF_8)));
+			String access_token = DataStore.getInstance()
+					.getAccessToken();
+			entity.addPart("access_token", new StringBody(access_token));
+			
+
+			// totalSize = entity.getContentLength();
+//			httppost.setHeader(HTTP.CONTENT_TYPE,
+//                    "application/x-www-form-urlencoded;charset=UTF-8");
+			httppost.setEntity(entity);
+
+			// Making server call
+			HttpResponse response = httpclient.execute(httppost);
+			HttpEntity r_entity = response.getEntity();
+
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode == 200) {
+				try {
+					// Server response
+					responseString = EntityUtils.toString(r_entity);
+					if (responseString != null && !responseString.equals("")) { // check
+																				// if
+																				// response
+																				// is
+																				// empty
+						JSONObject jsonResponse = new JSONObject(responseString);
+						res.setFlag(jsonResponse.getInt(FLAG));
+						if(jsonResponse.has("object"))
+						{
+							if(!jsonResponse.isNull("object"))
+							{
+								JSONObject meJson = jsonResponse
+										.getJSONObject("object");
+								AppUser me = new AppUser(meJson);
+								res.addPair("me", me);
+							}
+						}
+
+					} else {
+						res.setFlag(CONNECTION_ERROR_CODE);
+					}
+				} catch (Exception ex) {
+					res.setFlag(CONNECTION_ERROR_CODE);
+					ex.printStackTrace();
+				}
+			} else {
+				responseString = "Error occurred! Http Status Code: "
+						+ statusCode;
+			}
+
+		} catch (ClientProtocolException e) {
+			res.setFlag(ServerAccess.ERROR_CODE_unknown_exception);
+		} catch (IOException e) {
+			res.setFlag(ServerAccess.ERROR_CODE_unknown_exception);
+		}
+		return res;
+	}
+	
+	public ServerResult updateUserProfile1(String userName, String mobileNumber,
+			String address, String description) {
+		ServerResult result = new ServerResult();
+		try {
+			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
+			jsonPairs.add(new BasicNameValuePair("access_token",
+					DataStore.getInstance().getAccessToken()));
+			jsonPairs.add(new BasicNameValuePair("user_name", userName));
+			jsonPairs
+					.add(new BasicNameValuePair("mobile_number", mobileNumber));
+			jsonPairs.add(new BasicNameValuePair("address", address));
+			jsonPairs.add(new BasicNameValuePair("description", description));
+			// url
+			String url = BASE_SERVICE_URL + "users_api/edit_user_profile";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response
+															// is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+				if (jsonResponse.has("object")) {
+					if (!jsonResponse.isNull("object")) {
+						JSONObject meJson = jsonResponse
+								.getJSONObject("object");
+						AppUser me = new AppUser(meJson);
+						result.addPair("me", me);
+					}
+				}
+
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return result;
+	}
 
 	private String sendPostRequest(String url, List<NameValuePair> jsonPairs) {
 		client = new DefaultHttpClient();
@@ -949,6 +1047,10 @@ public class ServerAccess {
 			// StringEntity(jsonPairs.toString(),HTTP.UTF_8);
 			// entity.setContentType("application/json");
 			post.setEntity(new UrlEncodedFormEntity(jsonPairs, HTTP.UTF_8));
+			HttpParams params=new BasicHttpParams();
+			HttpConnectionParams.setSoTimeout(params, 5000);
+			post.setParams(params);
+			
 			HttpResponse response = client.execute(post);
 
 			try {

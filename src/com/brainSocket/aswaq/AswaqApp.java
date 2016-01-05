@@ -23,6 +23,8 @@ public class AswaqApp extends Application {
 	public static final int SLIDER_TRANSITION_INTERVAL = 3000;
 	public static final String DEFAULT_USER_IMAGE = "default_user.png";
 	public static final String DEFAULT_Ad_IMAGE = "logo_splash.png";
+	public final static int REQUEST_PICK_IMG_FROM_CAMERA = 894;
+    public final static int REQUEST_PICK_IMG_FROM_GALLERY = 89;
 
 	@Override
 	public void onCreate() {
@@ -98,11 +100,11 @@ public class AswaqApp extends Application {
 		return url + photo_path;
 	}
 
-	public static void resizeImage(Bitmap originalBitmap, String path) {
+	public static void resizeImage(Bitmap originalBitmap, String path,int newWidth,int newHeight) {
 		try {
 			File imageFile = new File(path);
 			Bitmap bmScreenshot = Bitmap.createScaledBitmap(originalBitmap,
-					1024, 800, false);
+					newWidth,newHeight , false);
 			OutputStream fOut = new FileOutputStream(imageFile);
 			bmScreenshot.compress(Bitmap.CompressFormat.JPEG, 90, fOut);
 			fOut.flush();

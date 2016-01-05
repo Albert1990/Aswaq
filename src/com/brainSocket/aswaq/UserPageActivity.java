@@ -99,7 +99,7 @@ public class UserPageActivity extends AppBaseActivity implements
 
 		lvAds.setOnItemClickListener(this);
 		btnFbPage.setOnClickListener(this);
-		lvAds.addHeaderView(llheader, null, true);
+		lvAds.addHeaderView(llheader, null, false);
 
 		AppUser me = DataStore.getInstance().getMe();
 		if (me != null) {
@@ -231,6 +231,9 @@ public class UserPageActivity extends AppBaseActivity implements
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					tvFollow.setText(getString(R.string.user_list_unfollow));
 					isFollowedByMe = 1;
+					String newFollowersCount=(String)data.getValue("newFollowersCount")+ " "
+							+ getString(R.string.user_page_activity_lbl_follower);
+					tvFollowers.setText(newFollowersCount);
 
 				}
 			} else
@@ -247,7 +250,9 @@ public class UserPageActivity extends AppBaseActivity implements
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					tvFollow.setText(getString(R.string.user_list_follow));
 					isFollowedByMe = 0;
-
+					String newFollowersCount=(String)data.getValue("newFollowersCount")+ " "
+							+ getString(R.string.user_page_activity_lbl_follower);
+					tvFollowers.setText(newFollowersCount);
 				}
 			} else
 				showToast(getString(R.string.error_connection_error));
@@ -387,6 +392,8 @@ public class UserPageActivity extends AppBaseActivity implements
 			tvUserName.setText(me.getName());
 			tvDesc.setText(me.getDescription());
 			setTitle(me.getName());
+			String profilePicturePath=AswaqApp.getImagePath(ImageType.User, me.getPicture());
+			PhotoProvider.getInstance().displayPhotoNormal(profilePicturePath, ivUser);
 		}
 	}
 

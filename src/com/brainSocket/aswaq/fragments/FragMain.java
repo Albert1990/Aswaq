@@ -136,17 +136,15 @@ public class FragMain extends Fragment implements OnClickListener,
 			
 			@Override
 			public void run() {
-				//getView().clearFocus();
 				View view = getActivity().getCurrentFocus();
 				if (view != null) {  
 				    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 				    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 				}
 			}
-		}, 2500);
+		}, 2000);
 		DataStore.getInstance().attemptGetPageComponents(
-				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
-		
+				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);	
 	}
 
 	private void search() {

@@ -15,6 +15,7 @@
     <RatingBar
         android:id="@+id/rbUserRate"
         style="?android:attr/ratingBarStyleSmall"
+        android:progressDrawable="@drawable/yellow_ratingbar_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -75,11 +76,27 @@
         app:fontId="1" />
 
     <com.brainSocket.aswaq.views.TextViewCustomFont
-        android:id="@+id/tvPaid1"
+        android:id="@+id/tvIsUsed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/ivProd"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="6dp"
+        android:background="@color/red"
+        android:lines="1"
+        android:maxLines="1"
+        android:padding="2dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/ts_text_normal"
+        app:fontId="1" />
+    
+    <com.brainSocket.aswaq.views.TextViewCustomFont
+        android:id="@+id/tvPaid1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/ivProd"
+        android:layout_toLeftOf="@id/tvIsUsed"
         android:layout_marginBottom="4dp"
         android:layout_marginRight="6dp"
         android:background="@color/payed_ad"
@@ -87,8 +104,8 @@
         android:maxLines="1"
         android:padding="2dp"
         android:text="@string/details_payed"
-        android:textColor="@color/txt_normal"
-        android:textSize="@dimen/ts_text_xsmall"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ts_text_normal"
         app:fontId="1" />
 
     <View

@@ -21,9 +21,10 @@
         android:paddingRight="24dp" >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="170dp"
-            android:layout_marginTop="30dp"
+            android:id="@+id/ivUserPhoto"
+            android:layout_height="80dp"
+            android:layout_width="80dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/logo_splash" />
 
         <com.brainSocket.aswaq.views.TextViewCustomFont

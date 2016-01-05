@@ -36,9 +36,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/payed_ad"
+                android:background="@color/red"
                 android:padding="6dp"
-                android:textColor="@color/txt_dark"
+                android:textColor="@color/white"
                 android:textSize="@dimen/ts_text_big"
                 app:fontId="1" />
 
@@ -185,6 +185,7 @@
                 <RatingBar
                     android:id="@+id/rbUserRate"
                     style="?android:attr/ratingBarStyleSmall"
+                    android:progressDrawable="@drawable/yellow_ratingbar_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvUserRate"

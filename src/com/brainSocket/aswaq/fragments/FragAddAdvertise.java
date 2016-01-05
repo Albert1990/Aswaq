@@ -55,10 +55,6 @@ import com.brainSocket.aswaq.views.EditTextCustomFont;
 import com.brainSocket.aswaq.views.TextViewCustomFont;
 
 public class FragAddAdvertise extends Fragment implements OnClickListener{
-
-    private final static int REQUEST_PICK_IMG_FROM_CAMERA = 894;
-    private final static int REQUEST_PICK_IMG_FROM_GALLERY = 89;
-	
 	private HomeCallbacks homeCallback;
 	private EditTextCustomFont txtProductDescription;
 	private EditTextCustomFont tvPrice;
@@ -333,13 +329,13 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         outputFileUri = Uri.fromFile(getNewTempImgFile(false));
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                        startActivityForResult(intent, REQUEST_PICK_IMG_FROM_CAMERA);
+                        startActivityForResult(intent,AswaqApp.REQUEST_PICK_IMG_FROM_CAMERA);
                 		selectedImageView = (ImageView) v;
                         break;
                     case GALLERY:
                         Intent intentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         intentGallery.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intentGallery, "Select File"), REQUEST_PICK_IMG_FROM_GALLERY);
+                        startActivityForResult(Intent.createChooser(intentGallery, "Select File"),AswaqApp.REQUEST_PICK_IMG_FROM_GALLERY);
                 		selectedImageView = (ImageView) v;
                         break;
                     case CANCEL:
@@ -396,10 +392,10 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			
 			if(resultCode == Activity.RESULT_OK){
 				String filePath = null;
-	            if(requestCode == REQUEST_PICK_IMG_FROM_CAMERA || requestCode == REQUEST_PICK_IMG_FROM_GALLERY){
-		            if(requestCode == REQUEST_PICK_IMG_FROM_CAMERA){
+	            if(requestCode ==AswaqApp.REQUEST_PICK_IMG_FROM_CAMERA || requestCode == AswaqApp.REQUEST_PICK_IMG_FROM_GALLERY){
+		            if(requestCode ==AswaqApp.REQUEST_PICK_IMG_FROM_CAMERA){
 		            	filePath = outputFileUri.getPath();
-		            }else if(requestCode == REQUEST_PICK_IMG_FROM_GALLERY){
+		            }else if(requestCode == AswaqApp.REQUEST_PICK_IMG_FROM_GALLERY){
 		                Uri uri = data.getData();
 		                if (uri.getScheme() != null && uri.getScheme().equals("file")) {
 		                	filePath = uri.getPath();
@@ -426,12 +422,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		            	filePath = new File(filePath).getAbsolutePath(); // make sure we have a valid absolute path
 			            Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
 			            int imageIndex = (Integer) selectedImageView.getTag();
-			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath());
+			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath(),1024,800);
 			            imagesURI[imageIndex] = getNewTempImgFile(true).getAbsolutePath();
 			            selectedImageView.setImageBitmap(yourSelectedImage);
 		            }
 	            }
-	        }else if(requestCode == REQUEST_PICK_IMG_FROM_CAMERA ){
+	        }else if(requestCode == AswaqApp.REQUEST_PICK_IMG_FROM_CAMERA ){
 	            // if picking a picture from camera failed or canceled then reset the URi
                 outputFileUri = null;
             }     

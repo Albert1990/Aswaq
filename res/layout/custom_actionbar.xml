@@ -40,7 +40,10 @@
         android:layout_toRightOf="@id/ivBack"
         android:textColor="@color/txt_normal"
         android:textSize="@dimen/ts_text_big"
-        app:fontId="2" />
+        android:lines="1"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:fontId="1" />
     
 
 </RelativeLayout>

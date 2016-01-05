@@ -129,6 +129,7 @@ public class RegisterActivity extends AppBaseActivity implements
 					Intent i = new Intent(RegisterActivity.this,
 							VerificationActivity.class);
 					startActivity(i);
+					finish();
 					break;
 				case ServerAccess.ERROR_CODE_user_exists_before:
 					txtEmail.setError(getString(R.string.login_error_user_exists_before));

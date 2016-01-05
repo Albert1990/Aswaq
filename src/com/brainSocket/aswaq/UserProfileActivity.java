@@ -1,23 +1,39 @@
 package com.brainSocket.aswaq;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import com.brainSocket.aswaq.adapters.DrawerAdapter;
 import com.brainSocket.aswaq.data.DataCacheProvider;
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.PhotoProvider;
 import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.dialogs.DiagPickPhoto;
+import com.brainSocket.aswaq.dialogs.DiagPickPhoto.PickDiagActions;
+import com.brainSocket.aswaq.dialogs.DiagPickPhoto.PickDiagCallBack;
 import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.enums.ImageType;
 import com.brainSocket.aswaq.enums.PhoneNumberCheckResult;
 import com.brainSocket.aswaq.models.AppUser;
 import com.brainSocket.aswaq.views.TextViewCustomFont;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Gravity;
@@ -49,6 +65,11 @@ public class UserProfileActivity extends AppBaseActivity implements
 	private EditText txtDescriptionRegister;
 	private TextViewCustomFont btnEdit;
 	private Dialog dialogLoading;
+	private ImageView ivUserPhoto;
+	private String selectedUserProfilePictureUri="";
+	
+	//temp
+	private Uri outputFileUri; //holder for the image picked from the camera
 
 	/** Called when the activity is first created. */
 	@Override
@@ -70,6 +91,8 @@ public class UserProfileActivity extends AppBaseActivity implements
 				txtDescriptionRegister = (EditText) findViewById(R.id.txtDescriptionRegister);
 				btnEdit = (TextViewCustomFont) findViewById(R.id.btnEditUserProfile);
 				btnEdit.setOnClickListener(this);
+				ivUserPhoto=(ImageView)findViewById(R.id.ivUserPhoto);
+				ivUserPhoto.setOnClickListener(this);
 				bindUiData(me);
 			}
 		} catch (Exception ex) {
@@ -82,6 +105,9 @@ public class UserProfileActivity extends AppBaseActivity implements
 		txtMobileNumberRegister.setText(me.getPhoneNum());
 		txtAddressRegister.setText(me.getAddress());
 		txtDescriptionRegister.setText(me.getDescription());
+		
+		String photo_path=AswaqApp.getImagePath(ImageType.User, me.getPicture());
+		PhotoProvider.getInstance().displayPhotoNormal(photo_path, ivUserPhoto);
 	}
 
 	private void initSlideDrawer() {
@@ -176,32 +202,12 @@ public class UserProfileActivity extends AppBaseActivity implements
 			cancel = true;
 		}
 
-		// if(!AswaqApp.isEmptyOrNull(mobileNumber))
-		// {
-		// String attemptingPhoneNum =
-		// txtMobileNumberRegister.getText().toString().replaceAll("\\s+","");
-		// PhoneNumberCheckResult numValid =
-		// AswaqApp.validatePhoneNum(attemptingPhoneNum);
-		// switch (numValid) {
-		// case SHORT:
-		// txtMobileNumberRegister.setError(getString(R.string.error_short_phone_num));
-		// focusView = txtMobileNumberRegister;
-		// cancel = true;
-		// break;
-		// case WRONG:
-		// txtMobileNumberRegister.setError(getString(R.string.error_incorrect_phone_num));
-		// focusView = txtMobileNumberRegister;
-		// cancel = true;
-		// break;
-		// }
-		// }
-
 		if (cancel)
 			focusView.requestFocus();
 		else {
 			showProgress(true);
 			DataStore.getInstance().attemptUpdateUserProfile(userName,
-					mobileNumber, address, description,
+					mobileNumber, address, description,selectedUserProfilePictureUri,
 					updateUserProfileCallback);
 		}
 	}
@@ -220,6 +226,7 @@ public class UserProfileActivity extends AppBaseActivity implements
 						originalMe.setPhoneNum(recievedMe.getPhoneNum());
 						originalMe.setAddress(recievedMe.getAddress());
 						originalMe.setDescription(recievedMe.getDescription());
+						originalMe.setPicture(recievedMe.getPicture());
 						DataCacheProvider.getInstance().storeMe(originalMe);
 					}
 					finish();
@@ -236,6 +243,91 @@ public class UserProfileActivity extends AppBaseActivity implements
 
 		}
 	};
+	
+	private static File getNewTempImgFile(boolean isForUpload){
+		final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "aswaq_temp_imgs" + File.separator);
+		root.mkdirs();
+		final String fname = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ((isForUpload)?"_resized":"")+ ".jpg";
+		File sdImageMainDirectory = new File(root, fname);
+		return sdImageMainDirectory;
+	}
+	
+	private void browseImage(final View v){
+
+		final DiagPickPhoto diag;
+        diag = new DiagPickPhoto(this, new PickDiagCallBack() {
+            @Override
+            public void onActionChoose(PickDiagActions action) {
+                switch (action){
+                    case CAMERA:
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        outputFileUri = Uri.fromFile(getNewTempImgFile(false));
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                        startActivityForResult(intent,AswaqApp.REQUEST_PICK_IMG_FROM_CAMERA);
+                        break;
+                    case GALLERY:
+                        Intent intentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intentGallery.setType("image/*");
+                        startActivityForResult(Intent.createChooser(intentGallery, "Select File"), AswaqApp.REQUEST_PICK_IMG_FROM_GALLERY);
+                        break;
+                    case CANCEL:
+                        //uriImgInvoice = null;
+                        break;
+                }
+            }
+        });
+        diag.show();
+		}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		try{
+			
+			if(resultCode == Activity.RESULT_OK){
+				String filePath = null;
+	            if(requestCode ==AswaqApp.REQUEST_PICK_IMG_FROM_CAMERA || requestCode == AswaqApp.REQUEST_PICK_IMG_FROM_GALLERY){
+		            if(requestCode ==AswaqApp.REQUEST_PICK_IMG_FROM_CAMERA){
+		            	filePath = outputFileUri.getPath();
+		            }else if(requestCode == AswaqApp.REQUEST_PICK_IMG_FROM_GALLERY){
+		                Uri uri = data.getData();
+		                if (uri.getScheme() != null && uri.getScheme().equals("file")) {
+		                	filePath = uri.getPath();
+		                }else{
+		                	String[] filePathField = {MediaStore.Images.Media.DATA};
+		                	Cursor cursor = getContentResolver().query(uri, filePathField, null, null, null);
+		                    if (cursor == null) {
+		                        throw new IllegalArgumentException("got null cursor when attempting to find path for external storage uri");
+		                    }
+
+		                    cursor.moveToFirst();
+		                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		                    filePath = cursor.getString(column_index);
+		                    
+//		                    Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+//		                    cursor.moveToFirst();
+//		                    int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+//		                    String path = cursor.getString(idx);
+//		                    uri = Uri.parse(path);
+		                }
+		            }
+		            
+		            if(filePath != null && !filePath.isEmpty()){
+		            	filePath = new File(filePath).getAbsolutePath(); // make sure we have a valid absolute path
+			            Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath(),150,150);
+			            selectedUserProfilePictureUri = getNewTempImgFile(true).getAbsolutePath();
+			            ivUserPhoto.setImageBitmap(yourSelectedImage);
+		            }
+	            }
+	        }else if(requestCode == AswaqApp.REQUEST_PICK_IMG_FROM_CAMERA ){
+	            // if picking a picture from camera failed or canceled then reset the URi
+                outputFileUri = null;
+            }     
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -246,6 +338,9 @@ public class UserProfileActivity extends AppBaseActivity implements
 			break;
 		case R.id.ivBack:
 			finish();
+			break;
+		case R.id.ivUserPhoto:
+			browseImage(v);
 			break;
 		}
 	}
@@ -268,7 +363,8 @@ public class UserProfileActivity extends AppBaseActivity implements
 
 	@Override
 	public void showToast(String msg) {
-
+		Toast.makeText(AswaqApp.getAppContext(), msg, Toast.LENGTH_SHORT)
+		.show();
 	}
 
 	@Override

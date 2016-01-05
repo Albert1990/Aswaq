@@ -440,14 +440,12 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.followUser(userId, follow);
 				if (result.connectionFailed())
 					success = false;
 				else {
 					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
-
 					}
 				}
 				if (callback != null)
@@ -527,15 +525,15 @@ public class DataStore {
 
 	public void attemptUpdateUserProfile(final String userName,
 			final String mobileNumber, final String address,
-			final String description, final DataRequestCallback callback) {
+			final String description, final String userProfilePicturePath,
+			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.updateUserProfile(userName,
-						mobileNumber, address, description);
+						mobileNumber, address, description,userProfilePicturePath);
 				if (result.connectionFailed())
 					success = false;
 				else {

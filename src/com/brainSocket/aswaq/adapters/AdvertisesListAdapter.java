@@ -71,11 +71,6 @@ public class AdvertisesListAdapter extends BaseAdapter {
 					viewHolder.ivProduct);
 			viewHolder.rbUserRate.setRating(ads.get(position).getUser()
 					.getRate());
-			// LayerDrawable stars=
-			// (LayerDrawable)viewHolder.rbUserRate.getProgressDrawable();
-
-			// int userRate=(Integer)ads.get(position).getUser().getRate();
-			// stars.getDrawable((Integer)ads.get(position).getUser().getRate()).setColorFilter(Color.YELLOW,Mode.SRC_ATOP);
 			viewHolder.tvUserName
 					.setText(ads.get(position).getUser().getName());
 			viewHolder.tvAdvertiseDescription.setText(ads.get(position)
@@ -85,6 +80,15 @@ public class AdvertisesListAdapter extends BaseAdapter {
 				viewHolder.tvPaid.setVisibility(View.INVISIBLE);
 			else
 				viewHolder.tvPaid.setVisibility(View.VISIBLE);
+			if(ads.get(position).isUsed()==1)
+			{
+				viewHolder.tvIsUsed.setVisibility(View.INVISIBLE);//.setText(context.getString(R.string.advertise_details_lbl_used));
+			}
+			else
+			{
+				viewHolder.tvIsUsed.setVisibility(View.VISIBLE);
+				viewHolder.tvIsUsed.setText(context.getString(R.string.advertise_details_lbl_new));
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -98,6 +102,7 @@ public class AdvertisesListAdapter extends BaseAdapter {
 		TextViewCustomFont tvAdvertiseDescription;
 		TextViewCustomFont tvPrice;
 		TextViewCustomFont tvPaid;
+		TextViewCustomFont tvIsUsed;
 
 		public void bindViews(View convertView) {
 			ivProduct = (ImageView) convertView.findViewById(R.id.ivProd);
@@ -110,6 +115,7 @@ public class AdvertisesListAdapter extends BaseAdapter {
 					.findViewById(R.id.tvPaid1);
 			tvPrice = (TextViewCustomFont) convertView
 					.findViewById(R.id.tvPrice);
+			tvIsUsed=(TextViewCustomFont)convertView.findViewById(R.id.tvIsUsed);
 		}
 
 	}
