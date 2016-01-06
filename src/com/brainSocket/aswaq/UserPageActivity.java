@@ -231,7 +231,9 @@ public class UserPageActivity extends AppBaseActivity implements
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					tvFollow.setText(getString(R.string.user_list_unfollow));
 					isFollowedByMe = 1;
-					String newFollowersCount=(String)data.getValue("newFollowersCount")+ " "
+					String newFollowersCount = (String) data
+							.getValue("newFollowersCount")
+							+ " "
 							+ getString(R.string.user_page_activity_lbl_follower);
 					tvFollowers.setText(newFollowersCount);
 
@@ -250,7 +252,9 @@ public class UserPageActivity extends AppBaseActivity implements
 				if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 					tvFollow.setText(getString(R.string.user_list_follow));
 					isFollowedByMe = 0;
-					String newFollowersCount=(String)data.getValue("newFollowersCount")+ " "
+					String newFollowersCount = (String) data
+							.getValue("newFollowersCount")
+							+ " "
 							+ getString(R.string.user_page_activity_lbl_follower);
 					tvFollowers.setText(newFollowersCount);
 				}
@@ -388,12 +392,16 @@ public class UserPageActivity extends AppBaseActivity implements
 	protected void onResume() {
 		super.onResume();
 		AppUser me = DataStore.getInstance().getMe();
-		if (me.getId() == userId) {
-			tvUserName.setText(me.getName());
-			tvDesc.setText(me.getDescription());
-			setTitle(me.getName());
-			String profilePicturePath=AswaqApp.getImagePath(ImageType.User, me.getPicture());
-			PhotoProvider.getInstance().displayPhotoNormal(profilePicturePath, ivUser);
+		if (me != null) {
+			if (me.getId() == userId) {
+				tvUserName.setText(me.getName());
+				tvDesc.setText(me.getDescription());
+				setTitle(me.getName());
+				String profilePicturePath = AswaqApp.getImagePath(
+						ImageType.User, me.getPicture());
+				PhotoProvider.getInstance().displayPhotoNormal(
+						profilePicturePath, ivUser);
+			}
 		}
 	}
 

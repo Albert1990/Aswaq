@@ -63,8 +63,9 @@ public class FragMain extends Fragment implements OnClickListener,
 	private Handler sliderHandler = null;
 	private CirclePageIndicator circleIndicator;
 
-	private FragMain() {
-		sliderHandler = new Handler();
+	public FragMain() {
+		if(sliderHandler==null)
+			sliderHandler = new Handler();
 	}
 
 	OnEditorActionListener callbackSearchQueryChange = new OnEditorActionListener() {
@@ -186,7 +187,8 @@ public class FragMain extends Fragment implements OnClickListener,
 							homeCallbacks.showToast(getString(R.string.error_connection_error));
 
 					} else {
-						homeCallbacks.showToast("error in getting categories");
+						homeCallbacks
+						.showToast(getString(R.string.error_connection_error));
 					}
 
 				} else {

@@ -23,9 +23,9 @@ public class DataStore {
 	private static DataStore instance;
 	private DataCacheProvider cacheProvider = null;
 	private AppUser me = null;
-	private List<CategoryModel> subCategoriesPairs=null;
-	private HashMap<Integer, PageModel> pages=null;
-	private final int TIMER_TICK=15*60*1000; //15 mins
+	private List<CategoryModel> subCategoriesPairs = null;
+	private HashMap<Integer, PageModel> pages = null;
+	private final int TIMER_TICK = 15 * 60 * 1000; // 15 mins
 
 	public static DataStore getInstance() {
 		if (instance == null)
@@ -43,96 +43,86 @@ public class DataStore {
 			e.printStackTrace();
 		}
 	}
-	
-	private void loadLocalData()
-	{
-		me=cacheProvider.getMe();
-		subCategoriesPairs=DataCacheProvider.getInstance().getStoredCategoriesPairs();
-		pages=DataCacheProvider.getInstance().getStoredPages();
+
+	private void loadLocalData() {
+		me = cacheProvider.getMe();
+		subCategoriesPairs = DataCacheProvider.getInstance()
+				.getStoredCategoriesPairs();
+		pages = DataCacheProvider.getInstance().getStoredPages();
 	}
-	
+
 	public void startScheduledUpdates() {
 		try {
 			handler.postDelayed(runnableUpdate, TIMER_TICK);
-		}catch (Exception e) {}
+		} catch (Exception e) {
+		}
 	}
-	
+
 	public void stopScheduledUpdates() {
 		try {
 			handler.removeCallbacks(runnableUpdate);
-		}catch (Exception e) {}
+		} catch (Exception e) {
+		}
 	}
-	
-	private Runnable runnableUpdate=new Runnable() {
-		
+
+	private Runnable runnableUpdate = new Runnable() {
+
 		@Override
 		public void run() {
 			attemptLoadAllPages();
 			handler.postDelayed(runnableUpdate, TIMER_TICK);
 		}
 	};
-	
-	private void attemptLoadAllPages()
-	{
+
+	private void attemptLoadAllPages() {
 		new Thread(new Runnable() {
-		
-		@Override
-		public void run() {
-			boolean success=true;
-			ServerResult result=serverHandler.getAllPages();
-			if(result.connectionFailed())
-				success=false;
-			else
-			{
-				try
-				{
-					if(result.getFlag()==ServerAccess.ERROR_CODE_done)
-					{
-						pages=(HashMap<Integer, PageModel>)result.getValue("pages");
-						DataCacheProvider.getInstance().storePages(pages);
+
+			@Override
+			public void run() {
+				boolean success = true;
+				ServerResult result = serverHandler.getAllPages();
+				if (result.connectionFailed())
+					success = false;
+				else {
+					try {
+						if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+							pages = (HashMap<Integer, PageModel>) result
+									.getValue("pages");
+							DataCacheProvider.getInstance().storePages(pages);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
 					}
 				}
-				catch(Exception ex)
-				{
-					ex.printStackTrace();
-				}
+				// invokeCallback(callback, success, result);
 			}
-			//invokeCallback(callback, success, result);
-		}
-	}).start();
+		}).start();
 	}
-	
-	private void loadAllPages()
-	{
-		boolean success=true;
-		ServerResult result=serverHandler.getAllPages();
-		if(result.connectionFailed())
-			success=false;
-		else
-		{
-			try
-			{
-				if(result.getFlag()==ServerAccess.ERROR_CODE_done)
-				{
-					pages=(HashMap<Integer, PageModel>)result.getValue("pages");
+
+	private void loadAllPages() {
+		boolean success = true;
+		ServerResult result = serverHandler.getAllPages();
+		if (result.connectionFailed())
+			success = false;
+		else {
+			try {
+				if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+					pages = (HashMap<Integer, PageModel>) result
+							.getValue("pages");
 					DataCacheProvider.getInstance().storePages(pages);
 				}
-			}
-			catch(Exception ex)
-			{
+			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
 	}
-	
-	public AppUser getMe()
-	{
+
+	public AppUser getMe() {
 		return me;
 	}
-	
-	public String getAccessToken()
-	{
-		if(me!=null)
+
+	public String getAccessToken() {
+		if (me != null)
 			return me.getAccessToken();
 		return null;
 	}
@@ -178,7 +168,7 @@ public class DataStore {
 					try {
 						if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 							me = (AppUser) result.getPairs().get("appUser");
-							//cacheProvider.storeAccessToken(me.getAccessToken());
+							// cacheProvider.storeAccessToken(me.getAccessToken());
 							cacheProvider.storeMe(me);
 						}
 					} catch (Exception e) {
@@ -210,7 +200,7 @@ public class DataStore {
 				} else {
 					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 						me = (AppUser) result.getPairs().get("appUser");
-						//cacheProvider.storeAccessToken(me.getAccessToken());
+						// cacheProvider.storeAccessToken(me.getAccessToken());
 						cacheProvider.storeMe(me);
 					}
 				}
@@ -225,24 +215,27 @@ public class DataStore {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				// cacheProvider.removePages();
 				boolean success = true;
 				PageModel page = null;
-				ServerResult result = null;
-				
+				ServerResult result = new ServerResult();
+
 				if(pages==null)
-					loadAllPages();
-				
-				page = pages.get(categoryId);
-				if(page!=null)
 				{
-					result = new ServerResult();
-					result.setFlag(ServerAccess.ERROR_CODE_done);
-					result.addPair("page", page);
+				 loadAllPages();
 				}
 				
-				
+				if (pages != null) {
+					if (pages.containsKey(categoryId)) {
+						page = pages.get(categoryId);
+						if (page != null) {
+							result.setFlag(ServerAccess.ERROR_CODE_done);
+							result.addPair("page", page);
+						}
+					}
+				}
+				else
+					success=false;
+
 				if (callback != null)
 					invokeCallback(callback, success, result);
 			}
@@ -272,7 +265,8 @@ public class DataStore {
 											.getValue("categories");
 									cacheProvider
 											.storeSubCategoriesPairs(subCategoriesPairs);
-									result.addPair("categories", subCategoriesPairs);
+									result.addPair("categories",
+											subCategoriesPairs);
 								} catch (Exception ex) {
 								}
 							}
@@ -301,8 +295,7 @@ public class DataStore {
 						.verifyUser(verificationCode);
 				if (result.connectionFailed())
 					success = false;
-				if(result.getFlag()==ServerAccess.ERROR_CODE_done)
-				{
+				if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
 					me.setVerified(1);
 					cacheProvider.removeStoredMe();
 					cacheProvider.storeMe(me);
@@ -332,8 +325,7 @@ public class DataStore {
 	public void attemptAddNewAdvertise(final String description,
 			final String address, final int categoryId, final int isUsed,
 			final int price, final JSONArray telephones,
-			final String facebookPageLink,
-			final DataRequestCallback callback) {
+			final String facebookPageLink, final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
@@ -341,7 +333,7 @@ public class DataStore {
 				boolean success = true;
 				ServerResult result = serverHandler.addNewAdvertise(
 						description, address, categoryId, isUsed, price,
-						telephones,facebookPageLink);
+						telephones, facebookPageLink);
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -415,7 +407,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.getUserPage(userId);
 				if (result.connectionFailed())
@@ -533,7 +524,8 @@ public class DataStore {
 			public void run() {
 				boolean success = true;
 				ServerResult result = serverHandler.updateUserProfile(userName,
-						mobileNumber, address, description,userProfilePicturePath);
+						mobileNumber, address, description,
+						userProfilePicturePath);
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -610,17 +602,19 @@ public class DataStore {
 			}
 		}).start();
 	}
-	
-	public void attemptDownloadPhoto(final String photoPath, final DataRequestCallback callback) {
+
+	public void attemptDownloadPhoto(final String photoPath,
+			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				boolean success = true;
-				Bitmap photo=PhotoProvider.getInstance().downloadImage(photoPath);
-				ServerResult result=new ServerResult();
-				
+				Bitmap photo = PhotoProvider.getInstance().downloadImage(
+						photoPath);
+				ServerResult result = new ServerResult();
+
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -631,22 +625,20 @@ public class DataStore {
 			}
 		}).start();
 	}
-	public void removeAllStoredData()
-	{
+
+	public void removeAllStoredData() {
 		DataCacheProvider.getInstance().removeAllStoredData();
-		me=null;
-		subCategoriesPairs=null;
-		pages=null;
+		me = null;
+		subCategoriesPairs = null;
+		pages = null;
 		stopScheduledUpdates();
 	}
-	
-	public void removePages()
-	{
+
+	public void removePages() {
 		DataCacheProvider.getInstance().removePages();
 	}
-	
-	public void removeSubCategoriesPairs()
-	{
+
+	public void removeSubCategoriesPairs() {
 		DataCacheProvider.getInstance().removeSubCategoriesPairs();
 	}
 

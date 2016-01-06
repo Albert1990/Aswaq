@@ -82,7 +82,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	///temp 
 	Uri outputFileUri; //holder for the image picked from the camera
 	
-	private FragAddAdvertise()
+	public FragAddAdvertise()
 	{
 		
 	}
