@@ -517,6 +517,7 @@ public class DataStore {
 	public void attemptUpdateUserProfile(final String userName,
 			final String mobileNumber, final String address,
 			final String description, final String userProfilePicturePath,
+			final String facebookPage,
 			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
@@ -525,7 +526,7 @@ public class DataStore {
 				boolean success = true;
 				ServerResult result = serverHandler.updateUserProfile(userName,
 						mobileNumber, address, description,
-						userProfilePicturePath);
+						userProfilePicturePath,facebookPage);
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -571,6 +572,27 @@ public class DataStore {
 				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.rateUser(userId, rate);
+				if (result.connectionFailed())
+					success = false;
+				else {
+					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+
+					}
+				}
+				if (callback != null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptSendChangePasswordRequest(final String email, final DataRequestCallback callback) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				boolean success = true;
+				ServerResult result = serverHandler.sendChangePasswordRequest(email);
 				if (result.connectionFailed())
 					success = false;
 				else {

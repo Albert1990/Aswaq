@@ -26,6 +26,15 @@
             android:layout_width="80dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/logo_splash" />
+        
+        <com.brainSocket.aswaq.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/user_profile_lbl_image_size"
+            android:textSize="@dimen/ts_text_small"
+            android:gravity="center"
+            app:fontId="1" />
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
@@ -34,7 +43,7 @@
             android:text="@string/lbl_user_name"
             app:fontId="1" />
 
-        <EditText
+        <com.brainSocket.aswaq.views.EditTextCustomFont
             android:id="@+id/txtUserNameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +57,7 @@
             android:text="@string/lbl_mobile_number"
             app:fontId="1" />
 
-        <EditText
+        <com.brainSocket.aswaq.views.EditTextCustomFont
             android:id="@+id/txtMobileNumberRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +73,7 @@
             android:text="@string/lbl_address"
             app:fontId="1" />
 
-        <EditText
+        <com.brainSocket.aswaq.views.EditTextCustomFont
             android:id="@+id/txtAddressRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,12 +87,43 @@
             android:text="@string/lbl_description"
             app:fontId="1" />
 
-        <EditText
+        <com.brainSocket.aswaq.views.EditTextCustomFont
             android:id="@+id/txtDescriptionRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
+        
+        <com.brainSocket.aswaq.views.TextViewCustomFont
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/diag_facebook_page_lbl_link"
+            app:fontId="1" />
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_text_normal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
+            android:text="@string/facebook_page_link_prefix"/>
+            
+            <com.brainSocket.aswaq.views.EditTextCustomFont
+            android:id="@+id/txtFacebookPage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+            
+        </LinearLayout>
+
+        
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnEditUserProfile"

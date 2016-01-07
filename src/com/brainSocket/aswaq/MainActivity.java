@@ -1,6 +1,7 @@
 package com.brainSocket.aswaq;
 
 import java.util.HashMap;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,9 +21,12 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.brainSocket.aswaq.adapters.DrawerAdapter;
 import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.PhotoProvider;
 import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.enums.ImageType;
 import com.brainSocket.aswaq.fragments.FragAbout;
 import com.brainSocket.aswaq.fragments.FragAddAdvertise;
 import com.brainSocket.aswaq.fragments.FragAds;
@@ -46,6 +50,7 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 	private FragmentType currentFragmentType;
 	private Fragment currentFragment;
 	private Dialog dialogLoading;
+	private ImageView ivUserImage;
 
 	// actionbar
 	private ImageView ivMenu;
@@ -61,7 +66,6 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 		initCustomActionBar();
 		initSlideDrawer();
 		init();
-		ivMenu.requestFocus();
 
 	}
 
@@ -79,9 +83,14 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 		llLogout = findViewById(R.id.llLogout);
 		llLogout.setOnClickListener(this);
 		tvUserName = (TextViewCustomFont) findViewById(R.id.tvUserName);
+		ivUserImage=(ImageView)findViewById(R.id.ivUserImage);
 		AppUser me = DataStore.getInstance().getMe();
 		if (me != null)
+		{
 			tvUserName.setText(me.getName());
+			String photoPath=AswaqApp.getImagePath(ImageType.User, me.getPicture());
+			PhotoProvider.getInstance().displayPhotoNormal(photoPath, ivUserImage);
+		}
 	}
 
 	private void initCustomActionBar() {

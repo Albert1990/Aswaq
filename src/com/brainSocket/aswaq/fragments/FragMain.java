@@ -63,8 +63,8 @@ public class FragMain extends Fragment implements OnClickListener,
 	private Handler sliderHandler = null;
 	private CirclePageIndicator circleIndicator;
 
-	public FragMain() {
-		if(sliderHandler==null)
+	private FragMain() {
+		if (sliderHandler == null)
 			sliderHandler = new Handler();
 	}
 
@@ -119,33 +119,43 @@ public class FragMain extends Fragment implements OnClickListener,
 		etSearch = (EditTextCustomFont) getView().findViewById(R.id.etSearch);
 		etSearch.setEnabled(false);
 		gridViewCategories.setOnItemClickListener(this);
-		
+
 		btnAddAdvertise = (FloatingActionButton) getView().findViewById(
 				R.id.btnAddAdvertise);
 		btnAddAdvertise.setOnClickListener(this);
 		vpSlider = (ViewPager) getView().findViewById(R.id.vpSliderMain);
 		vpSlider.setOnClickListener(this);
-		
+
 		etSearch.setOnEditorActionListener(callbackSearchQueryChange);
 		etSearch.setOnTouchListener(serchDrawableToutchLIstener);
-		circleIndicator=(CirclePageIndicator)getView().findViewById(R.id.titles);
+		circleIndicator = (CirclePageIndicator) getView().findViewById(
+				R.id.titles);
 
 		homeCallbacks.showProgress(true);
 		homeCallbacks.closeSlideDrawer();
-		
+
 		new Handler().postDelayed(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				View view = getActivity().getCurrentFocus();
-				if (view != null) {  
-				    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-				    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+				try {
+					if (getActivity() != null) {
+						View view = getActivity().getCurrentFocus();
+						if (view != null) {
+							InputMethodManager imm = (InputMethodManager) getActivity()
+									.getSystemService(
+											Context.INPUT_METHOD_SERVICE);
+							imm.hideSoftInputFromWindow(view.getWindowToken(),
+									0);
+						}
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
 				}
 			}
 		}, 2000);
 		DataStore.getInstance().attemptGetPageComponents(
-				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);	
+				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
 	}
 
 	private void search() {
@@ -162,33 +172,32 @@ public class FragMain extends Fragment implements OnClickListener,
 		public void onDataReady(ServerResult data, boolean success) {
 			try {
 				homeCallbacks.showProgress(false);
-				
+
 				if (success) {
 					if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
 						PageModel page = (PageModel) data.getValue("page");
-						if(page!=null)
-						{
-						categories = page.getCategories();
-						slides = page.getSlides();
-						MainCategoriesListAdapter categoryListAdapter = new MainCategoriesListAdapter(
-								getActivity(), categories);
-						gridViewCategories.setAdapter(categoryListAdapter);
+						if (page != null) {
+							categories = page.getCategories();
+							slides = page.getSlides();
+							MainCategoriesListAdapter categoryListAdapter = new MainCategoriesListAdapter(
+									getActivity(), categories);
+							gridViewCategories.setAdapter(categoryListAdapter);
 
-						SliderAdapter sliderAdapter = new SliderAdapter(
-								getActivity(), slides, SliderType.Banner);
-						vpSlider.setAdapter(sliderAdapter);
-						circleIndicator.setViewPager(vpSlider);
-						if (slides.size() > 1) {
-							new Handler().postDelayed(SliderTransition,
-									AswaqApp.SLIDER_TRANSITION_INTERVAL);
-						}
-					}
-						else
-							homeCallbacks.showToast(getString(R.string.error_connection_error));
+							SliderAdapter sliderAdapter = new SliderAdapter(
+									getActivity(), slides, SliderType.Banner);
+							vpSlider.setAdapter(sliderAdapter);
+							circleIndicator.setViewPager(vpSlider);
+							if (slides.size() > 1) {
+								new Handler().postDelayed(SliderTransition,
+										AswaqApp.SLIDER_TRANSITION_INTERVAL);
+							}
+						} else
+							homeCallbacks
+									.showToast(getString(R.string.error_connection_error));
 
 					} else {
 						homeCallbacks
-						.showToast(getString(R.string.error_connection_error));
+								.showToast(getString(R.string.error_connection_error));
 					}
 
 				} else {
@@ -224,15 +233,13 @@ public class FragMain extends Fragment implements OnClickListener,
 			}
 		}
 	};
-	
-	private void addAdvertise()
-	{
+
+	private void addAdvertise() {
 		try {
 			AppUser me = DataStore.getInstance().getMe();
 			if (me != null) {
 				if (me.isVerified() == true) {
-					homeCallbacks.loadFragment(FragmentType.AddAdvertise,
-							null);
+					homeCallbacks.loadFragment(FragmentType.AddAdvertise, null);
 				} else {
 					Intent i = new Intent(getActivity(),
 							VerificationActivity.class);
@@ -254,11 +261,11 @@ public class FragMain extends Fragment implements OnClickListener,
 			addAdvertise();
 			break;
 		case R.id.vpSlider:
-			try
-			{
+			try {
 				sliderHandler.removeCallbacks(SliderTransition);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
-			catch(Exception ex){ex.printStackTrace();}
 			break;
 		}
 	}

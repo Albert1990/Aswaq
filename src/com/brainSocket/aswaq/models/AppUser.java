@@ -35,7 +35,7 @@ public class AppUser /*implements Parcelable */{
 	float rate=0;
 	String description;
 	String address;
-	
+	String facebookPage;
 	 
 		
 
@@ -123,6 +123,11 @@ public class AppUser /*implements Parcelable */{
 			if(json.has("address"))
 				address = json.getString("address");
 		}catch (Exception e) {}
+		try
+		{
+			facebookPage=json.getString("facebook_page");
+		}
+		catch(Exception ex){}
 		
 	}
 	
@@ -150,7 +155,7 @@ public class AppUser /*implements Parcelable */{
 		try {json.put("rate", rate);} catch (Exception e) {}
 		try {json.put("description", description);} catch (Exception e) {}
 		try {json.put("address", address);} catch (Exception e) {}
-		//try {json.put("created_at", date);} catch (Exception e) {}
+		try {json.put("facebook_page", facebookPage);}catch(Exception ex){}
 		return json;
 	}
 	
@@ -299,6 +304,16 @@ public class AppUser /*implements Parcelable */{
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public void setFacebookPage(String facebookPage)
+	{
+		this.facebookPage=facebookPage;
+	}
+	
+	public String getFacebookPage()
+	{
+		return this.facebookPage;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.brainSocket.aswaq.fragments;
 
 import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,26 +14,24 @@ public class FragAbout extends Fragment{
 	
 	private FragAbout()
 	{
-		
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return inflater.inflate(R.layout.frag_about, container, false);
 	}
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		init();
 	}
 	
 	private void init()
 	{
-		
+		homeCallbacks=(HomeCallbacks)getActivity();
+		homeCallbacks.closeSlideDrawer();
 	}
 	
 	public static FragAbout newInstance()

@@ -913,7 +913,7 @@ public class ServerAccess {
 	}
 	
 	public ServerResult updateUserProfile(String userName, String mobileNumber,
-			String address, String description, String imgPath) {
+			String address, String description, String imgPath,String facebookPage) {
 		String url = BASE_SERVICE_URL + "users_api/edit_user_profile";
 		String responseString = null;
 		ServerResult res = new ServerResult();
@@ -945,7 +945,7 @@ public class ServerAccess {
 			String access_token = DataStore.getInstance()
 					.getAccessToken();
 			entity.addPart("access_token", new StringBody(access_token));
-			
+			entity.addPart("facebook_page", new StringBody(facebookPage,Charset.forName(HTTP.UTF_8)));
 
 			// totalSize = entity.getContentLength();
 //			httppost.setHeader(HTTP.CONTENT_TYPE,
@@ -997,6 +997,29 @@ public class ServerAccess {
 			res.setFlag(ServerAccess.ERROR_CODE_unknown_exception);
 		}
 		return res;
+	}
+	
+	public ServerResult sendChangePasswordRequest(String email) {
+		ServerResult result = new ServerResult();
+		try {
+			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
+			jsonPairs.add(new BasicNameValuePair("email", email));
+			// url
+			String url = BASE_SERVICE_URL + "users_api/send_change_password_request";
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response
+															// is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return result;
 	}
 	
 	public ServerResult updateUserProfile1(String userName, String mobileNumber,

@@ -2,15 +2,18 @@ package com.brainSocket.aswaq;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
 import com.brainSocket.aswaq.data.FacebookProvider;
 import com.brainSocket.aswaq.data.FacebookProviderListener;
 import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.dialogs.DiagChangePassword;
 import com.brainSocket.aswaq.enums.FragmentType;
 import com.brainSocket.aswaq.models.AppUser;
 import com.brainSocket.aswaq.views.TextViewCustomFont;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -29,6 +32,7 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,
 	private TextViewCustomFont btnDoesntHaveAccount;
 	private TextViewCustomFont btnLoginFB;
 	private Dialog dialogLoading;
+	private View btnForgetPassword;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -49,6 +53,8 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,
 		btnLogin.setOnClickListener(this);
 		btnDoesntHaveAccount.setOnClickListener(this);
 		btnLoginFB.setOnClickListener(this);
+		btnForgetPassword=findViewById(R.id.btnForgetPassword);
+		btnForgetPassword.setOnClickListener(this);
 	}
 
 	private void login() {
@@ -215,6 +221,10 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,
 				break;
 			case R.id.btnLoginFB:
 				attempFBtLogin();
+				break;
+			case R.id.btnForgetPassword:
+				DiagChangePassword diagChangePassword=new DiagChangePassword();
+				diagChangePassword.show(getSupportFragmentManager(), "");
 				break;
 			default:
 				break;

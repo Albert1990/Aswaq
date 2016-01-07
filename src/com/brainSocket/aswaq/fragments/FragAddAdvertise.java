@@ -75,6 +75,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	String[] imagesURI={null,null,null,null};
 	private int phoneNumberIndex=0;
 	private String facebookPageLink="";
+	private String facebooKPrefixLink="https://www.facebook.com/";
 	
 	// data
 	boolean isNew = false;
@@ -82,7 +83,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	///temp 
 	Uri outputFileUri; //holder for the image picked from the camera
 	
-	public FragAddAdvertise()
+	private FragAddAdvertise()
 	{
 		
 	}
@@ -148,12 +149,11 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		if(me.getPhoneNum().length()>0)
 		{
 			addPhoneNumberView(me.getPhoneNum());
+			if(me.getFacebookPage().length()>2)
+				btnAddYourPage.setText(facebooKPrefixLink+ me.getFacebookPage());
 		}
-		
-		
 		// initial State
 		setProductNew(false);
-		
 	}
 	
 	private void addNewAdvertise()
@@ -473,7 +473,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			{
 				if(params.containsKey("facebookPageLink"))
 				{
-					facebookPageLink="https://www.facebook.com/"+(String)params.get("facebookPageLink");
+					facebookPageLink=facebooKPrefixLink+(String)params.get("facebookPageLink");
 					btnAddYourPage.setText(facebookPageLink);
 				}
 			}

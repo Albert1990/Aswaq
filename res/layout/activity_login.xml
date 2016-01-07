@@ -34,8 +34,7 @@
             android:layout_marginRight="10dp"
             android:lines="1"
             android:maxLines="1"
-            android:singleLine="true"
-            android:text="admin@admin.com" />
+            android:singleLine="true"/>
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
@@ -53,8 +52,7 @@
             android:inputType="textPassword"
             android:lines="1"
             android:maxLines="1"
-            android:singleLine="true"
-            android:text="admin123" />
+            android:singleLine="true" />
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnLogin"
@@ -98,6 +96,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/btn_doesnt_have_account"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/ts_text_big"
+            app:fontId="1" />
+        
+        <com.brainSocket.aswaq.views.TextViewCustomFont
+            android:id="@+id/btnForgetPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/btn_forget_password"
             android:textColor="@color/blue"
             android:textSize="@dimen/ts_text_big"
             app:fontId="1" />

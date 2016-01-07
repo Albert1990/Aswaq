@@ -20,6 +20,7 @@ import com.brainSocket.aswaq.enums.FragmentType;
 import com.brainSocket.aswaq.enums.ImageType;
 import com.brainSocket.aswaq.enums.PhoneNumberCheckResult;
 import com.brainSocket.aswaq.models.AppUser;
+import com.brainSocket.aswaq.views.EditTextCustomFont;
 import com.brainSocket.aswaq.views.TextViewCustomFont;
 
 import android.app.Activity;
@@ -59,11 +60,12 @@ public class UserProfileActivity extends AppBaseActivity implements
 	private ImageView ivMenu;
 
 	// view members
-	private EditText txtUserNameRegister;
-	private EditText txtMobileNumberRegister;
-	private EditText txtAddressRegister;
-	private EditText txtDescriptionRegister;
+	private EditTextCustomFont txtUserNameRegister;
+	private EditTextCustomFont txtMobileNumberRegister;
+	private EditTextCustomFont txtAddressRegister;
+	private EditTextCustomFont txtDescriptionRegister;
 	private TextViewCustomFont btnEdit;
+	private EditTextCustomFont txtFacebookPage;
 	private Dialog dialogLoading;
 	private ImageView ivUserPhoto;
 	private String selectedUserProfilePictureUri="";
@@ -85,14 +87,16 @@ public class UserProfileActivity extends AppBaseActivity implements
 		try {
 			AppUser me = DataStore.getInstance().getMe();
 			if (me != null) {
-				txtUserNameRegister = (EditText) findViewById(R.id.txtUserNameRegister);
-				txtMobileNumberRegister = (EditText) findViewById(R.id.txtMobileNumberRegister);
-				txtAddressRegister = (EditText) findViewById(R.id.txtAddressRegister);
-				txtDescriptionRegister = (EditText) findViewById(R.id.txtDescriptionRegister);
+				txtUserNameRegister = (EditTextCustomFont) findViewById(R.id.txtUserNameRegister);
+				txtMobileNumberRegister = (EditTextCustomFont) findViewById(R.id.txtMobileNumberRegister);
+				txtAddressRegister = (EditTextCustomFont) findViewById(R.id.txtAddressRegister);
+				txtDescriptionRegister = (EditTextCustomFont) findViewById(R.id.txtDescriptionRegister);
+				txtFacebookPage=(EditTextCustomFont)findViewById(R.id.txtFacebookPage);
 				btnEdit = (TextViewCustomFont) findViewById(R.id.btnEditUserProfile);
 				btnEdit.setOnClickListener(this);
 				ivUserPhoto=(ImageView)findViewById(R.id.ivUserPhoto);
 				ivUserPhoto.setOnClickListener(this);
+				txtFacebookPage.setText(me.getFacebookPage().toString());
 				bindUiData(me);
 			}
 		} catch (Exception ex) {
@@ -194,6 +198,7 @@ public class UserProfileActivity extends AppBaseActivity implements
 		String mobileNumber = txtMobileNumberRegister.getText().toString();
 		String address = txtAddressRegister.getText().toString();
 		String description = txtDescriptionRegister.getText().toString();
+		String facebookPage=txtFacebookPage.getText().toString();
 
 		if (AswaqApp.isEmptyOrNull(userName)) {
 			txtUserNameRegister
@@ -207,7 +212,8 @@ public class UserProfileActivity extends AppBaseActivity implements
 		else {
 			showProgress(true);
 			DataStore.getInstance().attemptUpdateUserProfile(userName,
-					mobileNumber, address, description,selectedUserProfilePictureUri,
+					mobileNumber, address, 
+					description,selectedUserProfilePictureUri,facebookPage,
 					updateUserProfileCallback);
 		}
 	}
@@ -227,6 +233,7 @@ public class UserProfileActivity extends AppBaseActivity implements
 						originalMe.setAddress(recievedMe.getAddress());
 						originalMe.setDescription(recievedMe.getDescription());
 						originalMe.setPicture(recievedMe.getPicture());
+						originalMe.setFacebookPage(recievedMe.getFacebookPage());
 						DataCacheProvider.getInstance().storeMe(originalMe);
 					}
 					finish();
@@ -315,7 +322,7 @@ public class UserProfileActivity extends AppBaseActivity implements
 		            if(filePath != null && !filePath.isEmpty()){
 		            	filePath = new File(filePath).getAbsolutePath(); // make sure we have a valid absolute path
 			            Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath(),150,150);
+			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath(),300,300);
 			            selectedUserProfilePictureUri = getNewTempImgFile(true).getAbsolutePath();
 			            ivUserPhoto.setImageBitmap(yourSelectedImage);
 		            }

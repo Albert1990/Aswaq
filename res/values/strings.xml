@@ -69,7 +69,7 @@
     <string name="drawer_share">شير</string>
     <string name="drawer_main">الرئيسية</string>
     <string name="drawer_profile">صفحتي الشخصية</string>
-    <string name="drawer_agents">عملائي</string>
+    <string name="drawer_agents">قائمة المتابعين</string>
     <string name="drawer_callus">اتصل بنا</string>
     <string name="drawer_favourites">المفضلة</string>
     <string name="hint_password_repeat">تأكيد كلمة المرور</string>
@@ -135,5 +135,10 @@
     <string name="diag_facebook_page_ok">موافق</string>
     <string name="facebook_page_link_prefix">https://www.facebook.com/</string>
     <string name="user_profile_change_photo">غير صورتك الشخصية</string>
+    <string name="user_profile_lbl_image_size">يفضل أن تكون الصورة بقياس 300*300</string>
+    <string name="diag_change_password_lbl_email">اكتب بريدك الإلكتروني :</string>
+    <string name="diag_change_password_send_request">إرسال طلب تغيير كلمة المرور</string>
+    <string name="diag_change_password_sending_success">تم إرسال الطلب إلى بريدك الإلكتروني</string>
+    <string name="btn_forget_password">نسيت كلمة المرور ؟</string>
     
 </resources>
