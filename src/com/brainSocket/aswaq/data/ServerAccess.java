@@ -37,6 +37,7 @@ import com.brainSocket.aswaq.data.AndroidMultiPartEntity.ProgressListener;
 import com.brainSocket.aswaq.models.AdvertiseModel;
 import com.brainSocket.aswaq.models.AppUser;
 import com.brainSocket.aswaq.models.CategoryModel;
+import com.brainSocket.aswaq.models.ContactModel;
 import com.brainSocket.aswaq.models.PageModel;
 import com.brainSocket.aswaq.models.SlideModel;
 
@@ -1022,20 +1023,12 @@ public class ServerAccess {
 		return result;
 	}
 	
-	public ServerResult updateUserProfile1(String userName, String mobileNumber,
-			String address, String description) {
+	public ServerResult getContactInfo() {
 		ServerResult result = new ServerResult();
 		try {
 			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
-			jsonPairs.add(new BasicNameValuePair("access_token",
-					DataStore.getInstance().getAccessToken()));
-			jsonPairs.add(new BasicNameValuePair("user_name", userName));
-			jsonPairs
-					.add(new BasicNameValuePair("mobile_number", mobileNumber));
-			jsonPairs.add(new BasicNameValuePair("address", address));
-			jsonPairs.add(new BasicNameValuePair("description", description));
 			// url
-			String url = BASE_SERVICE_URL + "users_api/edit_user_profile";
+			String url = BASE_SERVICE_URL + "contact_api/get_contact_info";
 			// send request
 			String response = sendPostRequest(url, jsonPairs);
 			// parse response
@@ -1045,13 +1038,12 @@ public class ServerAccess {
 				result.setFlag(jsonResponse.getInt(FLAG));
 				if (jsonResponse.has("object")) {
 					if (!jsonResponse.isNull("object")) {
-						JSONObject meJson = jsonResponse
+						JSONObject jsonContactInfo = jsonResponse
 								.getJSONObject("object");
-						AppUser me = new AppUser(meJson);
-						result.addPair("me", me);
+						ContactModel contactModel = new ContactModel(jsonContactInfo);
+						result.addPair("contactModel", contactModel);
 					}
 				}
-
 			} else {
 				result.setFlag(CONNECTION_ERROR_CODE);
 			}

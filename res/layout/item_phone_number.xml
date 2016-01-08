@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal" >
+    
+    <com.brainSocket.aswaq.views.TextViewCustomFont
+                    android:id="@+id/tvPhoneNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="4dp"
+                    android:textColor="@color/txt_dark"
+                    android:textSize="@dimen/ts_text_normal"
+                    app:fontId="1" />
+
+                <ImageView
+                    android:id="@+id/ivPhone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_toLeftOf="@id/tvPhoneNumber"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/ic_phone"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/ivWhats"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_toRightOf="@id/tvPhoneNumber"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/ic_whats"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/ivViber"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_toRightOf="@id/tvPhoneNumber"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/ic_viber"
+                    android:visibility="gone" />
+
+</LinearLayout>

@@ -248,7 +248,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = new ServerResult();
 
@@ -289,7 +288,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler
 						.verifyUser(verificationCode);
@@ -311,7 +309,6 @@ public class DataStore {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.searchFor(keyword);
 				if (result.connectionFailed())
@@ -356,7 +353,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.getCategoryAds(categoryId);
 				if (result.connectionFailed())
@@ -382,7 +378,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.getAdvertiseDetails(adId);
 				if (result.connectionFailed())
@@ -451,7 +446,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.addAdvertiseToFavourite(
 						ad_id, add);
@@ -473,7 +467,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.getClients();
 				if (result.connectionFailed())
@@ -497,7 +490,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.sendVerificationCode();
 				if (result.connectionFailed())
@@ -543,7 +535,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.getMyFavourites();
 				if (result.connectionFailed())
@@ -569,7 +560,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.rateUser(userId, rate);
 				if (result.connectionFailed())
@@ -590,9 +580,28 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				ServerResult result = serverHandler.sendChangePasswordRequest(email);
+				if (result.connectionFailed())
+					success = false;
+				else {
+					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+
+					}
+				}
+				if (callback != null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptGetContactInfo(final DataRequestCallback callback) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				boolean success = true;
+				ServerResult result = serverHandler.getContactInfo();
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -631,7 +640,6 @@ public class DataStore {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				boolean success = true;
 				Bitmap photo = PhotoProvider.getInstance().downloadImage(
 						photoPath);

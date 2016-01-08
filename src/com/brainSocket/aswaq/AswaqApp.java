@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 
 import com.brainSocket.aswaq.data.DataStore;
 import com.brainSocket.aswaq.data.ServerAccess;
@@ -55,7 +56,11 @@ public class AswaqApp extends Application {
 	}
 
 	public static boolean isEmailValid(final String email) {
-		return true;
+		if (TextUtils.isEmpty(email)) {
+		    return false;
+		  } else {
+		    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+		  }
 	}
 
 	public static boolean isEmptyOrNull(final String txt) {

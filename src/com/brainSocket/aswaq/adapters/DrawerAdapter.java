@@ -155,7 +155,12 @@ public class DrawerAdapter extends BaseAdapter implements OnItemClickListener {
 				context.startActivity(i);
 			}
 		} else if (elem.itemType == DrawerItemType.FAVOURITES) {
-			homeCallbacks.loadFragment(FragmentType.Favourites, null);
+			if (me != null)
+				homeCallbacks.loadFragment(FragmentType.Favourites, null);
+			else {
+				Intent i = new Intent(context, LoginActivity.class);
+				context.startActivity(i);
+			}
 		} else if (elem.itemType == DrawerItemType.CALLUS) {
 			homeCallbacks.loadFragment(FragmentType.About, null);
 		} else {

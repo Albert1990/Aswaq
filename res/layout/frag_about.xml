@@ -11,7 +11,7 @@
 
         <ImageView
             android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/logo_splash" />
         
@@ -21,62 +21,24 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_app_name_white1" />
 
-        
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <com.brainSocket.aswaq.views.TextViewCustomFont
-                    android:id="@+id/tvPhoneNumber"
+            <ListView 
+                android:id="@+id/lstPhones"
+                android:layout_marginTop="20dp"
+                android:layout_width="200dp"
+                android:layout_height="95dp"
+                android:layout_gravity="center_horizontal">
+                
+            </ListView>
+            
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                    android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="4dp"
-                    android:text="@string/frag_about_number"
+                    android:gravity="center_horizontal"
                     android:textColor="@color/txt_dark"
-                    android:textSize="@dimen/ts_text_normal"
+                    android:textSize="@dimen/ts_text_big"
+                    android:layout_gravity="center_horizontal"
                     app:fontId="1" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_toRightOf="@id/tvPhoneNumber"
-                    android:gravity="center_horizontal"
-                    android:src="@drawable/ic_phone" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_toRightOf="@id/tvPhoneNumber"
-                    android:gravity="center_horizontal"
-                    android:src="@drawable/ic_whats" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_toRightOf="@id/tvPhoneNumber"
-                    android:gravity="center_horizontal"
-                    android:src="@drawable/ic_viber" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -89,7 +51,6 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginRight="4dp"
-                    android:layout_toRightOf="@id/tvPhoneNumber"
                     android:gravity="center_horizontal"
                     android:src="@drawable/ic_fb_about" />
 
@@ -99,12 +60,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:gravity="center_vertical"
-                    android:text="@string/frag_about_fb_page"
                     android:textColor="@color/txt_dark"
                     android:textSize="@dimen/ts_text_big"
                     app:fontId="1" />
             </LinearLayout>
-        </FrameLayout>
+            
+            <com.brainSocket.aswaq.views.TextViewCustomFont
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_dark"
+                    android:text="@string/frag_about_developed_by"
+                    android:textSize="@dimen/ts_text_normal"
+            		android:layout_marginTop="30dp"
+            		android:layout_marginLeft="15dp"
+                    app:fontId="1" />
+            
+            <ImageView
+                android:id="@+id/ivBrainSocketLogo"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/brain_socket_logo" />
+            
+            
     </LinearLayout>
 
 </ScrollView>

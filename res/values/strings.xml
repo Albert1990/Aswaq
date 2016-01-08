@@ -140,5 +140,6 @@
     <string name="diag_change_password_send_request">إرسال طلب تغيير كلمة المرور</string>
     <string name="diag_change_password_sending_success">تم إرسال الطلب إلى بريدك الإلكتروني</string>
     <string name="btn_forget_password">نسيت كلمة المرور ؟</string>
+    <string name="frag_about_developed_by">Developed By :</string>
     
 </resources>
