@@ -18,18 +18,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FragAbout extends Fragment implements OnClickListener{
+public class FragAbout extends Fragment implements OnClickListener,OnItemClickListener{
 	private HomeCallbacks homeCallbacks;
 	private ContactModel contactInfo;
 	private TextViewCustomFont tvfbPage;
 	private TextViewCustomFont tvEmail;
 	private View ivBrainSocketLogo;
+	private ListView lstPhones;
 	
 	private FragAbout()
 	{
@@ -57,6 +60,8 @@ public class FragAbout extends Fragment implements OnClickListener{
 		tvEmail=(TextViewCustomFont)getView().findViewById(R.id.tvEmail);
 		ivBrainSocketLogo=getView().findViewById(R.id.ivBrainSocketLogo);
 		ivBrainSocketLogo.setOnClickListener(this);
+		lstPhones=(ListView)getView().findViewById(R.id.lstPhones);;
+		lstPhones.setOnItemClickListener(this);
 		DataStore.getInstance().attemptGetContactInfo(getContactInfoCallback);
 	}
 	
@@ -70,7 +75,6 @@ public class FragAbout extends Fragment implements OnClickListener{
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
 				{
 					contactInfo=(ContactModel)data.getValue("contactModel");
-					ListView lstPhones=(ListView)getView().findViewById(R.id.lstPhones);
 					PhoneListAdapter adapter=new PhoneListAdapter();
 					lstPhones.setAdapter(adapter);
 					tvfbPage.setText(contactInfo.getFacebookPage());
@@ -151,7 +155,6 @@ public class FragAbout extends Fragment implements OnClickListener{
 			ImageView ivWhats;
 			ImageView ivViber;
 		}
-		
 	}
 
 	@Override
@@ -175,6 +178,15 @@ public class FragAbout extends Fragment implements OnClickListener{
 			startActivity(i);
 			break;
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		String selectedPhoneNumber = contactInfo.getPhones().get(position).getNumber();
+		Intent i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+				+ selectedPhoneNumber));
+		startActivity(i);
 	}
 
 }
