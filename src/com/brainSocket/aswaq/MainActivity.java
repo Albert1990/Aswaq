@@ -127,7 +127,7 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 	 */
 	private void updateActionbar(FragmentType section) {
 		setActionBarColor(Color.WHITE);
-		ivMenu.setVisibility(View.VISIBLE);
+		ivMenu.setVisibility(View.INVISIBLE);
 		ivBack.setVisibility(View.VISIBLE);
 		tvFragTitle.setVisibility(View.VISIBLE);
 
@@ -135,24 +135,25 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 		case Main:
 			setActionBarColor(Color.TRANSPARENT);
 			ivBack.setVisibility(View.GONE);
+			ivMenu.setVisibility(View.VISIBLE);
 			tvFragTitle.setVisibility(View.GONE);
 			break;
 		case AddAdvertise:
-			ivMenu.setVisibility(View.GONE);
+			//ivMenu.setVisibility(View.GONE);
 			break;
 		case SubCategories:
-			ivMenu.setVisibility(View.GONE);
+			//ivMenu.setVisibility(View.GONE);
 			break;
 		case MyClients:
-			ivMenu.setVisibility(View.GONE);
+			//ivMenu.setVisibility(View.GONE);
 			tvFragTitle.setText(getString(R.string.drawer_agents));
 			break;
 		case Favourites:
-			ivMenu.setVisibility(View.GONE);
+			//ivMenu.setVisibility(View.GONE);
 			tvFragTitle.setText(getString(R.string.drawer_favourites));
 			break;
 		case ShowAds:
-			ivMenu.setVisibility(View.GONE);
+			//ivMenu.setVisibility(View.GONE);
 			break;
 		default:
 			// setActionBarColor(getResources().getColor(R.color.app_theme));

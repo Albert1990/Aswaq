@@ -107,6 +107,21 @@ public class AswaqApp extends Application {
 
 	public static void resizeImage(Bitmap originalBitmap, String path,int newWidth,int newHeight) {
 		try {
+			float ratio=1;
+			if(originalBitmap.getWidth()>originalBitmap.getHeight())
+			{
+				ratio=originalBitmap.getWidth()/originalBitmap.getHeight();
+			}
+			else if(originalBitmap.getWidth()<originalBitmap.getHeight())
+			{
+				ratio=originalBitmap.getHeight()/originalBitmap.getWidth();
+			}
+			else
+			{
+				
+			}
+			newWidth=(int)(originalBitmap.getWidth()/(ratio*newWidth));
+			newHeight=(int)(originalBitmap.getHeight()/(ratio*newHeight));
 			File imageFile = new File(path);
 			Bitmap bmScreenshot = Bitmap.createScaledBitmap(originalBitmap,
 					newWidth,newHeight , false);

@@ -11,6 +11,7 @@ import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.models.AdvertiseModel;
 import com.brainSocket.aswaq.models.AppUser;
 import com.brainSocket.aswaq.models.CategoryModel;
+import com.brainSocket.aswaq.models.ContactModel;
 import com.brainSocket.aswaq.models.PageModel;
 import com.brainSocket.aswaq.models.SlideModel;
 
@@ -23,6 +24,7 @@ public class DataStore {
 	private static DataStore instance;
 	private DataCacheProvider cacheProvider = null;
 	private AppUser me = null;
+	private ContactModel contactModel;
 	private List<CategoryModel> subCategoriesPairs = null;
 	private HashMap<Integer, PageModel> pages = null;
 	private final int TIMER_TICK = 15 * 60 * 1000; // 15 mins
@@ -601,12 +603,22 @@ public class DataStore {
 			@Override
 			public void run() {
 				boolean success = true;
-				ServerResult result = serverHandler.getContactInfo();
-				if (result.connectionFailed())
-					success = false;
-				else {
-					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
-
+				ServerResult result = null;
+				if(contactModel!=null)
+				{
+					result=new ServerResult();
+					result.setFlag(ServerAccess.ERROR_CODE_done);
+					result.addPair("contactModel", contactModel);
+				}
+				else
+				{
+					result=serverHandler.getContactInfo();
+					if (result.connectionFailed())
+						success = false;
+					else {
+						if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+							contactModel=(ContactModel)result.getValue("contactModel");
+						}
 					}
 				}
 				if (callback != null)

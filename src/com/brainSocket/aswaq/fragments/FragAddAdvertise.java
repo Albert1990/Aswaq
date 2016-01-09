@@ -149,8 +149,11 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		if(me.getPhoneNum().length()>0)
 		{
 			addPhoneNumberView(me.getPhoneNum());
-			if(me.getFacebookPage().length()>2)
-				btnAddYourPage.setText(facebooKPrefixLink+ me.getFacebookPage());
+		}
+		if(me.getFacebookPage().length()>1)
+		{
+			facebookPageLink=me.getFacebookPage();
+			btnAddYourPage.setText(facebooKPrefixLink+ me.getFacebookPage());
 		}
 		// initial State
 		setProductNew(false);
@@ -220,12 +223,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			if(focusView!=null)
 				focusView.requestFocus();
 		}else{
-			boolean hasOnePhotoAtLeast=false;
-			for(int i=0;i<imagesURI.length;i++)
-			{
-				if(imagesURI[i]!=null)
-					hasOnePhotoAtLeast=true;
-			}
+			boolean hasOnePhotoAtLeast=true;//false;
+//			for(int i=0;i<imagesURI.length;i++)
+//			{
+//				if(imagesURI[i]!=null)
+//					hasOnePhotoAtLeast=true;
+//			}
 			if(hasOnePhotoAtLeast)
 			{
 				// we have to collect all inserted phone numbers
