@@ -30,7 +30,7 @@ public class AswaqApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		AppContext = this;
+		AppContext = this; 
 		DataStore.getInstance(); // to make sure DataStore is initalized
 	}
 

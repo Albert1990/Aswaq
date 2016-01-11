@@ -57,7 +57,7 @@
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:background="@drawable/logo_splash"
+            android:src="@drawable/logo_splash"
             android:padding="2dp"
             android:scaleType="centerCrop"
             app:corner_radius="5dp" />
