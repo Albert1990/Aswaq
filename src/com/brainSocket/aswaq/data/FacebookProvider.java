@@ -80,10 +80,32 @@ public class FacebookProvider {
 	                                Log.v("LoginActivity", response.toString());
 	                                HashMap<String, Object> map = new HashMap<String, Object>();
 	                                JSONObject jsonResp = response.getJSONObject();
+	                                try
+	                                {
 	                                map.put("name", jsonResp.get("name"));
+	                                }catch(Exception ex){
+	                                	map.put("name", "unknown");
+	                                }
+	                                try
+	                                {
 	                                map.put("email", jsonResp.get("email"));
+	                                }catch(Exception ex){
+	                                	map.put("email", "");
+	                                }
+	                                try
+	                                {
 	                                map.put("gender", jsonResp.get("gender"));
+	                                }
+	                                catch(Exception ex){
+	                                	ex.printStackTrace();
+	                                }
+	                                try
+	                                {
 	                                map.put("birthday", jsonResp.get("birthday"));
+	                                }
+	                                catch(Exception ex){
+	                                	ex.printStackTrace();
+	                                }
 	                                broadcastSessionOpened(accessToken.getToken(), accessToken.getUserId(), map);
                             	}catch (Exception e) {
 									broadcastFacebookException(null);
