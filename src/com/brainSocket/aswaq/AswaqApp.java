@@ -153,8 +153,8 @@ public class AswaqApp extends Application {
 			result = PhoneNumberCheckResult.SHORT;
 		}
 
-		// if(!(num.startsWith("00") || num.startsWith("+") ) )
-		// result = PhoneNumberCheckResult.WRONG;
+//		 if(!(num.startsWith("00") || num.startsWith("+") ) )
+//		 result = PhoneNumberCheckResult.WRONG;
 
 		return result;
 	}

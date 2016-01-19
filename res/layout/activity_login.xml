@@ -14,45 +14,29 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="140dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="50dp"
             android:src="@drawable/logo_splash" />
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@string/lbl_email"
+            android:text="@string/lbl_mobile_number"
             android:textSize="@dimen/ts_text_normal"
             app:fontId="1" />
 
         <EditText
-            android:id="@+id/txtEmail"
+            android:id="@+id/txtMobileNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:lines="1"
             android:maxLines="1"
+            android:inputType="phone"
             android:singleLine="true"/>
 
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_password"
-            android:textSize="@dimen/ts_text_normal"
-            app:fontId="1" />
-
-        <EditText
-            android:id="@+id/txtPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:inputType="textPassword"
-            android:lines="1"
-            android:maxLines="1"
-            android:singleLine="true" />
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
             android:id="@+id/btnLogin"
@@ -66,49 +50,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/ts_text_normal"
             app:fontId="2" />
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/login_lbl_or"
-            android:textColor="@color/txt_normal"
-            android:textSize="@dimen/ts_text_small"
-            app:fontId="1" />
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/btnLoginFB"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/shape_rounded_fb"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/login_btn_login_fb"
-            android:textColor="@color/white"
-            android:textSize="@dimen/ts_text_normal"
-            app:fontId="1" />
-
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/btnDoesntHaveAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/btn_doesnt_have_account"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/ts_text_big"
-            app:fontId="1" />
-        
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:id="@+id/btnForgetPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/btn_forget_password"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/ts_text_big"
-            app:fontId="1" />
     </LinearLayout>
 
 </ScrollView>

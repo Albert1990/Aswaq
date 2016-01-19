@@ -11,6 +11,7 @@ import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
 import com.brainSocket.aswaq.dialogs.DiagChangePassword;
 import com.brainSocket.aswaq.enums.FragmentType;
+import com.brainSocket.aswaq.enums.PhoneNumberCheckResult;
 import com.brainSocket.aswaq.models.AppUser;
 import com.brainSocket.aswaq.views.TextViewCustomFont;
 import com.facebook.AccessToken;
@@ -29,13 +30,15 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppBaseActivity implements OnClickListener,
 		HomeCallbacks {
-	private EditText txtEmail;
-	private EditText txtPassword;
+	//private EditText txtEmail;
+	//private EditText txtPassword;
 	private TextViewCustomFont btnLogin;
-	private TextViewCustomFont btnDoesntHaveAccount;
-	private TextViewCustomFont btnLoginFB;
+	//private TextViewCustomFont btnDoesntHaveAccount;
+	//private TextViewCustomFont btnLoginFB;
 	private Dialog dialogLoading;
-	private View btnForgetPassword;
+	//private View btnForgetPassword;
+	private EditText txtMobileNumber;
+	private String mobileNumber="";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -48,57 +51,55 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,
 	}
 
 	private void initComponents() {
-		txtEmail = (EditText) findViewById(R.id.txtEmail);
-		txtPassword = (EditText) findViewById(R.id.txtPassword);
+		//txtEmail = (EditText) findViewById(R.id.txtEmail);
+		//txtPassword = (EditText) findViewById(R.id.txtPassword);
 		btnLogin = (TextViewCustomFont) findViewById(R.id.btnLogin);
-		btnDoesntHaveAccount = (TextViewCustomFont) findViewById(R.id.btnDoesntHaveAccount);
-		btnLoginFB = (TextViewCustomFont) findViewById(R.id.btnLoginFB);
+		//btnDoesntHaveAccount = (TextViewCustomFont) findViewById(R.id.btnDoesntHaveAccount);
+		//btnLoginFB = (TextViewCustomFont) findViewById(R.id.btnLoginFB);
 		btnLogin.setOnClickListener(this);
-		btnDoesntHaveAccount.setOnClickListener(this);
-		btnLoginFB.setOnClickListener(this);
-		btnForgetPassword=findViewById(R.id.btnForgetPassword);
-		btnForgetPassword.setOnClickListener(this);
+		//btnDoesntHaveAccount.setOnClickListener(this);
+		//btnLoginFB.setOnClickListener(this);
+		//btnForgetPassword=findViewById(R.id.btnForgetPassword);
+		//btnForgetPassword.setOnClickListener(this);
+		
+		txtMobileNumber=(EditText)findViewById(R.id.txtMobileNumber);
 	}
 
+
+	
 	private void login() {
 		boolean cancel = false;
 		View focusView = null;
 
-		String email = txtEmail.getText().toString();
-		String password = txtPassword.getText().toString();
+		mobileNumber = txtMobileNumber.getText().toString();
+		//check mobile number
+		PhoneNumberCheckResult mobileNumberCheckResult= AswaqApp.validatePhoneNum(mobileNumber);
+		
+		
+		if(mobileNumberCheckResult!=PhoneNumberCheckResult.OK)
+		{
+			cancel=true;
+		switch(mobileNumberCheckResult)
+		{
+		case WRONG:
+			txtMobileNumber.setError(getString(R.string.error_mobile_number_wrong));
+			break;
+		case SHORT:
+			txtMobileNumber.setError(getString(R.string.error_mobile_number_short));
+			break;
+		case EMPTY:
+			txtMobileNumber.setError(getString(R.string.error_mobile_number_empty));
+			break;
+		}
+		}
 
-		// check email if valid
-		if (AswaqApp.isEmptyOrNull(email)) {
-			txtEmail.setError(getString(R.string.login_error_email_empty));
-			cancel = true;
-			focusView = txtEmail;
-		} else {
-			if (!AswaqApp.isEmailValid(email)) {
-				txtEmail.setError(getString(R.string.login_error_email_invalid));
-				cancel = true;
-				focusView = txtEmail;
-			}
-		}
-		if (AswaqApp.isEmptyOrNull(password)) {
-			txtPassword
-					.setError(getString(R.string.login_error_password_empty));
-			cancel = true;
-			focusView = txtPassword;
-		} else {
-			if (password.length() < 4) {
-				txtPassword
-						.setError(getString(R.string.login_error_password_length));
-				cancel = true;
-				focusView = txtPassword;
-			}
-		}
 		if (cancel) {
 			focusView.requestFocus();
 		} else {
 			// every thing is good
 			showProgress(true);
 			DataStore.getInstance()
-					.attemptLogin(email, password, loginCallback);
+					.attemptLogin(mobileNumber, loginCallback);
 		}
 	}
 
@@ -120,8 +121,12 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,
 					startActivity(i);
 					finish();
 				} else if (data.getFlag() == ServerAccess.ERROR_CODE_user_not_exists) {
-					txtEmail.setError(getString(R.string.login_error_email_or_password_wrong));
-					txtEmail.requestFocus();
+					//txtEmail.setError(getString(R.string.login_error_email_or_password_wrong));
+					//txtEmail.requestFocus();
+					Intent i=new Intent(LoginActivity.this,RegisterActivity.class);
+					i.putExtra("mobileNumber", mobileNumber);
+					startActivity(i);
+					
 				}
 			} else {
 				showToast(getString(R.string.login_error_connection_failed));
@@ -129,89 +134,34 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,
 		}
 	};
 
-	FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
-
-		@Override
-		public void onFacebookSessionOpened(String accessToken, String userId,
-				HashMap<String, Object> map) {
-			showProgress(false);
-			String email = (String) map.get("email");
-			String name = (String) map.get("name");
-			String password = "5982";
-			DataStore.getInstance().attemptSignUp(email, name, password,
-					userId, accessToken, registerCallback);
-
-			// linkWithFB = true ;
-			FacebookProvider.getInstance().unregisterListener();
-		}
-
-		@Override
-		public void onFacebookSessionClosed() {
-			showProgress(false);
-			showToast(getString(R.string.error_facebook_permissions_rejected));
-		}
-
-		@Override
-		public void onFacebookException(Exception exception) {
-			showProgress(false);
-			showToast(getString(R.string.error_facebook_exception));
-//			if (exception instanceof FacebookAuthorizationException) {
-//	            if (AccessToken.getCurrentAccessToken() != null) {
-//	                LoginManager.getInstance().logOut();
-//	            }
+//	private DataRequestCallback registerCallback = new DataRequestCallback() {
+//		@Override
+//		public void onDataReady(ServerResult data, boolean success) {
+//			if (success) {
+//				switch (data.getFlag()) {
+//				case ServerAccess.ERROR_CODE_done:
+//					AppUser me = DataStore.getInstance().getMe();
+//					Intent i = null;
+//					if (me.isVerified()) {
+//						i = new Intent(LoginActivity.this, MainActivity.class);
+//					} else {
+//						i = new Intent(LoginActivity.this,
+//								VerificationActivity.class);
+//					}
+//
+//					startActivity(i);
+//					finish();
+//					break;
+//				case ServerAccess.ERROR_CODE_user_exists_before:
+//					showToast(getString(R.string.login_error_user_exists_before));
+//					break;
+//				}
+//			} else {
+//				showToast(getString(R.string.error_connection_error));
 //			}
-		}
-	};
-
-	/**
-	 * try login first using facebook if success then singning up to the API
-	 * Server using the facebook Id and phone number entered in the previous
-	 * stage
-	 */
-	public void attempFBtLogin() {
-		ArrayList<String> perm1 = new ArrayList<String>();
-		perm1.add("public_profile");
-		// perm1.add("user_friends");
-		perm1.add("email");
-
-		// Session.openActiveSession(this, true, permissions, callback)
-		FacebookProvider.getInstance().registerListener(facebookLoginListner);
-		FacebookProvider.getInstance().requestFacebookLogin(this);
-
-		// Session.StatusCallback callback = new LoginStatsCallback() ;
-		// Session.openActiveSession(LoginActivity.this, true, perm1, callback )
-		// ;
-		showProgress(true);
-	}
-
-	private DataRequestCallback registerCallback = new DataRequestCallback() {
-		@Override
-		public void onDataReady(ServerResult data, boolean success) {
-			if (success) {
-				switch (data.getFlag()) {
-				case ServerAccess.ERROR_CODE_done:
-					AppUser me = DataStore.getInstance().getMe();
-					Intent i = null;
-					if (me.isVerified()) {
-						i = new Intent(LoginActivity.this, MainActivity.class);
-					} else {
-						i = new Intent(LoginActivity.this,
-								VerificationActivity.class);
-					}
-
-					startActivity(i);
-					finish();
-					break;
-				case ServerAccess.ERROR_CODE_user_exists_before:
-					showToast(getString(R.string.login_error_user_exists_before));
-					break;
-				}
-			} else {
-				showToast(getString(R.string.error_connection_error));
-			}
-			showProgress(false);
-		}
-	};
+//			showProgress(false);
+//		}
+//	};
 
 	@Override
 	public void onClick(View v) {
@@ -221,19 +171,19 @@ public class LoginActivity extends AppBaseActivity implements OnClickListener,
 			case R.id.btnLogin:
 				login();
 				break;
-			case R.id.btnDoesntHaveAccount:
-				Intent registerActivityIntent = new Intent(LoginActivity.this,
-						RegisterActivity.class);
-				startActivity(registerActivityIntent);
-				finish();
-				break;
-			case R.id.btnLoginFB:
-				attempFBtLogin();
-				break;
-			case R.id.btnForgetPassword:
-				DiagChangePassword diagChangePassword=new DiagChangePassword();
-				diagChangePassword.show(getSupportFragmentManager(), "");
-				break;
+//			case R.id.btnDoesntHaveAccount:
+//				Intent registerActivityIntent = new Intent(LoginActivity.this,
+//						RegisterActivity.class);
+//				startActivity(registerActivityIntent);
+//				finish();
+//				break;
+//			case R.id.btnLoginFB:
+//				attempFBtLogin();
+//				break;
+//			case R.id.btnForgetPassword:
+//				DiagChangePassword diagChangePassword=new DiagChangePassword();
+//				diagChangePassword.show(getSupportFragmentManager(), "");
+//				break;
 			default:
 				break;
 			}

@@ -8,7 +8,7 @@
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="170dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/logo_splash" />
     
@@ -48,10 +48,12 @@
             android:id="@+id/btnVerifyCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/selector_btn_app_theme"
             android:gravity="center"
-            android:padding="20dp"
+            
             android:text="@string/verif_btn_verifiy_code"
             android:textColor="@color/white"
             android:textSize="@dimen/ts_text_big"

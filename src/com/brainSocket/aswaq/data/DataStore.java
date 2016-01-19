@@ -154,16 +154,16 @@ public class DataStore {
 	 *            : pass null if signing-up without facebook
 	 * @param callback
 	 */
-	public void attemptSignUp(final String email, final String userName,
-			final String password, final String facebookId,
+	public void attemptSignUp(final String mobileNumber, final String userName,
+			final String facebookId,
 			final String facebookAccessToken, final DataRequestCallback callback) {
 
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				boolean success = true;
-				ServerResult result = serverHandler.registerUser(email,
-						userName, password, facebookId, facebookAccessToken);
+				ServerResult result = serverHandler.registerUser(mobileNumber,
+						userName, facebookId, facebookAccessToken);
 				if (result.connectionFailed()) {
 					success = false;
 				} else {
@@ -190,13 +190,13 @@ public class DataStore {
 	 * @param phoneNumfinal
 	 * @param callback
 	 */
-	public void attemptLogin(final String email, final String password,
+	public void attemptLogin(final String mobileNumber,
 			final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				boolean success = true;
-				ServerResult result = serverHandler.login(email, password);
+				ServerResult result = serverHandler.login(mobileNumber);
 				if (result.connectionFailed()) {
 					success = false;
 				} else {
@@ -509,7 +509,7 @@ public class DataStore {
 	}
 
 	public void attemptUpdateUserProfile(final String userName,
-			final String mobileNumber, final String address,
+			final String address,
 			final String description, final String userProfilePicturePath,
 			final String facebookPage,
 			final DataRequestCallback callback) {
@@ -519,7 +519,7 @@ public class DataStore {
 			public void run() {
 				boolean success = true;
 				ServerResult result = serverHandler.updateUserProfile(userName,
-						mobileNumber, address, description,
+						address, description,
 						userProfilePicturePath,facebookPage);
 				if (result.connectionFailed())
 					success = false;

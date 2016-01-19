@@ -1,12 +1,17 @@
 package com.brainSocket.aswaq;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
 import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
+import com.brainSocket.aswaq.data.FacebookProvider;
+import com.brainSocket.aswaq.data.FacebookProviderListener;
 import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
 import com.brainSocket.aswaq.enums.FragmentType;
 import com.brainSocket.aswaq.views.TextViewCustomFont;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -19,10 +24,11 @@ import android.widget.Toast;
 
 public class RegisterActivity extends AppBaseActivity implements
 		OnClickListener, HomeCallbacks {
-	private EditText txtUserNameRegister, txtEmail, txtPassword,
-			txtRepeatPassword;
+	private EditText txtUserNameRegister;
 	private TextViewCustomFont btnRegister;
+	private TextViewCustomFont btnLoginFB;
 	private Dialog dialogLoading;
+	private String selectedMobileNumber="";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -34,11 +40,16 @@ public class RegisterActivity extends AppBaseActivity implements
 
 	private void initComponents() {
 		txtUserNameRegister = (EditText) findViewById(R.id.txtUserNameRegister);
-		txtEmail = (EditText) findViewById(R.id.txtEmailRegister);
-		txtPassword = (EditText) findViewById(R.id.txtPasswordRegister);
-		txtRepeatPassword = (EditText) findViewById(R.id.txtRepeatPasswordRegister);
+		//txtEmail = (EditText) findViewById(R.id.txtEmailRegister);
+		//txtPassword = (EditText) findViewById(R.id.txtPasswordRegister);
+		//txtRepeatPassword = (EditText) findViewById(R.id.txtRepeatPasswordRegister);
 		btnRegister = (TextViewCustomFont) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(this);
+		
+		btnLoginFB=(TextViewCustomFont)findViewById(R.id.btnLoginFB);
+		btnLoginFB.setOnClickListener(this);
+		
+		selectedMobileNumber=getIntent().getExtras().getString("mobileNumber", "");
 	}
 
 	@Override
@@ -47,6 +58,9 @@ public class RegisterActivity extends AppBaseActivity implements
 		switch (viewId) {
 		case R.id.btnRegister:
 			register();
+			break;
+			case R.id.btnLoginFB:
+			attempFBtLogin();
 			break;
 		default:
 
@@ -60,51 +74,12 @@ public class RegisterActivity extends AppBaseActivity implements
 		View focusView = null;
 
 		String userName = txtUserNameRegister.getText().toString();
-		String email = txtEmail.getText().toString();
-		String password = txtPassword.getText().toString();
-		String repeatedPassword = txtRepeatPassword.getText().toString();
 
 		if (AswaqApp.isEmptyOrNull(userName)) {
 			txtUserNameRegister
 					.setError(getString(R.string.login_error_user_name_empty));
 			focusView = txtUserNameRegister;
 			cancel = true;
-		}
-		if (AswaqApp.isEmptyOrNull(email)) {
-			txtEmail.setError(getString(R.string.login_error_email_empty));
-			focusView = txtEmail;
-			cancel = true;
-		} else {
-			if (!AswaqApp.isEmailValid(email)) {
-				txtEmail.setError(getString(R.string.login_error_email_invalid));
-				focusView = txtEmail;
-				cancel = true;
-			}
-		}
-		if (AswaqApp.isEmptyOrNull(password)) {
-			txtPassword
-					.setError(getString(R.string.login_error_password_empty));
-			focusView = txtPassword;
-			cancel = true;
-		} else {
-			// if (password.length() < 4) {
-			// txtPassword.setError(getString(R.string.login_error_password_length));
-			// focusView = txtPassword;
-			// cancel = true;
-			// }
-			if (AswaqApp.isEmptyOrNull(repeatedPassword)) {
-				txtRepeatPassword
-						.setError(getString(R.string.login_error_password_empty));
-				focusView = txtRepeatPassword;
-				cancel = true;
-			} else {
-				if (!password.equals(repeatedPassword)) {
-					txtRepeatPassword
-							.setError(getString(R.string.error_password_not_same));
-					focusView = txtRepeatPassword;
-					cancel = true;
-				}
-			}
 		}
 
 		if (cancel) {
@@ -113,7 +88,7 @@ public class RegisterActivity extends AppBaseActivity implements
 			String facebookAccessToken = "";
 			String facebookId = "";
 			showProgress(true);
-			DataStore.getInstance().attemptSignUp(email, userName, password,
+			DataStore.getInstance().attemptSignUp(selectedMobileNumber, userName,
 					facebookId, facebookAccessToken, registerCallback);
 		}
 
@@ -132,7 +107,11 @@ public class RegisterActivity extends AppBaseActivity implements
 					finish();
 					break;
 				case ServerAccess.ERROR_CODE_user_exists_before:
-					txtEmail.setError(getString(R.string.login_error_user_exists_before));
+						//txtEmail.setError(getString(R.string.login_error_user_exists_before));
+					showToast(getString(R.string.login_error_user_exists_before));
+					break;
+					case R.id.btnLoginFB:
+					attempFBtLogin();
 					break;
 
 				}
@@ -158,6 +137,61 @@ public class RegisterActivity extends AppBaseActivity implements
 		else
 			dialogLoading.dismiss();
 	}
+	
+	/**
+	 * try login first using facebook if success then singning up to the API
+	 * Server using the facebook Id and phone number entered in the previous
+	 * stage
+	 */
+	public void attempFBtLogin() {
+		ArrayList<String> perm1 = new ArrayList<String>();
+		perm1.add("public_profile");
+		// perm1.add("user_friends");
+		perm1.add("email");
+
+		// Session.openActiveSession(this, true, permissions, callback)
+		FacebookProvider.getInstance().registerListener(facebookLoginListner);
+		FacebookProvider.getInstance().requestFacebookLogin(this);
+
+		// Session.StatusCallback callback = new LoginStatsCallback() ;
+		// Session.openActiveSession(LoginActivity.this, true, perm1, callback )
+		// ;
+		showProgress(true);
+	}
+	
+	FacebookProviderListener facebookLoginListner = new FacebookProviderListener() {
+
+		@Override
+		public void onFacebookSessionOpened(String accessToken, String userId,
+				HashMap<String, Object> map) {
+			showProgress(false);
+			//String email = (String) map.get("email");
+			String name = (String) map.get("name");
+			//String password = "5982";
+			DataStore.getInstance().attemptSignUp(selectedMobileNumber,name,
+					userId, accessToken, registerCallback);
+
+			// linkWithFB = true ;
+			FacebookProvider.getInstance().unregisterListener();
+		}
+
+		@Override
+		public void onFacebookSessionClosed() {
+			showProgress(false);
+			showToast(getString(R.string.error_facebook_permissions_rejected));
+		}
+
+		@Override
+		public void onFacebookException(Exception exception) {
+			showProgress(false);
+			showToast(getString(R.string.error_facebook_exception));
+//			if (exception instanceof FacebookAuthorizationException) {
+//	            if (AccessToken.getCurrentAccessToken() != null) {
+//	                LoginManager.getInstance().logOut();
+//	            }
+//			}
+		}
+	};
 
 	@Override
 	public void showToast(String msg) {

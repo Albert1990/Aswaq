@@ -113,7 +113,7 @@ public class FacebookProvider {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender, birthday");
+                parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
 			}	
@@ -234,10 +234,10 @@ public class FacebookProvider {
 
 	private static final List<String> PERMISSIONS = new ArrayList<String>() {
 		{
-			add("user_friends");
+			//add("user_friends");
 			add("public_profile");
 			add("email");
-			add("user_birthday");
+			//add("user_birthday");
 		}
 	};
 	private static final String PUBLISH_PERMISSION = "publish_actions";

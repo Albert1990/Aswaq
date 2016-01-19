@@ -50,21 +50,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
 
-        <com.brainSocket.aswaq.views.TextViewCustomFont
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/lbl_mobile_number"
-            app:fontId="1" />
-
-        <com.brainSocket.aswaq.views.EditTextCustomFont
-            android:id="@+id/txtMobileNumberRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:inputType="phone" />
-
 
         <com.brainSocket.aswaq.views.TextViewCustomFont
             android:layout_width="match_parent"

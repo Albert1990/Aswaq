@@ -31,7 +31,7 @@
     <string name="login_error_email_or_password_wrong">خطأ في البريد الالكتروني او كلمة المرور</string>
     <string name="login_error_connection_failed">حدث خطأ في عملية الاتصال</string>
     <string name="login_error_user_exists_before">إن البريد الالكتروني هذا مسجل من قبل</string>
-    <string name="login_btn_login">دخول</string>
+    <string name="login_btn_login">تسجيل الدخول أو الاشتراك</string>
     <string name="login_btn_login_fb">دخول عن طريق الفيسبوك</string>
     <string name="login_btnRegister">تسجيل</string>
     <string name="login_lbl_or">أو</string>
@@ -39,7 +39,7 @@
     <string name="error_incorrect_phone_num">رقم الهاتف غير صحيح ....</string>
     
     <!-- verif -->
-    <string name="verif_lbl_verification_text">تفقد البريد الوارد في برديك الالكتروني وأدخل رمز التأكيد</string>
+    <string name="verif_lbl_verification_text">ستصلك رسالة SMS خلال دقائق معدودة تحتوي رمز التفعيل</string>
     <string name="verif_hint_verification_code">رمز التأكيد</string>
     <string name="verif_btn_verifiy_code">تأكيد</string>
     <string name="verif_error_verification_message_wrong">رمز التفعيل خطأ</string>
@@ -141,5 +141,7 @@
     <string name="diag_change_password_sending_success">تم إرسال الطلب إلى بريدك الإلكتروني</string>
     <string name="btn_forget_password">نسيت كلمة المرور ؟</string>
     <string name="frag_about_developed_by">Developed By :</string>
+    <string name="error_mobile_number_short">رقم الموبايل أقصر من المتوقع</string>
+    <string name="error_mobile_number_wrong">صيغة رقم الموبايل المدخل غير صحيحة</string>
     
 </resources>

@@ -61,7 +61,6 @@ public class UserProfileActivity extends AppBaseActivity implements
 
 	// view members
 	private EditTextCustomFont txtUserNameRegister;
-	private EditTextCustomFont txtMobileNumberRegister;
 	private EditTextCustomFont txtAddressRegister;
 	private EditTextCustomFont txtDescriptionRegister;
 	private TextViewCustomFont btnEdit;
@@ -88,7 +87,6 @@ public class UserProfileActivity extends AppBaseActivity implements
 			AppUser me = DataStore.getInstance().getMe();
 			if (me != null) {
 				txtUserNameRegister = (EditTextCustomFont) findViewById(R.id.txtUserNameRegister);
-				txtMobileNumberRegister = (EditTextCustomFont) findViewById(R.id.txtMobileNumberRegister);
 				txtAddressRegister = (EditTextCustomFont) findViewById(R.id.txtAddressRegister);
 				txtDescriptionRegister = (EditTextCustomFont) findViewById(R.id.txtDescriptionRegister);
 				txtFacebookPage=(EditTextCustomFont)findViewById(R.id.txtFacebookPage);
@@ -106,7 +104,6 @@ public class UserProfileActivity extends AppBaseActivity implements
 
 	private void bindUiData(AppUser me) {
 		txtUserNameRegister.setText(me.getName());
-		txtMobileNumberRegister.setText(me.getPhoneNum());
 		txtAddressRegister.setText(me.getAddress());
 		txtDescriptionRegister.setText(me.getDescription());
 		
@@ -195,7 +192,6 @@ public class UserProfileActivity extends AppBaseActivity implements
 		View focusView = null;
 
 		String userName = txtUserNameRegister.getText().toString();
-		String mobileNumber = txtMobileNumberRegister.getText().toString();
 		String address = txtAddressRegister.getText().toString();
 		String description = txtDescriptionRegister.getText().toString();
 		String facebookPage=txtFacebookPage.getText().toString();
@@ -212,7 +208,7 @@ public class UserProfileActivity extends AppBaseActivity implements
 		else {
 			showProgress(true);
 			DataStore.getInstance().attemptUpdateUserProfile(userName,
-					mobileNumber, address, 
+					 address, 
 					description,selectedUserProfilePictureUri,facebookPage,
 					updateUserProfileCallback);
 		}
@@ -237,10 +233,6 @@ public class UserProfileActivity extends AppBaseActivity implements
 						DataCacheProvider.getInstance().storeMe(originalMe);
 					}
 					finish();
-				} else if (data.getFlag() == ServerAccess.ERROR_CODE_error_in_mobile_number_format) {
-					txtMobileNumberRegister
-							.setError(getString(R.string.error_incorrect_phone_num));
-					txtMobileNumberRegister.requestFocus();
 				} else {
 					showToast(getString(R.string.error_server_error));
 				}

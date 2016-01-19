@@ -108,14 +108,13 @@ public class ServerAccess {
 		return instance;
 	}
 
-	public ServerResult login(String email, String password) {
+	public ServerResult login(String mobileNumber) {
 		ServerResult result = new ServerResult();
 		AppUser me = null;
 		try {
 			// parameters
 			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
-			jsonPairs.add(new BasicNameValuePair("email", email));
-			jsonPairs.add(new BasicNameValuePair("password", password));
+			jsonPairs.add(new BasicNameValuePair("mobile_number", mobileNumber));
 
 			try {
 				String deviceId = Secure.getString(AswaqApp.getAppContext()
@@ -159,17 +158,16 @@ public class ServerAccess {
 	 * @param phoneNum
 	 * @return
 	 */
-	public ServerResult registerUser(final String email, final String userName,
-			final String password, final String facebookId,
+	public ServerResult registerUser(final String mobileNumber, final String userName,
+			final String facebookId,
 			final String facebookAccessToken) {
 		ServerResult result = new ServerResult();
 		AppUser me = null;
 		try {
 			// parameters
 			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
-			jsonPairs.add(new BasicNameValuePair("email", email));
+			jsonPairs.add(new BasicNameValuePair("mobile_number", mobileNumber));
 			jsonPairs.add(new BasicNameValuePair("user_name", userName));
-			jsonPairs.add(new BasicNameValuePair("password", password));
 			jsonPairs.add(new BasicNameValuePair("version", "1.0"));
 			jsonPairs.add(new BasicNameValuePair("facebook_id", facebookId));
 			jsonPairs.add(new BasicNameValuePair("facebook_access_token",
@@ -913,7 +911,7 @@ public class ServerAccess {
 		return res;
 	}
 	
-	public ServerResult updateUserProfile(String userName, String mobileNumber,
+	public ServerResult updateUserProfile(String userName,
 			String address, String description, String imgPath,String facebookPage) {
 		String url = BASE_SERVICE_URL + "users_api/edit_user_profile";
 		String responseString = null;
@@ -940,7 +938,6 @@ public class ServerAccess {
 
 			// Adding file data to http body
 			entity.addPart("user_name", new StringBody(userName,Charset.forName(HTTP.UTF_8)));
-			entity.addPart("mobile_number", new StringBody(mobileNumber,Charset.forName(HTTP.UTF_8)));
 			entity.addPart("address", new StringBody(address,Charset.forName(HTTP.UTF_8)));
 			entity.addPart("description", new StringBody(description,Charset.forName(HTTP.UTF_8)));
 			String access_token = DataStore.getInstance()
