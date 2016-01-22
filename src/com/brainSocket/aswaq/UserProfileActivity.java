@@ -314,7 +314,7 @@ public class UserProfileActivity extends AppBaseActivity implements
 		            if(filePath != null && !filePath.isEmpty()){
 		            	filePath = new File(filePath).getAbsolutePath(); // make sure we have a valid absolute path
 			            Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath(),300,300);
+			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath(),300);
 			            selectedUserProfilePictureUri = getNewTempImgFile(true).getAbsolutePath();
 			            ivUserPhoto.setImageBitmap(yourSelectedImage);
 		            }

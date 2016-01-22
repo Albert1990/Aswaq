@@ -350,7 +350,6 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
         diag.show();
 
 		// Determine Uri of camera image to save.
-		
 
 //		    // Camera.
 //		    final List<Intent> cameraIntents = new ArrayList<Intent>();
@@ -425,8 +424,9 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		            	filePath = new File(filePath).getAbsolutePath(); // make sure we have a valid absolute path
 			            Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
 			            int imageIndex = (Integer) selectedImageView.getTag();
-			            AswaqApp.resizeImage(yourSelectedImage, getNewTempImgFile(true).getAbsolutePath(),1024,800);
-			            imagesURI[imageIndex] = getNewTempImgFile(true).getAbsolutePath();
+			            String resizedImgPath = getNewTempImgFile(true).getAbsolutePath();
+			            AswaqApp.resizeImage(yourSelectedImage, resizedImgPath,1400);
+			            imagesURI[imageIndex] = resizedImgPath;
 			            selectedImageView.setImageBitmap(yourSelectedImage);
 		            }
 	            }
