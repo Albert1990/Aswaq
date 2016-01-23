@@ -11,6 +11,9 @@ import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
 import com.brainSocket.aswaq.enums.FragmentType;
 import com.brainSocket.aswaq.views.TextViewCustomFont;
+import com.facebook.AccessToken;
+import com.facebook.FacebookAuthorizationException;
+import com.facebook.login.LoginManager;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -185,11 +188,15 @@ public class RegisterActivity extends AppBaseActivity implements
 		public void onFacebookException(Exception exception) {
 			showProgress(false);
 			showToast(getString(R.string.error_facebook_exception));
-//			if (exception instanceof FacebookAuthorizationException) {
-//	            if (AccessToken.getCurrentAccessToken() != null) {
-//	                LoginManager.getInstance().logOut();
-//	            }
-//			}
+			try
+			{
+			if (exception instanceof FacebookAuthorizationException) {
+	            if (AccessToken.getCurrentAccessToken() != null) {
+	                LoginManager.getInstance().logOut();
+	            }
+			}
+			}
+			catch(Exception ex){}
 		}
 	};
 

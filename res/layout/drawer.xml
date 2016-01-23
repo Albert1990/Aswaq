@@ -163,7 +163,7 @@
         </LinearLayout>
         -->
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/llLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
                 android:padding="2dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_logout" />
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 
 </LinearLayout>

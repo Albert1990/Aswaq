@@ -144,4 +144,9 @@ public class AswaqApp extends Application {
 
 		return result;
 	}
+	
+	public static String localizeMobileNumber(String mobileNumber)
+	{
+		return "0"+mobileNumber.substring(4,mobileNumber.length()); // to remove +963 and add 0 to the first of the number
+	}
 }

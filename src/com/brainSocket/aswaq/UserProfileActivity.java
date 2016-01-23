@@ -52,7 +52,7 @@ public class UserProfileActivity extends AppBaseActivity implements
 	private ListView lvDrawer;
 	private DrawerAdapter adapter;
 	private DrawerLayout dlDrawer;
-	private View llLogout;
+	//private View llLogout;
 
 	// actionbar
 	private TextViewCustomFont tvFragTitle;
@@ -116,8 +116,8 @@ public class UserProfileActivity extends AppBaseActivity implements
 		adapter = new DrawerAdapter(this, lvDrawer);
 		lvDrawer.setAdapter(adapter);
 		dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
-		llLogout = findViewById(R.id.llLogout);
-		llLogout.setOnClickListener(this);
+//		llLogout = findViewById(R.id.llLogout);
+//		llLogout.setOnClickListener(this);
 	}
 
 	private void initCustomActionBar() {

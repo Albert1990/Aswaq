@@ -30,7 +30,7 @@
     <string name="login_error_user_name_empty">يرجى إدخال الاسم</string>
     <string name="login_error_email_or_password_wrong">خطأ في البريد الالكتروني او كلمة المرور</string>
     <string name="login_error_connection_failed">حدث خطأ في عملية الاتصال</string>
-    <string name="login_error_user_exists_before">إن البريد الالكتروني هذا مسجل من قبل</string>
+    <string name="login_error_user_exists_before">إن رقم الموبايل الذي أدخلته مسجل من قبل</string>
     <string name="login_btn_login">تسجيل الدخول أو الاشتراك</string>
     <string name="login_btn_login_fb">دخول عن طريق الفيسبوك</string>
     <string name="login_btnRegister">تسجيل</string>

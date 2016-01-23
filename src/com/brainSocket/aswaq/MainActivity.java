@@ -43,7 +43,7 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 	private ListView lvDrawer;
 	private DrawerAdapter adapter;
 	private DrawerLayout dlDrawer;
-	private View llLogout;
+	//private View llLogout;
 	private TextViewCustomFont tvUserName;
 
 	private FragmentManager fragmentManager;
@@ -80,8 +80,8 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 		adapter = new DrawerAdapter(this, lvDrawer);
 		lvDrawer.setAdapter(adapter);
 		dlDrawer = (DrawerLayout) findViewById(R.id.dlDrawer);
-		llLogout = findViewById(R.id.llLogout);
-		llLogout.setOnClickListener(this);
+//		llLogout = findViewById(R.id.llLogout);
+//		llLogout.setOnClickListener(this);
 		tvUserName = (TextViewCustomFont) findViewById(R.id.tvUserName);
 		ivUserImage=(ImageView)findViewById(R.id.ivUserImage);
 		AppUser me = DataStore.getInstance().getMe();
@@ -229,11 +229,11 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 	public void onClick(View v) {
 		int viewId = v.getId();
 		switch (viewId) {
-		case R.id.llLogout:
-			DataStore.getInstance().removeAllStoredData();
-			Intent i = new Intent(MainActivity.this, SplashScreen.class);
-			startActivity(i);
-			break;
+//		case R.id.llLogout:
+//			DataStore.getInstance().removeAllStoredData();
+//			Intent i = new Intent(MainActivity.this, SplashScreen.class);
+//			startActivity(i);
+//			break;
 		case R.id.ivMenu:
 			toggleDrawer();
 			break;

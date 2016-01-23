@@ -103,6 +103,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private void init()
 	{
 		homeCallback=(HomeCallbacks)getActivity();
+		homeCallback.setTitle("");
 		inflater=(LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
 		AppUser me=DataStore.getInstance().getMe();
 		
@@ -148,7 +149,8 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		
 		if(me.getPhoneNum().length()>0)
 		{
-			addPhoneNumberView(me.getPhoneNum());
+			String localizeMobileNumber=AswaqApp.localizeMobileNumber(me.getPhoneNum());
+			addPhoneNumberView(localizeMobileNumber);
 		}
 		if(me.getFacebookPage().length()>1)
 		{
