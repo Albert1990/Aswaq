@@ -146,10 +146,14 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 			break;
 		case MyClients:
 			//ivMenu.setVisibility(View.GONE);
+			ivBack.setVisibility(View.VISIBLE);
+			tvFragTitle.setVisibility(View.VISIBLE);
 			tvFragTitle.setText(getString(R.string.drawer_agents));
 			break;
 		case Favourites:
 			//ivMenu.setVisibility(View.GONE);
+			ivBack.setVisibility(View.VISIBLE);
+			tvFragTitle.setVisibility(View.VISIBLE);
 			tvFragTitle.setText(getString(R.string.drawer_favourites));
 			break;
 		case ShowAds:
@@ -185,16 +189,21 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 	public void onBackStackChanged() {
 		try {
 			int entrys = getSupportFragmentManager().getBackStackEntryCount();
+			if(entrys<=0)
+			{
+				updateActionbar(FragmentType.Main);
+				return ;
+			}
 			String fragmentName = getSupportFragmentManager()
 					.getBackStackEntryAt(entrys - 1).getName();
 			FragmentType backFrag = FragmentType.valueOf(fragmentName);
-			if (entrys > 1) {
+			if (entrys >= 1) {
 				updateActionbar(backFrag);
 			} else {
 				updateActionbar(FragmentType.Main);
 			}
 		} catch (Exception e) {
-
+			updateActionbar(FragmentType.Main);
 		}
 
 	}

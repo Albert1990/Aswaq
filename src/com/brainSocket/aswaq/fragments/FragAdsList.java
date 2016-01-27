@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.brainSocket.aswaq.AdvertiseDetailsActivity;
 import com.brainSocket.aswaq.AswaqApp;
@@ -180,19 +181,23 @@ public class FragAdsList extends Fragment{
     class ProductViewHolder {
 
     	ImageView ivProduct;
-		TextViewCustomFont tvUserName;
-		TextViewCustomFont tvAdvertiseDescription;
-		TextViewCustomFont tvPrice;
+    	TextView tvUserName;
+    	TextView tvAdvertiseDescription;
+    	TextView tvPrice;
 		RatingBar rbUserRate;
 		View tvPaid;
+		TextView tvIsUsed;
+		TextView tvDate;
 		
         ProductViewHolder(View view) {            
             ivProduct=(ImageView) view.findViewById(R.id.ivProd);
-    		tvUserName=(TextViewCustomFont) view.findViewById(R.id.tvUserName);
-    		tvAdvertiseDescription=(TextViewCustomFont) view.findViewById(R.id.tvAdvertiseDescription);
-    		tvPrice=(TextViewCustomFont) view.findViewById(R.id.tvPrice);
+    		tvUserName=(TextView) view.findViewById(R.id.tvUserName);
+    		tvAdvertiseDescription=(TextView) view.findViewById(R.id.tvAdvertiseDescription);
+    		tvPrice=(TextView) view.findViewById(R.id.tvPrice);
     		rbUserRate=(RatingBar) view.findViewById(R.id.rbUserRate);
-    		tvPaid=view.findViewById(R.id.tvPaid);
+    		tvPaid=view.findViewById(R.id.tvPaid1);
+    		tvIsUsed=(TextView)view.findViewById(R.id.tvIsUsed);
+    		tvDate=(TextView)view.findViewById(R.id.tvDate);
         }
 
         public void bindItem(LineItem mItems) {
@@ -209,9 +214,23 @@ public class FragAdsList extends Fragment{
         		String price=Integer.toString(ad.getPrice())+getString(R.string.lbl_price_unit);
         		tvPrice.setText(price);
         		rbUserRate.setRating(ad.getUser().getRate());
-        		if(ad.IsPinned()==1)
-        			tvPaid.setVisibility(View.VISIBLE);
-            } catch (Exception ignored) {}
+        		if (ad.IsPinned() == 0)
+    				tvPaid.setVisibility(View.INVISIBLE);
+    			else
+    				tvPaid.setVisibility(View.VISIBLE);
+    			if(ad.isUsed()==1)
+    			{
+    				tvIsUsed.setVisibility(View.INVISIBLE);//.setText(context.getString(R.string.advertise_details_lbl_used));
+    			}
+    			else
+    			{
+    				tvIsUsed.setVisibility(View.VISIBLE);
+    				tvIsUsed.setText(getString(R.string.advertise_details_lbl_new));
+    			}
+    			tvDate.setText(ad.getDate());
+            } catch (Exception ex) {
+            	ex.printStackTrace();
+            }
         }
     }
 

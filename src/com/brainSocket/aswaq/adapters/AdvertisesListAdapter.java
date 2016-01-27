@@ -89,6 +89,7 @@ public class AdvertisesListAdapter extends BaseAdapter {
 				viewHolder.tvIsUsed.setVisibility(View.VISIBLE);
 				viewHolder.tvIsUsed.setText(context.getString(R.string.advertise_details_lbl_new));
 			}
+			viewHolder.tvDate.setText(ads.get(position).getDate());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -98,24 +99,27 @@ public class AdvertisesListAdapter extends BaseAdapter {
 	private static class ViewHolderItem {
 		ImageView ivProduct;
 		RatingBar rbUserRate;
-		TextViewCustomFont tvUserName;
-		TextViewCustomFont tvAdvertiseDescription;
-		TextViewCustomFont tvPrice;
-		TextViewCustomFont tvPaid;
-		TextViewCustomFont tvIsUsed;
+		TextView tvUserName;
+		TextView tvAdvertiseDescription;
+		TextView tvPrice;
+		TextView tvPaid;
+		TextView tvIsUsed;
+		TextView tvDate;
+		
 
 		public void bindViews(View convertView) {
 			ivProduct = (ImageView) convertView.findViewById(R.id.ivProd);
 			rbUserRate = (RatingBar) convertView.findViewById(R.id.rbUserRate);
-			tvUserName = (TextViewCustomFont) convertView
+			tvUserName = (TextView) convertView
 					.findViewById(R.id.tvUserName);
-			tvAdvertiseDescription = (TextViewCustomFont) convertView
+			tvAdvertiseDescription = (TextView) convertView
 					.findViewById(R.id.tvAdvertiseDescription);
-			tvPaid = (TextViewCustomFont) convertView
+			tvPaid = (TextView) convertView
 					.findViewById(R.id.tvPaid1);
-			tvPrice = (TextViewCustomFont) convertView
+			tvPrice = (TextView) convertView
 					.findViewById(R.id.tvPrice);
-			tvIsUsed=(TextViewCustomFont)convertView.findViewById(R.id.tvIsUsed);
+			tvIsUsed=(TextView)convertView.findViewById(R.id.tvIsUsed);
+			tvDate=(TextView)convertView.findViewById(R.id.tvDate);
 		}
 
 	}

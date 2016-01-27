@@ -107,6 +107,20 @@
         android:textColor="@color/black"
         android:textSize="@dimen/ts_text_normal"
         app:fontId="1" />
+    
+    <com.brainSocket.aswaq.views.TextViewCustomFont
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tvIsUsed"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="6dp"
+        android:padding="2dp"
+        android:text="date"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ts_text_small"
+        app:fontId="1" />
 
     <View
         android:layout_width="match_parent"
