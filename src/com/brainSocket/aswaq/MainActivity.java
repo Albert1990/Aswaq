@@ -56,6 +56,10 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 	private ImageView ivMenu;
 	private TextViewCustomFont tvFragTitle;
 	private ImageView ivBack;
+	
+	//activityState
+	public boolean isStopedOrPaused=false;
+	public boolean AdvertiseUploadedSuccessfully=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -359,6 +363,30 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	protected void onPause() {
+		isStopedOrPaused=true;
+		super.onPause();
+	}
+	
+	@Override
+	protected void onStop() {
+		isStopedOrPaused=true;
+		super.onStop();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		isStopedOrPaused=false;
+		if(AdvertiseUploadedSuccessfully)
+		{
+			AdvertiseUploadedSuccessfully=false;
+			loadFragment(FragmentType.Main, null);
+			showToast(getString(R.string.toast_ad_has_been_added));
 		}
 	}
 }

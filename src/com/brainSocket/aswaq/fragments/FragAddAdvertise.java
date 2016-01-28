@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.brainSocket.aswaq.AswaqApp;
 import com.brainSocket.aswaq.HomeCallbacks;
+import com.brainSocket.aswaq.MainActivity;
 import com.brainSocket.aswaq.R;
 import com.brainSocket.aswaq.data.DataCacheProvider;
 import com.brainSocket.aswaq.data.DataRequestCallback;
@@ -286,15 +287,23 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			homeCallback.showProgress(false);
 			if(success)
 			{
-			if(data.getFlag()==ServerAccess.ERROR_CODE_done)
-			{
-				homeCallback.loadFragment(FragmentType.Main,null);
-				homeCallback.showToast(getString(R.string.toast_ad_has_been_added));
-			}
-			else
-			{
-				homeCallback.showToast(getString(R.string.error_connection_error));
-			}
+				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
+				{
+					MainActivity mainActivity=(MainActivity)getActivity();
+					if(!mainActivity.isStopedOrPaused)
+					{
+						homeCallback.loadFragment(FragmentType.Main,null);
+						homeCallback.showToast(getString(R.string.toast_ad_has_been_added));
+					}
+					else
+					{
+						mainActivity.AdvertiseUploadedSuccessfully=true;
+					}
+				}
+				else
+				{
+					homeCallback.showToast(getString(R.string.error_connection_error));
+				}
 			}
 			else
 			{
