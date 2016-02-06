@@ -324,7 +324,7 @@ public class DataStore {
 	public void attemptAddNewAdvertise(final String description,
 			final String address, final int categoryId, final int isUsed,
 			final int price, final JSONArray telephones,
-			final String facebookPageLink, final DataRequestCallback callback) {
+			final String facebookPageLink, final String [] imgPath,final DataRequestCallback callback) {
 		new Thread(new Runnable() {
 
 			@Override
@@ -332,7 +332,7 @@ public class DataStore {
 				boolean success = true;
 				ServerResult result = serverHandler.addNewAdvertise(
 						description, address, categoryId, isUsed, price,
-						telephones, facebookPageLink);
+						telephones, facebookPageLink,imgPath);
 				if (result.connectionFailed())
 					success = false;
 				else {
@@ -626,25 +626,25 @@ public class DataStore {
 			}
 		}).start();
 	}
-
-	public void attemptUploadAdPhotos(final int adId, final String[] photos,
-			final DataRequestCallback callback) {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				boolean success = true;
-				ServerResult result = serverHandler.uploadAdvertisePhotos(adId,
-						photos);
-				if (result.connectionFailed())
-					success = false;
-				else {
-				}
-				if (callback != null)
-					invokeCallback(callback, success, result);
-			}
-		}).start();
-	}
+//
+//	public void attemptUploadAdPhotos(final int adId, final String[] photos,
+//			final DataRequestCallback callback) {
+//		new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				boolean success = true;
+//				ServerResult result = serverHandler.uploadAdvertisePhotos(adId,
+//						photos);
+//				if (result.connectionFailed())
+//					success = false;
+//				else {
+//				}
+//				if (callback != null)
+//					invokeCallback(callback, success, result);
+//			}
+//		}).start();
+//	}
 
 	public void attemptDownloadPhoto(final String photoPath,
 			final DataRequestCallback callback) {

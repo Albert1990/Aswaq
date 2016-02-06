@@ -243,7 +243,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			homeCallback.showProgress(true);
 			DataStore.getInstance().attemptAddNewAdvertise(description,address,
 					selectedCategoryId,
-					isUsed,price,telephones,facebookPageLink,addNewAdvertiseCallback);
+					isUsed,price,telephones,facebookPageLink,imagesURI,addNewAdvertiseCallback);
 			}
 			else
 				homeCallback.showToast(getString(R.string.error_photo_required));
@@ -259,15 +259,26 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
+			homeCallback.showProgress(false);
 			if(success){
 				if(data.getFlag()==ServerAccess.ERROR_CODE_done){
-					int adId=(Integer)data.getValue("adId");
-					DataStore.getInstance().attemptUploadAdPhotos(adId,imagesURI,adPhotosUploadCallback);
+					MainActivity mainActivity=(MainActivity)getActivity();
+					if(!mainActivity.isStopedOrPaused)
+					{
+						homeCallback.loadFragment(FragmentType.Main,null);
+						homeCallback.showToast(getString(R.string.toast_ad_has_been_added));
+					}
+					else
+					{
+						mainActivity.AdvertiseUploadedSuccessfully=true;
+					}
+				}
+				else if(data.getFlag()==ServerAccess.ERROR_CODE_photos_upload_error)
+				{
+					homeCallback.showToast(getString(R.string.frag_add_ad_error_upload_photos));
 				}
 				else
 				{
-					
-					homeCallback.showProgress(false);
 					homeCallback.showToast(getString(R.string.error_connection_error));
 				}
 			}
@@ -280,38 +291,42 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		}
 	};
 	
-	private DataRequestCallback adPhotosUploadCallback=new DataRequestCallback() {
-		
-		@Override
-		public void onDataReady(ServerResult data, boolean success) {
-			homeCallback.showProgress(false);
-			if(success)
-			{
-				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
-				{
-					MainActivity mainActivity=(MainActivity)getActivity();
-					if(!mainActivity.isStopedOrPaused)
-					{
-						homeCallback.loadFragment(FragmentType.Main,null);
-						homeCallback.showToast(getString(R.string.toast_ad_has_been_added));
-					}
-					else
-					{
-						mainActivity.AdvertiseUploadedSuccessfully=true;
-					}
-				}
-				else
-				{
-					homeCallback.showToast(getString(R.string.error_connection_error));
-				}
-			}
-			else
-			{
-				homeCallback.showToast(getString(R.string.error_connection_error));
-			}
-			
-		}
-	};
+//	private DataRequestCallback adPhotosUploadCallback=new DataRequestCallback() {
+//		
+//		@Override
+//		public void onDataReady(ServerResult data, boolean success) {
+//			homeCallback.showProgress(false);
+//			if(success)
+//			{
+//				if(data.getFlag()==ServerAccess.ERROR_CODE_done)
+//				{
+//					MainActivity mainActivity=(MainActivity)getActivity();
+//					if(!mainActivity.isStopedOrPaused)
+//					{
+//						homeCallback.loadFragment(FragmentType.Main,null);
+//						homeCallback.showToast(getString(R.string.toast_ad_has_been_added));
+//					}
+//					else
+//					{
+//						mainActivity.AdvertiseUploadedSuccessfully=true;
+//					}
+//				}
+//				else if(data.getFlag()==ServerAccess.ERROR_CODE_photos_upload_error)
+//				{
+//					homeCallback.showToast(getString(R.string.frag_add_ad_error_upload_photos));
+//				}
+//				else
+//				{
+//					homeCallback.showToast(getString(R.string.error_connection_error));
+//				}
+//			}
+//			else
+//			{
+//				homeCallback.showToast(getString(R.string.error_connection_error));
+//			}
+//			
+//		}
+//	};
 	
 //	private void browseImage(View v){
 //		selectedImageView=(ImageView)v;
@@ -393,7 +408,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private static File getNewTempImgFile(boolean isForUpload){
 		final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "aswaq_temp_imgs" + File.separator);
 		root.mkdirs();
-		final String fname = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ((isForUpload)?"_resized":"")+ ".jpg";
+		final String fname = "7325534887719644.JPG";//"IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ((isForUpload)?"_resized":"")+ ".jpg";
 		File sdImageMainDirectory = new File(root, fname);
 		return sdImageMainDirectory;
 	}

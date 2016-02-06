@@ -67,6 +67,13 @@ public class ServerAccess {
 	public static final int ERROR_CODE_verification_attempts_exceeded = -132;
 	public static final int ERROR_CODE_error_in_mobile_number_format = -133;
 	public static final int ERROR_CODE_follow_relation_exists_before = -134;
+	public static final int ERROR_CODE_category_not_exists = -135;
+	public static final int ERROR_CODE_has_no_permission = -136;
+	public static final int ERROR_CODE_photos_upload_error = -137;
+	public static final int ERROR_CODE_relation_exists_before = -138;
+	public static final int ERROR_CODE_relation_not_exists=-139;
+	public static final int ERROR_CODE_mobile_number_should_numbers_only = -140;
+	public static final int ERROR_CODE_mobile_number_format_error = -141;
 
 	public static final int ERROR_CODE_unknown_exception = -100;
 	public static final int CONNECTION_ERROR_CODE = -1000;
@@ -75,9 +82,8 @@ public class ServerAccess {
 	// api
 	public static final int MAIN_PORT_NUM = 80;
 	private boolean inProductionMode = true;
-	public static String IMAGE_SERVICE_URL = "http://192.168.10.182:"
-			+ MAIN_PORT_NUM + "/aswaq/imgs/";
-	public static String BASE_SERVICE_URL = "http://192.168.10.182:"
+	public static String IMAGE_SERVICE_URL = "http://aswaqsyria.com/imgs/";
+	public static String BASE_SERVICE_URL = "http://aswaqsyria.com"
 			+ MAIN_PORT_NUM + "/aswaq/index.php/";
 
 	// api keys
@@ -90,10 +96,8 @@ public class ServerAccess {
 
 	private ServerAccess() {
 		if (inProductionMode) {
-			IMAGE_SERVICE_URL = "http://104.217.253.15:" + MAIN_PORT_NUM
-					+ "/aswaq/imgs/";
-			BASE_SERVICE_URL = "http://104.217.253.15:" + MAIN_PORT_NUM
-					+ "/aswaq/index.php/";
+			IMAGE_SERVICE_URL = "http://aswaqsyria.com/imgs/";
+			BASE_SERVICE_URL = "http://aswaqsyria.com/index.php/";
 		} else {
 			IMAGE_SERVICE_URL = "http://192.168.1.112:" + MAIN_PORT_NUM
 					+ "/aswaq/imgs/";
@@ -430,51 +434,51 @@ public class ServerAccess {
 		return result;
 	}
 
-	public ServerResult addNewAdvertise(String description, String address,
-			int categoryId, int isUsed, int price, JSONArray telephones,
-			String facebookPageLink) {
-		ServerResult result = new ServerResult();
-		try {
-			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
-
-			jsonPairs.add(new BasicNameValuePair("description", description));
-			jsonPairs.add(new BasicNameValuePair("address", address));
-			jsonPairs.add(new BasicNameValuePair("category_id", Integer
-					.toString(categoryId)));
-			jsonPairs.add(new BasicNameValuePair("price", Integer
-					.toString(price)));
-			jsonPairs.add(new BasicNameValuePair("is_used", Integer
-					.toString(isUsed)));
-			jsonPairs.add(new BasicNameValuePair("telephones", telephones
-					.toString()));
-			jsonPairs.add(new BasicNameValuePair("facebook_page", facebookPageLink));
-			jsonPairs.add(new BasicNameValuePair("access_token",
-					DataStore.getInstance().getAccessToken()));
-			jsonPairs.add(new BasicNameValuePair("pay_type", "1"));
-			// url
-			String url = BASE_SERVICE_URL + "ads_api/add";
-			// send request
-			String response = sendPostRequest(url, jsonPairs);
-			// parse response
-			if (response != null && !response.equals("")) { // check if response
-															// is empty
-				JSONObject jsonResponse = new JSONObject(response);
-				result.setFlag(jsonResponse.getInt(FLAG));
-				if (jsonResponse.has("object")) {
-					if (!jsonResponse.isNull("object")) {
-						// TODO read response
-						// JSONObject ob=jsonResponse.getJSONObject("object");
-						result.addPair("adId", jsonResponse.getInt("object"));
-					}
-				}
-			} else {
-				result.setFlag(CONNECTION_ERROR_CODE);
-			}
-		} catch (Exception ex) {
-			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
-		}
-		return result;
-	}
+//	public ServerResult addNewAdvertise(String description, String address,
+//			int categoryId, int isUsed, int price, JSONArray telephones,
+//			String facebookPageLink) {
+//		ServerResult result = new ServerResult();
+//		try {
+//			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
+//
+//			jsonPairs.add(new BasicNameValuePair("description", description));
+//			jsonPairs.add(new BasicNameValuePair("address", address));
+//			jsonPairs.add(new BasicNameValuePair("category_id", Integer
+//					.toString(categoryId)));
+//			jsonPairs.add(new BasicNameValuePair("price", Integer
+//					.toString(price)));
+//			jsonPairs.add(new BasicNameValuePair("is_used", Integer
+//					.toString(isUsed)));
+//			jsonPairs.add(new BasicNameValuePair("telephones", telephones
+//					.toString()));
+//			jsonPairs.add(new BasicNameValuePair("facebook_page", facebookPageLink));
+//			jsonPairs.add(new BasicNameValuePair("access_token",
+//					DataStore.getInstance().getAccessToken()));
+//			jsonPairs.add(new BasicNameValuePair("pay_type", "1"));
+//			// url
+//			String url = BASE_SERVICE_URL + "ads_api/add";
+//			// send request
+//			String response = sendPostRequest(url, jsonPairs);
+//			// parse response
+//			if (response != null && !response.equals("")) { // check if response
+//															// is empty
+//				JSONObject jsonResponse = new JSONObject(response);
+//				result.setFlag(jsonResponse.getInt(FLAG));
+//				if (jsonResponse.has("object")) {
+//					if (!jsonResponse.isNull("object")) {
+//						// TODO read response
+//						// JSONObject ob=jsonResponse.getJSONObject("object");
+//						result.addPair("adId", jsonResponse.getInt("object"));
+//					}
+//				}
+//			} else {
+//				result.setFlag(CONNECTION_ERROR_CODE);
+//			}
+//		} catch (Exception ex) {
+//			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+//		}
+//		return result;
+//	}
 
 	public ServerResult getCategoryAds(int categoryId) {
 		ServerResult result = new ServerResult();
@@ -829,8 +833,10 @@ public class ServerAccess {
 		return result;
 	}
 
-	public ServerResult uploadAdvertisePhotos(int ad_id, String[] imgPath) {
-		String url = BASE_SERVICE_URL + "ads_api/upload_ad_photos";
+	public ServerResult addNewAdvertise(String description, String address,
+			int categoryId, int isUsed, int price, JSONArray telephones,
+			String facebookPageLink, String[] imgPath) {
+		String url = BASE_SERVICE_URL + "ads_api/add";
 		String responseString = null;
 		ServerResult res = new ServerResult();
 		HttpClient httpclient = new DefaultHttpClient();
@@ -858,15 +864,15 @@ public class ServerAccess {
 			}
 
 			// Adding file data to http body
-			entity.addPart("ad_id", new StringBody(Integer.toString(ad_id))); // Extra
-																				// parameters
-																				// if
-																				// you
-																				// want
-																				// to
-																				// pass
-																				// to
-																				// server
+			entity.addPart("category_id", new StringBody(Integer.toString(categoryId),Charset.forName(HTTP.UTF_8)));
+			entity.addPart("description", new StringBody(description,Charset.forName(HTTP.UTF_8)));
+			entity.addPart("address", new StringBody(address,Charset.forName(HTTP.UTF_8)));
+			entity.addPart("price", new StringBody(Integer.toString(price),Charset.forName(HTTP.UTF_8)));
+			entity.addPart("is_used", new StringBody(Integer.toString(isUsed),Charset.forName(HTTP.UTF_8)));
+			entity.addPart("facebook_page", new StringBody(facebookPageLink,Charset.forName(HTTP.UTF_8)));
+			entity.addPart("pay_type", new StringBody(Integer.toString(0),Charset.forName(HTTP.UTF_8)));
+			entity.addPart("telephones", new StringBody(telephones.toString(),Charset.forName(HTTP.UTF_8)));
+
 			String access_token = DataStore.getInstance()
 					.getAccessToken();
 			entity.addPart("access_token", new StringBody(access_token));
