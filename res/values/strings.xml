@@ -17,7 +17,7 @@
     <string name="btn_add_advertise">أضف إعلان</string>
     <string name="hint_txt_product_description">وصف بسيط عما تنشره</string>
 
-    <!-- Generic -->
+    <!-- Generic strings-->
     <string name="place_holder">-------</string>
     
     <!-- login -->
@@ -143,5 +143,6 @@
     <string name="frag_about_developed_by">Developed By :</string>
     <string name="error_mobile_number_short">رقم الموبايل أقصر من المتوقع</string>
     <string name="error_mobile_number_wrong">صيغة رقم الموبايل المدخل غير صحيحة</string>
+    <string name="frag_add_ad_error_upload_photos">حدث خطأ أثناء رفع صور الإعلان</string>
     
 </resources>
