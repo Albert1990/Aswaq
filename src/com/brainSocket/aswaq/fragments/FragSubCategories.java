@@ -28,12 +28,7 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 	private HomeCallbacks homeCallbacks;
 	private View vNoDataPlaceHolder;
 	private List<CategoryModel> subCategories=null;
-	
-	private FragSubCategories()
-	{
 		
-	}
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

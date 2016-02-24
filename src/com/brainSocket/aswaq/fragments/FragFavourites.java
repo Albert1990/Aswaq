@@ -28,11 +28,6 @@ public class FragFavourites extends Fragment implements OnItemClickListener{
 	private HomeCallbacks homeCallbacks;
 	private List<AdvertiseModel> ads;
 	
-	private FragFavourites()
-	{
-		//constructer
-	}
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

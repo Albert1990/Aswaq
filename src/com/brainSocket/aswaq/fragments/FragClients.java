@@ -29,11 +29,6 @@ public class FragClients extends Fragment implements OnItemClickListener{
 	private View vNoDataPlaceHolder;
 	private List<AppUser> clients=null;
 	
-	private FragClients()
-	{
-		
-	}
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

@@ -33,11 +33,7 @@ public class FragAbout extends Fragment implements OnClickListener,OnItemClickLi
 	private TextViewCustomFont tvEmail;
 	private View ivBrainSocketLogo;
 	private ListView lstPhones;
-	
-	private FragAbout()
-	{
-	}
-	
+		
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

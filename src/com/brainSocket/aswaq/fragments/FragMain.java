@@ -63,7 +63,7 @@ public class FragMain extends Fragment implements OnClickListener,
 	private Handler sliderHandler = null;
 	private CirclePageIndicator circleIndicator;
 
-	private FragMain() {
+	public FragMain() {
 		if (sliderHandler == null)
 			sliderHandler = new Handler();
 	}
