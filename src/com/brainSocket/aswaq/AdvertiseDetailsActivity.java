@@ -156,6 +156,7 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 				if (isFavourite)
 					ivFav.setBackgroundResource(R.drawable.ic_star_active);
 
+				String facebookPage=ad.getFacebookPage();
 				if (ad.getFacebookPage().length()<2) {
 					btnFbPage.setVisibility(View.GONE);
 				}
@@ -385,10 +386,17 @@ public class AdvertiseDetailsActivity extends AppBaseActivity implements
 			handleFavouriteRequest();
 			break;
 		case R.id.btnFbPage:
-			Uri uri = Uri.parse(ad.getFacebookPage()); // missing 'http://' will
-														// cause crashed
-			i = new Intent(Intent.ACTION_VIEW, uri);
-			startActivity(i);
+			try
+			{
+				Uri uri = Uri.parse(ad.getFacebookPage()); // missing 'http://' will
+															// cause crashed
+				i = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(i);
+			}
+			catch(Exception ex)
+			{
+				
+			}
 			break;
 		case R.id.ivBack:
 			finish();

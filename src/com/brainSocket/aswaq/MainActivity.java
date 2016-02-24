@@ -163,6 +163,12 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 		case ShowAds:
 			//ivMenu.setVisibility(View.GONE);
 			break;
+		case About:
+			ivMenu.setVisibility(View.VISIBLE);
+			ivBack.setVisibility(View.VISIBLE);
+			tvFragTitle.setVisibility(View.VISIBLE);
+			tvFragTitle.setText(getString(R.string.drawer_callus));
+			break;
 		default:
 			// setActionBarColor(getResources().getColor(R.color.app_theme));
 			break;

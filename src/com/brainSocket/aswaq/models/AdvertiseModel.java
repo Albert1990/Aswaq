@@ -189,6 +189,8 @@ public class AdvertiseModel {
 		this.isUsed = isUsed;
 	}
 	public String getFacebookPage() {
+		if(!facebookPage.startsWith("http"))
+			return "https://www.facebook.com/"+facebookPage;
 		return facebookPage;
 	}
 	public void setFacebookPage(String facebookPage) {

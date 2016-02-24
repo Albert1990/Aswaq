@@ -74,7 +74,6 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private LayoutInflater inflater;
 	int selectedCategoryId=-1;
 	String[] imagesURI={null,null,null,null};
-	private int phoneNumberIndex=0;
 	private String facebookPageLink="";
 	private String facebooKPrefixLink="https://www.facebook.com/";
 	
@@ -160,6 +159,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		}
 		// initial State
 		setProductNew(false);
+		txtProductDescription.requestFocus();
 	}
 	
 	private void addNewAdvertise()
@@ -186,6 +186,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		}
 		else
 		{
+			//hello
 			EditTextCustomFont firstPhoneNumber=(EditTextCustomFont)vPhoneNumbersContainer.getChildAt(1).findViewById(R.id.tvPhone);
 			String firstPhone=firstPhoneNumber.getText().toString();
 			if(AswaqApp.isEmptyOrNull(firstPhone))
@@ -408,7 +409,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private static File getNewTempImgFile(boolean isForUpload){
 		final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "aswaq_temp_imgs" + File.separator);
 		root.mkdirs();
-		final String fname = "7325534887719644.JPG";//"IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ((isForUpload)?"_resized":"")+ ".jpg";
+		final String fname = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ((isForUpload)?"_resized":"")+ ".jpg";
 		File sdImageMainDirectory = new File(root, fname);
 		return sdImageMainDirectory;
 	}
@@ -482,16 +483,23 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	
 	private void addPhoneNumberView(String phoneNumber)
 	{
-		View phoneRowView=inflater.inflate(R.layout.row_phone_number, vPhoneNumbersContainer, false);
-		vPhoneNumbersContainer.addView(phoneRowView);
-		if(phoneNumber!=null)
+		try
 		{
-			((EditTextCustomFont)phoneRowView.findViewById(R.id.tvPhone)).setText(phoneNumber);
+			View phoneRowView=inflater.inflate(R.layout.row_phone_number, vPhoneNumbersContainer, false);
+			vPhoneNumbersContainer.addView(phoneRowView);
+			EditTextCustomFont txtMob=(EditTextCustomFont)phoneRowView.findViewById(R.id.tvPhone);
+			if(phoneNumber!=null)
+			{
+				txtMob.setText(phoneNumber);
+			}
+			else
+				txtMob.requestFocus();
+			View btnDeletePhoneNumber=phoneRowView.findViewById(R.id.btnDel);
+			btnDeletePhoneNumber.setOnClickListener(this);
 		}
-		View btnDeletePhoneNumber=phoneRowView.findViewById(R.id.btnDel);
-		btnDeletePhoneNumber.setTag(phoneNumberIndex);
-		phoneNumberIndex++;
-		btnDeletePhoneNumber.setOnClickListener(this);
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 	
 	private PageTransitionCallback facebookPageCallback=new PageTransitionCallback() {
@@ -512,6 +520,17 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			}
 		}
 	};
+	
+	private void removePhoneNumberView(View v)
+	{
+		try
+		{
+			vPhoneNumbersContainer.removeView((View)v.getParent());
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	 
 	@Override
 	public void onClick(View v) {
@@ -546,9 +565,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			addPhoneNumberView(null);
 			break;
 		case R.id.btnDel:
-			int selectedPhoneNumberIndex=(Integer)v.getTag();
-			vPhoneNumbersContainer.removeViewAt(selectedPhoneNumberIndex+1); //+1 because of the btnAddNewPhoneNumber .
-			phoneNumberIndex--;
+			removePhoneNumberView(v);
 			break;
 		case R.id.btnAddYourPage:
 			DiagFacebookPage diagFacebookPage=new DiagFacebookPage(facebookPageCallback);
