@@ -36,11 +36,6 @@ public class FragUsersList extends Fragment{
     View vNoDataPlaceHolder;
 
     CollectionsAdapter adapter;
-    
-    public FragUsersList()
-    {
-    	super();
-    }
 
     public static FragUsersList newInstance(ArrayList<AppUser> collections, FRAG_USERS_TYPE type){
         FragUsersList frag = new FragUsersList();

@@ -72,7 +72,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	private LinearLayout vPhoneNumbersContainer;
 	private TextViewCustomFont btnAddYourPage;
 	private LayoutInflater inflater;
-	int selectedCategoryId=-1;
+	int selectedCategoryId = -1;
 	String[] imagesURI={null,null,null,null};
 	private String facebookPageLink="";
 	private String facebooKPrefixLink="https://www.facebook.com/";
@@ -83,10 +83,6 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 	///temp 
 	Uri outputFileUri; //holder for the image picked from the camera
 	
-	public FragAddAdvertise()
-	{
-		super();
-	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,12 +143,12 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		btnAddPhone=(TextViewCustomFont)getView().findViewById(R.id.btnAddPhone);
 		btnAddPhone.setOnClickListener(this);
 		
-		if(me.getPhoneNum().length()>0)
+		if(me.getPhoneNum() != null && !me.getPhoneNum().isEmpty())
 		{
 			String localizeMobileNumber=AswaqApp.localizeMobileNumber(me.getPhoneNum());
 			addPhoneNumberView(localizeMobileNumber);
 		}
-		if(me.getFacebookPage().length()>1)
+		if(me.getFacebookPage() != null && !me.getFacebookPage().isEmpty())
 		{
 			facebookPageLink=me.getFacebookPage();
 			btnAddYourPage.setText(facebooKPrefixLink+ me.getFacebookPage());
@@ -215,7 +211,7 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 			price=Integer.parseInt(tvPrice.getText().toString());
 		}
 		
-		if(selectedCategoryId==-1)
+		if(selectedCategoryId == -1)
 		{
 			tvCategory.setError(getString(R.string.error_chose_suitable_category));
 			focusView=tvCategory;
@@ -574,14 +570,14 @@ public class FragAddAdvertise extends Fragment implements OnClickListener{
 		}
 	}
 	
-	private DataRequestCallback onCategorySelectedCallback=new DataRequestCallback() {
+	private DataRequestCallback onCategorySelectedCallback = new DataRequestCallback() {
 		
 		@Override
 		public void onDataReady(ServerResult data, boolean success) {
 			try
 			{
-				CategoryModel selectedCategory=(CategoryModel)data.getValue("selectedCategory");
-				selectedCategoryId=selectedCategory.getId();
+				CategoryModel selectedCategory = (CategoryModel)data.getValue("selectedCategory");
+				selectedCategoryId = selectedCategory.getId();
 				tvCategory.setText(selectedCategory.getName());
 			}
 			catch(Exception ex)

@@ -34,11 +34,6 @@ public class FragAbout extends Fragment implements OnClickListener,OnItemClickLi
 	private View ivBrainSocketLogo;
 	private ListView lstPhones;
 
-	public FragAbout()
-	{
-		super();
-	}
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
