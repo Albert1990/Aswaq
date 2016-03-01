@@ -159,7 +159,7 @@ public class FragMain extends Fragment implements OnClickListener,
 		
 		DataStore.getInstance().attemptGetPageComponents(
 				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
-		DataStore.getInstance().attemptCheckVersion(checkVersionCallback);
+		
 	}
 
 	private void search() {
@@ -212,18 +212,6 @@ public class FragMain extends Fragment implements OnClickListener,
 				etSearch.setEnabled(true);
 			} catch (Exception ex) {
 				ex.printStackTrace();
-			}
-		}
-	};
-	
-DataRequestCallback checkVersionCallback=new DataRequestCallback() {
-		
-		@Override
-		public void onDataReady(ServerResult data, boolean success) {
-			if(success)
-			{
-				if(data.getFlag()!=ServerAccess.ERROR_CODE_done)
-					new DiagUpdateAppVersion().show(getFragmentManager(), "xy");
 			}
 		}
 	};

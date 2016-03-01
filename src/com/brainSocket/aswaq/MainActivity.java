@@ -81,7 +81,22 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 		fragmentManager = getSupportFragmentManager();
 		fragmentManager.addOnBackStackChangedListener(this);
 		loadFragment(FragmentType.Main, null);
+		DataStore.getInstance().attemptCheckVersion(checkVersionCallback);
 	}
+	
+DataRequestCallback checkVersionCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			if(success)
+			{
+				if(data.getFlag()!=ServerAccess.ERROR_CODE_done)
+					new DiagUpdateAppVersion().show(getSupportFragmentManager(), "xy");
+			}
+		}
+	};
+	
+	
 
 	private void initSlideDrawer() {
 		lvDrawer = (ListView) findViewById(R.id.lvDrawer);
