@@ -144,5 +144,8 @@
     <string name="error_mobile_number_short">رقم الموبايل أقصر من المتوقع</string>
     <string name="error_mobile_number_wrong">صيغة رقم الموبايل المدخل غير صحيحة</string>
     <string name="frag_add_ad_error_upload_photos">حدث خطأ أثناء رفع صور الإعلان</string>
+    <string name="lbl_update_version">هناك نسخة أحدث من تطبيق أسواق, قم بتحميلها الآن</string>
+    <string name="diag_btn_download">تحميل</string>
+    <string name="diag_btn_cancel">لاحقاً</string>
     
 </resources>

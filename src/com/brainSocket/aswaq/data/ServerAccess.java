@@ -702,6 +702,40 @@ public class ServerAccess {
 		}
 		return result;
 	}
+	
+	public ServerResult checkVersion() {
+		ServerResult result = new ServerResult();
+		try {
+			// parameters
+			List<NameValuePair> jsonPairs = new ArrayList<NameValuePair>();
+			jsonPairs.add(new BasicNameValuePair("version",AswaqApp.VERSIOIN_ID));
+
+			// url
+			String url = BASE_SERVICE_URL + "versions_api/check_version";
+
+			// send request
+			String response = sendPostRequest(url, jsonPairs);
+			// parse response
+			if (response != null && !response.equals("")) { // check if response
+															// is empty
+				JSONObject jsonResponse = new JSONObject(response);
+				result.setFlag(jsonResponse.getInt(FLAG));
+//				if(jsonResponse.has("object"))
+//				{
+//					if(!jsonResponse.isNull("object"))
+//					{
+//						result.addPair("newFollowersCount", jsonResponse.getString("object"));
+//					}
+//				}
+
+			} else {
+				result.setFlag(CONNECTION_ERROR_CODE);
+			}
+		} catch (Exception e) {
+			result.setFlag(RESPONCE_FORMAT_ERROR_CODE);
+		}
+		return result;
+	}
 
 	public ServerResult addAdvertiseToFavourite(int adId, boolean add) {
 		ServerResult result = new ServerResult();

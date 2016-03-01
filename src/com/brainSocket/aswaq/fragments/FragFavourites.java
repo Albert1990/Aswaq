@@ -28,9 +28,9 @@ public class FragFavourites extends Fragment implements OnItemClickListener{
 	private HomeCallbacks homeCallbacks;
 	private List<AdvertiseModel> ads;
 	
-	private FragFavourites()
+	public FragFavourites()
 	{
-		//constructer
+		super();
 	}
 	
 	@Override

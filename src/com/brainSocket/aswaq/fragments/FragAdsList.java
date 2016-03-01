@@ -34,6 +34,11 @@ public class FragAdsList extends Fragment{
     View vNoDataPlaceHolder;
 
     CollectionsAdapter adapter;
+    
+    public FragAdsList()
+    {
+    	super();
+    }
 
     public static FragAdsList newInstance(ArrayList<AdvertiseModel> apps){
         FragAdsList frag = new FragAdsList();

@@ -40,6 +40,7 @@ import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
 import com.brainSocket.aswaq.data.ServerAccess;
 import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.dialogs.DiagUpdateAppVersion;
 import com.brainSocket.aswaq.enums.FragmentType;
 import com.brainSocket.aswaq.enums.SliderType;
 import com.brainSocket.aswaq.models.AppUser;
@@ -63,7 +64,8 @@ public class FragMain extends Fragment implements OnClickListener,
 	private Handler sliderHandler = null;
 	private CirclePageIndicator circleIndicator;
 
-	private FragMain() {
+	public FragMain() {
+		super();
 		if (sliderHandler == null)
 			sliderHandler = new Handler();
 	}
@@ -154,8 +156,10 @@ public class FragMain extends Fragment implements OnClickListener,
 				}
 			}
 		}, 2000);
+		
 		DataStore.getInstance().attemptGetPageComponents(
 				ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
+		DataStore.getInstance().attemptCheckVersion(checkVersionCallback);
 	}
 
 	private void search() {
@@ -172,6 +176,7 @@ public class FragMain extends Fragment implements OnClickListener,
 		public void onDataReady(ServerResult data, boolean success) {
 			try {
 				homeCallbacks.showProgress(false);
+				
 
 				if (success) {
 					if (data.getFlag() == ServerAccess.ERROR_CODE_done) {
@@ -207,6 +212,18 @@ public class FragMain extends Fragment implements OnClickListener,
 				etSearch.setEnabled(true);
 			} catch (Exception ex) {
 				ex.printStackTrace();
+			}
+		}
+	};
+	
+DataRequestCallback checkVersionCallback=new DataRequestCallback() {
+		
+		@Override
+		public void onDataReady(ServerResult data, boolean success) {
+			if(success)
+			{
+				if(data.getFlag()!=ServerAccess.ERROR_CODE_done)
+					new DiagUpdateAppVersion().show(getFragmentManager(), "xy");
 			}
 		}
 	};
@@ -303,6 +320,8 @@ public class FragMain extends Fragment implements OnClickListener,
 		super.onResume();
 		try {
 			try {
+				DataStore.getInstance().attemptGetPageComponents(
+						ServerAccess.MAIN_CATEGORY_ID, getPageComponentsCallback);
 				sliderHandler.removeCallbacks(SliderTransition);
 			} catch (Exception ex) {
 				ex.printStackTrace();

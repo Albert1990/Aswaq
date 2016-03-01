@@ -23,8 +23,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.brainSocket.aswaq.adapters.DrawerAdapter;
+import com.brainSocket.aswaq.data.DataRequestCallback;
 import com.brainSocket.aswaq.data.DataStore;
 import com.brainSocket.aswaq.data.PhotoProvider;
+import com.brainSocket.aswaq.data.ServerAccess;
+import com.brainSocket.aswaq.data.ServerResult;
+import com.brainSocket.aswaq.dialogs.DiagUpdateAppVersion;
 import com.brainSocket.aswaq.enums.FragmentType;
 import com.brainSocket.aswaq.enums.ImageType;
 import com.brainSocket.aswaq.fragments.FragAbout;
@@ -288,6 +292,7 @@ public class MainActivity extends AppBaseActivity implements OnClickListener,
 	public void setTitle(String title) {
 		tvFragTitle.setText(title);
 	}
+	
 
 	@Override
 	public void loadFragment(FragmentType fragmentType,

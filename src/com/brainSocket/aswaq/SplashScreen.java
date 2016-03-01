@@ -28,13 +28,13 @@ public class SplashScreen extends AppBaseActivity {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		try {
-			DataStore.getInstance().startScheduledUpdates();
-		} catch (Exception ex) {
-			Toast.makeText(this, getString(R.string.error_connection_error),
-					Toast.LENGTH_SHORT).show();
-			ex.printStackTrace();
-		}
+//		try {
+//			DataStore.getInstance().startScheduledUpdates();
+//		} catch (Exception ex) {
+//			Toast.makeText(this, getString(R.string.error_connection_error),
+//					Toast.LENGTH_SHORT).show();
+//			ex.printStackTrace();
+//		}
 		new Handler().postDelayed(startApp, 2000);
 	}
 

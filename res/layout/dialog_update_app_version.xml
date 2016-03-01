@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <com.brainSocket.aswaq.views.TextViewCustomFont
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="6dp"
+        android:text="@string/lbl_update_version"
+        android:textColor="@color/txt_dark"
+        android:textSize="@dimen/ts_text_big"
+        app:fontId="1" />
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.brainSocket.aswaq.views.TextViewCustomFont
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="6dp"
+        android:background="@drawable/selector_btn_app_theme"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/diag_btn_cancel"
+        android:textColor="@color/white"
+        android:textSize="@dimen/ts_text_small"
+        android:layout_weight="1"
+        app:fontId="1" />
+        
+        <com.brainSocket.aswaq.views.TextViewCustomFont
+        android:id="@+id/btnOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="6dp"
+        android:background="@drawable/selector_btn_app_theme"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/diag_btn_download"
+        android:textColor="@color/white"
+        android:textSize="@dimen/ts_text_small"
+        android:layout_weight="1"
+        app:fontId="1" />
+        
+        
+        
+    </LinearLayout>
+    
+
+</LinearLayout>

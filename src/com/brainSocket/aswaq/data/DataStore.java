@@ -27,7 +27,7 @@ public class DataStore {
 	private ContactModel contactModel;
 	private List<CategoryModel> subCategoriesPairs = null;
 	private HashMap<Integer, PageModel> pages = null;
-	private final int TIMER_TICK = 15 * 60 * 1000; // 15 mins
+	private final int TIMER_TICK = 5 * 60 * 1000; // 5 mins
 
 	public static DataStore getInstance() {
 		if (instance == null)
@@ -39,8 +39,9 @@ public class DataStore {
 		try {
 			serverHandler = ServerAccess.getInstance();
 			cacheProvider = DataCacheProvider.getInstance();
-			handler = new Handler();
 			loadLocalData();
+			startScheduledUpdates();
+			attemptLoadAllPages();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,8 +54,9 @@ public class DataStore {
 		pages = DataCacheProvider.getInstance().getStoredPages();
 	}
 
-	public void startScheduledUpdates() {
+	private void startScheduledUpdates() {
 		try {
+			handler = new Handler();
 			handler.postDelayed(runnableUpdate, TIMER_TICK);
 		} catch (Exception e) {
 		}
@@ -430,6 +432,25 @@ public class DataStore {
 			public void run() {
 				boolean success = true;
 				ServerResult result = serverHandler.followUser(userId, follow);
+				if (result.connectionFailed())
+					success = false;
+				else {
+					if (result.getFlag() == ServerAccess.ERROR_CODE_done) {
+					}
+				}
+				if (callback != null)
+					invokeCallback(callback, success, result);
+			}
+		}).start();
+	}
+	
+	public void attemptCheckVersion(final DataRequestCallback callback) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				boolean success = true;
+				ServerResult result = serverHandler.checkVersion();
 				if (result.connectionFailed())
 					success = false;
 				else {

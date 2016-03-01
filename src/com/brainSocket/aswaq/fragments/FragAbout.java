@@ -33,9 +33,10 @@ public class FragAbout extends Fragment implements OnClickListener,OnItemClickLi
 	private TextViewCustomFont tvEmail;
 	private View ivBrainSocketLogo;
 	private ListView lstPhones;
-	
-	private FragAbout()
+
+	public FragAbout()
 	{
+		super();
 	}
 	
 	@Override
@@ -173,9 +174,13 @@ public class FragAbout extends Fragment implements OnClickListener,OnItemClickLi
 			catch(Exception ex){ex.printStackTrace();}
 			break;
 		case R.id.ivBrainSocketLogo:
+			try
+			{
 			Uri uri = Uri.parse("http://brain-socket.com/"); // missing 'http://' will
 			i = new Intent(Intent.ACTION_VIEW, uri);
 			startActivity(i);
+			}
+			catch(Exception ex){}
 			break;
 		}
 	}

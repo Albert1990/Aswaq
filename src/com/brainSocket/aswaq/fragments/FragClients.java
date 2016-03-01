@@ -29,9 +29,9 @@ public class FragClients extends Fragment implements OnItemClickListener{
 	private View vNoDataPlaceHolder;
 	private List<AppUser> clients=null;
 	
-	private FragClients()
+	public FragClients()
 	{
-		
+		super();
 	}
 	
 	@Override

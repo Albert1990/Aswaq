@@ -51,6 +51,7 @@ public class RegisterActivity extends AppBaseActivity implements
 		
 		btnLoginFB=(TextViewCustomFont)findViewById(R.id.btnLoginFB);
 		btnLoginFB.setOnClickListener(this);
+		//btnLoginFB.setVisibility(View.GONE);
 		
 		selectedMobileNumber=getIntent().getExtras().getString("mobileNumber", "");
 	}
@@ -147,6 +148,14 @@ public class RegisterActivity extends AppBaseActivity implements
 	 * stage
 	 */
 	public void attempFBtLogin() {
+		try
+		{
+	            if (AccessToken.getCurrentAccessToken() != null) {
+	                LoginManager.getInstance().logOut();
+	            }
+			
+		}
+		catch(Exception ex){}
 		ArrayList<String> perm1 = new ArrayList<String>();
 		perm1.add("public_profile");
 		// perm1.add("user_friends");
@@ -190,11 +199,11 @@ public class RegisterActivity extends AppBaseActivity implements
 			showToast(getString(R.string.error_facebook_exception));
 			try
 			{
-			if (exception instanceof FacebookAuthorizationException) {
-	            if (AccessToken.getCurrentAccessToken() != null) {
-	                LoginManager.getInstance().logOut();
-	            }
-			}
+				if (exception instanceof FacebookAuthorizationException) {
+		            if (AccessToken.getCurrentAccessToken() != null) {
+		                LoginManager.getInstance().logOut();
+		            }
+				}
 			}
 			catch(Exception ex){}
 		}

@@ -44,8 +44,9 @@ public class FragAds extends Fragment implements OnItemClickListener{
 	private View vNoDataPlaceHolder;
 	private CirclePageIndicator circleIndicator;
 	
-	private FragAds()
+	public FragAds()
 	{
+		super();
 		sliderHandler=new Handler();
 	}
 	
@@ -191,6 +192,7 @@ private Runnable SliderTransition=new Runnable() {
 		{
 			try
 			{
+				//DataStore.getInstance().attemptGetCategoryAds(getArguments().getInt("selectedSubCategoryId"), getCategoryAdsCallback);
 				sliderHandler.removeCallbacks(SliderTransition);
 			}catch(Exception ex){ex.printStackTrace();}
 			sliderHandler.postDelayed(SliderTransition,AswaqApp.SLIDER_TRANSITION_INTERVAL);

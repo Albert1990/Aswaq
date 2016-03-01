@@ -29,9 +29,9 @@ public class FragSubCategories extends Fragment implements OnItemClickListener {
 	private View vNoDataPlaceHolder;
 	private List<CategoryModel> subCategories=null;
 	
-	private FragSubCategories()
+	public FragSubCategories()
 	{
-		
+		super();
 	}
 	
 	@Override
